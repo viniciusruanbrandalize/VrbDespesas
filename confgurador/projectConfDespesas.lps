@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Win32 Release"/>
+    <Units>
+      <Unit>
+        <Filename Value="projectConfDespesas.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="21"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmPrincipal"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="146"/>
+        <CursorPos X="29" Y="162"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\pas\view\view.mensagem.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmMessage"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="21"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\pas\lib\lib.cryptini.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="21"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\pas\model\connection\model.connection.ini.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="143"/>
+        <CursorPos X="62" Y="124"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.principal.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="37" Y="24"/>
+        <UsageCount Value="21"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="66" Column="5" TopLine="44"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="68" Column="5" TopLine="46"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="70" Column="5" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="61" Column="18" TopLine="45"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="87" Column="8" TopLine="75"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="110" Column="49" TopLine="98"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="96" Column="13" TopLine="90"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="66" Column="18" TopLine="56"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="158" Column="46" TopLine="129"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="98" Column="10" TopLine="96"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="69" Column="27" TopLine="50"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="98" Column="3" TopLine="95"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="172" Column="28" TopLine="149"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="135" TopLine="127"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="133" TopLine="127"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="134" TopLine="127"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="16" Column="20"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="102" Column="3" TopLine="100"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="149" Column="15" TopLine="133"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="150" Column="15" TopLine="134"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="151" Column="15" TopLine="135"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="150" Column="15" TopLine="134"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="42" Column="30" TopLine="172"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="98" Column="13" TopLine="90"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="101" Column="41" TopLine="90"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="102" Column="41" TopLine="91"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="100" Column="3" TopLine="89"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="195" Column="56" TopLine="186"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="100" Column="40" TopLine="87"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="101" Column="39" TopLine="87"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

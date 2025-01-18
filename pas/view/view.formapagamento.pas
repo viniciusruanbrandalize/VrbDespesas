@@ -1,0 +1,130 @@
+unit view.formapagamento;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  view.cadastropadrao, controller.formapagamento, view.mensagem, lib.types;
+
+type
+
+  { TfrmFormaPagamento }
+
+  TfrmFormaPagamento = class(TfrmCadastroPadrao)
+    edtNome: TLabeledEdit;
+    edtSigla: TLabeledEdit;
+    procedure actExcluirExecute(Sender: TObject);
+    procedure actSalvarExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+    Controller: TFormaPagamentoController;
+  public
+    procedure CarregarDados; override;
+    procedure LimparCampos; override;
+    procedure CarregarSelecionado; override;
+  end;
+
+var
+  frmFormaPagamento: TfrmFormaPagamento;
+
+implementation
+
+uses
+  view.principal;
+
+{$R *.lfm}
+
+{ TfrmFormaPagamento }
+
+procedure TfrmFormaPagamento.FormCreate(Sender: TObject);
+begin
+  inherited;
+  Controller := TFormaPagamentoController.Create;
+end;
+
+procedure TfrmFormaPagamento.actExcluirExecute(Sender: TObject);
+var
+  erro: String;
+  id: Integer;
+begin
+  if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
+                           [mbNao, mbSim], mbNao) then
+  begin
+    id := StrToInt(lvPadrao.Selected.Caption);
+    if Controller.Excluir(id, erro) then
+      inherited
+    else
+      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    Operacao := opNenhum;
+  end;
+end;
+
+procedure TfrmFormaPagamento.actSalvarExecute(Sender: TObject);
+var
+  erro: String;
+begin
+  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  begin
+    Controller.FormaPagamento.Nome  := edtNome.Text;
+    Controller.FormaPagamento.Sigla := edtSigla.Text;
+    if Operacao = opInserir then
+    begin
+      if not Controller.Inserir(Controller.FormaPagamento, erro) then
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    end;
+    if Operacao = opEditar then
+    begin
+      if not Controller.Editar(Controller.FormaPagamento, erro) then
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    end;
+    inherited;
+  end;
+end;
+
+procedure TfrmFormaPagamento.FormClose(Sender: TObject;
+  var CloseAction: TCloseAction);
+begin
+  TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuCadastro, True);
+end;
+
+procedure TfrmFormaPagamento.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(Controller);
+end;
+
+procedure TfrmFormaPagamento.CarregarDados;
+begin
+  lvPadrao.Items.Clear;
+  Controller.Listar(lvPadrao);
+end;
+
+procedure TfrmFormaPagamento.LimparCampos;
+begin
+  edtNome.Clear;
+  edtSigla.Clear;
+end;
+
+procedure TfrmFormaPagamento.CarregarSelecionado;
+var
+  id: Integer;
+  erro: String;
+begin
+  id := StrToInt(lvPadrao.Selected.Caption);
+  if Controller.BuscarPorId(controller.FormaPagamento, id, erro) then
+  begin
+    edtNome.Text  := Controller.FormaPagamento.Nome;
+    edtSigla.Text := Controller.FormaPagamento.Sigla;
+  end
+  else
+  begin
+    TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    Abort;
+  end;
+end;
+
+end.
+

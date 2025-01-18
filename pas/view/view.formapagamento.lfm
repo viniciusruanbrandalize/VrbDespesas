@@ -1,0 +1,74 @@
+inherited frmFormaPagamento: TfrmFormaPagamento
+  Caption = 'Cadastro de Formas de Pagamento'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  inherited pnlFundo: TPanel
+    inherited pnlPrincipal: TPanel
+      inherited pgcPadrao: TPageControl
+        ActivePage = tbsCadastro
+        TabIndex = 1
+        inherited tbsLista: TTabSheet
+          inherited pnlFundoLista: TPanel
+            inherited lvPadrao: TListView
+              Columns = <              
+                item
+                  Caption = 'Código'
+                  Width = 100
+                end              
+                item
+                  Caption = 'Nome'
+                  Width = 700
+                end              
+                item
+                  Caption = 'Sigla'
+                  Width = 100
+                end>
+            end
+            inherited pnlPesquisa: TPanel
+              inherited edtPesquisa: TEdit
+                Text = ''
+              end
+            end
+          end
+        end
+        inherited tbsCadastro: TTabSheet
+          inherited pnlFundoCadastro: TPanel
+            object edtNome: TLabeledEdit[1]
+              Left = 8
+              Height = 28
+              Top = 32
+              Width = 488
+              EditLabel.Height = 20
+              EditLabel.Width = 488
+              EditLabel.Caption = 'Nome:'
+              MaxLength = 60
+              TabOrder = 1
+              Text = 'edtNome'
+            end
+            object edtSigla: TLabeledEdit[2]
+              Left = 512
+              Height = 28
+              Top = 32
+              Width = 112
+              EditLabel.Height = 20
+              EditLabel.Width = 112
+              EditLabel.Caption = 'Sigla:'
+              MaxLength = 3
+              TabOrder = 2
+              Text = 'edt'
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited actList: TActionList
+    inherited actExcluir: TAction
+      OnExecute = actExcluirExecute
+    end
+    inherited actSalvar: TAction
+      OnExecute = actSalvarExecute
+    end
+  end
+end

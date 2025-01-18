@@ -1,0 +1,43 @@
+object dmConexao1: TdmConexao1
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 345
+  HorizontalOffset = 601
+  VerticalOffset = 313
+  Width = 550
+  PPI = 120
+  object SQLConnector: TSQLConnector
+    Connected = False
+    LoginPrompt = False
+    KeepConnection = False
+    Transaction = SQLTransaction
+    OnLog = SQLConnectorLog
+    LogEvents = [detExecute, detCommit, detRollBack, detParamValue]
+    ConnectorType = 'Firebird'
+    Left = 60
+    Top = 20
+  end
+  object SQLDBLibraryLoader: TSQLDBLibraryLoader
+    Enabled = False
+    ConnectionType = 'Firebird'
+    LibraryName = 'fbclient.dll'
+    Left = 230
+    Top = 20
+  end
+  object SQLQuery: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <>
+    Database = SQLConnector
+    Params = <>
+    Macros = <>
+    Left = 60
+    Top = 176
+  end
+  object SQLTransaction: TSQLTransaction
+    Active = False
+    Action = caCommit
+    Database = SQLConnector
+    Left = 60
+    Top = 96
+  end
+end

@@ -1,0 +1,205 @@
+unit model.entity.recebimento;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils;
+
+type
+
+  { TRecebimento }
+
+  TRecebimento = class
+  private
+    FId:   Integer;
+    FData: TDate;
+    FHoraExtra: Double;
+    FINSS: Double;
+    FIR: Double;
+    FValorTotal: Double;
+    FValorBase: Double;
+    FDecimoTerceiro: Boolean;
+    FFerias: Boolean;
+    FValorDecimoTerceiro: Double;
+    FValorFerias: Double;
+    FAntecipacao: Double;
+    function GetAntecipacao: Double;
+    function GetData: TDate;
+    function GetDecimoTerceiro: Boolean;
+    function GetFerias: Boolean;
+    function GetHoraExtra: Double;
+    function GetId: Integer;
+    function GetINSS: Double;
+    function GetIR: Double;
+    function GetValorBase: Double;
+    function GetValorDecimoTerceiro: Double;
+    function GetValorFerias: Double;
+    function GetValorTotal: Double;
+    procedure SetAntecipacao(AValue: Double);
+    procedure SetData(AValue: TDate);
+    procedure SetDecimoTerceiro(AValue: Boolean);
+    procedure SetFerias(AValue: Boolean);
+    procedure SetHoraExtra(AValue: Double);
+    procedure SetId(AValue: Integer);
+    procedure SetINSS(AValue: Double);
+    procedure SetIR(AValue: Double);
+    procedure SetValorBase(AValue: Double);
+    procedure SetValorDecimoTerceiro(AValue: Double);
+    procedure SetValorFerias(AValue: Double);
+    procedure SetValorTotal(AValue: Double);
+  public
+    constructor Create;
+    destructor Destroy; override;
+  published
+    property Id: Integer read GetId write SetId;
+    property Data: TDate read GetData write SetData;
+    property HoraExtra: Double read GetHoraExtra write SetHoraExtra;
+    property INSS: Double read GetINSS write SetINSS;
+    property IR: Double read GetIR write SetIR;
+    property ValorTotal: Double read GetValorTotal write SetValorTotal;
+    property ValorBase: Double read GetValorBase write SetValorBase;
+    property DecimoTerceiro: Boolean read GetDecimoTerceiro write SetDecimoTerceiro;
+    property Ferias: Boolean read GetFerias write SetFerias;
+    property ValorDecimoTerceiro: Double read GetValorDecimoTerceiro write SetValorDecimoTerceiro;
+    property ValorFerias: Double read GetValorFerias write SetValorFerias;
+    property Antecipacao: Double read GetAntecipacao write SetAntecipacao;
+  end;
+
+implementation
+
+{ TRecebimento }
+
+function TRecebimento.GetId: Integer;
+begin
+  Result := FId;
+end;
+
+function TRecebimento.GetAntecipacao: Double;
+begin
+  Result := FAntecipacao;
+end;
+
+function TRecebimento.GetData: TDate;
+begin
+  Result := FData;
+end;
+
+function TRecebimento.GetDecimoTerceiro: Boolean;
+begin
+  Result := FDecimoTerceiro;
+end;
+
+function TRecebimento.GetFerias: Boolean;
+begin
+  Result := FFerias;
+end;
+
+function TRecebimento.GetHoraExtra: Double;
+begin
+  Result := FHoraExtra;
+end;
+
+function TRecebimento.GetINSS: Double;
+begin
+  Result := FINSS;
+end;
+
+function TRecebimento.GetIR: Double;
+begin
+  Result := FIR;
+end;
+
+function TRecebimento.GetValorBase: Double;
+begin
+  Result := FValorBase;
+end;
+
+function TRecebimento.GetValorDecimoTerceiro: Double;
+begin
+  Result := FValorDecimoTerceiro;
+end;
+
+function TRecebimento.GetValorFerias: Double;
+begin
+  Result := FValorFerias;
+end;
+
+function TRecebimento.GetValorTotal: Double;
+begin
+  Result := FValorTotal;
+end;
+
+procedure TRecebimento.SetAntecipacao(AValue: Double);
+begin
+  FAntecipacao := AValue;
+end;
+
+procedure TRecebimento.SetData(AValue: TDate);
+begin
+  FData := AValue;
+end;
+
+procedure TRecebimento.SetDecimoTerceiro(AValue: Boolean);
+begin
+  FDecimoTerceiro := AValue;
+end;
+
+procedure TRecebimento.SetFerias(AValue: Boolean);
+begin
+  FFerias := AValue;
+end;
+
+procedure TRecebimento.SetHoraExtra(AValue: Double);
+begin
+  FHoraExtra := AValue;
+end;
+
+procedure TRecebimento.SetId(AValue: Integer);
+begin
+  FId := AValue;
+end;
+
+procedure TRecebimento.SetINSS(AValue: Double);
+begin
+  FINSS := AValue;
+end;
+
+procedure TRecebimento.SetIR(AValue: Double);
+begin
+  FIR := AValue;
+end;
+
+procedure TRecebimento.SetValorBase(AValue: Double);
+begin
+  FValorBase := AValue;
+end;
+
+procedure TRecebimento.SetValorDecimoTerceiro(AValue: Double);
+begin
+  FValorDecimoTerceiro := AValue;
+end;
+
+procedure TRecebimento.SetValorFerias(AValue: Double);
+begin
+  FValorFerias := AValue;
+end;
+
+procedure TRecebimento.SetValorTotal(AValue: Double);
+begin
+  FValorTotal := AValue;
+end;
+
+constructor TRecebimento.Create;
+begin
+  //
+end;
+
+destructor TRecebimento.Destroy;
+begin
+  inherited Destroy;
+end;
+
+end.
+

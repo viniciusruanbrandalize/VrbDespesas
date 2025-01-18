@@ -1,0 +1,62 @@
+inherited frmTipoCompra: TfrmTipoCompra
+  Caption = 'Cadastro de Tipos de despesas'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  inherited pnlFundo: TPanel
+    inherited pnlPrincipal: TPanel
+      inherited pgcPadrao: TPageControl
+        inherited tbsLista: TTabSheet
+          inherited pnlFundoLista: TPanel
+            inherited lvPadrao: TListView
+              Columns = <              
+                item
+                  Caption = 'Código'
+                  Width = 100
+                end              
+                item
+                  Caption = 'Nome'
+                  Width = 800
+                end>
+            end
+            inherited pnlPesquisa: TPanel
+              inherited edtPesquisa: TEdit
+                Text = ''
+              end
+            end
+            inherited lbPesquisa: TListBox
+              Items.Strings = (
+                'desc_tipo_compra'
+              )
+              ItemHeight = 20
+            end
+          end
+        end
+        inherited tbsCadastro: TTabSheet
+          inherited pnlFundoCadastro: TPanel
+            object edtNome: TLabeledEdit[1]
+              Left = 8
+              Height = 28
+              Top = 32
+              Width = 564
+              EditLabel.Height = 20
+              EditLabel.Width = 564
+              EditLabel.Caption = 'Nome:'
+              MaxLength = 100
+              TabOrder = 1
+              Text = 'edtNome'
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited actList: TActionList
+    inherited actExcluir: TAction
+      OnExecute = actExcluirExecute
+    end
+    inherited actSalvar: TAction
+      OnExecute = actSalvarExecute
+    end
+  end
+end
