@@ -1,4 +1,4 @@
-unit model.entity.fornecedor;
+unit model.entity.donocadastro;
 
 {$mode ObjFPC}{$H+}
 
@@ -10,9 +10,9 @@ uses
 
 type
 
-  { TFornecedor }
+  { TDonoCadastro }
 
-  TFornecedor = class(TInterfacedObject, IParticipante)
+  TDonoCadastro = class(TInterfacedObject, IParticipante)
   private
     FId: Integer;
     FPessoa: String;
@@ -34,7 +34,6 @@ type
     FDonoCadastro: Boolean;
     FCidade: TCidade;
     FUsuarioCadastro: TUsuario;
-    FParticipante: IParticipante;
 
     function GetAlteracao: TDateTime;
     function GetBairro: String;
@@ -52,7 +51,6 @@ type
     function GetNome: String;
     function GetNumero: Integer;
     function GetObs: String;
-    function GetParticipante: IParticipante;
     function GetPessoa: String;
     function GetRua: String;
     function GetTelefone: String;
@@ -73,7 +71,6 @@ type
     procedure SetNome(AValue: String);
     procedure SetNumero(AValue: Integer);
     procedure SetObs(AValue: String);
-    procedure SetParticipante(AValue: IParticipante);
     procedure SetPessoa(AValue: String);
     procedure SetRua(AValue: String);
     procedure SetTelefone(AValue: String);
@@ -102,174 +99,168 @@ type
     property DonoCadastro: Boolean read GetDonoCadastro write SetDonoCadastro;
     property Cidade: TCidade read GetCidade write SetCidade;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
-    property Participante: IParticipante read GetParticipante write SetParticipante;
   end;
 
 implementation
 
-{ TFornecedor }
+{ TDonoCadastro }
 
-function TFornecedor.GetId: Integer;
+function TDonoCadastro.GetId: Integer;
 begin
   Result := FId;
 end;
 
-function TFornecedor.GetAlteracao: TDateTime;
+function TDonoCadastro.GetAlteracao: TDateTime;
 begin
   Result := FAlteracao;
 end;
 
-function TFornecedor.GetBairro: String;
+function TDonoCadastro.GetBairro: String;
 begin
   Result := FBairro;
 end;
 
-function TFornecedor.GetCadastro: TDateTime;
+function TDonoCadastro.GetCadastro: TDateTime;
 begin
   Result := FCadastro;
 end;
 
-function TFornecedor.GetCelular: String;
+function TDonoCadastro.GetCelular: String;
 begin
   Result := FCelular;
 end;
 
-function TFornecedor.GetCEP: String;
+function TDonoCadastro.GetCEP: String;
 begin
   Result := FCEP;
 end;
 
-function TFornecedor.GetCidade: TCidade;
+function TDonoCadastro.GetCidade: TCidade;
 begin
   Result := FCidade;
 end;
 
-function TFornecedor.GetCNPJ: String;
+function TDonoCadastro.GetCNPJ: String;
 begin
   Result := FCNPJ;
 end;
 
-function TFornecedor.GetComplemento: String;
+function TDonoCadastro.GetComplemento: String;
 begin
   Result := FComplemento;
 end;
 
-function TFornecedor.GetDonoCadastro: Boolean;
+function TDonoCadastro.GetDonoCadastro: Boolean;
 begin
   Result := FDonoCadastro;
 end;
 
-function TFornecedor.GetEmail: String;
+function TDonoCadastro.GetEmail: String;
 begin
   Result := FEmail;
 end;
 
-function TFornecedor.GetFantasia: String;
+function TDonoCadastro.GetFantasia: String;
 begin
   Result := FFantasia;
 end;
 
-function TFornecedor.GetIE: Integer;
+function TDonoCadastro.GetIE: Integer;
 begin
   Result := FIE;
 end;
 
-function TFornecedor.GetNome: String;
+function TDonoCadastro.GetNome: String;
 begin
   Result := FNome;
 end;
 
-function TFornecedor.GetNumero: Integer;
+function TDonoCadastro.GetNumero: Integer;
 begin
   Result := FNumero;
 end;
 
-function TFornecedor.GetObs: String;
+function TDonoCadastro.GetObs: String;
 begin
   Result := FObs;
 end;
 
-function TFornecedor.GetParticipante: IParticipante;
-begin
-  Result := FParticipante;
-end;
-
-function TFornecedor.GetPessoa: String;
+function TDonoCadastro.GetPessoa: String;
 begin
   Result := FPessoa;
 end;
 
-function TFornecedor.GetRua: String;
+function TDonoCadastro.GetRua: String;
 begin
   Result := FRua;
 end;
 
-function TFornecedor.GetTelefone: String;
+function TDonoCadastro.GetTelefone: String;
 begin
   Result := FTelefone;
 end;
 
-function TFornecedor.GetUsuarioCadastro: TUsuario;
+function TDonoCadastro.GetUsuarioCadastro: TUsuario;
 begin
   Result := FUsuarioCadastro;
 end;
 
-procedure TFornecedor.SetAlteracao(AValue: TDateTime);
+procedure TDonoCadastro.SetAlteracao(AValue: TDateTime);
 begin
   FAlteracao := AValue;
 end;
 
-procedure TFornecedor.SetBairro(AValue: String);
+procedure TDonoCadastro.SetBairro(AValue: String);
 begin
   FBairro := AValue;
 end;
 
-procedure TFornecedor.SetCadastro(AValue: TDateTime);
+procedure TDonoCadastro.SetCadastro(AValue: TDateTime);
 begin
   FCadastro := AValue;
 end;
 
-procedure TFornecedor.SetCelular(AValue: String);
+procedure TDonoCadastro.SetCelular(AValue: String);
 begin
   FCelular := AValue;
 end;
 
-procedure TFornecedor.SetCEP(AValue: String);
+procedure TDonoCadastro.SetCEP(AValue: String);
 begin
   FCEP := AValue;
 end;
 
-procedure TFornecedor.SetCidade(AValue: TCidade);
+procedure TDonoCadastro.SetCidade(AValue: TCidade);
 begin
   FCidade := AValue;
 end;
 
-procedure TFornecedor.SetCNPJ(AValue: String);
+procedure TDonoCadastro.SetCNPJ(AValue: String);
 begin
   FCNPJ := AValue;
 end;
 
-procedure TFornecedor.SetComplemento(AValue: String);
+procedure TDonoCadastro.SetComplemento(AValue: String);
 begin
   FComplemento := AValue;
 end;
 
-procedure TFornecedor.SetDonoCadastro(AValue: Boolean);
+procedure TDonoCadastro.SetDonoCadastro(AValue: Boolean);
 begin
   FDonoCadastro := AValue;
 end;
 
-procedure TFornecedor.SetEmail(AValue: String);
+procedure TDonoCadastro.SetEmail(AValue: String);
 begin
   FEmail := AValue;
 end;
 
-procedure TFornecedor.SetFantasia(AValue: String);
+procedure TDonoCadastro.SetFantasia(AValue: String);
 begin
   FFantasia := AValue;
 end;
 
-procedure TFornecedor.SetId(AValue: Integer);
+procedure TDonoCadastro.SetId(AValue: Integer);
 begin
   if AValue = 0 then
     raise Exception.Create('O campo "Id" precisa ser preenchido!')
@@ -277,12 +268,12 @@ begin
     FId := AValue;
 end;
 
-procedure TFornecedor.SetIE(AValue: Integer);
+procedure TDonoCadastro.SetIE(AValue: Integer);
 begin
   FIE := AValue;
 end;
 
-procedure TFornecedor.SetNome(AValue: String);
+procedure TDonoCadastro.SetNome(AValue: String);
 begin
   if AValue = EmptyStr then
     raise Exception.Create('O campo "Nome" precisa ser preenchido!')
@@ -290,47 +281,42 @@ begin
     FNome := AValue;
 end;
 
-procedure TFornecedor.SetNumero(AValue: Integer);
+procedure TDonoCadastro.SetNumero(AValue: Integer);
 begin
   FNumero := AValue;
 end;
 
-procedure TFornecedor.SetObs(AValue: String);
+procedure TDonoCadastro.SetObs(AValue: String);
 begin
   FObs := AValue;
 end;
 
-procedure TFornecedor.SetParticipante(AValue: IParticipante);
-begin
-  FParticipante := AValue;
-end;
-
-procedure TFornecedor.SetPessoa(AValue: String);
+procedure TDonoCadastro.SetPessoa(AValue: String);
 begin
   FPessoa := AValue;
 end;
 
-procedure TFornecedor.SetRua(AValue: String);
+procedure TDonoCadastro.SetRua(AValue: String);
 begin
   FRua := AValue;
 end;
 
-procedure TFornecedor.SetTelefone(AValue: String);
+procedure TDonoCadastro.SetTelefone(AValue: String);
 begin
   FTelefone := AValue;
 end;
 
-procedure TFornecedor.SetUsuarioCadastro(AValue: TUsuario);
+procedure TDonoCadastro.SetUsuarioCadastro(AValue: TUsuario);
 begin
   FUsuarioCadastro := AValue;
 end;
 
-constructor TFornecedor.Create;
+constructor TDonoCadastro.Create;
 begin
   //
 end;
 
-destructor TFornecedor.Destroy;
+destructor TDonoCadastro.Destroy;
 begin
   inherited Destroy;
 end;
