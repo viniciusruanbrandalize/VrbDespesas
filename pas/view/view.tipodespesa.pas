@@ -1,4 +1,4 @@
-unit view.tipocompra;
+unit view.tipodespesa;
 
 {$mode ObjFPC}{$H+}
 
@@ -6,13 +6,13 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  view.cadastropadrao, lib.types, controller.tipocompra, view.mensagem;
+  view.cadastropadrao, lib.types, controller.tipodespesa, view.mensagem;
 
 type
 
-  { TfrmTipoCompra }
+  { TfrmTipoDespesa }
 
-  TfrmTipoCompra = class(TfrmCadastroPadrao)
+  TfrmTipoDespesa = class(TfrmCadastroPadrao)
     edtNome: TLabeledEdit;
     procedure actExcluirExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
@@ -20,7 +20,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
-    Controller: TTipoCompraController;
+    Controller: TTipoDespesaController;
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -28,7 +28,7 @@ type
   end;
 
 var
-  frmTipoCompra: TfrmTipoCompra;
+  frmTipoDespesa: TfrmTipoDespesa;
 
 implementation
 
@@ -37,36 +37,36 @@ uses
 
 {$R *.lfm}
 
-{ TfrmTipoCompra }
+{ TfrmTipoDespesa }
 
-procedure TfrmTipoCompra.FormCreate(Sender: TObject);
+procedure TfrmTipoDespesa.FormCreate(Sender: TObject);
 begin
   inherited;
-  Controller := TTipoCompraController.Create;
+  Controller := TTipoDespesaController.Create;
 end;
 
-procedure TfrmTipoCompra.actSalvarExecute(Sender: TObject);
+procedure TfrmTipoDespesa.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
   if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
   begin
-    Controller.TipoCompra.Nome  := edtNome.Text;
+    Controller.TipoDespesa.Nome  := edtNome.Text;
     if Operacao = opInserir then
     begin
-      if not Controller.Inserir(Controller.TipoCompra, erro) then
+      if not Controller.Inserir(Controller.TipoDespesa, erro) then
         TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     end;
     if Operacao = opEditar then
     begin
-      if not Controller.Editar(Controller.TipoCompra, erro) then
+      if not Controller.Editar(Controller.TipoDespesa, erro) then
         TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     end;
     inherited;
   end;
 end;
 
-procedure TfrmTipoCompra.actExcluirExecute(Sender: TObject);
+procedure TfrmTipoDespesa.actExcluirExecute(Sender: TObject);
 var
   erro: String;
   id: Integer;
@@ -83,37 +83,37 @@ begin
   end;
 end;
 
-procedure TfrmTipoCompra.FormClose(Sender: TObject;
+procedure TfrmTipoDespesa.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuCadastro, True);
 end;
 
-procedure TfrmTipoCompra.FormDestroy(Sender: TObject);
+procedure TfrmTipoDespesa.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
 end;
 
-procedure TfrmTipoCompra.CarregarDados;
+procedure TfrmTipoDespesa.CarregarDados;
 begin
   lvPadrao.Items.Clear;
   Controller.Listar(lvPadrao);
 end;
 
-procedure TfrmTipoCompra.LimparCampos;
+procedure TfrmTipoDespesa.LimparCampos;
 begin
   edtNome.Clear;
 end;
 
-procedure TfrmTipoCompra.CarregarSelecionado;
+procedure TfrmTipoDespesa.CarregarSelecionado;
 var
   id: Integer;
   erro: String;
 begin
   id := StrToInt(lvPadrao.Selected.Caption);
-  if Controller.BuscarPorId(controller.TipoCompra, id, erro) then
+  if Controller.BuscarPorId(controller.TipoDespesa, id, erro) then
   begin
-    edtNome.Text  := Controller.TipoCompra.Nome;
+    edtNome.Text  := Controller.TipoDespesa.Nome;
   end
   else
   begin

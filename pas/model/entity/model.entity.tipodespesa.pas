@@ -1,4 +1,4 @@
-unit model.entity.tipocompra;
+unit model.entity.tipodespesa;
 
 {$mode ObjFPC}{$H+}
 
@@ -9,9 +9,9 @@ uses
 
 type
 
-  { TTipoCompra }
+  { TTipoDespesa }
 
-  TTipoCompra = class
+  TTipoDespesa = class
   private
     FId:   Integer;
     FNome: String;
@@ -29,34 +29,40 @@ type
 
 implementation
 
-{ TTipoCompra }
+{ TTipoDespesa }
 
-function TTipoCompra.GetId: Integer;
+function TTipoDespesa.GetId: Integer;
 begin
   Result := FId;
 end;
 
-function TTipoCompra.GetNome: String;
+function TTipoDespesa.GetNome: String;
 begin
   Result := FNome;
 end;
 
-procedure TTipoCompra.SetId(AValue: Integer);
+procedure TTipoDespesa.SetId(AValue: Integer);
 begin
-  FId := AValue;
+  if AValue = 0 then
+    raise Exception.Create('O campo "Id" precisa ser preenchido!')
+  else
+    FId := AValue;
 end;
 
-procedure TTipoCompra.SetNome(AValue: String);
+procedure TTipoDespesa.SetNome(AValue: String);
 begin
-  FNome := AValue;
+  if AValue = EmptyStr then
+    raise Exception.Create('O campo "Nome" precisa ser preenchido!')
+  else
+    FNome := AValue;
 end;
 
-constructor TTipoCompra.Create;
+constructor TTipoDespesa.Create;
 begin
   //
 end;
 
-destructor TTipoCompra.Destroy;
+destructor TTipoDespesa.Destroy;
 begin
   inherited Destroy;
 end;

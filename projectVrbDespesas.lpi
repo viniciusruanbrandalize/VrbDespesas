@@ -85,14 +85,6 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\model\entity\model.entity.subtipocompra.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\entity\model.entity.tipocompra.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="pas\model\entity\model.entity.usuario.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
@@ -187,22 +179,46 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\model\dao\model.dao.tipocompra.pas"/>
+        <Filename Value="pas\model\entity\model.entity.subtipodespesa.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\controller\controller.tipocompra.pas"/>
+        <Filename Value="pas\model\entity\model.entity.tipodespesa.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\view\view.tipocompra.pas"/>
+        <Filename Value="pas\model\dao\model.dao.tipodespesa.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmTipoCompra"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.tipodespesa.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.tipodespesa.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmTipoDespesa"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\model\dao\model.dao.padrao.pas"/>
+        <Filename Value="pas\model\entity\model.entity.participante.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.pais.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.estado.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.cidade.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.fornecedor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

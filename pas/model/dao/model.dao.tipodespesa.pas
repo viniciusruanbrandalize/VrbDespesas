@@ -1,36 +1,37 @@
-unit model.dao.tipocompra;
+unit model.dao.tipodespesa;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, SQLDB, model.entity.tipocompra,
+  Classes, SysUtils, ComCtrls, SQLDB, model.entity.tipodespesa,
   model.connection.conexao1;
 
 type
 
-  { TTipoCompraDAO }
+  { TTipoDespesaDAO }
 
-  TTipoCompraDAO = class
+  TTipoDespesaDAO = class
   private
     Qry: TSQLQuery;
   public
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
-    function BuscarPorId(TipoCompra : TTipoCompra; Id: Integer; out Erro: String): Boolean;
-    function Inserir(TipoCompra : TTipoCompra; out Erro: string): Boolean;
-    function Editar(TipoCompra : TTipoCompra; out Erro: string): Boolean;
+    function BuscarPorId(TipoDespesa : TTipoDespesa; Id: Integer; out Erro: String): Boolean;
+    function Inserir(TipoDespesa : TTipoDespesa; out Erro: string): Boolean;
+    function Editar(TipoDespesa : TTipoDespesa; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+    function GerarId(Gerador: String; Incremento: Integer=1): Integer;
     constructor Create;
     destructor Destroy; override;
   end;
 
 implementation
 
-{ TTipoCompraDAO }
+{ TTipoDespesaDAO }
 
-procedure TTipoCompraDAO.Listar(lv: TListView);
+procedure TTipoDespesaDAO.Listar(lv: TListView);
 var
   sql: String;
   item : TListItem;
@@ -59,7 +60,7 @@ begin
   end;
 end;
 
-procedure TTipoCompraDAO.Pesquisar(lv: TListView; Campo, Busca: String);
+procedure TTipoDespesaDAO.Pesquisar(lv: TListView; Campo, Busca: String);
 var
   sql: String;
   item : TListItem;
@@ -91,7 +92,7 @@ begin
   end;
 end;
 
-function TTipoCompraDAO.BuscarPorId(TipoCompra : TTipoCompra; Id: Integer; out Erro: String): Boolean;
+function TTipoDespesaDAO.BuscarPorId(TipoDespesa : TTipoDespesa; Id: Integer; out Erro: String): Boolean;
 var
   sql: String;
 begin
@@ -109,8 +110,8 @@ begin
 
     if Qry.RecordCount = 1 then
     begin
-      TipoCompra.Id    := Qry.FieldByName('id_tipo_compra').AsInteger;
-      TipoCompra.Nome  := Qry.FieldByName('desc_tipo_compra').AsString;
+      TipoDespesa.Id    := Qry.FieldByName('id_tipo_compra').AsInteger;
+      TipoDespesa.Nome  := Qry.FieldByName('desc_tipo_compra').AsString;
       Result := True;
     end
     else
@@ -130,7 +131,7 @@ begin
   end;
 end;
 
-function TTipoCompraDAO.Inserir(TipoCompra : TTipoCompra; out Erro: string): Boolean;
+function TTipoDespesaDAO.Inserir(TipoDespesa : TTipoDespesa; out Erro: string): Boolean;
 var
   sql: String;
 begin
@@ -142,7 +143,7 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('desc_tipo_compra').AsString  := TipoCompra.Nome;
+    Qry.ParamByName('desc_tipo_compra').AsString  := TipoDespesa.Nome;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -156,7 +157,7 @@ begin
   end;
 end;
 
-function TTipoCompraDAO.Editar(TipoCompra : TTipoCompra; out Erro: string): Boolean;
+function TTipoDespesaDAO.Editar(TipoDespesa : TTipoDespesa; out Erro: string): Boolean;
 var
   sql: String;
 begin
@@ -168,8 +169,8 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id_tipo_compra').AsInteger   := TipoCompra.Id;
-    Qry.ParamByName('desc_tipo_compra').AsString  := TipoCompra.Nome;
+    Qry.ParamByName('id_tipo_compra').AsInteger   := TipoDespesa.Id;
+    Qry.ParamByName('desc_tipo_compra').AsString  := TipoDespesa.Nome;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -184,7 +185,7 @@ begin
   end;
 end;
 
-function TTipoCompraDAO.Excluir(Id: Integer; out Erro: string): Boolean;
+function TTipoDespesaDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
@@ -209,13 +210,38 @@ begin
   end;
 end;
 
-constructor TTipoCompraDAO.Create;
+function TTipoDespesaDAO.GerarId(Gerador: String; Incremento: Integer): Integer;
+var
+  qryGerador: TSQLQuery;
+  sql: String;
+  id: integer;
+begin
+  id := 0;
+  qryGerador := TSQLQuery.Create(nil);
+  try
+
+    sql := 'SELECT GEN_ID('+Gerador+', '+IntToStr(Incremento)+') AS ID ' +
+           'FROM RDB$DATABASE';
+
+    qryGerador.SQLConnection := dmConexao1.SQLConnector;
+    qryGerador.SQL.Add(sql);
+    qryGerador.Open;
+
+    id := qryGerador.FieldByName('ID').AsInteger;
+    Result := id;
+
+  finally
+    qryGerador.Free;
+  end;
+end;
+
+constructor TTipoDespesaDAO.Create;
 begin
   Qry := TSQLQuery.Create(nil);
   qry.SQLConnection := dmConexao1.SQLConnector;
 end;
 
-destructor TTipoCompraDAO.Destroy;
+destructor TTipoDespesaDAO.Destroy;
 begin
   Qry.Free;
   inherited Destroy;

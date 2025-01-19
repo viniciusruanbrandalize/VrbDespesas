@@ -1,4 +1,4 @@
-unit model.entity.formapagamento;
+unit model.entity.pais;
 
 {$mode ObjFPC}{$H+}
 
@@ -9,48 +9,57 @@ uses
 
 type
 
-  { TFormaPagamento }
+  { TPais }
 
-  TFormaPagamento = class
+  TPais = class
   private
     FId:   Integer;
     FNome: String;
-    FSigla: String;
+    FSiscomex: String;
+    FSped: String;
     function GetId: Integer;
     function GetNome: String;
-    function GetSigla: String;
+    function GetSiscomex: String;
+    function GetSped: String;
     procedure SetId(AValue: Integer);
     procedure SetNome(AValue: String);
-    procedure SetSigla(AValue: String);
+    procedure SetSiscomex(AValue: String);
+    procedure SetSped(AValue: String);
   public
     constructor Create;
     destructor Destroy; override;
   published
     property Id: Integer read GetId write SetId;
     property Nome: String read GetNome write SetNome;
-    property Sigla: String read GetSigla write SetSigla;
+    property Siscomex: String read GetSiscomex write SetSiscomex;
+    property Sped: String read GetSped write SetSped;
   end;
 
 implementation
 
-{ TFormaPagamento }
+{ TPais }
 
-function TFormaPagamento.GetId: Integer;
+function TPais.GetId: Integer;
 begin
   Result := FId;
 end;
 
-function TFormaPagamento.GetNome: String;
+function TPais.GetNome: String;
 begin
   Result := FNome;
 end;
 
-function TFormaPagamento.GetSigla: String;
+function TPais.GetSiscomex: String;
 begin
-  Result := FSigla;
+  Result := FSiscomex;
 end;
 
-procedure TFormaPagamento.SetId(AValue: Integer);
+function TPais.GetSped: String;
+begin
+  Result := FSped;
+end;
+
+procedure TPais.SetId(AValue: Integer);
 begin
   if AValue = 0 then
     raise Exception.Create('O campo "Id" precisa ser preenchido!')
@@ -58,7 +67,7 @@ begin
     FId := AValue;
 end;
 
-procedure TFormaPagamento.SetNome(AValue: String);
+procedure TPais.SetNome(AValue: String);
 begin
   if AValue = EmptyStr then
     raise Exception.Create('O campo "Nome" precisa ser preenchido!')
@@ -66,17 +75,22 @@ begin
     FNome := AValue;
 end;
 
-procedure TFormaPagamento.SetSigla(AValue: String);
+procedure TPais.SetSiscomex(AValue: String);
 begin
-  FSigla := AValue;
+  FSiscomex := AValue;
 end;
 
-constructor TFormaPagamento.Create;
+procedure TPais.SetSped(AValue: String);
+begin
+  FSped := AValue;
+end;
+
+constructor TPais.Create;
 begin
   //
 end;
 
-destructor TFormaPagamento.Destroy;
+destructor TPais.Destroy;
 begin
   inherited Destroy;
 end;

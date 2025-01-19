@@ -1,4 +1,4 @@
-inherited frmTipoCompra: TfrmTipoCompra
+inherited frmTipoDespesa: TfrmTipoDespesa
   Caption = 'Cadastro de Tipos de despesas'
   OnClose = FormClose
   OnCreate = FormCreate
@@ -6,6 +6,8 @@ inherited frmTipoCompra: TfrmTipoCompra
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
+        ActivePage = tbsCadastro
+        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
