@@ -42,6 +42,7 @@ end;
 
 function TBancoController.Inserir(objBanco: TBanco; out Erro: string): Boolean;
 begin
+  objBanco.Id := BancoDao.GerarId('gen_id_banco');
   Result := BancoDao.Inserir(objBanco, Erro);
 end;
 

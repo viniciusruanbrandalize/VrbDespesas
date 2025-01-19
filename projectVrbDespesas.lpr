@@ -19,7 +19,8 @@ uses
   model.connection.conexao2, model.dao.banco, model.error.ini, lib.cryptini,
   lib.util, lib.types, indylaz, view.cadastropadrao, view.banco, lib.bcrypt,
   view.formapagamento, model.dao.formapagamento, controller.formapagamento,
-  model.dao.tipocompra, controller.tipocompra, view.tipocompra;
+  model.dao.tipocompra, controller.tipocompra, view.tipocompra, 
+model.dao.padrao;
 
 {$R *.res}
 

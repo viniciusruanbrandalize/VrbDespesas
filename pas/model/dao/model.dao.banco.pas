@@ -21,6 +21,7 @@ type
     function Inserir(Banco: TBanco; out Erro: string): Boolean;
     function Editar(Banco: TBanco; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+    function GerarId(Gerador: String; Incremento: Integer=1): Integer;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -36,7 +37,7 @@ var
 begin
   try
 
-    sql := 'select * from banco order by nome_banco';
+    sql := 'select * from banco order by nome';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -48,8 +49,8 @@ begin
     while not Qry.EOF do
     begin
       item := lv.Items.Add;
-      item.Caption := Qry.FieldByName('id_banco').AsString;
-      item.SubItems.Add(qry.FieldByName('nome_banco').AsString);
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('nome').AsString);
       Qry.Next;
     end;
 
@@ -65,19 +66,20 @@ begin
   try
 
     sql := 'select * from banco ' +
-           'where id_banco = :id_banco ' +
-           'order by id_banco';
+           'where id = :id ' +
+           'order by id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id_banco').AsInteger := id;
+    Qry.ParamByName('id').AsInteger := id;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
     begin
-      Banco.Id   := Qry.FieldByName('id_banco').AsInteger;
-      Banco.Nome := Qry.FieldByName('nome_banco').AsString;
+      Banco.Id   := Qry.FieldByName('id').AsInteger;
+      Banco.Nome := Qry.FieldByName('nome').AsString;
+      Banco.Numero := Qry.FieldByName('numero').AsInteger;
       Result := True;
     end
     else
@@ -103,12 +105,14 @@ var
 begin
   try
 
-    sql := 'insert into banco(nome_banco) values (:nome_banco)';
+    sql := 'insert into banco(id, nome, numero) values (:id, :nome, :numero)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('nome_banco').AsString := Banco.Nome;
+    Qry.ParamByName('id').AsInteger  := Banco.Id;
+    Qry.ParamByName('nome').AsString := Banco.Nome;
+    Qry.ParamByName('numero').AsInteger  := Banco.Numero;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -128,14 +132,15 @@ var
 begin
   try
 
-    sql := 'update banco set nome_banco = :nome_banco ' +
-           'where id_banco = :id_banco';
+    sql := 'update banco set nome = :nome, numero = :numero ' +
+           'where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id_banco').AsInteger  := Banco.Id;
-    Qry.ParamByName('nome_banco').AsString := Banco.Nome;
+    Qry.ParamByName('id').AsInteger  := Banco.Id;
+    Qry.ParamByName('nome').AsString := Banco.Nome;
+    Qry.ParamByName('numero').AsInteger  := Banco.Numero;
 
     //dmConexao1.SQLTransaction.StartTransaction;
     Qry.ExecSQL;
@@ -158,12 +163,12 @@ var
 begin
   try
 
-    sql := 'delete from banco where id_banco = :id_banco';
+    sql := 'delete from banco where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id_banco').AsInteger  := Id;
+    Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -174,6 +179,31 @@ begin
       Erro := 'Ocorreu um erro ao inserir banco: ' + sLineBreak + E.Message;
       Result := False;
     end;
+  end;
+end;
+
+function TBancoDAO.GerarId(Gerador: String; Incremento: Integer=1): Integer;
+var
+  qryGerador: TSQLQuery;
+  sql: String;
+  id: integer;
+begin
+  id := 0;
+  qryGerador := TSQLQuery.Create(nil);
+  try
+
+    sql := 'SELECT GEN_ID('+Gerador+', '+IntToStr(Incremento)+') AS ID ' +
+           'FROM RDB$DATABASE';
+
+    qryGerador.SQLConnection := dmConexao1.SQLConnector;
+    qryGerador.SQL.Add(sql);
+    qryGerador.Open;
+
+    id := qryGerador.FieldByName('ID').AsInteger;
+    Result := id;
+
+  finally
+    qryGerador.Free;
   end;
 end;
 

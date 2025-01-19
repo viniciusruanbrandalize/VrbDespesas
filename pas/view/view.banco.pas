@@ -14,6 +14,7 @@ type
 
   TfrmBanco = class(TfrmCadastroPadrao)
     edtNome: TLabeledEdit;
+    edtNumero: TLabeledEdit;
     procedure actExcluirExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -56,7 +57,13 @@ var
 begin
   if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
   begin
-    TBancoController(Controller).Banco.Nome := edtNome.Text;
+    Controller.Banco.Nome   := edtNome.Text;
+
+    if edtNumero.Text <> '' then
+      Controller.Banco.Numero := StrToInt(edtNumero.Text)
+    else
+      Controller.Banco.Numero := 0;
+
     if Operacao = opInserir then
     begin
       if not Controller.Inserir(Controller.Banco, erro) then
@@ -102,6 +109,7 @@ end;
 procedure TfrmBanco.LimparCampos;
 begin
   edtNome.Clear;
+  edtNumero.Clear;
 end;
 
 procedure TfrmBanco.CarregarSelecionado;
@@ -112,7 +120,8 @@ begin
   id := StrToInt(lvPadrao.Selected.Caption);
   if Controller.BuscarPorId(controller.Banco, id, erro) then
   begin
-    edtNome.Text := Controller.Banco.Nome;
+    edtNome.Text   := Controller.Banco.Nome;
+    edtNumero.Text := Controller.Banco.Numero.ToString;
   end
   else
   begin

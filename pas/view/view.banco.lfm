@@ -6,6 +6,8 @@ inherited frmBanco: TfrmBanco
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
+        ActivePage = tbsCadastro
+        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -47,7 +49,7 @@ inherited frmBanco: TfrmBanco
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
             object edtNome: TLabeledEdit[1]
-              Left = 8
+              Left = 104
               Height = 28
               Top = 32
               Width = 452
@@ -56,6 +58,19 @@ inherited frmBanco: TfrmBanco
               EditLabel.Caption = 'Nome:'
               TabOrder = 1
               Text = 'edtNome'
+            end
+            object edtNumero: TLabeledEdit[2]
+              Left = 5
+              Height = 28
+              Top = 32
+              Width = 84
+              EditLabel.Height = 20
+              EditLabel.Width = 84
+              EditLabel.Caption = 'Número:'
+              MaxLength = 11
+              NumbersOnly = True
+              TabOrder = 2
+              Text = 'edtNumero'
             end
           end
         end
