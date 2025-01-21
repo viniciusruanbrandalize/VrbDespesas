@@ -20,9 +20,9 @@ uses
   model.entity.contabancaria, model.entity.bandeira,
   model.entity.usuariodonocadastro, model.entity.pix, model.entity.login,
   model.entity.logbackup, model.entity.despesa,
-  model.entity.despesaformapagamento, model.connection.ini,
-  model.connection.conexao1, model.connection.conexao2, model.dao.banco,
-  model.error.ini, lib.cryptini, lib.util, lib.types, indylaz,
+  model.entity.despesaformapagamento, model.entity.cartao, model.entity.pagador,
+  model.connection.ini, model.connection.conexao1, model.connection.conexao2,
+  model.dao.banco, model.error.ini, lib.cryptini, lib.util, lib.types, indylaz,
   view.cadastropadrao, view.banco, lib.bcrypt, view.formapagamento,
   view.tipodespesa, model.dao.formapagamento, controller.formapagamento,
   controller.tipodespesa, model.dao.tipodespesa;

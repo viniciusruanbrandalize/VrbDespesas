@@ -14,11 +14,15 @@ type
 
   TDespesa = class
   private
+    FAlteracao: TDateTime;
+    FCadastro: TDateTime;
     FDonoCadastro: IParticipante;
     FFornecedor: IParticipante;
     FId:   Integer;
     FDescricao: String;
     FObservacao: String;
+    FPaga: Boolean;
+    FParcela: Integer;
     FUsuarioCadastro: TUsuario;
     FValor: Double;
     FData: TDate;
@@ -29,6 +33,8 @@ type
     FOutros: Double;
     FTotal: Double;
     FSubTipo: TSubtipoDespesa;
+    function GetAlteracao: TDateTime;
+    function GetCadastro: TDateTime;
     function GetChaveNFE: String;
     function GetData: TDate;
     function GetDesconto: Double;
@@ -40,10 +46,14 @@ type
     function GetDescricao: String;
     function GetObservacao: String;
     function GetOutros: Double;
+    function GetPaga: Boolean;
+    function GetParcela: Integer;
     function GetSubTipo: TSubtipoDespesa;
     function GetTotal: Double;
     function GetUsuarioCadastro: TUsuario;
     function GetValor: Double;
+    procedure SetAlteracao(AValue: TDateTime);
+    procedure SetCadastro(AValue: TDateTime);
     procedure SetChaveNFE(AValue: String);
     procedure SetData(AValue: TDate);
     procedure SetDesconto(AValue: Double);
@@ -55,6 +65,8 @@ type
     procedure SetDescricao(AValue: String);
     procedure SetObservacao(AValue: String);
     procedure SetOutros(AValue: Double);
+    procedure SetPaga(AValue: Boolean);
+    procedure SetParcela(AValue: Integer);
     procedure SetSubTipo(AValue: TSubtipoDespesa);
     procedure SetTotal(AValue: Double);
     procedure SetUsuarioCadastro(AValue: TUsuario);
@@ -78,6 +90,10 @@ type
     property Fornecedor: IParticipante read GetFornecedor write SetFornecedor;
     property DonoCadastro: IParticipante read GetDonoCadastro write SetDonoCadastro;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
+    property Paga: Boolean read GetPaga write SetPaga;
+    property Parcela: Integer read GetParcela write SetParcela;
+    property Cadastro: TDateTime read GetCadastro write SetCadastro;
+    property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
   end;
 
 implementation
@@ -92,6 +108,16 @@ end;
 function TDespesa.GetChaveNFE: String;
 begin
   Result := FChaveNFE;
+end;
+
+function TDespesa.GetAlteracao: TDateTime;
+begin
+  Result := FAlteracao;
+end;
+
+function TDespesa.GetCadastro: TDateTime;
+begin
+  Result := FCadastro;
 end;
 
 function TDespesa.GetData: TDate;
@@ -139,6 +165,16 @@ begin
   Result := FOutros;
 end;
 
+function TDespesa.GetPaga: Boolean;
+begin
+  Result := FPaga;
+end;
+
+function TDespesa.GetParcela: Integer;
+begin
+  Result := FParcela;
+end;
+
 function TDespesa.GetSubTipo: TSubtipoDespesa;
 begin
   Result := FSubTipo;
@@ -157,6 +193,16 @@ end;
 function TDespesa.GetValor: Double;
 begin
   Result := FValor;
+end;
+
+procedure TDespesa.SetAlteracao(AValue: TDateTime);
+begin
+  FAlteracao:=AValue;
+end;
+
+procedure TDespesa.SetCadastro(AValue: TDateTime);
+begin
+  FCadastro:=AValue;
 end;
 
 procedure TDespesa.SetChaveNFE(AValue: String);
@@ -212,6 +258,16 @@ end;
 procedure TDespesa.SetOutros(AValue: Double);
 begin
   FOutros := AValue;
+end;
+
+procedure TDespesa.SetPaga(AValue: Boolean);
+begin
+  FPaga:=AValue;
+end;
+
+procedure TDespesa.SetParcela(AValue: Integer);
+begin
+  FParcela:=AValue;
 end;
 
 procedure TDespesa.SetSubTipo(AValue: TSubtipoDespesa);

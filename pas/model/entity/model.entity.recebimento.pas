@@ -32,7 +32,11 @@ type
     FValorDecimoTerceiro: Double;
     FValorFerias: Double;
     FAntecipacao: Double;
+    FCadastro: TDateTime;
+    FAlteracao: TDateTime;
+    function GetAlteracao: TDateTime;
     function GetAntecipacao: Double;
+    function GetCadastro: TDateTime;
     function GetContaBancaria: TContaBancaria;
     function GetData: TDate;
     function GetDecimoTerceiro: Boolean;
@@ -50,7 +54,9 @@ type
     function GetValorDecimoTerceiro: Double;
     function GetValorFerias: Double;
     function GetValorTotal: Double;
+    procedure SetAlteracao(AValue: TDateTime);
     procedure SetAntecipacao(AValue: Double);
+    procedure SetCadastro(AValue: TDateTime);
     procedure SetContaBancaria(AValue: TContaBancaria);
     procedure SetData(AValue: TDate);
     procedure SetDecimoTerceiro(AValue: Boolean);
@@ -84,6 +90,8 @@ type
     property ValorDecimoTerceiro: Double read GetValorDecimoTerceiro write SetValorDecimoTerceiro;
     property ValorFerias: Double read GetValorFerias write SetValorFerias;
     property Antecipacao: Double read GetAntecipacao write SetAntecipacao;
+    property Cadastro: TDateTime read GetCadastro write SetCadastro;
+    property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
     property FormaPagamento: TFormaPagamento read GetFormaPagamento write SetFormaPagamento;
     property ContaBancaria: TContaBancaria read GetContaBancaria write SetContaBancaria;
     property Pix: TPix read GetPix write SetPix;
@@ -104,6 +112,16 @@ end;
 function TRecebimento.GetAntecipacao: Double;
 begin
   Result := FAntecipacao;
+end;
+
+function TRecebimento.GetAlteracao: TDateTime;
+begin
+  Result := FAlteracao;
+end;
+
+function TRecebimento.GetCadastro: TDateTime;
+begin
+  Result := FCadastro;
 end;
 
 function TRecebimento.GetContaBancaria: TContaBancaria;
@@ -186,9 +204,19 @@ begin
   Result := FValorTotal;
 end;
 
+procedure TRecebimento.SetAlteracao(AValue: TDateTime);
+begin
+  FAlteracao := AValue;
+end;
+
 procedure TRecebimento.SetAntecipacao(AValue: Double);
 begin
   FAntecipacao := AValue;
+end;
+
+procedure TRecebimento.SetCadastro(AValue: TDateTime);
+begin
+  FCadastro := AValue;
 end;
 
 procedure TRecebimento.SetContaBancaria(AValue: TContaBancaria);
