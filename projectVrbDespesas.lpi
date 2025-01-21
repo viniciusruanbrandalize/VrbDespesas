@@ -241,6 +241,18 @@
         <Filename Value="pas\model\entity\model.entity.pix.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.logbackup.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.despesa.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.despesaformapagamento.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
