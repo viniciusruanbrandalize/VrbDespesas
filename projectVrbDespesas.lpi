@@ -53,19 +53,7 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\model\entity\model.entity.compra.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\entity\model.entity.confbackup.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="pas\model\entity\model.entity.configuracao.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\entity\model.entity.devedor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -74,10 +62,6 @@
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.login.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\entity\model.entity.loja.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

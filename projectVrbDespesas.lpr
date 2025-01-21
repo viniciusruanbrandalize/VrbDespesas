@@ -11,9 +11,9 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, view.principal, view.mensagem, controller.banco, controller.principal,
-  controller.erro, model.entity.banco, model.entity.compra,
-  model.entity.confbackup, model.entity.configuracao, model.entity.devedor,
-  model.entity.formapagamento, model.entity.loja, model.entity.recebimento,
+  controller.erro, model.entity.banco,
+  model.entity.configuracao,
+  model.entity.formapagamento, model.entity.recebimento,
   model.entity.usuario, model.entity.subtipodespesa, model.entity.tipodespesa,
   model.entity.participante, model.entity.pais, model.entity.estado,
   model.entity.cidade, model.entity.fornecedor, model.entity.donocadastro,

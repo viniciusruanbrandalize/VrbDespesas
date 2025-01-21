@@ -36,14 +36,12 @@
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.compra.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5" Y="35"/>
         <UsageCount Value="76"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.confbackup.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5"/>
         <UsageCount Value="76"/>
@@ -56,7 +54,6 @@
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.devedor.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="76"/>
       </Unit>
@@ -75,7 +72,6 @@
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.loja.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="76"/>
       </Unit>
@@ -384,6 +380,23 @@
         <UsageCount Value="23"/>
       </Unit>
       <Unit>
+        <Filename Value="pas\model\entity\model.entity.cartao.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="9"/>
+        <CursorPos X="30" Y="20"/>
+        <UsageCount Value="23"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.pagador.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="38" Y="21"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
         <Filename Value="pas\model\entity\model.entity.subtipocompra.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="63"/>
@@ -580,24 +593,6 @@
         <TopLine Value="2471"/>
         <CursorPos X="3" Y="2476"/>
         <UsageCount Value="9"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\entity\model.entity.cartao.pas"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="9"/>
-        <CursorPos X="30" Y="20"/>
-        <UsageCount Value="23"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\entity\model.entity.pagador.pas"/>
-        <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="233"/>
-        <CursorPos X="35" Y="248"/>
-        <UsageCount Value="20"/>
-        <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="3">
