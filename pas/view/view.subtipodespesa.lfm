@@ -1,0 +1,40 @@
+inherited frmSubtipoDespesa: TfrmSubtipoDespesa
+  Caption = 'Cadastro de Subtipos de despesa'
+  inherited pnlFundo: TPanel
+    inherited pnlPrincipal: TPanel
+      inherited pgcPadrao: TPageControl
+        inherited tbsLista: TTabSheet
+          inherited pnlFundoLista: TPanel
+            inherited lvPadrao: TListView
+              Columns = <              
+                item
+                end              
+                item
+                end              
+                item
+                end>
+            end
+            inherited pnlPesquisa: TPanel
+              inherited edtPesquisa: TEdit
+                Text = ''
+              end
+              inherited cbPesquisa: TComboBox
+                Items.Strings = (
+                  'Nome'
+                  'Tipo'
+                )
+              end
+            end
+            inherited lbPesquisa: TListBox
+              Items.Strings = (
+                'nome'
+                'tipo'
+              )
+              ItemHeight = 20
+            end
+          end
+        end
+      end
+    end
+  end
+end

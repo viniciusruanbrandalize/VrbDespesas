@@ -1,26 +1,26 @@
-unit model.dao.formapagamento;
+unit model.dao.subtipodespesa;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, SQLDB, model.entity.formapagamento,
+  Classes, SysUtils, ComCtrls, SQLDB, model.entity.subtipodespesa,
   model.connection.conexao1;
 
 type
 
-  { TFormaPagamentoDAO }
+  { TSubtipoDespesaDAO }
 
-  TFormaPagamentoDAO = class
+  TSubtipoDespesaDAO = class
   private
     Qry: TSQLQuery;
   public
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
-    function BuscarPorId(FormaPagamento : TFormaPagamento; Id: Integer; out Erro: String): Boolean;
-    function Inserir(FormaPagamento : TFormaPagamento; out Erro: string): Boolean;
-    function Editar(FormaPagamento : TFormaPagamento; out Erro: string): Boolean;
+    function BuscarPorId(SubtipoDespesa : TSubtipoDespesa; Id: Integer; out Erro: String): Boolean;
+    function Inserir(SubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
+    function Editar(SubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
     function GerarId(Gerador: String; Incremento: Integer=1): Integer;
     constructor Create;
@@ -29,16 +29,18 @@ type
 
 implementation
 
-{ TFormaPagamentoDAO }
+{ TSubtipoDespesaDAO }
 
-procedure TFormaPagamentoDAO.Listar(lv: TListView);
+procedure TSubtipoDespesaDAO.Listar(lv: TListView);
 var
   sql: String;
   item : TListItem;
 begin
   try
 
-    sql := 'select * from forma_pgto order by nome';
+    sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
+           'left join tipo_despesa td on td.id = sd.id_subtipo ' +
+           'order by sd.nome';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -52,7 +54,7 @@ begin
       item := lv.Items.Add;
       item.Caption := Qry.FieldByName('id').AsString;
       item.SubItems.Add(qry.FieldByName('nome').AsString);
-      item.SubItems.Add(qry.FieldByName('sigla').AsString);
+      item.SubItems.Add(qry.FieldByName('nome_tipo').AsString);
       Qry.Next;
     end;
 
@@ -61,7 +63,7 @@ begin
   end;
 end;
 
-procedure TFormaPagamentoDAO.Pesquisar(lv: TListView; Campo, Busca: String);
+procedure TSubtipoDespesaDAO.Pesquisar(lv: TListView; Campo, Busca: String);
 var
   sql: String;
   item : TListItem;
@@ -71,15 +73,17 @@ begin
 
     if TryStrToFloat(Busca, valor) then
     begin
-      sql := 'select * from forma_pgto ' +
-             'where '+campo+' = :busca '+
-             'order by nome';
+      sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
+           'left join tipo_despesa td on td.id = sd.id_subtipo ' +
+           'where '+campo+' = :busca '+
+           'order by sd.nome';
     end
     else
     begin
-      sql := 'select * from forma_pgto ' +
+      sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
+             'left join tipo_despesa td on td.id = sd.id_subtipo ' +
              'where UPPER('+campo+') like :busca '+
-             'order by nome';
+             'order by sd.nome';
     end;
 
     Qry.Close;
@@ -95,7 +99,7 @@ begin
       item := lv.Items.Add;
       item.Caption := Qry.FieldByName('id').AsString;
       item.SubItems.Add(qry.FieldByName('nome').AsString);
-      item.SubItems.Add(qry.FieldByName('sigla').AsString);
+      item.SubItems.Add(qry.FieldByName('nome_tipo').AsString);
       Qry.Next;
     end;
 
@@ -104,15 +108,16 @@ begin
   end;
 end;
 
-function TFormaPagamentoDAO.BuscarPorId(FormaPagamento : TFormaPagamento; Id: Integer; out Erro: String): Boolean;
+function TSubtipoDespesaDAO.BuscarPorId(SubtipoDespesa: TSubtipoDespesa; Id: Integer; out Erro: String): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'select * from forma_pgto ' +
-           'where id = :id ' +
-           'order by id';
+    sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
+             'left join tipo_despesa td on td.id = sd.id_subtipo ' +
+             'where id = :id '+
+             'order by sd.id';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -122,9 +127,10 @@ begin
 
     if Qry.RecordCount = 1 then
     begin
-      FormaPagamento.Id    := Qry.FieldByName('id').AsInteger;
-      FormaPagamento.Nome  := Qry.FieldByName('nome').AsString;
-      FormaPagamento.Sigla := Qry.FieldByName('sigla').AsString;
+      SubtipoDespesa.Id               := Qry.FieldByName('id').AsInteger;
+      SubtipoDespesa.Nome             := Qry.FieldByName('nome').AsString;
+      SubtipoDespesa.TipoDespesa.Id   := Qry.FieldByName('id_tipo_despesa').AsInteger;
+      SubtipoDespesa.TipoDespesa.Nome := Qry.FieldByName('nome_tipo').AsString;
       Result := True;
     end
     else
@@ -144,21 +150,21 @@ begin
   end;
 end;
 
-function TFormaPagamentoDAO.Inserir(FormaPagamento : TFormaPagamento; out Erro: string): Boolean;
+function TSubtipoDespesaDAO.Inserir(SubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'insert into forma_pgto(id, nome, sigla) values ' +
-           '(:id, :nome, :sigla)';
+    sql := 'insert into subtipo_despesa(id, nome, id_tipo) values ' +
+           '(:id, :nome, :id_tipo)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger   := FormaPagamento.Id;
-    Qry.ParamByName('nome').AsString  := FormaPagamento.Nome;
-    Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
+    Qry.ParamByName('id').AsInteger  := SubtipoDespesa.Id;
+    Qry.ParamByName('nome').AsString := SubtipoDespesa.Nome;
+    Qry.ParamByName('id_tipo').AsInteger := SubtipoDespesa.TipoDespesa.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -166,28 +172,29 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao inserir forma de pagamento: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao inserir Subtipo Despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
 end;
 
-function TFormaPagamentoDAO.Editar(FormaPagamento : TFormaPagamento; out Erro: string): Boolean;
+function TSubtipoDespesaDAO.Editar(SubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'update forma_pgto set nome = :nome, ' +
-           'sigla = :sigla ' +
+    sql := 'update subtipo_despesa set nome = :nome, id_tipo = :id_tipo ' +
            'where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger   := FormaPagamento.Id;
-    Qry.ParamByName('nome').AsString  := FormaPagamento.Nome;
-    Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
+    Qry.ParamByName('id').AsInteger  := SubtipoDespesa.Id;
+    Qry.ParamByName('nome').AsString := SubtipoDespesa.Nome;
+    Qry.ParamByName('id_tipo').AsInteger  := SubtipoDespesa.TipoDespesa.Id;
+
+    //dmConexao1.SQLTransaction.StartTransaction;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -196,19 +203,19 @@ begin
   except on E: Exception do
     begin
       dmConexao1.SQLTransaction.Rollback;
-      Erro := 'Ocorreu um erro ao alterar forma de pagamento: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao inserir Subtipo de Despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
 end;
 
-function TFormaPagamentoDAO.Excluir(Id: Integer; out Erro: string): Boolean;
+function TSubtipoDespesaDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'delete from forma_pgto where id = :id';
+    sql := 'delete from subtipo_despesa where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -221,14 +228,13 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir forma de pagamento: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao inserir Subtipo de Despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
 end;
 
-function TFormaPagamentoDAO.GerarId(Gerador: String; Incremento: Integer
-  ): Integer;
+function TSubtipoDespesaDAO.GerarId(Gerador: String; Incremento: Integer=1): Integer;
 var
   qryGerador: TSQLQuery;
   sql: String;
@@ -253,13 +259,13 @@ begin
   end;
 end;
 
-constructor TFormaPagamentoDAO.Create;
+constructor TSubtipoDespesaDAO.Create;
 begin
   Qry := TSQLQuery.Create(nil);
   qry.SQLConnection := dmConexao1.SQLConnector;
 end;
 
-destructor TFormaPagamentoDAO.Destroy;
+destructor TSubtipoDespesaDAO.Destroy;
 begin
   Qry.Free;
   inherited Destroy;

@@ -28,7 +28,7 @@ type
   published
     property Id: Integer read GetId write SetId;
     property Nome: String read GetNome write SetNome;
-    property TipoCompra: TTipoDespesa read GetTipoDespesa write SetTipoDespesa;
+    property TipoDespesa: TTipoDespesa read GetTipoDespesa write SetTipoDespesa;
   end;
 
 implementation
@@ -76,11 +76,12 @@ end;
 
 constructor TSubtipoDespesa.Create;
 begin
-  //
+  FTipoDespesa := TTipoDespesa.Create;
 end;
 
 destructor TSubtipoDespesa.Destroy;
 begin
+  FTipoDespesa.Free;
   inherited Destroy;
 end;
 

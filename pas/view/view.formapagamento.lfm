@@ -29,6 +29,19 @@ inherited frmFormaPagamento: TfrmFormaPagamento
               inherited edtPesquisa: TEdit
                 Text = ''
               end
+              inherited cbPesquisa: TComboBox
+                Items.Strings = (
+                  'Nome'
+                  'Sigla'
+                )
+              end
+            end
+            inherited lbPesquisa: TListBox
+              Items.Strings = (
+                'nome'
+                'sigla'
+              )
+              ItemHeight = 20
             end
           end
         end
@@ -66,6 +79,9 @@ inherited frmFormaPagamento: TfrmFormaPagamento
   inherited actList: TActionList
     inherited actExcluir: TAction
       OnExecute = actExcluirExecute
+    end
+    inherited actPesquisar: TAction
+      OnExecute = actPesquisarExecute
     end
     inherited actSalvar: TAction
       OnExecute = actSalvarExecute

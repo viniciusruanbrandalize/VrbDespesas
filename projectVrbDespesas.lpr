@@ -11,10 +11,9 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, view.principal, view.mensagem, controller.banco, controller.principal,
-  controller.erro, model.entity.banco,
-  model.entity.configuracao,
-  model.entity.formapagamento, model.entity.recebimento,
-  model.entity.usuario, model.entity.subtipodespesa, model.entity.tipodespesa,
+  controller.erro, model.entity.banco, model.entity.configuracao,
+  model.entity.formapagamento, model.entity.recebimento, model.entity.usuario,
+  model.entity.subtipodespesa, model.entity.tipodespesa,
   model.entity.participante, model.entity.pais, model.entity.estado,
   model.entity.cidade, model.entity.fornecedor, model.entity.donocadastro,
   model.entity.contabancaria, model.entity.bandeira,
@@ -25,7 +24,8 @@ uses
   model.dao.banco, model.error.ini, lib.cryptini, lib.util, lib.types, indylaz,
   view.cadastropadrao, view.banco, lib.bcrypt, view.formapagamento,
   view.tipodespesa, model.dao.formapagamento, controller.formapagamento,
-  controller.tipodespesa, model.dao.tipodespesa;
+  controller.tipodespesa, controller.subtipodespesa, model.dao.tipodespesa,
+  model.dao.subtipodespesa, view.subtipodespesa;
 
 {$R *.res}
 

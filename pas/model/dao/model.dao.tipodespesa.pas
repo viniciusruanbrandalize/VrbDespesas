@@ -152,8 +152,8 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('nome').AsInteger := TipoDespesa.Id;
-    Qry.ParamByName('nome').AsString  := TipoDespesa.Nome;
+    Qry.ParamByName('id').AsInteger  := TipoDespesa.Id;
+    Qry.ParamByName('nome').AsString := TipoDespesa.Nome;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 

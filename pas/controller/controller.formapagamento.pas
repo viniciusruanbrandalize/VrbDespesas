@@ -18,6 +18,7 @@ type
   public
     FormaPagamento: TFormaPagamento;
     procedure Listar(lv: TListView);
+    procedure Pesquisar(lv: TListView; Campo, Busca: String);
     function BuscarPorId(objFormaPagamento : TFormaPagamento; Id: Integer; out Erro: String): Boolean;
     function Inserir(objFormaPagamento: TFormaPagamento; out Erro: string): Boolean;
     function Editar(objFormaPagamento: TFormaPagamento; out Erro: string): Boolean;
@@ -33,6 +34,12 @@ implementation
 procedure TFormaPagamentoController.Listar(lv: TListView);
 begin
   FormaPagamentoDAO.Listar(lv);
+end;
+
+procedure TFormaPagamentoController.Pesquisar(lv: TListView; Campo,
+  Busca: String);
+begin
+  FormaPagamentoDAO.Pesquisar(lv, Campo, Busca);
 end;
 
 function TFormaPagamentoController.BuscarPorId(objFormaPagamento: TFormaPagamento; Id: Integer; out

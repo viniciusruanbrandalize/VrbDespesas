@@ -16,6 +16,7 @@ type
     edtNome: TLabeledEdit;
     edtSigla: TLabeledEdit;
     procedure actExcluirExecute(Sender: TObject);
+    procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -61,6 +62,12 @@ begin
       TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Operacao := opNenhum;
   end;
+end;
+
+procedure TfrmFormaPagamento.actPesquisarExecute(Sender: TObject);
+begin
+  lvPadrao.Items.Clear;
+  Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex], edtPesquisa.Text);
 end;
 
 procedure TfrmFormaPagamento.actSalvarExecute(Sender: TObject);
