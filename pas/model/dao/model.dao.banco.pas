@@ -17,6 +17,7 @@ type
     Qry: TSQLQuery;
   public
     procedure Listar(lv: TListView);
+    procedure Pesquisar(lv: TListView; Campo, Busca: String);
     function BuscarPorId(Banco : TBanco; Id: Integer; out Erro: String): Boolean;
     function Inserir(Banco: TBanco; out Erro: string): Boolean;
     function Editar(Banco: TBanco; out Erro: string): Boolean;
@@ -56,6 +57,48 @@ begin
 
   finally
     Qry.Close;
+  end;
+end;
+
+procedure TBancoDAO.Pesquisar(lv: TListView; Campo, Busca: String);
+var
+  sql: String;
+  item : TListItem;
+  valor: Double;
+begin
+  try
+
+    if TryStrToFloat(Busca, valor) then
+    begin
+      sql := 'select * from banco ' +
+             'where '+campo+' = :busca '+
+             'order by nome';
+    end
+    else
+    begin
+      sql := 'select * from banco ' +
+             'where UPPER('+campo+') like :busca '+
+             'order by nome';
+    end;
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('nome').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
   end;
 end;
 

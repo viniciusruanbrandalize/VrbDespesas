@@ -6,8 +6,6 @@ inherited frmTipoDespesa: TfrmTipoDespesa
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -28,7 +26,7 @@ inherited frmTipoDespesa: TfrmTipoDespesa
             end
             inherited lbPesquisa: TListBox
               Items.Strings = (
-                'desc_tipo_compra'
+                'nome'
               )
               ItemHeight = 20
             end
@@ -56,6 +54,9 @@ inherited frmTipoDespesa: TfrmTipoDespesa
   inherited actList: TActionList
     inherited actExcluir: TAction
       OnExecute = actExcluirExecute
+    end
+    inherited actPesquisar: TAction
+      OnExecute = actPesquisarExecute
     end
     inherited actSalvar: TAction
       OnExecute = actSalvarExecute

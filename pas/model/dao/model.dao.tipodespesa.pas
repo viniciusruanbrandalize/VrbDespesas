@@ -38,7 +38,7 @@ var
 begin
   try
 
-    sql := 'select * from tipo_compra order by desc_tipo_compra';
+    sql := 'select * from tipo_despesa order by nome';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -50,8 +50,8 @@ begin
     while not Qry.EOF do
     begin
       item := lv.Items.Add;
-      item.Caption := Qry.FieldByName('id_tipo_compra').AsString;
-      item.SubItems.Add(qry.FieldByName('desc_tipo_compra').AsString);
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('nome').AsString);
       Qry.Next;
     end;
 
@@ -64,17 +64,27 @@ procedure TTipoDespesaDAO.Pesquisar(lv: TListView; Campo, Busca: String);
 var
   sql: String;
   item : TListItem;
+  valor: Double;
 begin
   try
 
-    sql := 'select * from tipo_compra ' +
-           'where '+campo+' like :busca '+
-           'order by desc_tipo_compra';
+    if TryStrToFloat(Busca, valor) then
+    begin
+      sql := 'select * from tipo_despesa ' +
+             'where '+campo+' = :busca '+
+             'order by nome';
+    end
+    else
+    begin
+      sql := 'select * from tipo_despesa ' +
+             'where UPPER('+campo+') like :busca '+
+             'order by nome';
+    end;
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('busca').AsString := QuotedStr('%'+Busca+'%');
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
     Qry.Open;
 
     Qry.First;
@@ -82,8 +92,8 @@ begin
     while not Qry.EOF do
     begin
       item := lv.Items.Add;
-      item.Caption := Qry.FieldByName('id_tipo_compra').AsString;
-      item.SubItems.Add(qry.FieldByName('desc_tipo_compra').AsString);
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('nome').AsString);
       Qry.Next;
     end;
 
@@ -98,20 +108,20 @@ var
 begin
   try
 
-    sql := 'select * from tipo_compra ' +
-           'where id_tipo_compra = :id_tipo_compra ' +
-           'order by id_tipo_compra';
+    sql := 'select * from tipo_despesa ' +
+           'where id = :id ' +
+           'order by id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id_tipo_compra').AsInteger := id;
+    Qry.ParamByName('id').AsInteger := id;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
     begin
-      TipoDespesa.Id    := Qry.FieldByName('id_tipo_compra').AsInteger;
-      TipoDespesa.Nome  := Qry.FieldByName('desc_tipo_compra').AsString;
+      TipoDespesa.Id    := Qry.FieldByName('id').AsInteger;
+      TipoDespesa.Nome  := Qry.FieldByName('nome').AsString;
       Result := True;
     end
     else
@@ -137,13 +147,13 @@ var
 begin
   try
 
-    sql := 'insert into tipo_compra(desc_tipo_compra) values ' +
-           '(:desc_tipo_compra)';
+    sql := 'insert into tipo_despesa(id, nome) values (:id, :nome)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('desc_tipo_compra').AsString  := TipoDespesa.Nome;
+    Qry.ParamByName('nome').AsInteger := TipoDespesa.Id;
+    Qry.ParamByName('nome').AsString  := TipoDespesa.Nome;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -163,14 +173,14 @@ var
 begin
   try
 
-    sql := 'update tipo_compra set desc_tipo_compra = :desc_tipo_compra ' +
-           'where id_tipo_compra = :id_tipo_compra';
+    sql := 'update tipo_despesa set nome = :nome ' +
+           'where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id_tipo_compra').AsInteger   := TipoDespesa.Id;
-    Qry.ParamByName('desc_tipo_compra').AsString  := TipoDespesa.Nome;
+    Qry.ParamByName('id').AsInteger   := TipoDespesa.Id;
+    Qry.ParamByName('nome').AsString  := TipoDespesa.Nome;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -191,12 +201,12 @@ var
 begin
   try
 
-    sql := 'delete from tipo_compra where id_tipo_compra = :id_tipo_compra';
+    sql := 'delete from tipo_despesa where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id_tipo_compra').AsInteger  := Id;
+    Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 

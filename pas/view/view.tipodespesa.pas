@@ -15,6 +15,7 @@ type
   TfrmTipoDespesa = class(TfrmCadastroPadrao)
     edtNome: TLabeledEdit;
     procedure actExcluirExecute(Sender: TObject);
+    procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -81,6 +82,12 @@ begin
       TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Operacao := opNenhum;
   end;
+end;
+
+procedure TfrmTipoDespesa.actPesquisarExecute(Sender: TObject);
+begin
+  lvPadrao.Items.Clear;
+  Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex], edtPesquisa.Text);
 end;
 
 procedure TfrmTipoDespesa.FormClose(Sender: TObject;

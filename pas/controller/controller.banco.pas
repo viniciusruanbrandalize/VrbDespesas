@@ -17,6 +17,7 @@ type
   public
     Banco: TBanco;
     procedure Listar(lv: TListView);
+    procedure Pesquisar(lv: TListView; Campo, Busca: String);
     function BuscarPorId(objBanco : TBanco; Id: Integer; out Erro: String): Boolean;
     function Inserir(objBanco: TBanco; out Erro: string): Boolean;
     function Editar(objBanco: TBanco; out Erro: string): Boolean;
@@ -32,6 +33,11 @@ implementation
 procedure TBancoController.Listar(lv: TListView);
 begin
   BancoDao.Listar(lv);
+end;
+
+procedure TBancoController.Pesquisar(lv: TListView; Campo, Busca: String);
+begin
+  BancoDao.Pesquisar(lv, campo, busca);
 end;
 
 function TBancoController.BuscarPorId(objBanco: TBanco; Id: Integer; out

@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
-  view.formapagamento, view.tipocompra;
+  view.formapagamento, view.tipodespesa;
 
 type
 
@@ -169,7 +169,7 @@ end;
 
 procedure TfrmPrincipal.actTipoCompraExecute(Sender: TObject);
 begin
-  Controller.AbrirTela(frmTipoCompra, TfrmTipoCompra, false, pnlAbreForms, Self);
+  Controller.AbrirTela(frmTipoDespesa, TfrmTipoDespesa, false, pnlAbreForms, Self);
   BarraLateralVazia(pnlMenuCadastro, false);
 end;
 

@@ -42,7 +42,18 @@ inherited frmBanco: TfrmBanco
               inherited cbPesquisa: TComboBox
                 AnchorSideLeft.Control = nil
                 Left = 8
+                Items.Strings = (
+                  'Nome'
+                  'Número'
+                )
               end
+            end
+            inherited lbPesquisa: TListBox
+              Items.Strings = (
+                'nome'
+                'numero'
+              )
+              ItemHeight = 20
             end
           end
         end
@@ -81,6 +92,9 @@ inherited frmBanco: TfrmBanco
   inherited actList: TActionList
     inherited actExcluir: TAction
       OnExecute = actExcluirExecute
+    end
+    inherited actPesquisar: TAction
+      OnExecute = actPesquisarExecute
     end
     inherited actSalvar: TAction
       OnExecute = actSalvarExecute

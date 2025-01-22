@@ -18,6 +18,7 @@ type
   public
     TipoDespesa: TTipoDespesa;
     procedure Listar(lv: TListView);
+    procedure Pesquisar(lv: TListView; Campo, Busca: String);
     function BuscarPorId(objTipoDespesa : TTipoDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(objTipoDespesa : TTipoDespesa; out Erro: string): Boolean;
     function Editar(objTipoDespesa : TTipoDespesa; out Erro: string): Boolean;
@@ -33,6 +34,11 @@ implementation
 procedure TTipoDespesaController.Listar(lv: TListView);
 begin
   TipoDespesaDAO.Listar(lv);
+end;
+
+procedure TTipoDespesaController.Pesquisar(lv: TListView; Campo, Busca: String);
+begin
+  TipoDespesaDAO.Pesquisar(lv, Campo, Busca);
 end;
 
 function TTipoDespesaController.BuscarPorId(objTipoDespesa: TTipoDespesa; Id: Integer; out
