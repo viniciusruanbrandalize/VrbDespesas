@@ -1,0 +1,34 @@
+inherited frmUsuario: TfrmUsuario
+  Caption = 'Cadastro de Usuários'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  inherited pnlFundo: TPanel
+    inherited pnlPrincipal: TPanel
+      inherited pgcPadrao: TPageControl
+        ActivePage = tbsCadastro
+        TabIndex = 1
+        inherited tbsLista: TTabSheet
+          inherited pnlFundoLista: TPanel
+            inherited pnlPesquisa: TPanel
+              inherited edtPesquisa: TEdit
+                Text = ''
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited actList: TActionList
+    inherited actExcluir: TAction
+      OnExecute = actExcluirExecute
+    end
+    inherited actPesquisar: TAction
+      OnExecute = actPesquisarExecute
+    end
+    inherited actSalvar: TAction
+      OnExecute = actSalvarExecute
+    end
+  end
+end

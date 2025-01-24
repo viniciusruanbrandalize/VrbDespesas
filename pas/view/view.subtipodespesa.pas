@@ -28,6 +28,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure lbTipoNomeDblClick(Sender: TObject);
     procedure lbTipoNomeKeyPress(Sender: TObject; var Key: char);
+    procedure lbTipoNomeSelectionChange(Sender: TObject; User: boolean);
   private
     Controller: TSubtipoDespesaController;
   public
@@ -77,8 +78,11 @@ end;
 
 procedure TfrmSubtipoDespesa.edtTipoExit(Sender: TObject);
 begin
-  //if lbTipoNome.Visible then
-  //  lbTipoNome.Visible := false;
+  if not lbTipoNome.Focused then
+  begin
+    if lbTipoNome.Visible then
+      lbTipoNome.Visible := false;
+  end;
 end;
 
 procedure TfrmSubtipoDespesa.edtTipoKeyUp(Sender: TObject; var Key: Word;
@@ -159,6 +163,12 @@ begin
   begin
     lbTipoNome.OnDblClick(nil);
   end;
+end;
+
+procedure TfrmSubtipoDespesa.lbTipoNomeSelectionChange(Sender: TObject;
+  User: boolean);
+begin
+  edtTipo.Text := lbTipoNome.Items[lbTipoNome.ItemIndex];
 end;
 
 procedure TfrmSubtipoDespesa.CarregarDados;

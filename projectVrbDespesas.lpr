@@ -24,8 +24,9 @@ uses
   model.dao.banco, model.error.ini, lib.cryptini, lib.util, lib.types, indylaz,
   view.cadastropadrao, view.banco, lib.bcrypt, view.formapagamento,
   view.tipodespesa, model.dao.formapagamento, controller.formapagamento,
-  controller.tipodespesa, controller.subtipodespesa, model.dao.tipodespesa,
-  model.dao.subtipodespesa, view.subtipodespesa;
+  controller.tipodespesa, controller.subtipodespesa, controller.usuario,
+  model.dao.tipodespesa, model.dao.subtipodespesa, model.dao.usuario,
+  view.subtipodespesa, view.usuario;
 
 {$R *.res}
 

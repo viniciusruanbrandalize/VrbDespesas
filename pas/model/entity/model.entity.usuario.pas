@@ -17,17 +17,17 @@ type
     FNome: String;
     FSenha: String;
     FEmail: String;
-    FDataCadastro: TDate;
-    FHoraCadastro: TTime;
-    function GetDataCadastro: TDate;
+    FCadastro: TDateTime;
+    FAlteracao: TDateTime;
+    function GetAlteracao: TDateTime;
+    function GetCadastro: TDateTime;
     function GetEmail: String;
-    function GetHoraCadastro: TTime;
     function GetId: Integer;
     function GetNome: String;
     function GetSenha: String;
-    procedure SetDataCadastro(AValue: TDate);
+    procedure SetAlteracao(AValue: TDateTime);
+    procedure SetCadastro(AValue: TDateTime);
     procedure SetEmail(AValue: String);
-    procedure SetHoraCadastro(AValue: TTime);
     procedure SetId(AValue: Integer);
     procedure SetNome(AValue: String);
     procedure SetSenha(AValue: String);
@@ -39,27 +39,27 @@ type
     property Nome: String read GetNome write SetNome;
     property Senha: String read GetSenha write SetSenha;
     property Email: String read GetEmail write SetEmail;
-    property DataCadastro: TDate read GetDataCadastro write SetDataCadastro;
-    property HoraCadastro: TTime read GetHoraCadastro write SetHoraCadastro;
+    property Cadastro: TDateTime read GetCadastro write SetCadastro;
+    property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
   end;
 
 implementation
 
 { TUsuario }
 
-function TUsuario.GetDataCadastro: TDate;
-begin
-  Result := FDataCadastro;
-end;
-
 function TUsuario.GetEmail: String;
 begin
   Result := FEmail;
 end;
 
-function TUsuario.GetHoraCadastro: TTime;
+function TUsuario.GetAlteracao: TDateTime;
 begin
-  Result := FHoraCadastro;
+  Result := FAlteracao;
+end;
+
+function TUsuario.GetCadastro: TDateTime;
+begin
+  Result := FCadastro;
 end;
 
 function TUsuario.GetSenha: String;
@@ -67,9 +67,14 @@ begin
   Result := FSenha;
 end;
 
-procedure TUsuario.SetDataCadastro(AValue: TDate);
+procedure TUsuario.SetAlteracao(AValue: TDateTime);
 begin
-  FDataCadastro := AValue;
+  AValue := FAlteracao;
+end;
+
+procedure TUsuario.SetCadastro(AValue: TDateTime);
+begin
+  AValue := FCadastro;
 end;
 
 procedure TUsuario.SetEmail(AValue: String);
@@ -77,14 +82,12 @@ begin
   FEmail := AValue;
 end;
 
-procedure TUsuario.SetHoraCadastro(AValue: TTime);
-begin
-  FHoraCadastro := AValue;
-end;
-
 procedure TUsuario.SetSenha(AValue: String);
 begin
-  FSenha := AValue;
+  if AValue = EmptyStr then
+    raise Exception.Create('O campo "Senha" precisa ser preenchido!')
+  else
+    FSenha := AValue;
 end;
 
 function TUsuario.GetId: Integer;
@@ -99,12 +102,18 @@ end;
 
 procedure TUsuario.SetId(AValue: Integer);
 begin
-  FId := AValue;
+  if AValue = 0 then
+    raise Exception.Create('O campo "Id" precisa ser preenchido!')
+  else
+    FId := AValue;
 end;
 
 procedure TUsuario.SetNome(AValue: String);
 begin
-  FNome := AValue;
+  if AValue = EmptyStr then
+    raise Exception.Create('O campo "Nome" precisa ser preenchido!')
+  else
+    FNome := AValue;
 end;
 
 constructor TUsuario.Create;

@@ -194,15 +194,15 @@ var
 begin
   try
 
-    sql := 'insert into subtipo_despesa(id, nome, id_tipo) values ' +
-           '(:id, :nome, :id_tipo)';
+    sql := 'insert into subtipo_despesa(id, nome, id_tipo_despesa) values ' +
+           '(:id, :nome, :id_tipo_despesa)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := SubtipoDespesa.Id;
     Qry.ParamByName('nome').AsString := SubtipoDespesa.Nome;
-    Qry.ParamByName('id_tipo').AsInteger := SubtipoDespesa.TipoDespesa.Id;
+    Qry.ParamByName('id_tipo_despesa').AsInteger := SubtipoDespesa.TipoDespesa.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -222,7 +222,7 @@ var
 begin
   try
 
-    sql := 'update subtipo_despesa set nome = :nome, id_tipo = :id_tipo ' +
+    sql := 'update subtipo_despesa set nome = :nome, id_tipo_despesa = :id_tipo_despesa ' +
            'where id = :id';
 
     Qry.Close;
@@ -230,7 +230,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := SubtipoDespesa.Id;
     Qry.ParamByName('nome').AsString := SubtipoDespesa.Nome;
-    Qry.ParamByName('id_tipo').AsInteger  := SubtipoDespesa.TipoDespesa.Id;
+    Qry.ParamByName('id_tipo_despesa').AsInteger  := SubtipoDespesa.TipoDespesa.Id;
 
     //dmConexao1.SQLTransaction.StartTransaction;
     Qry.ExecSQL;

@@ -54,7 +54,7 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               Width = 408
               EditLabel.Height = 20
               EditLabel.Width = 408
-              EditLabel.Caption = 'Nome:'
+              EditLabel.Caption = 'Nome: *'
               TabOrder = 1
               Text = 'edtNome'
             end
@@ -65,7 +65,7 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               Width = 327
               EditLabel.Height = 20
               EditLabel.Width = 327
-              EditLabel.Caption = 'Tipo:'
+              EditLabel.Caption = 'Tipo: *'
               Font.Color = 2977025
               Font.Style = [fsBold]
               ParentFont = False
@@ -92,6 +92,7 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               Visible = False
               OnDblClick = lbTipoNomeDblClick
               OnKeyPress = lbTipoNomeKeyPress
+              OnSelectionChange = lbTipoNomeSelectionChange
             end
             object lbTipoId: TListBox[4]
               Left = 768
