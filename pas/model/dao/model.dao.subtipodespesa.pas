@@ -5,7 +5,7 @@ unit model.dao.subtipodespesa;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, SQLDB, model.entity.subtipodespesa,
+  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.entity.subtipodespesa,
   model.connection.conexao1;
 
 type
@@ -18,6 +18,7 @@ type
   public
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure PesquisarTipoDespesa(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(SubtipoDespesa : TSubtipoDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(SubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
     function Editar(SubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
@@ -39,7 +40,7 @@ begin
   try
 
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
-           'left join tipo_despesa td on td.id = sd.id_subtipo ' +
+           'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
            'order by sd.nome';
 
     Qry.Close;
@@ -74,14 +75,14 @@ begin
     if TryStrToFloat(Busca, valor) then
     begin
       sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
-           'left join tipo_despesa td on td.id = sd.id_subtipo ' +
+           'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
            'where '+campo+' = :busca '+
            'order by sd.nome';
     end
     else
     begin
       sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
-             'left join tipo_despesa td on td.id = sd.id_subtipo ' +
+             'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
              'where UPPER('+campo+') like :busca '+
              'order by sd.nome';
     end;
@@ -108,6 +109,43 @@ begin
   end;
 end;
 
+procedure TSubtipoDespesaDAO.PesquisarTipoDespesa(lbNome, lbId: TListBox; busca: String;
+  out QtdRegistro: Integer);
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select first 10 id, nome from tipo_despesa ' +
+           'where UPPER(nome) like :busca '+
+           'order by nome';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    QtdRegistro := Qry.RecordCount;
+
+    lbNome.Items.Clear;
+    lbNome.Height := 100;
+    lbId.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbId.Items.Add(Qry.FieldByName('id').AsString);
+      lbNome.Items.Add(qry.FieldByName('nome').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
+  end;
+end;
+
 function TSubtipoDespesaDAO.BuscarPorId(SubtipoDespesa: TSubtipoDespesa; Id: Integer; out Erro: String): Boolean;
 var
   sql: String;
@@ -115,8 +153,8 @@ begin
   try
 
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
-             'left join tipo_despesa td on td.id = sd.id_subtipo ' +
-             'where id = :id '+
+             'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
+             'where sd.id = :id '+
              'order by sd.id';
 
     Qry.Close;

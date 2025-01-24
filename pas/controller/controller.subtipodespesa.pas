@@ -5,7 +5,7 @@ unit controller.subtipodespesa;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.entity.subtipodespesa,
+  Classes, SysUtils, ComCtrls, StdCtrls, model.entity.subtipodespesa,
   model.dao.subtipodespesa;
 
 type
@@ -19,6 +19,7 @@ type
     SubtipoDespesa: TSubtipoDespesa;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure PesquisarTipoDespesa(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(objSubtipoDespesa : TSubtipoDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(objSubtipoDespesa : TSubtipoDespesa; out Erro: string): Boolean;
     function Editar(objSubtipoDespesa : TSubtipoDespesa; out Erro: string): Boolean;
@@ -39,6 +40,12 @@ end;
 procedure TSubtipoDespesaController.Pesquisar(lv: TListView; Campo, Busca: String);
 begin
   SubtipoDespesaDAO.Pesquisar(lv, Campo, Busca);
+end;
+
+procedure TSubtipoDespesaController.PesquisarTipoDespesa(lbNome, lbId: TListBox; busca: String;
+  out QtdRegistro: Integer);
+begin
+  SubtipoDespesaDAO.PesquisarTipoDespesa(lbNome, lbId, busca, QtdRegistro);
 end;
 
 function TSubtipoDespesaController.BuscarPorId(objSubtipoDespesa: TSubtipoDespesa; Id: Integer; out

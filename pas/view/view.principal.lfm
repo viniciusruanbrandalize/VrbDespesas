@@ -15,7 +15,6 @@ object frmPrincipal: TfrmPrincipal
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 610
@@ -624,6 +623,7 @@ object frmPrincipal: TfrmPrincipal
       Category = 'Cadastro'
       Caption = 'Subtipo de despesas'
       ImageIndex = 15
+      OnExecute = actSubtipoCompraExecute
     end
     object actTipoCompra: TAction
       Category = 'Cadastro'
