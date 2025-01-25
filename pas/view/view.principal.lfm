@@ -382,6 +382,23 @@ object frmPrincipal: TfrmPrincipal
         Margin = 7
         ParentFont = False
       end
+      object btnUsuario: TSpeedButton
+        Left = 0
+        Height = 40
+        Top = 240
+        Width = 50
+        Action = actUsuario
+        Align = alTop
+        Flat = True
+        Font.Color = clWhite
+        Font.Height = -15
+        Font.Style = [fsBold]
+        Images = imgList
+        ImageIndex = 6
+        ImageWidth = 32
+        Margin = 7
+        ParentFont = False
+      end
     end
     object pnlMenuOperacao: TPanel
       Left = 263
@@ -635,6 +652,7 @@ object frmPrincipal: TfrmPrincipal
       Category = 'Cadastro'
       Caption = 'Usuários'
       ImageIndex = 6
+      OnExecute = actUsuarioExecute
     end
     object actCompra: TAction
       Category = 'Operacao'

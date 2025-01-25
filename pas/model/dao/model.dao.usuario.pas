@@ -194,7 +194,7 @@ begin
     Qry.ParamByName('nome').AsString        := Usuario.Nome;
     Qry.ParamByName('senha').AsString       := Usuario.Senha;
     Qry.ParamByName('email').AsString       := Usuario.Email;
-    Qry.ParamByName('alteracao').AsDateTime := Usuario.Alteracao;
+    Qry.ParamByName('alteracao').AsDateTime := Usuario.Alteracao;   //Now
 
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;

@@ -5,15 +5,22 @@ unit view.usuario;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, view.cadastropadrao,
-  view.mensagem, lib.types, controller.usuario;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  DateTimePicker, view.cadastropadrao, view.mensagem, lib.types,
+  controller.usuario;
 
 type
 
   { TfrmUsuario }
 
   TfrmUsuario = class(TfrmCadastroPadrao)
+    lblCadastroAlteracao: TLabel;
+    edtNome: TLabeledEdit;
+    edtEmail: TLabeledEdit;
+    edtSenha1: TLabeledEdit;
+    edtSenha2: TLabeledEdit;
     procedure actExcluirExecute(Sender: TObject);
+    procedure actIncluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -56,6 +63,13 @@ begin
   end;
 end;
 
+procedure TfrmUsuario.actIncluirExecute(Sender: TObject);
+begin
+  inherited;
+  edtSenha1.EditLabel.Caption := 'Senha:';
+  edtSenha2.EditLabel.Caption := 'Confirmação de Senha:';
+end;
+
 procedure TfrmUsuario.actPesquisarExecute(Sender: TObject);
 begin
   lvPadrao.Items.Clear;
@@ -66,20 +80,31 @@ procedure TfrmUsuario.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if Controller.ValidarSenha(edtSenha1.Text, edtSenha2.Text, Operacao, erro) then
   begin
-    //Controller.Usuario.Nome  := edtNome.Text;
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      if not Controller.Inserir(Controller.Usuario, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Controller.Usuario.Nome      := edtNome.Text;
+      Controller.Usuario.Email     := edtEmail.Text;
+      Controller.Usuario.Senha     := Controller.CriptografarSenha(edtSenha2.Text);
+      if Operacao = opInserir then
+      begin
+        Controller.Usuario.Cadastro := Now;
+        if not Controller.Inserir(Controller.Usuario, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        Controller.Usuario.Alteracao := Now;
+        if not Controller.Editar(Controller.Usuario, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      if not Controller.Editar(Controller.Usuario, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    inherited;
+  end
+  else
+  begin
+    TfrmMessage.Mensagem(erro, 'Aviso', 'C', [mbOk])
   end;
 end;
 
@@ -107,7 +132,11 @@ end;
 
 procedure TfrmUsuario.LimparCampos;
 begin
-  //
+  edtNome.Clear;
+  edtEmail.Clear;
+  edtSenha1.Clear;
+  edtSenha2.Clear;
+  lblCadastroAlteracao.Caption := '';
 end;
 
 procedure TfrmUsuario.CarregarSelecionado;
@@ -118,8 +147,10 @@ begin
   id := StrToInt(lvPadrao.Selected.Caption);
   if Controller.BuscarPorId(controller.Usuario, id, erro) then
   begin
-    //edtNome.Text  := Controller.SubtipoDespesa.Nome;
-    //edtTipo.Text   := Controller.SubtipoDespesa.TipoDespesa.Nome;
+    edtNome.Text  := Controller.Usuario.Nome;
+    edtEmail.Text := Controller.Usuario.Email;
+    edtSenha1.EditLabel.Caption := 'Senha Atual:';
+    edtSenha2.EditLabel.Caption := 'Nova Senha:';
   end
   else
   begin

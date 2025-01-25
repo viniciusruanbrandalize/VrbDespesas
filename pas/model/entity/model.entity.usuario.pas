@@ -69,12 +69,12 @@ end;
 
 procedure TUsuario.SetAlteracao(AValue: TDateTime);
 begin
-  AValue := FAlteracao;
+  FAlteracao := AValue;
 end;
 
 procedure TUsuario.SetCadastro(AValue: TDateTime);
 begin
-  AValue := FCadastro;
+  FCadastro := AValue;
 end;
 
 procedure TUsuario.SetEmail(AValue: String);

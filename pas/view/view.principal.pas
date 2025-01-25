@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
-  view.formapagamento, view.tipodespesa, view.subtipodespesa;
+  view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario;
 
 type
 
@@ -47,6 +47,7 @@ type
     btnDevedor: TSpeedButton;
     btnLoja: TSpeedButton;
     btnTipo: TSpeedButton;
+    btnUsuario: TSpeedButton;
     btnVoltar: TSpeedButton;
     btnUtilitario: TSpeedButton;
     btnRelatorio: TSpeedButton;
@@ -79,6 +80,7 @@ type
     procedure actRelatorioExecute(Sender: TObject);
     procedure actSubtipoCompraExecute(Sender: TObject);
     procedure actTipoCompraExecute(Sender: TObject);
+    procedure actUsuarioExecute(Sender: TObject);
     procedure actUtilitarioExecute(Sender: TObject);
     procedure actVoltarExecute(Sender: TObject);
     procedure AppPropertiesException(Sender: TObject; E: Exception);
@@ -177,6 +179,12 @@ end;
 procedure TfrmPrincipal.actTipoCompraExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmTipoDespesa, TfrmTipoDespesa, false, pnlAbreForms, Self);
+  BarraLateralVazia(pnlMenuCadastro, false);
+end;
+
+procedure TfrmPrincipal.actUsuarioExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmUsuario, TfrmUsuario, false, pnlAbreForms, Self);
   BarraLateralVazia(pnlMenuCadastro, false);
 end;
 

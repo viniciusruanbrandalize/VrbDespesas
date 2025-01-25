@@ -10,10 +10,101 @@ inherited frmUsuario: TfrmUsuario
         TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
+            inherited lvPadrao: TListView
+              Columns = <              
+                item
+                  Caption = 'Código'
+                  Width = 100
+                end              
+                item
+                  Caption = 'Nome'
+                  Width = 620
+                end              
+                item
+                  Caption = 'Cadastro'
+                  Width = 200
+                end>
+            end
             inherited pnlPesquisa: TPanel
               inherited edtPesquisa: TEdit
                 Text = ''
               end
+              inherited cbPesquisa: TComboBox
+                Items.Strings = (
+                  'Nome'
+                  'E-mail'
+                )
+              end
+            end
+            inherited lbPesquisa: TListBox
+              Items.Strings = (
+                'nome'
+                'email'
+              )
+              ItemHeight = 20
+            end
+          end
+        end
+        inherited tbsCadastro: TTabSheet
+          inherited pnlFundoCadastro: TPanel
+            object edtNome: TLabeledEdit[1]
+              Left = 8
+              Height = 28
+              Top = 32
+              Width = 392
+              EditLabel.Height = 20
+              EditLabel.Width = 392
+              EditLabel.Caption = 'Nome:'
+              MaxLength = 20
+              TabOrder = 1
+              Text = 'edtNome'
+            end
+            object edtEmail: TLabeledEdit[2]
+              Left = 416
+              Height = 28
+              Top = 32
+              Width = 392
+              EditLabel.Height = 20
+              EditLabel.Width = 392
+              EditLabel.Caption = 'E-mail:'
+              MaxLength = 300
+              TabOrder = 2
+              Text = 'edtEmail'
+            end
+            object edtSenha1: TLabeledEdit[3]
+              Left = 8
+              Height = 28
+              Top = 96
+              Width = 392
+              EchoMode = emPassword
+              EditLabel.Height = 20
+              EditLabel.Width = 392
+              EditLabel.Caption = 'Senha:'
+              MaxLength = 20
+              PasswordChar = '#'
+              TabOrder = 3
+              Text = 'edtSenha1'
+            end
+            object edtSenha2: TLabeledEdit[4]
+              Left = 8
+              Height = 28
+              Top = 160
+              Width = 392
+              EchoMode = emPassword
+              EditLabel.Height = 20
+              EditLabel.Width = 392
+              EditLabel.Caption = 'Senha:'
+              MaxLength = 20
+              PasswordChar = '#'
+              TabOrder = 4
+              Text = 'edtSenha2'
+            end
+            object lblCadastroAlteracao: TLabel[5]
+              Left = 265
+              Height = 20
+              Top = 354
+              Width = 140
+              Caption = 'lblCadastroAlteracao'
             end
           end
         end
@@ -21,6 +112,9 @@ inherited frmUsuario: TfrmUsuario
     end
   end
   inherited actList: TActionList
+    inherited actIncluir: TAction
+      OnExecute = actIncluirExecute
+    end
     inherited actExcluir: TAction
       OnExecute = actExcluirExecute
     end
