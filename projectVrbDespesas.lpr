@@ -26,7 +26,7 @@ uses
   view.tipodespesa, model.dao.formapagamento, controller.formapagamento,
   controller.tipodespesa, controller.subtipodespesa, controller.usuario,
   model.dao.tipodespesa, model.dao.subtipodespesa, model.dao.usuario,
-  view.subtipodespesa, view.usuario;
+  view.subtipodespesa, view.usuario, view.logerro;
 
 {$R *.res}
 

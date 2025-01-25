@@ -100,11 +100,197 @@ inherited frmUsuario: TfrmUsuario
               Text = 'edtSenha2'
             end
             object lblCadastroAlteracao: TLabel[5]
-              Left = 265
-              Height = 20
-              Top = 354
-              Width = 140
+              Left = 5
+              Height = 23
+              Top = 430
+              Width = 941
+              Align = alBottom
+              Alignment = taRightJustify
+              BorderSpacing.Around = 5
               Caption = 'lblCadastroAlteracao'
+              Font.Height = -17
+              ParentFont = False
+            end
+          end
+        end
+        object tbsAcesso: TTabSheet[2]
+          Caption = 'tbsAcesso'
+          ClientHeight = 523
+          ClientWidth = 951
+          object pnlFundoAcesso: TPanel
+            Left = 0
+            Height = 523
+            Top = 0
+            Width = 951
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 523
+            ClientWidth = 951
+            ParentBackground = False
+            TabOrder = 0
+            object ToolBarCadastro1: TToolBar
+              Left = 5
+              Height = 60
+              Top = 458
+              Width = 941
+              Align = alBottom
+              BorderSpacing.Around = 5
+              ButtonHeight = 60
+              ButtonWidth = 100
+              Caption = 'ToolBarCadastro1'
+              EdgeInner = esNone
+              EdgeOuter = esNone
+              Images = img
+              ImagesWidth = 32
+              ShowCaptions = True
+              TabOrder = 0
+              object btnSalvar1: TToolButton
+                Left = 1
+                Top = 0
+                Action = actSalvarAcesso
+              end
+              object btnCancelar1: TToolButton
+                Left = 101
+                Top = 0
+                Action = actCancelarAcesso
+              end
+            end
+            object pnlTituloAcesso: TPanel
+              Left = 5
+              Height = 30
+              Top = 5
+              Width = 941
+              Align = alTop
+              Alignment = taLeftJustify
+              BorderSpacing.Around = 5
+              BevelOuter = bvNone
+              Caption = 'Gerenciar acessos do usuário'
+              Font.Color = 1403392
+              Font.Height = -20
+              Font.Style = [fsBold]
+              ParentBackground = False
+              ParentFont = False
+              TabOrder = 1
+            end
+            object lbTelaNome: TListBox
+              Left = 752
+              Height = 48
+              Top = 48
+              Width = 88
+              Items.Strings = (
+                'frmUsuario'
+                'frmBanco'
+              )
+              ItemHeight = 20
+              TabOrder = 2
+              Visible = False
+            end
+            object pnlTelaAcesso: TPanel
+              Left = 5
+              Height = 413
+              Top = 40
+              Width = 300
+              Align = alLeft
+              BorderSpacing.Around = 5
+              BevelOuter = bvNone
+              ClientHeight = 413
+              ClientWidth = 300
+              ParentBackground = False
+              TabOrder = 3
+              object lbTelaTitulo: TListBox
+                Cursor = crHandPoint
+                Left = 0
+                Height = 393
+                Top = 20
+                Width = 300
+                Align = alClient
+                BorderStyle = bsNone
+                Color = clWhite
+                Columns = 1
+                Items.Strings = (
+                  'Cadastro de Usuarios 1'
+                  'Cadastro de Bancos'
+                )
+                ItemHeight = 20
+                TabOrder = 0
+              end
+              object Label1: TLabel
+                Left = 0
+                Height = 20
+                Top = 0
+                Width = 300
+                Align = alTop
+                Alignment = taCenter
+                Caption = 'Telas'
+                Color = clWhite
+                Font.Color = 1403392
+                Font.Height = -15
+                Font.Style = [fsBold]
+                ParentColor = False
+                ParentFont = False
+                Transparent = False
+              end
+            end
+            object lbNomeAcesso: TListBox
+              Left = 848
+              Height = 48
+              Top = 48
+              Width = 88
+              Items.Strings = (
+                'actIncluir'
+                'actExcluir'
+              )
+              ItemHeight = 20
+              TabOrder = 4
+              Visible = False
+            end
+            object pnlAcessoAcesso: TPanel
+              Left = 320
+              Height = 413
+              Top = 40
+              Width = 300
+              Align = alLeft
+              BorderSpacing.Left = 10
+              BorderSpacing.Around = 5
+              BevelOuter = bvNone
+              ClientHeight = 413
+              ClientWidth = 300
+              ParentBackground = False
+              TabOrder = 5
+              object cklbTituloAcesso: TCheckListBox
+                Cursor = crHandPoint
+                Left = 0
+                Height = 393
+                Top = 20
+                Width = 300
+                Align = alClient
+                BorderStyle = bsNone
+                Items.Strings = (
+                  'aaa'
+                  'aaaaaa'
+                )
+                ItemHeight = 21
+                TabOrder = 0
+                Data = {
+                  020000000000
+                }
+              end
+              object lbl1: TLabel
+                Left = 0
+                Height = 20
+                Top = 0
+                Width = 300
+                Align = alTop
+                Alignment = taCenter
+                Caption = 'Acessos'
+                Color = clWhite
+                Font.Color = 1403392
+                Font.Height = -15
+                Font.Style = [fsBold]
+                ParentColor = False
+                ParentFont = False
+                Transparent = False
+              end
             end
           end
         end
@@ -123,6 +309,26 @@ inherited frmUsuario: TfrmUsuario
     end
     inherited actSalvar: TAction
       OnExecute = actSalvarExecute
+    end
+    object actAcesso: TAction[8]
+      Caption = 'Gerenciar Acessos'
+      ImageIndex = 8
+      OnExecute = actAcessoExecute
+    end
+    object actSalvarAcesso: TAction[9]
+      Caption = 'Salvar'
+      ImageIndex = 6
+      OnExecute = actSalvarAcessoExecute
+    end
+    object actCancelarAcesso: TAction[10]
+      Caption = 'Cancelar'
+      ImageIndex = 7
+      OnExecute = actCancelarAcessoExecute
+    end
+  end
+  inherited pMenuPadrao: TPopupMenu
+    object MenuItem4: TMenuItem[3]
+      Action = actAcesso
     end
   end
 end

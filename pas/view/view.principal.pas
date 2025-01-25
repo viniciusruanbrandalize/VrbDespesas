@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
-  view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario;
+  view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
+  view.logerro;
 
 type
 
@@ -24,6 +25,7 @@ type
     actConfiguracaoGlobal: TAction;
     actBackup: TAction;
     actHistoricoLogin: TAction;
+    actLogErro: TAction;
     actVoltar: TAction;
     actRecebimento: TAction;
     actSubtipoCompra: TAction;
@@ -37,6 +39,7 @@ type
     AppProperties: TApplicationProperties;
     btnContasPagar: TSpeedButton;
     btnConfiguracao: TSpeedButton;
+    btnLogErro: TSpeedButton;
     btnDespesa: TSpeedButton;
     btnCopiaSeguranca: TSpeedButton;
     btnRecebimento: TSpeedButton;
@@ -76,6 +79,7 @@ type
     procedure actBancoExecute(Sender: TObject);
     procedure actCadastroExecute(Sender: TObject);
     procedure actFormaPagamentoExecute(Sender: TObject);
+    procedure actLogErroExecute(Sender: TObject);
     procedure actOperacaoExecute(Sender: TObject);
     procedure actRelatorioExecute(Sender: TObject);
     procedure actSubtipoCompraExecute(Sender: TObject);
@@ -147,6 +151,11 @@ procedure TfrmPrincipal.actFormaPagamentoExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmFormaPagamento, TfrmFormaPagamento, false, pnlAbreForms, Self);
   BarraLateralVazia(pnlMenuCadastro, false);
+end;
+
+procedure TfrmPrincipal.actLogErroExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmLogErro, TfrmLogErro, True, nil, Self);
 end;
 
 procedure TfrmPrincipal.actAjudaExecute(Sender: TObject);
