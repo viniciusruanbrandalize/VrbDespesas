@@ -15,6 +15,7 @@ type
   private
 
     {Erro X}
+    FId:                String;  { ID DA SECAO }
     FData:              TDate;
     FHora:              TTime;
     FNomeComputador:    String;
@@ -50,6 +51,7 @@ type
     function GetDiretorioExe: String;
     function GetFuncaoErro: String;
     function GetHora: TTime;
+    function GetID: String;
     function GetIPComputador: String;
     function GetLinhaErro: Integer;
     function GetMensagem: String;
@@ -76,6 +78,7 @@ type
     procedure SetDiretorioExe(AValue: String);
     procedure SetFuncaoErro(AValue: String);
     procedure SetHora(AValue: TTime);
+    procedure SetID(AValue: String);
     procedure SetIPComputador(AValue: String);
     procedure SetLinhaErro(AValue: Integer);
     procedure SetMensagem(AValue: String);
@@ -101,10 +104,11 @@ type
   public
     procedure Escrever;
     procedure CarregarPorSecao(Secao: String);
+    function ExisteSecaoIni(Secao: String): Boolean;
     constructor Create;
     destructor Destroy; override;
   published
-
+    property ID: String read GetID write SetID;
     property Data: TDate read GetData write SetData;
     property Hora: TTime read GetHora write SetHora;
     property NomeComputador: String read GetNomeComputador write SetNomeComputador;
@@ -268,6 +272,11 @@ begin
   Result := FHora;
 end;
 
+function TErroINI.GetID: String;
+begin
+  Result := FId;
+end;
+
 function TErroINI.GetIPComputador: String;
 begin
   Result := FIPComputador;
@@ -301,6 +310,11 @@ end;
 procedure TErroINI.SetHora(AValue: TTime);
 begin
   FHora := AValue;
+end;
+
+procedure TErroINI.SetID(AValue: String);
+begin
+  FID := AValue;
 end;
 
 procedure TErroINI.SetIPComputador(AValue: String);
@@ -345,7 +359,7 @@ var
 begin
   secao := VerificarSecaoAtual;
   lib.cryptini.EscreverData( PChar(secao), 'DATA',                  FData);
-  lib.cryptini.EscreverData( PChar(secao), 'HORA',                  FHora);
+  lib.cryptini.EscreverHora( PChar(secao), 'HORA',                  FHora);
   lib.cryptini.EscreverString( PChar(secao), 'NOME_COMPUTADOR',     PChar(FNomeComputador));
   lib.cryptini.EscreverString( PChar(secao), 'IP_COMPUTADOR',       PChar(FIPComputador));
   lib.cryptini.EscreverString( PChar(secao), 'MENSAGEM',            PChar(FMensagem));
@@ -374,6 +388,7 @@ end;
 
 procedure TErroINI.CarregarPorSecao(Secao: String);
 begin
+  FId := Secao;
   lib.cryptini.LerData(PChar(Secao),    'DATA', FData);
   lib.cryptini.LerHora(PChar(Secao),    'HORA', FHora);
   lib.cryptini.LerString(PChar(Secao),  'MENSAGEM', FMensagem);
@@ -400,6 +415,11 @@ begin
   lib.cryptini.LerString(PChar(Secao),  'SISTEMA_OPERACIONAL', FSistemaOperacional);
   lib.cryptini.LerString(PChar(Secao),  'MODO_EXE', FModoExe);
   lib.cryptini.LerString(PChar(Secao),  'USUARIO', FUsuario);
+end;
+
+function TErroINI.ExisteSecaoIni(Secao: String): Boolean;
+begin
+  lib.cryptini.ExisteSecao(PChar(Secao), Result);
 end;
 
 procedure TErroINI.SetMensagemTratada(AValue: String);

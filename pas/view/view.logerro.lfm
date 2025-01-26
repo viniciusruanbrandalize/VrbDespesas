@@ -3,13 +3,16 @@ object frmLogErro: TfrmLogErro
   Height = 500
   Top = 250
   Width = 800
-  BorderIcons = [biSystemMenu, biMinimize]
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Histórico de Erros'
   ClientHeight = 500
   ClientWidth = 800
   DesignTimePPI = 120
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
+  Position = poOwnerFormCenter
   object pnlFundo: TPanel
     Left = 0
     Height = 500
@@ -33,13 +36,19 @@ object frmLogErro: TfrmLogErro
       BorderSpacing.Around = 8
       BorderStyle = bsNone
       CharCase = ecUppercase
+      Font.Color = 2569157
+      Font.Height = -15
+      Font.Name = 'Courier New'
+      Font.Style = [fsBold]
       Lines.Strings = (
         'MERRO'
       )
+      ParentFont = False
       PopupMenu = PopupMenuMemo
       ReadOnly = True
       ScrollBars = ssAutoBoth
       TabOrder = 0
+      Visible = False
     end
     object lv: TListView
       Cursor = crHandPoint
@@ -51,6 +60,10 @@ object frmLogErro: TfrmLogErro
       BorderSpacing.Around = 8
       Columns = <      
         item
+          Caption = 'ID'
+          Width = 110
+        end      
+        item
           Caption = 'Data'
           Width = 120
         end      
@@ -60,9 +73,10 @@ object frmLogErro: TfrmLogErro
         end      
         item
           Caption = 'Descrição'
-          Width = 520
+          Width = 420
         end>
       PopupMenu = PopupMenuLv
+      RowSelect = True
       TabOrder = 1
       ViewStyle = vsReport
     end

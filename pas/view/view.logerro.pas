@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  ComCtrls, Menus, ActnList;
+  ComCtrls, Menus, ActnList, controller.logerro;
 
 type
 
@@ -29,9 +29,11 @@ type
     procedure actCopiarExecute(Sender: TObject);
     procedure actFecharDetalheExecute(Sender: TObject);
     procedure actVisualizarExecute(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
-
+    Controller: TLogErroController;
   public
 
   end;
@@ -57,14 +59,35 @@ begin
 end;
 
 procedure TfrmLogErro.actVisualizarExecute(Sender: TObject);
+var
+  erro: String;
+  sl: TStringList;
 begin
-  mErro.Visible := True;
+  sl := TStringList.Create;
+  try
+    mErro.Visible := True;
+    controller.BuscarPorId(lv.Selected.Caption, sl, erro);
+    mErro.Text := sl.Text;
+  finally
+    sl.Free;
+  end;
+end;
+
+procedure TfrmLogErro.FormCreate(Sender: TObject);
+begin
+  Controller := TLogErroController.Create;
+end;
+
+procedure TfrmLogErro.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(Controller);
 end;
 
 procedure TfrmLogErro.FormShow(Sender: TObject);
 begin
   mErro.Lines.Clear;
   lv.Items.Clear;
+  controller.Listar(lv);
 end;
 
 end.
