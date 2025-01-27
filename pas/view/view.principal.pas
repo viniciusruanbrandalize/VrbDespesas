@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
-  view.logerro;
+  view.logerro, view.loglogin;
 
 type
 

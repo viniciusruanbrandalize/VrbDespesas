@@ -1,0 +1,65 @@
+object frmLogLogin: TfrmLogLogin
+  Left = 481
+  Height = 543
+  Top = 250
+  Width = 800
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Histórico de Login'
+  ClientHeight = 543
+  ClientWidth = 800
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  object pnlFundo: TPanel
+    Left = 0
+    Height = 543
+    Top = 0
+    Width = 800
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 543
+    ClientWidth = 800
+    Color = 15925228
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object lv: TListView
+      Left = 10
+      Height = 523
+      Top = 10
+      Width = 780
+      Align = alClient
+      BorderSpacing.Around = 10
+      BorderStyle = bsNone
+      Columns = <      
+        item
+          Caption = 'Código'
+          Width = 0
+        end      
+        item
+          Caption = 'Data'
+          Width = 100
+        end      
+        item
+          Caption = 'Hora'
+          Width = 100
+        end      
+        item
+          Caption = 'Computador'
+          Width = 200
+        end      
+        item
+          Caption = 'IP'
+          Width = 150
+        end      
+        item
+          Caption = 'Usuário'
+          Width = 200
+        end>
+      TabOrder = 0
+      ViewStyle = vsReport
+    end
+  end
+end
