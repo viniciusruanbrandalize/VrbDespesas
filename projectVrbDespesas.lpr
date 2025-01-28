@@ -25,9 +25,10 @@ uses
   view.cadastropadrao, view.banco, lib.bcrypt, view.formapagamento,
   view.tipodespesa, model.dao.formapagamento, controller.formapagamento,
   controller.tipodespesa, controller.subtipodespesa, controller.usuario,
-  controller.logerro, controller.loglogin, model.dao.tipodespesa,
-  model.dao.subtipodespesa, model.dao.usuario, model.dao.login,
-  view.subtipodespesa, view.usuario, view.logerro, view.loglogin;
+  controller.logerro, controller.loglogin, controller.login,
+  model.dao.tipodespesa, model.dao.subtipodespesa, model.dao.usuario,
+  model.dao.login, view.subtipodespesa, view.usuario, view.logerro,
+  view.loglogin, view.login;
 
 {$R *.res}
 

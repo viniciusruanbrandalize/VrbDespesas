@@ -38,9 +38,9 @@ var
 begin
   try
 
-    sql := 'select first 100 l.*, u.nome as nome_usuario from login l ' +
+    sql := 'select first 20 l.*, u.nome as nome_usuario from login l ' +
            'left join usuario u on l.id_usuario = u.id ' +
-           'order by data, hora';
+           'order by data desc, hora desc';
 
     Qry.Close;
     Qry.SQL.Clear;

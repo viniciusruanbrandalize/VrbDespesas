@@ -25,6 +25,7 @@ type
     actConfiguracaoGlobal: TAction;
     actBackup: TAction;
     actHistoricoLogin: TAction;
+    actLogLogin: TAction;
     actLogErro: TAction;
     actVoltar: TAction;
     actRecebimento: TAction;
@@ -42,6 +43,7 @@ type
     btnLogErro: TSpeedButton;
     btnDespesa: TSpeedButton;
     btnCopiaSeguranca: TSpeedButton;
+    btnLoglogin: TSpeedButton;
     btnRecebimento: TSpeedButton;
     btnSubtipo: TSpeedButton;
     btnBanco: TSpeedButton;
@@ -80,6 +82,7 @@ type
     procedure actCadastroExecute(Sender: TObject);
     procedure actFormaPagamentoExecute(Sender: TObject);
     procedure actLogErroExecute(Sender: TObject);
+    procedure actLogLoginExecute(Sender: TObject);
     procedure actOperacaoExecute(Sender: TObject);
     procedure actRelatorioExecute(Sender: TObject);
     procedure actSubtipoCompraExecute(Sender: TObject);
@@ -156,6 +159,11 @@ end;
 procedure TfrmPrincipal.actLogErroExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmLogErro, TfrmLogErro, True, nil, Self);
+end;
+
+procedure TfrmPrincipal.actLogLoginExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmLogLogin, TfrmLogLogin, True, nil, Self);
 end;
 
 procedure TfrmPrincipal.actAjudaExecute(Sender: TObject);

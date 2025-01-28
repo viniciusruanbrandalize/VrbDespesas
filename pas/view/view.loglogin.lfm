@@ -12,6 +12,7 @@ object frmLogLogin: TfrmLogLogin
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  Position = poOwnerFormCenter
   object pnlFundo: TPanel
     Left = 0
     Height = 543
@@ -58,6 +59,7 @@ object frmLogLogin: TfrmLogLogin
           Caption = 'Usuário'
           Width = 200
         end>
+      RowSelect = True
       TabOrder = 0
       ViewStyle = vsReport
     end
