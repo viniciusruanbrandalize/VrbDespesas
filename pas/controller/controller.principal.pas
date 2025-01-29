@@ -5,7 +5,8 @@ unit controller.principal;
 interface
 
 uses
-  Classes, SysUtils, Forms, controls, controller.erro, lib.util;
+  Classes, SysUtils, Forms, controls, controller.erro, lib.util,
+  model.connection.conexao1;
 
 type
 
@@ -17,6 +18,7 @@ type
   public
     procedure TratarErros(Sender: TObject; E: Exception);
     procedure AbrirTela(Formulario: TForm; ClasseForm: TFormClass; Modal: Boolean; AParent: TWinControl; FormularioPai: TForm);
+    function RetornarNomeUsuario: String;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -34,6 +36,11 @@ procedure TPrincipalController.AbrirTela(Formulario: TForm; ClasseForm: TFormCla
   Modal: Boolean; AParent: TWinControl; FormularioPai: TForm);
 begin
   CriarForm(Formulario, ClasseForm, Modal, AParent, FormularioPai);
+end;
+
+function TPrincipalController.RetornarNomeUsuario: String;
+begin
+  Result := dmConexao1.NomeUsuario;
 end;
 
 constructor TPrincipalController.Create;

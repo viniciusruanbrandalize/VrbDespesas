@@ -21,10 +21,13 @@ type
     procedure SQLConnectorLog(Sender: TSQLConnection; EventType: TDBEventType;
       const Msg: String);
   private
+    FNomeUsuario: String;
+    FIdUsuario:   Integer;
     procedure ConectarBaseDeDados();
     function VerificarNomeDLL(Driver: String): String;
   public
-
+    property NomeUsuario: String  read FNomeUsuario write FNomeUsuario;
+    property IdUsuario:   Integer read FIdUsuario   write FIdUsuario;
   end;
 
 var
@@ -39,6 +42,11 @@ implementation
 procedure TdmConexao1.DataModuleCreate(Sender: TObject);
 begin
   ConectarBaseDeDados;
+  {$IFOPT D+}
+  dmConexao1.IdUsuario   := 1;
+  dmConexao1.NomeUsuario := 'ADMIN';
+  {$ELSE}
+  {$ENDIF}
 end;
 
 procedure TdmConexao1.SQLConnectorLog(Sender: TSQLConnection;

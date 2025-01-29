@@ -28,7 +28,7 @@ uses
   controller.logerro, controller.loglogin, controller.login,
   model.dao.tipodespesa, model.dao.subtipodespesa, model.dao.usuario,
   model.dao.login, view.subtipodespesa, view.usuario, view.logerro,
-  view.loglogin, view.login;
+  view.loglogin, view.login, Controls;
 
 {$R *.res}
 
@@ -37,6 +37,18 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TdmConexao1, dmConexao1);
+
+  {$IFOPT D+}
+  {$ELSE}
+    try
+      frmLogin := TfrmLogin.Create(nil);
+    if not (frmLogin.ShowModal = mrOK) then
+      Application.Terminate;
+    finally
+      frmLogin.Free;
+    end;
+  {$ENDIF}
+
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.Run;
 end.

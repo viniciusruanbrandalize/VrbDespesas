@@ -133,6 +133,7 @@ procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
   pnlAbreForms.Align := alClient;
   pnlAbreForms.Caption := '';
+  lblNomeUsuario.Caption := Controller.RetornarNomeUsuario;
 end;
 
 procedure TfrmPrincipal.imgMenuClick(Sender: TObject);

@@ -5,7 +5,7 @@ unit model.dao.login;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, SQLDB, model.entity.login,
+  Classes, SysUtils, ComCtrls, SQLDB, model.entity.login, model.entity.usuario,
   model.connection.conexao1;
 
 type
@@ -17,11 +17,9 @@ type
     Qry: TSQLQuery;
   public
     procedure Listar(lv: TListView);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String);
-    function BuscarPorId(Login : TLogin; Id: Integer; out Erro: String): Boolean;
     function Inserir(Login : TLogin; out Erro: string): Boolean;
-    function Editar(Login : TLogin; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+    function EncontrarUsuario(Usuario: TUsuario; Nome: String; out Erro: String): Boolean;
     function GerarId(Gerador: String; Incremento: Integer=1): Integer;
     constructor Create;
     destructor Destroy; override;
@@ -66,109 +64,24 @@ begin
   end;
 end;
 
-procedure TLoginDAO.Pesquisar(lv: TListView; Campo, Busca: String);
-var
-  sql: String;
-  item : TListItem;
-  valor: Double;
-begin
-  try
-
-    if TryStrToFloat(Busca, valor) then
-    begin
-      sql := 'select * from usuario ' +
-             'where '+campo+' = :busca '+
-             'order by nome';
-    end
-    else
-    begin
-      sql := 'select * from usuario ' +
-             'where UPPER('+campo+') like :busca '+
-             'order by nome';
-    end;
-
-    Qry.Close;
-    Qry.SQL.Clear;
-    Qry.SQL.Add(sql);
-    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
-    Qry.Open;
-
-    Qry.First;
-
-    while not Qry.EOF do
-    begin
-      item := lv.Items.Add;
-      item.Caption := Qry.FieldByName('id').AsString;
-      item.SubItems.Add(qry.FieldByName('nome').AsString);
-      item.SubItems.Add(qry.FieldByName('cadastro').AsString);
-      Qry.Next;
-    end;
-
-  finally
-    qry.Close;
-  end;
-end;
-
-function TLoginDAO.BuscarPorId(Login : TLogin; Id: Integer; out Erro: String): Boolean;
-var
-  sql: String;
-begin
-  try
-
-    sql := 'select * from usuario ' +
-           'where id = :id ' +
-           'order by id';
-
-    Qry.Close;
-    Qry.SQL.Clear;
-    Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger := id;
-    Qry.Open;
-
-    if Qry.RecordCount = 1 then
-    begin
-      //Usuario.Id       := Qry.FieldByName('id').AsInteger;
-      //Usuario.Nome     := Qry.FieldByName('nome').AsString;
-      //Usuario.Senha    := Qry.FieldByName('senha').AsString;
-      //Usuario.Email    := Qry.FieldByName('email').AsString;
-      //Usuario.Cadastro := Qry.FieldByName('cadastro').AsDateTime;
-      //Usuario.Alteracao := Qry.FieldByName('alteracao').AsDateTime;
-      Result := True;
-    end
-    else
-    if Qry.RecordCount > 1 then
-    begin
-      Erro := 'Mais de um objeto foi retornado na busca por código!';
-      Result := False;
-    end
-    else
-    begin
-      Erro := 'Nenhum objeto foi encontrado!';
-      Result := False;
-    end;
-
-  finally
-    Qry.Close;
-  end;
-end;
-
 function TLoginDAO.Inserir(Login : TLogin; out Erro: string): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'insert into usuario(id, nome, senha, email, cadastro) values ' +
-           '(:id, :nome, :senha, :email, :cadastro)';
+    sql := 'insert into login(id, nome_pc, ip_pc, data, hora, id_usuario) values ' +
+           '(:id, :nome_pc, :ip_pc, :data, :hora, :id_usuario)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    //Qry.ParamByName('id').AsInteger        := Usuario.Id;
-    //Qry.ParamByName('nome').AsString       := Usuario.Nome;
-    //Qry.ParamByName('senha').AsString      := Usuario.Senha;
-    //Qry.ParamByName('email').AsString      := Usuario.Email;
-    //Qry.ParamByName('cadastro').AsDateTime := Usuario.Cadastro;
+    Qry.ParamByName('id').AsInteger         := Login.Id;
+    Qry.ParamByName('nome_pc').AsString     := Login.NomePC;
+    Qry.ParamByName('ip_pc').AsString       := Login.IPPC;
+    Qry.ParamByName('data').AsDate          := Login.Data;
+    Qry.ParamByName('hora').AsTime          := Login.Hora;
+    Qry.ParamByName('id_usuario').AsInteger := Login.Usuario.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -182,46 +95,13 @@ begin
   end;
 end;
 
-function TLoginDAO.Editar(Login : TLogin; out Erro: string): Boolean;
-var
-  sql: String;
-begin
-  try
-
-    sql := 'update usuario set nome = :nome, ' +
-           'email = :email, senha = :senha, alteracao = :alteracao ' +
-           'where id = :id';
-
-    Qry.Close;
-    Qry.SQL.Clear;
-    Qry.SQL.Add(sql);
-    //Qry.ParamByName('id').AsInteger         := Usuario.Id;
-    //Qry.ParamByName('nome').AsString        := Usuario.Nome;
-    //Qry.ParamByName('senha').AsString       := Usuario.Senha;
-    //Qry.ParamByName('email').AsString       := Usuario.Email;
-    //Qry.ParamByName('alteracao').AsDateTime := Usuario.Alteracao;   //Now
-
-    Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
-
-    Result := True;
-
-  except on E: Exception do
-    begin
-      dmConexao1.SQLTransaction.Rollback;
-      Erro := 'Ocorreu um erro ao alterar usuário: ' + sLineBreak + E.Message;
-      Result := False;
-    end;
-  end;
-end;
-
 function TLoginDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'delete from usuario where id = :id';
+    sql := 'delete from login where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -237,6 +117,46 @@ begin
       Erro := 'Ocorreu um erro ao excluir usuário: ' + sLineBreak + E.Message;
       Result := False;
     end;
+  end;
+end;
+
+function TLoginDAO.EncontrarUsuario(Usuario: TUsuario; Nome: String; out
+  Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select * from usuario ' +
+           'where nome = :busca ' +
+           'order by id asc';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := Nome;
+    Qry.Open;
+
+    Qry.First;
+
+    if qry.RecordCount > 0 then
+    begin
+      Usuario.Id        := Qry.FieldByName('id').AsInteger;
+      Usuario.Nome      := Qry.FieldByName('nome').AsString;
+      Usuario.Senha     := Qry.FieldByName('senha').AsString;
+      Usuario.Email     := Qry.FieldByName('email').AsString;
+      Usuario.Cadastro  := Qry.FieldByName('cadastro').AsDateTime;
+      Usuario.Alteracao := Qry.FieldByName('alteracao').AsDateTime;
+      Result := True;
+    end
+    else
+    begin
+      Erro := 'Usuário não encontrado!';
+      Result := False;
+    end;
+
+  finally
+    Qry.Close;
   end;
 end;
 

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  Buttons, controller.login, view.mensagem;
+  Buttons, controller.login, view.mensagem, lib.util;
 
 type
 
@@ -81,25 +81,26 @@ begin
 end;
 
 procedure TfrmLogin.fazerLogin;
+var
+  erro: String;
 begin
-  //dtsLogin.DataSet := TControllerLogin(controller).Filtrar('nome', edtUsuario.Text);
-  //
-  //if TControllerLogin(controller).TotalRegistro(dtsLogin.DataSet) = 1 then
-  //begin
-  //  if compareHashBCrypt(edtSenha.Text, dtsLogin.DataSet.FieldByName('senha').AsString) then
-  //  begin
-  //    TControllerLogin(controller).GravarLogin(dtsLogin.DataSet.FieldByName('id').AsInteger);
-  //    ModalResult := mrOK;
-  //  end
-  //  else
-  //  begin
-  //    TfrmMessage.Mensagem('A Senha está incorreta!', 'Aviso', 'C', [mbOk]);
-  //  end;
-  //end
-  //else
-  //begin
-  //  TfrmMessage.Mensagem('Usuário não existe!', 'Aviso', 'C', [mbOk]);
-  //end;
+  if controller.FazerLogin(controller.Usuario, edtUsuario.Text,
+                           edtSenha.Text, erro) then
+  begin
+    controller.Login.NomePC  := retornarPc();
+    controller.Login.IPPC    := retornarIP();
+    controller.Login.Data    := Now;
+    controller.Login.Hora    := Now;
+    controller.Login.Usuario := Controller.Usuario;
+    if controller.Inserir(controller.Login, erro) then
+      ModalResult := mrOK
+    else
+      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+  end
+  else
+  begin
+    TfrmMessage.Mensagem(erro, 'Aviso', 'C', [mbOk]);
+  end;
 end;
 
 procedure TfrmLogin.MudaVisualizacaoCampoSenha;

@@ -5,7 +5,7 @@ unit model.entity.login;
 interface
 
 uses
-  Classes, SysUtils, model.usuario;
+  Classes, SysUtils, model.entity.usuario;
 
 type
 
