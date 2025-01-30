@@ -1,0 +1,85 @@
+inherited frmBandeira: TfrmBandeira
+  Caption = 'Cadastro de bandeiras'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  inherited pnlFundo: TPanel
+    inherited pnlPrincipal: TPanel
+      inherited pgcPadrao: TPageControl
+        ActivePage = tbsCadastro
+        TabIndex = 1
+        inherited tbsLista: TTabSheet
+          inherited pnlFundoLista: TPanel
+            inherited lvPadrao: TListView
+              Columns = <              
+                item
+                  Caption = 'Código'
+                  Width = 100
+                end              
+                item
+                  Caption = 'Nome'
+                  Width = 820
+                end>
+            end
+            inherited pnlPesquisa: TPanel
+              inherited edtPesquisa: TEdit
+                AnchorSideLeft.Control = nil
+                AnchorSideLeft.Side = asrTop
+                AnchorSideRight.Control = nil
+                Left = 208
+                Width = 688
+                Text = ''
+              end
+              inherited btnPesquisar: TSpeedButton
+                AnchorSideLeft.Side = asrTop
+                AnchorSideRight.Control = nil
+                AnchorSideRight.Side = asrTop
+                Left = 906
+                Width = 37
+                Margin = -1
+                ShowCaption = False
+              end
+              inherited cbPesquisa: TComboBox
+                AnchorSideLeft.Control = nil
+                Left = 8
+              end
+            end
+            inherited lbPesquisa: TListBox
+              Items.Strings = (
+                'nome'
+              )
+              ItemHeight = 20
+            end
+          end
+        end
+        inherited tbsCadastro: TTabSheet
+          inherited pnlFundoCadastro: TPanel
+            object edtNome: TLabeledEdit[1]
+              Left = 8
+              Height = 28
+              Top = 32
+              Width = 452
+              EditLabel.Height = 20
+              EditLabel.Width = 452
+              EditLabel.Caption = 'Nome:'
+              MaxLength = 60
+              TabOrder = 1
+              Text = 'edtNome'
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited actList: TActionList
+    inherited actExcluir: TAction
+      OnExecute = actExcluirExecute
+    end
+    inherited actPesquisar: TAction
+      OnExecute = actPesquisarExecute
+    end
+    inherited actSalvar: TAction
+      OnExecute = actSalvarExecute
+    end
+  end
+end

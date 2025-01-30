@@ -348,6 +348,21 @@
         <Filename Value="pas\controller\controller.login.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="pas\model\dao\model.dao.bandeira.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.bandeira.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.bandeira.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmBandeira"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

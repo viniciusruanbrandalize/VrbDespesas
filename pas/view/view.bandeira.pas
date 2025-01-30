@@ -1,4 +1,4 @@
-unit view.banco;
+unit view.bandeira;
 
 {$mode ObjFPC}{$H+}
 
@@ -6,15 +6,14 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  view.cadastropadrao, controller.banco, lib.types, view.mensagem;
+  view.cadastropadrao, controller.bandeira, lib.types, view.mensagem;
 
 type
 
-  { TfrmBanco }
+  { TfrmBandeira }
 
-  TfrmBanco = class(TfrmCadastroPadrao)
+  TfrmBandeira = class(TfrmCadastroPadrao)
     edtNome: TLabeledEdit;
-    edtNumero: TLabeledEdit;
     procedure actExcluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
@@ -22,7 +21,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
-    Controller: TBancoController;
+    Controller: TBandeiraController;
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -30,7 +29,7 @@ type
   end;
 
 var
-  frmBanco: TfrmBanco;
+  frmBandeira: TfrmBandeira;
 
 implementation
 
@@ -39,52 +38,47 @@ uses
 
 {$R *.lfm}
 
-{ TfrmBanco }
+{ TfrmBandeira }
 
-procedure TfrmBanco.FormCreate(Sender: TObject);
+procedure TfrmBandeira.FormCreate(Sender: TObject);
 begin
   inherited;
-  Controller := TBancoController.Create;
+  Controller := TBandeiraController.Create;
 end;
 
-procedure TfrmBanco.FormDestroy(Sender: TObject);
+procedure TfrmBandeira.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
 end;
 
-procedure TfrmBanco.actSalvarExecute(Sender: TObject);
+procedure TfrmBandeira.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
   if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
   begin
-    Controller.Banco.Nome   := edtNome.Text;
-
-    if edtNumero.Text <> '' then
-      Controller.Banco.Numero := StrToInt(edtNumero.Text)
-    else
-      Controller.Banco.Numero := 0;
+    Controller.Bandeira.Nome   := edtNome.Text;
 
     if Operacao = opInserir then
     begin
-      if not Controller.Inserir(Controller.Banco, erro) then
+      if not Controller.Inserir(Controller.Bandeira, erro) then
         TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     end;
     if Operacao = opEditar then
     begin
-      if not Controller.Editar(Controller.Banco, erro) then
+      if not Controller.Editar(Controller.Bandeira, erro) then
         TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     end;
     inherited;
   end;
 end;
 
-procedure TfrmBanco.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+procedure TfrmBandeira.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuFinanceiro, True);
 end;
 
-procedure TfrmBanco.actExcluirExecute(Sender: TObject);
+procedure TfrmBandeira.actExcluirExecute(Sender: TObject);
 var
   erro: String;
   id: Integer;
@@ -101,34 +95,32 @@ begin
   end;
 end;
 
-procedure TfrmBanco.actPesquisarExecute(Sender: TObject);
+procedure TfrmBandeira.actPesquisarExecute(Sender: TObject);
 begin
   lvPadrao.Items.Clear;
   Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex], edtPesquisa.Text);
 end;
 
-procedure TfrmBanco.CarregarDados;
+procedure TfrmBandeira.CarregarDados;
 begin
   lvPadrao.Items.Clear;
   Controller.Listar(lvPadrao);
 end;
 
-procedure TfrmBanco.LimparCampos;
+procedure TfrmBandeira.LimparCampos;
 begin
   edtNome.Clear;
-  edtNumero.Clear;
 end;
 
-procedure TfrmBanco.CarregarSelecionado;
+procedure TfrmBandeira.CarregarSelecionado;
 var
   id: Integer;
   erro: String;
 begin
   id := StrToInt(lvPadrao.Selected.Caption);
-  if Controller.BuscarPorId(controller.Banco, id, erro) then
+  if Controller.BuscarPorId(controller.Bandeira, id, erro) then
   begin
-    edtNome.Text   := Controller.Banco.Nome;
-    edtNumero.Text := Controller.Banco.Numero.ToString;
+    edtNome.Text   := Controller.Bandeira.Nome;
   end
   else
   begin

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
-  view.logerro, view.loglogin;
+  view.logerro, view.loglogin, view.bandeira;
 
 type
 
@@ -25,6 +25,9 @@ type
     actConfiguracaoGlobal: TAction;
     actBackup: TAction;
     actHistoricoLogin: TAction;
+    actFinanceiro: TAction;
+    actBandeira: TAction;
+    actVoltarFinanceiro: TAction;
     actLogLogin: TAction;
     actLogErro: TAction;
     actVoltar: TAction;
@@ -38,6 +41,8 @@ type
     actRelatorio: TAction;
     actMenu: TActionList;
     AppProperties: TApplicationProperties;
+    btnBanco: TSpeedButton;
+    btnBandeira: TSpeedButton;
     btnContasPagar: TSpeedButton;
     btnConfiguracao: TSpeedButton;
     btnLogErro: TSpeedButton;
@@ -46,19 +51,20 @@ type
     btnLoglogin: TSpeedButton;
     btnRecebimento: TSpeedButton;
     btnSubtipo: TSpeedButton;
-    btnBanco: TSpeedButton;
     btnOperacao: TSpeedButton;
     btnAjuda: TSpeedButton;
     btnDevedor: TSpeedButton;
     btnLoja: TSpeedButton;
     btnTipo: TSpeedButton;
     btnUsuario: TSpeedButton;
+    btnFinanceiro: TSpeedButton;
     btnVoltar: TSpeedButton;
     btnUtilitario: TSpeedButton;
     btnRelatorio: TSpeedButton;
     btnFormaPagamento: TSpeedButton;
     btnVoltar1: TSpeedButton;
     btnVoltar2: TSpeedButton;
+    btnVoltar3: TSpeedButton;
     imgMenu: TImage;
     imgUsuario: TImage;
     imgList: TImageList;
@@ -69,6 +75,7 @@ type
     pnlMenuCadastro: TPanel;
     pnlMenuOperacao: TPanel;
     pnlMenuUtilitario: TPanel;
+    pnlMenuFinanceiro: TPanel;
     pnlMenuVazio: TPanel;
     pnlUsuario: TPanel;
     pnlMenuRetair: TPanel;
@@ -79,7 +86,9 @@ type
     Timer: TTimer;
     procedure actAjudaExecute(Sender: TObject);
     procedure actBancoExecute(Sender: TObject);
+    procedure actBandeiraExecute(Sender: TObject);
     procedure actCadastroExecute(Sender: TObject);
+    procedure actFinanceiroExecute(Sender: TObject);
     procedure actFormaPagamentoExecute(Sender: TObject);
     procedure actLogErroExecute(Sender: TObject);
     procedure actLogLoginExecute(Sender: TObject);
@@ -90,6 +99,7 @@ type
     procedure actUsuarioExecute(Sender: TObject);
     procedure actUtilitarioExecute(Sender: TObject);
     procedure actVoltarExecute(Sender: TObject);
+    procedure actVoltarFinanceiroExecute(Sender: TObject);
     procedure AppPropertiesException(Sender: TObject; E: Exception);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -151,6 +161,11 @@ begin
   mudarMenu(1);
 end;
 
+procedure TfrmPrincipal.actFinanceiroExecute(Sender: TObject);
+begin
+  mudarMenu(20);
+end;
+
 procedure TfrmPrincipal.actFormaPagamentoExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmFormaPagamento, TfrmFormaPagamento, false, pnlAbreForms, Self);
@@ -175,7 +190,13 @@ end;
 procedure TfrmPrincipal.actBancoExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmBanco, TfrmBanco, false, pnlAbreForms, Self);
-  BarraLateralVazia(pnlMenuCadastro, false);
+  BarraLateralVazia(pnlMenuFinanceiro, false);
+end;
+
+procedure TfrmPrincipal.actBandeiraExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmBandeira, TfrmBandeira, false, pnlAbreForms, Self);
+  BarraLateralVazia(pnlMenuFinanceiro, false);
 end;
 
 procedure TfrmPrincipal.actOperacaoExecute(Sender: TObject);
@@ -216,6 +237,11 @@ begin
   mudarMenu(0);
 end;
 
+procedure TfrmPrincipal.actVoltarFinanceiroExecute(Sender: TObject);
+begin
+  mudarMenu(1);
+end;
+
 procedure TfrmPrincipal.AppPropertiesException(Sender: TObject; E: Exception);
 begin
   Controller.TratarErros(Sender, E);
@@ -242,6 +268,7 @@ begin
     pnlMenuCadastro.Width   := 215;
     pnlMenuOperacao.Width   := 215;
     pnlMenuUtilitario.Width := 215;
+    pnlMenuFinanceiro.Width := 215;
     //pnlMenuVazio.Width      := 215;
     pnlMenuRetair.Caption := 'MENU';
   end
@@ -252,6 +279,7 @@ begin
     pnlMenuCadastro.Width   := 50;
     pnlMenuOperacao.Width   := 50;
     pnlMenuUtilitario.Width := 50;
+    pnlMenuFinanceiro.Width := 50;
     //pnlMenuVazio.Width      := 50;
     pnlMenuRetair.Caption := '';
   end;
@@ -264,6 +292,7 @@ begin
   {
     0 - Menu Principal
     1 - Menu de Cadastro
+        20 - Menu de Cadastros Financeiros
     2 - Menu de Operações
     3 - Menu de Utilitarios
     4 - Menu de Relatórios
@@ -273,6 +302,7 @@ begin
   pnlMenuCadastro.Visible   := index = 1;
   pnlMenuOperacao.Visible   := Index = 2;
   pnlMenuUtilitario.Visible := Index = 3;
+  pnlMenuFinanceiro.Visible := Index = 20;
 end;
 
 procedure TfrmPrincipal.BarraLateralVazia(pnlAtivo: TPanel; Ativo: Boolean);
