@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, model.entity.banco, model.entity.usuario,
-  model.entity.participante;
+  model.entity.participante, model.entity.donocadastro;
 
 type
 
@@ -170,11 +170,16 @@ end;
 
 constructor TContaBancaria.Create;
 begin
-  //
+  FBanco := TBanco.Create;
+  FDonoCadastro := TDonoCadastro.Create;
+  FUsuarioCadastro := TUsuario.Create;
 end;
 
 destructor TContaBancaria.Destroy;
 begin
+  FBanco.Free;
+  FUsuarioCadastro.Free;
+  FreeAndNil(FDonoCadastro);
   inherited Destroy;
 end;
 

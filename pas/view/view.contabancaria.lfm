@@ -1,0 +1,103 @@
+inherited frmContaBancaria: TfrmContaBancaria
+  Caption = 'Cadastro de contas bancárias'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  inherited pnlFundo: TPanel
+    inherited pnlPrincipal: TPanel
+      inherited pgcPadrao: TPageControl
+        ActivePage = tbsCadastro
+        TabIndex = 1
+        inherited tbsLista: TTabSheet
+          inherited pnlFundoLista: TPanel
+            inherited lvPadrao: TListView
+              Columns = <              
+                item
+                  Caption = 'Código'
+                  Width = 100
+                end              
+                item
+                  Caption = 'Nome'
+                  Width = 820
+                end>
+            end
+            inherited pnlPesquisa: TPanel
+              inherited edtPesquisa: TEdit
+                AnchorSideLeft.Control = nil
+                AnchorSideLeft.Side = asrTop
+                AnchorSideRight.Control = nil
+                Left = 208
+                Width = 688
+                Text = ''
+              end
+              inherited btnPesquisar: TSpeedButton
+                AnchorSideLeft.Side = asrTop
+                AnchorSideRight.Control = nil
+                AnchorSideRight.Side = asrTop
+                Left = 906
+                Width = 37
+                Margin = -1
+                ShowCaption = False
+              end
+              inherited cbPesquisa: TComboBox
+                AnchorSideLeft.Control = nil
+                Left = 8
+                Items.Strings = (
+                  'Nome'
+                  'Número'
+                )
+              end
+            end
+            inherited lbPesquisa: TListBox
+              Items.Strings = (
+                'nome'
+                'numero'
+              )
+              ItemHeight = 20
+            end
+          end
+        end
+        inherited tbsCadastro: TTabSheet
+          inherited pnlFundoCadastro: TPanel
+            object edtAgencia: TLabeledEdit[1]
+              Left = 232
+              Height = 28
+              Top = 32
+              Width = 192
+              EditLabel.Height = 20
+              EditLabel.Width = 192
+              EditLabel.Caption = 'Agência:'
+              MaxLength = 60
+              TabOrder = 1
+              Text = 'edtAgencia'
+            end
+            object edtNumero: TLabeledEdit[2]
+              Left = 5
+              Height = 28
+              Top = 32
+              Width = 211
+              EditLabel.Height = 20
+              EditLabel.Width = 211
+              EditLabel.Caption = 'Número:'
+              MaxLength = 11
+              NumbersOnly = True
+              TabOrder = 2
+              Text = 'edtNumero'
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited actList: TActionList
+    inherited actExcluir: TAction
+      OnExecute = actExcluirExecute
+    end
+    inherited actPesquisar: TAction
+      OnExecute = actPesquisarExecute
+    end
+    inherited actSalvar: TAction
+      OnExecute = actSalvarExecute
+    end
+  end
+end

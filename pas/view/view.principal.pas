@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
-  view.logerro, view.loglogin, view.bandeira;
+  view.logerro, view.loglogin, view.bandeira, view.contabancaria;
 
 type
 
@@ -27,6 +27,7 @@ type
     actHistoricoLogin: TAction;
     actFinanceiro: TAction;
     actBandeira: TAction;
+    actContaBancaria: TAction;
     actVoltarFinanceiro: TAction;
     actLogLogin: TAction;
     actLogErro: TAction;
@@ -43,6 +44,7 @@ type
     AppProperties: TApplicationProperties;
     btnBanco: TSpeedButton;
     btnBandeira: TSpeedButton;
+    btnConta: TSpeedButton;
     btnContasPagar: TSpeedButton;
     btnConfiguracao: TSpeedButton;
     btnLogErro: TSpeedButton;
@@ -88,6 +90,7 @@ type
     procedure actBancoExecute(Sender: TObject);
     procedure actBandeiraExecute(Sender: TObject);
     procedure actCadastroExecute(Sender: TObject);
+    procedure actContaBancariaExecute(Sender: TObject);
     procedure actFinanceiroExecute(Sender: TObject);
     procedure actFormaPagamentoExecute(Sender: TObject);
     procedure actLogErroExecute(Sender: TObject);
@@ -159,6 +162,12 @@ end;
 procedure TfrmPrincipal.actCadastroExecute(Sender: TObject);
 begin
   mudarMenu(1);
+end;
+
+procedure TfrmPrincipal.actContaBancariaExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmContaBancaria, TfrmContaBancaria, false, pnlAbreForms, Self);
+  BarraLateralVazia(pnlMenuFinanceiro, false);
 end;
 
 procedure TfrmPrincipal.actFinanceiroExecute(Sender: TObject);

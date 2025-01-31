@@ -26,8 +26,9 @@ uses
   view.tipodespesa, model.dao.formapagamento, controller.formapagamento,
   controller.tipodespesa, controller.subtipodespesa, controller.usuario,
   controller.logerro, controller.loglogin, controller.login,
-  controller.bandeira, model.dao.tipodespesa, model.dao.subtipodespesa,
-  model.dao.usuario, model.dao.login, model.dao.bandeira, view.subtipodespesa,
+  controller.bandeira, controller.contabancaria, model.dao.tipodespesa,
+  model.dao.subtipodespesa, model.dao.usuario, model.dao.login,
+  model.dao.bandeira, model.dao.contabancaria, view.subtipodespesa,
   view.usuario, view.logerro, view.loglogin, view.login, view.bandeira,
   Controls;
 
