@@ -5,7 +5,7 @@ unit model.dao.contabancaria;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, SQLDB, model.entity.contabancaria,
+  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.entity.contabancaria,
   model.connection.conexao1;
 
 type
@@ -18,11 +18,13 @@ type
   public
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure PesquisarBanco(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(ContaBancaria : TContaBancaria; Id: Integer; out Erro: String): Boolean;
     function Inserir(ContaBancaria: TContaBancaria; out Erro: string): Boolean;
     function Editar(ContaBancaria: TContaBancaria; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
     function GerarId(Gerador: String; Incremento: Integer=1): Integer;
+    procedure ListarPix(lv: TListView; IdConta: Integer);
     constructor Create;
     destructor Destroy; override;
   end;
@@ -110,15 +112,53 @@ begin
   end;
 end;
 
+procedure TContaBancariaDAO.PesquisarBanco(lbNome, lbId: TListBox;
+  busca: String; out QtdRegistro: Integer);
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select first 10 id, nome from banco ' +
+           'where UPPER(nome) like :busca '+
+           'order by nome';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    QtdRegistro := Qry.RecordCount;
+
+    lbNome.Items.Clear;
+    lbNome.Height := 100;
+    lbId.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbId.Items.Add(Qry.FieldByName('id').AsString);
+      lbNome.Items.Add(qry.FieldByName('nome').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
+  end;
+end;
+
 function TContaBancariaDAO.BuscarPorId(ContaBancaria: TContaBancaria; Id: Integer; out Erro: String): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'select * from conta_bancaria ' +
-           'where id = :id ' +
-           'order by id';
+    sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
+           'left join banco b on b.id = cb.id_banco ' +
+           'where cb.id = :id ' +
+           'order by cb.id';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -135,6 +175,7 @@ begin
       ContaBancaria.Cadastro  := Qry.FieldByName('cadastro').AsDateTime;
       ContaBancaria.Alteracao := Qry.FieldByName('alteracao').AsDateTime;
       ContaBancaria.Banco.Id  := Qry.FieldByName('id_banco').AsInteger;
+      ContaBancaria.Banco.Nome := Qry.FieldByName('nome_banco').AsString;
       //ContaBancaria.DonoCadastro.
       ContaBancaria.UsuarioCadastro.Id := Qry.FieldByName('id_usuario_cadastro').AsInteger;
       Result := True;
@@ -165,7 +206,7 @@ begin
     sql := 'insert into conta_bancaria(id, numero, agencia, tipo, cadastro, ' +
            'id_banco, id_usuario_cadastro, id_dono_cadastro) values ' +
            '(:id, :numero, :agencia, :tipo, :cadastro, :id_banco, ' +
-           ':id_usuario_cadastro, id_dono_cadastro)';
+           ':id_usuario_cadastro, :id_dono_cadastro)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -272,6 +313,40 @@ begin
 
   finally
     qryGerador.Free;
+  end;
+end;
+
+procedure TContaBancariaDAO.ListarPix(lv: TListView; IdConta: Integer);
+var
+  sql: String;
+  item : TListItem;
+begin
+  try
+
+    sql := 'select * from pix ' +
+           'where id_conta_bancaria = :id_conta_bancaria ' +
+           'order by cadastro desc';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id_conta_bancaria').AsInteger := IdConta;
+    Qry.Open;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := Qry.FieldByName('chave').AsString;
+      item.SubItems.Add(qry.FieldByName('chave').AsString);
+      item.SubItems.Add(qry.FieldByName('tipo').AsString);
+      item.SubItems.Add(qry.FieldByName('cadastro').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    Qry.Close;
   end;
 end;
 

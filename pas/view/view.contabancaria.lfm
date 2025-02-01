@@ -6,8 +6,8 @@ inherited frmContaBancaria: TfrmContaBancaria
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
+        ActivePage = tbsPix
+        TabIndex = 3
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -17,8 +17,16 @@ inherited frmContaBancaria: TfrmContaBancaria
                   Width = 100
                 end              
                 item
-                  Caption = 'Nome'
-                  Width = 820
+                  Caption = 'Número'
+                  Width = 200
+                end              
+                item
+                  Caption = 'Agência'
+                  Width = 200
+                end              
+                item
+                  Caption = 'Banco'
+                  Width = 400
                 end>
             end
             inherited pnlPesquisa: TPanel
@@ -43,15 +51,18 @@ inherited frmContaBancaria: TfrmContaBancaria
                 AnchorSideLeft.Control = nil
                 Left = 8
                 Items.Strings = (
-                  'Nome'
+                  'Agência'
                   'Número'
+                  'Banco'
                 )
+                Text = 'Agência'
               end
             end
             inherited lbPesquisa: TListBox
               Items.Strings = (
-                'nome'
-                'numero'
+                'cb.agencia'
+                'cb.numero'
+                'b.nome'
               )
               ItemHeight = 20
             end
@@ -66,7 +77,7 @@ inherited frmContaBancaria: TfrmContaBancaria
               Width = 192
               EditLabel.Height = 20
               EditLabel.Width = 192
-              EditLabel.Caption = 'Agência:'
+              EditLabel.Caption = 'Agência: *'
               MaxLength = 60
               TabOrder = 1
               Text = 'edtAgencia'
@@ -78,11 +89,470 @@ inherited frmContaBancaria: TfrmContaBancaria
               Width = 211
               EditLabel.Height = 20
               EditLabel.Width = 211
-              EditLabel.Caption = 'Número:'
+              EditLabel.Caption = 'Número: *'
               MaxLength = 11
               NumbersOnly = True
               TabOrder = 2
               Text = 'edtNumero'
+            end
+            object cbTipo: TComboBox[3]
+              Left = 440
+              Height = 28
+              Top = 32
+              Width = 192
+              ItemHeight = 20
+              Items.Strings = (
+                'Corrente'
+                'Poupança'
+                'Salário'
+                'Corrente/Poupança'
+                'Poupança/Salário'
+              )
+              Style = csDropDownList
+              TabOrder = 3
+            end
+            object lblTipoConta: TLabel[4]
+              Left = 440
+              Height = 20
+              Top = 9
+              Width = 43
+              Caption = 'Tipo: *'
+            end
+            object edtBanco: TLabeledEdit[5]
+              Left = 8
+              Height = 28
+              Top = 96
+              Width = 208
+              EditLabel.Height = 20
+              EditLabel.Width = 208
+              EditLabel.Caption = 'Banco: *'
+              Font.Color = 2977025
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 4
+              Text = 'edtBanco'
+              OnExit = edtBancoExit
+              OnKeyUp = edtBancoKeyUp
+            end
+            object lbBancoNome: TListBox[6]
+              Left = 8
+              Height = 19
+              Top = 125
+              Width = 327
+              BorderStyle = bsNone
+              Color = 12451746
+              Items.Strings = (
+                'subtipo1'
+                'subtipo2'
+                'subtipo3'
+                'subtipo4'
+              )
+              ItemHeight = 20
+              TabOrder = 5
+              Visible = False
+              OnDblClick = lbBancoNomeDblClick
+              OnKeyPress = lbBancoNomeKeyPress
+              OnSelectionChange = lbBancoNomeSelectionChange
+            end
+            object lbBancoId: TListBox[7]
+              Left = 344
+              Height = 19
+              Top = 125
+              Width = 144
+              Items.Strings = (
+                'key'
+                'key'
+                'key'
+                'key'
+              )
+              ItemHeight = 20
+              TabOrder = 6
+              Visible = False
+            end
+          end
+        end
+        object tbsCartao: TTabSheet[2]
+          Caption = 'tbsCartao'
+          ClientHeight = 523
+          ClientWidth = 951
+          object pnlFundoCartao: TPanel
+            Left = 0
+            Height = 523
+            Top = 0
+            Width = 951
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 523
+            ClientWidth = 951
+            ParentBackground = False
+            TabOrder = 0
+            object pgcCartao: TPageControl
+              Left = 0
+              Height = 523
+              Top = 0
+              Width = 951
+              ActivePage = tbsListaCartao
+              Align = alClient
+              TabIndex = 0
+              TabOrder = 0
+              object tbsListaCartao: TTabSheet
+                Caption = 'tbsListaCartao'
+                ClientHeight = 490
+                ClientWidth = 943
+                object pnlFundoListaCartao: TPanel
+                  Left = 0
+                  Height = 490
+                  Top = 0
+                  Width = 943
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 490
+                  ClientWidth = 943
+                  ParentBackground = False
+                  TabOrder = 0
+                  object pnlBotaoListaCartao: TPanel
+                    Left = 5
+                    Height = 60
+                    Top = 425
+                    Width = 933
+                    Align = alBottom
+                    BorderSpacing.Around = 5
+                    BevelOuter = bvNone
+                    ClientHeight = 60
+                    ClientWidth = 933
+                    ParentBackground = False
+                    TabOrder = 0
+                    object ToolBarListaCartao: TToolBar
+                      Left = 0
+                      Height = 60
+                      Top = 0
+                      Width = 933
+                      Align = alClient
+                      ButtonHeight = 60
+                      ButtonWidth = 100
+                      Caption = 'ToolBarLista'
+                      EdgeInner = esNone
+                      EdgeOuter = esNone
+                      Images = img
+                      ImagesWidth = 32
+                      ShowCaptions = True
+                      TabOrder = 0
+                      object btnIncluirCartao: TToolButton
+                        Left = 1
+                        Top = 0
+                        Action = actIncluirCartao
+                      end
+                      object btnEditarCartao: TToolButton
+                        Left = 101
+                        Top = 0
+                        Action = actEditarCartao
+                      end
+                      object btnExcluirCartao: TToolButton
+                        Left = 201
+                        Top = 0
+                        Action = actExcluirCartao
+                      end
+                      object btnVisualizarCartao: TToolButton
+                        Left = 301
+                        Top = 0
+                        Action = actVisualizarCartao
+                      end
+                    end
+                  end
+                  object lvCartao: TListView
+                    Cursor = crHandPoint
+                    Left = 5
+                    Height = 415
+                    Top = 5
+                    Width = 933
+                    Align = alClient
+                    BorderSpacing.Around = 5
+                    BorderStyle = bsNone
+                    Columns = <                    
+                      item
+                        Caption = 'Código'
+                        Width = 0
+                      end                    
+                      item
+                        Caption = 'Chave'
+                        Width = 500
+                      end                    
+                      item
+                        Caption = 'Tipo'
+                        Width = 400
+                      end>
+                    PopupMenu = pMenuPix
+                    RowSelect = True
+                    TabOrder = 1
+                    ViewStyle = vsReport
+                  end
+                end
+              end
+              object tbsCadastroCartao: TTabSheet
+                Caption = 'tbsCadastroCartao'
+                ClientHeight = 490
+                ClientWidth = 943
+                object pnlFundoCadCartao: TPanel
+                  Left = 0
+                  Height = 490
+                  Top = 0
+                  Width = 943
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 490
+                  ClientWidth = 943
+                  ParentBackground = False
+                  TabOrder = 0
+                  object pnlBotaoCadCartao: TPanel
+                    Left = 5
+                    Height = 60
+                    Top = 425
+                    Width = 933
+                    Align = alBottom
+                    BorderSpacing.Around = 5
+                    BevelOuter = bvNone
+                    ClientHeight = 60
+                    ClientWidth = 933
+                    ParentBackground = False
+                    TabOrder = 0
+                    object ToolBarCadastroCartao: TToolBar
+                      Left = 0
+                      Height = 60
+                      Top = 0
+                      Width = 933
+                      Align = alClient
+                      ButtonHeight = 60
+                      ButtonWidth = 100
+                      Caption = 'ToolBarCadastro'
+                      EdgeInner = esNone
+                      EdgeOuter = esNone
+                      Images = img
+                      ImagesWidth = 32
+                      ShowCaptions = True
+                      TabOrder = 0
+                      object btnSalvarCartao: TToolButton
+                        Left = 1
+                        Top = 0
+                        Action = actSalvarPix
+                      end
+                      object btnCancelarCartao: TToolButton
+                        Left = 101
+                        Top = 0
+                        Action = actCancelarPix
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+        object tbsPix: TTabSheet[3]
+          Caption = 'tbsPix'
+          ClientHeight = 523
+          ClientWidth = 951
+          object pnlFundoPix: TPanel
+            Left = 0
+            Height = 523
+            Top = 0
+            Width = 951
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 523
+            ClientWidth = 951
+            ParentBackground = False
+            TabOrder = 0
+            object pgcPix: TPageControl
+              Left = 0
+              Height = 523
+              Top = 0
+              Width = 951
+              ActivePage = tbsCadastroPix
+              Align = alClient
+              TabIndex = 1
+              TabOrder = 0
+              object tbsListaPix: TTabSheet
+                Caption = 'tbsListaPix'
+                ClientHeight = 490
+                ClientWidth = 943
+                object pnlFundoListaPix: TPanel
+                  Left = 0
+                  Height = 490
+                  Top = 0
+                  Width = 943
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 490
+                  ClientWidth = 943
+                  ParentBackground = False
+                  TabOrder = 0
+                  object pnlBotaoListaPix: TPanel
+                    Left = 5
+                    Height = 60
+                    Top = 425
+                    Width = 933
+                    Align = alBottom
+                    BorderSpacing.Around = 5
+                    BevelOuter = bvNone
+                    ClientHeight = 60
+                    ClientWidth = 933
+                    ParentBackground = False
+                    TabOrder = 0
+                    object ToolBarListaPix: TToolBar
+                      Left = 0
+                      Height = 60
+                      Top = 0
+                      Width = 933
+                      Align = alClient
+                      ButtonHeight = 60
+                      ButtonWidth = 100
+                      Caption = 'ToolBarLista'
+                      EdgeInner = esNone
+                      EdgeOuter = esNone
+                      Images = img
+                      ImagesWidth = 32
+                      ShowCaptions = True
+                      TabOrder = 0
+                      object btnIncluirPix: TToolButton
+                        Left = 1
+                        Top = 0
+                        Action = actIncluirPix
+                      end
+                      object btnEditarPix: TToolButton
+                        Left = 101
+                        Top = 0
+                        Action = actEditarPix
+                      end
+                      object btnExcluirPix: TToolButton
+                        Left = 201
+                        Top = 0
+                        Action = actExcluirPix
+                      end
+                      object btnVisualizarPix: TToolButton
+                        Left = 301
+                        Top = 0
+                        Action = actVisualizarPix
+                      end
+                    end
+                  end
+                  object lvPix: TListView
+                    Cursor = crHandPoint
+                    Left = 5
+                    Height = 415
+                    Top = 5
+                    Width = 933
+                    Align = alClient
+                    BorderSpacing.Around = 5
+                    BorderStyle = bsNone
+                    Columns = <                    
+                      item
+                        Caption = 'Código'
+                        Width = 0
+                      end                    
+                      item
+                        Caption = 'Chave'
+                        Width = 500
+                      end                    
+                      item
+                        Caption = 'Tipo'
+                        Width = 400
+                      end>
+                    PopupMenu = pMenuPix
+                    RowSelect = True
+                    TabOrder = 1
+                    ViewStyle = vsReport
+                  end
+                end
+              end
+              object tbsCadastroPix: TTabSheet
+                Caption = 'tbsCadastroPix'
+                ClientHeight = 490
+                ClientWidth = 943
+                object pnlFundoCadPix: TPanel
+                  Left = 0
+                  Height = 490
+                  Top = 0
+                  Width = 943
+                  Align = alClient
+                  BevelOuter = bvNone
+                  ClientHeight = 490
+                  ClientWidth = 943
+                  ParentBackground = False
+                  TabOrder = 0
+                  object edtChave: TLabeledEdit
+                    Left = 8
+                    Height = 28
+                    Top = 32
+                    Width = 348
+                    EditLabel.Height = 20
+                    EditLabel.Width = 348
+                    EditLabel.Caption = 'Chave: *'
+                    TabOrder = 0
+                    Text = 'edtChave'
+                  end
+                  object cbTipoChave: TComboBox
+                    Left = 368
+                    Height = 28
+                    Top = 32
+                    Width = 245
+                    ItemHeight = 20
+                    Items.Strings = (
+                      'CPF'
+                      'CNPJ'
+                      'E-MAIL'
+                      'ALEATÓRIA'
+                    )
+                    Style = csDropDownList
+                    TabOrder = 1
+                  end
+                  object lblTipoChavePix: TLabel
+                    Left = 368
+                    Height = 20
+                    Top = 10
+                    Width = 106
+                    Caption = 'Tipo de chave: *'
+                  end
+                  object pnlBotaoCadPix: TPanel
+                    Left = 5
+                    Height = 60
+                    Top = 425
+                    Width = 933
+                    Align = alBottom
+                    BorderSpacing.Around = 5
+                    BevelOuter = bvNone
+                    ClientHeight = 60
+                    ClientWidth = 933
+                    ParentBackground = False
+                    TabOrder = 2
+                    object ToolBarCadastroPix: TToolBar
+                      Left = 0
+                      Height = 60
+                      Top = 0
+                      Width = 933
+                      Align = alClient
+                      ButtonHeight = 60
+                      ButtonWidth = 100
+                      Caption = 'ToolBarCadastro'
+                      EdgeInner = esNone
+                      EdgeOuter = esNone
+                      Images = img
+                      ImagesWidth = 32
+                      ShowCaptions = True
+                      TabOrder = 0
+                      object btnSalvarPix: TToolButton
+                        Left = 1
+                        Top = 0
+                        Action = actSalvarPix
+                      end
+                      object btnCancelarPix: TToolButton
+                        Left = 101
+                        Top = 0
+                        Action = actCancelarPix
+                      end
+                    end
+                  end
+                end
+              end
             end
           end
         end
@@ -99,5 +569,88 @@ inherited frmContaBancaria: TfrmContaBancaria
     inherited actSalvar: TAction
       OnExecute = actSalvarExecute
     end
+    object actCartao: TAction[8]
+      Caption = 'Cartões'
+      ImageIndex = 9
+    end
+    object actPix: TAction[9]
+      Caption = 'Chaves Pix'
+      ImageIndex = 10
+    end
+    object actSalvarPix: TAction[10]
+      Caption = 'Salvar'
+      ImageIndex = 6
+    end
+    object actCancelarPix: TAction[11]
+      Caption = 'Cancelar'
+      ImageIndex = 7
+    end
+    object actSalvarCartao: TAction[12]
+      Caption = 'Salvar'
+      ImageIndex = 6
+    end
+    object actCancelarCartao: TAction[13]
+      Caption = 'Cancelar'
+      ImageIndex = 7
+    end
+    object actIncluirPix: TAction[14]
+      Caption = 'Incluir'
+      ImageIndex = 1
+    end
+    object actEditarPix: TAction[15]
+      Caption = 'Editar'
+      ImageIndex = 2
+    end
+    object actExcluirPix: TAction[16]
+      Caption = 'Excluir'
+      ImageIndex = 3
+    end
+    object actVisualizarPix: TAction[17]
+      Caption = 'Visualizar'
+      ImageIndex = 4
+    end
+    object actIncluirCartao: TAction[18]
+      Caption = 'Incluir'
+      ImageIndex = 1
+    end
+    object actEditarCartao: TAction[19]
+      Caption = 'Editar'
+      ImageIndex = 2
+    end
+    object actExcluirCartao: TAction[20]
+      Caption = 'Excluir'
+      ImageIndex = 3
+    end
+    object actVisualizarCartao: TAction[21]
+      Caption = 'Visualizar'
+      ImageIndex = 4
+    end
+  end
+  inherited pMenuPadrao: TPopupMenu
+    object MenuItem4: TMenuItem[3]
+      Action = actCartao
+    end
+    object MenuItem5: TMenuItem[4]
+      Action = actPix
+    end
+  end
+  object pMenuPix: TPopupMenu[4]
+    Images = img
+    Left = 416
+    Top = 8
+    object MenuItem6: TMenuItem
+      Action = actEditarPix
+    end
+    object MenuItem7: TMenuItem
+      Action = actExcluirPix
+    end
+    object MenuItem8: TMenuItem
+      Action = actVisualizarPix
+    end
+  end
+  object pMenuCartao: TPopupMenu[5]
+    Images = img
+    Left = 512
+    Top = 8
   end
 end

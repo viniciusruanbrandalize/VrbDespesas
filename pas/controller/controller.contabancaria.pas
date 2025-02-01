@@ -5,8 +5,8 @@ unit controller.contabancaria;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.entity.contabancaria,
-  model.dao.contabancaria;
+  Classes, SysUtils, ComCtrls, StdCtrls, model.entity.contabancaria,
+  model.dao.contabancaria, model.connection.conexao1;
 
 type
 
@@ -19,6 +19,7 @@ type
     ContaBancaria: TContaBancaria;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure PesquisarBanco(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(objContaBancaria : TContaBancaria; Id: Integer; out Erro: String): Boolean;
     function Inserir(objContaBancaria : TContaBancaria; out Erro: string): Boolean;
     function Editar(objContaBancaria : TContaBancaria; out Erro: string): Boolean;
@@ -41,6 +42,12 @@ begin
   ContaBancariaDAO.Pesquisar(lv, Campo, Busca);
 end;
 
+procedure TContaBancariaController.PesquisarBanco(lbNome, lbId: TListBox;
+  busca: String; out QtdRegistro: Integer);
+begin
+  ContaBancariaDAO.PesquisarBanco(lbNome, lbId, busca, QtdRegistro);
+end;
+
 function TContaBancariaController.BuscarPorId(objContaBancaria: TContaBancaria; Id: Integer; out
   Erro: String): Boolean;
 begin
@@ -49,7 +56,8 @@ end;
 
 function TContaBancariaController.Inserir(objContaBancaria: TContaBancaria; out Erro: string): Boolean;
 begin
-  objContaBancaria.Id := ContaBancariaDAO.GerarId('gen_id_tipo_despesa');
+  objContaBancaria.Id := ContaBancariaDAO.GerarId('gen_id_conta_bancaria');
+  objContaBancaria.UsuarioCadastro.Id := dmConexao1.IdUsuario;
   Result := ContaBancariaDAO.Inserir(objContaBancaria, Erro);
 end;
 

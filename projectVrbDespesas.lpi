@@ -371,6 +371,13 @@
         <Filename Value="pas\controller\controller.contabancaria.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.contabancaria.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmContaBancaria"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

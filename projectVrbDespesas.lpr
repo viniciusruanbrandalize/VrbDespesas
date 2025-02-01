@@ -30,7 +30,7 @@ uses
   model.dao.subtipodespesa, model.dao.usuario, model.dao.login,
   model.dao.bandeira, model.dao.contabancaria, view.subtipodespesa,
   view.usuario, view.logerro, view.loglogin, view.login, view.bandeira,
-  Controls;
+  view.contabancaria, Controls;
 
 {$R *.res}
 
