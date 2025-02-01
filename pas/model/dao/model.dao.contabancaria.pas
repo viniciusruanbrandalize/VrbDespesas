@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.entity.contabancaria,
-  model.connection.conexao1;
+  model.connection.conexao1, model.entity.pix, model.entity.cartao;
 
 type
 
@@ -24,7 +24,15 @@ type
     function Editar(ContaBancaria: TContaBancaria; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
     function GerarId(Gerador: String; Incremento: Integer=1): Integer;
+
+    {$Region 'Pix'}
     procedure ListarPix(lv: TListView; IdConta: Integer);
+    function BuscarPixPorId(Pix : TPix; Id: String; out Erro: String): Boolean;
+    function InserirPix(Pix: TPix; out Erro: string): Boolean;
+    function EditarPix(Pix: TPix; out Erro: string): Boolean;
+    function ExcluirPix(Id: String; out Erro: string): Boolean;
+    {$EndRegion}
+
     constructor Create;
     destructor Destroy; override;
   end;
@@ -347,6 +355,139 @@ begin
 
   finally
     Qry.Close;
+  end;
+end;
+
+function TContaBancariaDAO.BuscarPixPorId(Pix: TPix; Id: String; out Erro: String
+  ): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select * from pix ' +
+           'where chave = :id ' +
+           'order by chave';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsString := id;
+    Qry.Open;
+
+    if Qry.RecordCount = 1 then
+    begin
+      Pix.Chave              := Qry.FieldByName('chave').AsString;
+      Pix.Tipo               := Qry.FieldByName('tipo').AsString;
+      Pix.Cadastro           := Qry.FieldByName('cadastro').AsDateTime;
+      Pix.Alteracao          := Qry.FieldByName('alteracao').AsDateTime;
+      Pix.UsuarioCadastro.Id := Qry.FieldByName('id_usuario_cadastro').AsInteger;
+      Pix.ContaBancaria.Id   := Qry.FieldByName('id_conta_bancaria').AsInteger;
+      Result := True;
+    end
+    else
+    if Qry.RecordCount > 1 then
+    begin
+      Erro := 'Mais de um objeto foi retornado na busca por código!';
+      Result := False;
+    end
+    else
+    begin
+      Erro := 'Nenhum objeto foi encontrado!';
+      Result := False;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TContaBancariaDAO.InserirPix(Pix: TPix; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'insert into pix(chave, tipo, cadastro, id_conta_bancaria, ' +
+           'id_usuario_cadastro, id_dono_cadastro) values ' +
+           '(:chave, :tipo, :cadastro, :id_conta_bancaria, ' +
+           ':id_usuario_cadastro, :id_dono_cadastro)';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('chave').AsString      := Pix.Chave;
+    Qry.ParamByName('tipo').AsString       := Pix.Tipo;
+    Qry.ParamByName('cadastro').AsDateTime := Pix.Cadastro;
+    Qry.ParamByName('id_conta_bancaria').AsInteger  := Pix.ContaBancaria.Id;
+    Qry.ParamByName('id_usuario_cadastro').AsInteger  := Pix.UsuarioCadastro.Id;
+    //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao inserir Pix: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TContaBancariaDAO.EditarPix(Pix: TPix; out Erro: string): Boolean;
+begin
+  sql: String;
+try
+
+    sql := 'update pix set chave = :chave, tipo = :tipo, ' +
+           'alteracao = :alteracao ' +
+           'where chave = :id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('chave').AsString       := Pix.Chave;
+    Qry.ParamByName('id').AsString       := Pix.Chave;
+    Qry.ParamByName('tipo').AsString        := Pix.Tipo;
+    Qry.ParamByName('alteracao').AsDateTime := Pix.Alteracao;
+
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := 'Ocorreu um erro ao inserir Pix: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TContaBancariaDAO.ExcluirPix(Id: String; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'delete from pix where chave = :id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsString  := Id;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao inserir Conta Bancaria: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
   end;
 end;
 
