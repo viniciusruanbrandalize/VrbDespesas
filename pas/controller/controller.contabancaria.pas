@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.contabancaria,
-  model.dao.contabancaria, model.connection.conexao1;
+  model.entity.cartao, model.entity.pix, model.dao.contabancaria,
+  model.connection.conexao1;
 
 type
 
@@ -17,6 +18,8 @@ type
     ContaBancariaDAO: TContaBancariaDAO;
   public
     ContaBancaria: TContaBancaria;
+    Pix: TPix;
+    Cartao: TCartao;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
     procedure PesquisarBanco(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
@@ -24,6 +27,12 @@ type
     function Inserir(objContaBancaria : TContaBancaria; out Erro: string): Boolean;
     function Editar(objContaBancaria : TContaBancaria; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+
+    {$Region ''}
+    procedure ListarPix(lv: TListView; IdConta: Integer);
+    function InserirPix(objPix : TPix; out Erro: string): Boolean;
+    {$EndRegion}
+
     constructor Create;
     destructor Destroy; override;
   end;
@@ -71,16 +80,32 @@ begin
   Result := ContaBancariaDAO.Excluir(Id, Erro);
 end;
 
+procedure TContaBancariaController.ListarPix(lv: TListView; IdConta: Integer);
+begin
+  ContaBancariaDAO.ListarPix(lv, IdConta);
+end;
+
+function TContaBancariaController.InserirPix(objPix: TPix; out Erro: string
+  ): Boolean;
+begin
+  objPix.UsuarioCadastro.Id := dmConexao1.IdUsuario;
+  Result := ContaBancariaDAO.InserirPix(objPix, Erro);
+end;
+
 constructor TContaBancariaController.Create;
 begin
   ContaBancaria    := TContaBancaria.Create;
   ContaBancariaDAO := TContaBancariaDAO.Create;
+  Pix              := TPix.Create;
+  Cartao           := TCartao.Create;
 end;
 
 destructor TContaBancariaController.Destroy;
 begin
   ContaBancaria.Free;
   ContaBancariaDAO.Free;
+  Pix.Free;
+  Cartao.Free;
   inherited Destroy;
 end;
 

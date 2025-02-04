@@ -33,6 +33,14 @@ type
     function ExcluirPix(Id: String; out Erro: string): Boolean;
     {$EndRegion}
 
+    {$Region 'Cartao'}
+    procedure ListarCartao(lv: TListView; IdConta: Integer);
+    function BuscarCartaoPorId(Cartao : TCartao; Id: String; out Erro: String): Boolean;
+    function InserirCartao(Cartao : TCartao; out Erro: string): Boolean;
+    function EditarCartao(Cartao : TCartao; out Erro: string): Boolean;
+    function ExcluirCartao(Id: Integer; out Erro: string): Boolean;
+    {$EndRegion}
+
     constructor Create;
     destructor Destroy; override;
   end;
@@ -268,7 +276,7 @@ begin
   except on E: Exception do
     begin
       dmConexao1.SQLTransaction.Rollback;
-      Erro := 'Ocorreu um erro ao inserir Conta Bancaria: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao alterar Conta Bancaria: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
@@ -293,7 +301,7 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao inserir Conta Bancaria: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao excluir Conta Bancaria: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
@@ -436,9 +444,10 @@ begin
 end;
 
 function TContaBancariaDAO.EditarPix(Pix: TPix; out Erro: string): Boolean;
-begin
+var
   sql: String;
-try
+begin
+  try
 
     sql := 'update pix set chave = :chave, tipo = :tipo, ' +
            'alteracao = :alteracao ' +
@@ -460,7 +469,7 @@ try
   except on E: Exception do
     begin
       dmConexao1.SQLTransaction.Rollback;
-      Erro := 'Ocorreu um erro ao inserir Pix: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao alterar Pix: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
@@ -485,7 +494,203 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao inserir Conta Bancaria: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao excluir Pix: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+procedure TContaBancariaDAO.ListarCartao(lv: TListView; IdConta: Integer);
+var
+  sql: String;
+  item : TListItem;
+begin
+  try
+
+    sql := 'select * from cartao ' +
+           'where id_conta_bancaria = :id_conta_bancaria ' +
+           'order by cadastro desc';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id_conta_bancaria').AsInteger := IdConta;
+    Qry.Open;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('numero').AsString);
+
+      if qry.FieldByName('tipo').AsString = 'C' then
+        item.SubItems.Add('Crédito')
+      else
+        item.SubItems.Add('Débito');
+
+      if qry.FieldByName('aproximacao').AsBoolean then
+        item.SubItems.Add('Sim')
+      else
+        item.SubItems.Add('Não');
+
+      item.SubItems.Add(qry.FieldByName('validade').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TContaBancariaDAO.BuscarCartaoPorId(Cartao: TCartao; Id: String; out
+  Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select c.*, ban.nome as nome_bandeira from cartao card ' +
+           'left join bandeira ban on ban.id = card.id_bandeira ' +
+           'where id = :id ' +
+           'order by id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsString := id;
+    Qry.Open;
+
+    if Qry.RecordCount = 1 then
+    begin
+      Cartao.Id                 := Qry.FieldByName('id').AsInteger;
+      Cartao.Numero             := Qry.FieldByName('numero').AsString;
+      Cartao.Validade           := Qry.FieldByName('validade').AsDateTime;
+      Cartao.Cadastro           := Qry.FieldByName('cadastro').AsDateTime;
+      Cartao.Alteracao          := Qry.FieldByName('alteracao').AsDateTime;
+      Cartao.Tipo               := Qry.FieldByName('tipo').AsString;
+      Cartao.Aproximacao        := Qry.FieldByName('aproximacao').AsBoolean;
+      Cartao.UsuarioCadastro.Id := Qry.FieldByName('id_usuario_cadastro').AsInteger;
+      Cartao.ContaBancaria.Id   := Qry.FieldByName('id_conta_bancaria').AsInteger;
+      Cartao.Bandeira.Id        := Qry.FieldByName('id_bandeira').AsInteger;
+      Cartao.Bandeira.Nome      := Qry.FieldByName('nome_bandeira').AsString;
+      Result := True;
+    end
+    else
+    if Qry.RecordCount > 1 then
+    begin
+      Erro := 'Mais de um objeto foi retornado na busca por código!';
+      Result := False;
+    end
+    else
+    begin
+      Erro := 'Nenhum objeto foi encontrado!';
+      Result := False;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TContaBancariaDAO.InserirCartao(Cartao: TCartao; out Erro: string
+  ): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'insert into cartao(id, numero, tipo, aproximacao, validade, cadastro, ' +
+           'id_bandeira, id_conta_bancaria, id_dono_cadastro, id_usuario_cadastro) ' +
+           'values (:id, :numero, :tipo, :aproximacao, :validade, :cadastro, ' +
+           ':id_bandeira, :id_conta_bancaria, :id_dono_cadastro, :id_usuario_cadastro)';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger          := Cartao.Id;
+    Qry.ParamByName('tipo').AsString         := Cartao.Tipo;
+    Qry.ParamByName('numero').AsString       := Cartao.Numero;
+    Qry.ParamByName('aproximacao').AsBoolean := Cartao.Aproximacao;
+    Qry.ParamByName('validade').AsDateTime   := Cartao.Validade;
+    Qry.ParamByName('cadastro').AsDateTime   := Cartao.Cadastro;
+    Qry.ParamByName('id_bandeira').AsInteger := Cartao.Bandeira.Id;
+    Qry.ParamByName('id_conta_bancaria').AsInteger   := Cartao.ContaBancaria.Id;
+    Qry.ParamByName('id_usuario_cadastro').AsInteger := Cartao.UsuarioCadastro.Id;
+    //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao inserir Cartão: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TContaBancariaDAO.EditarCartao(Cartao: TCartao; out Erro: string
+  ): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'update cartao set numero = :numero, tipo = :tipo, ' +
+           'aproximacao = :aproximacao, validade = :validade, ' +
+           'id_bandeira = :id_bandeira, alteracao = :alteracao ' +
+           'where id = :id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger          := Cartao.Id;
+    Qry.ParamByName('tipo').AsString         := Cartao.Tipo;
+    Qry.ParamByName('numero').AsString       := Cartao.Numero;
+    Qry.ParamByName('aproximacao').AsBoolean := Cartao.Aproximacao;
+    Qry.ParamByName('validade').AsDateTime   := Cartao.Validade;
+    Qry.ParamByName('alteracao').AsDateTime  := Cartao.Alteracao;
+    Qry.ParamByName('id_bandeira').AsInteger := Cartao.Bandeira.Id;
+    Qry.ParamByName('id_conta_bancaria').AsInteger   := Cartao.ContaBancaria.Id;
+    Qry.ParamByName('id_usuario_cadastro').AsInteger := Cartao.UsuarioCadastro.Id;
+    //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := 'Ocorreu um erro ao alterar Cartão: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TContaBancariaDAO.ExcluirCartao(Id: Integer; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'delete from cartao where id = :id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger  := Id;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao excluir Cartão: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;

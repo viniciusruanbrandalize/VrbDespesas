@@ -167,7 +167,8 @@ end;
 
 procedure TfrmContaBancaria.CarregarDadosPix;
 begin
-  //
+  lvPix.Items.Clear;
+  Controller.ListarPix(lvPix, Controller.ContaBancaria.Id);
 end;
 
 procedure TfrmContaBancaria.LimparCamposPix;
