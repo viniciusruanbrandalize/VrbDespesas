@@ -57,6 +57,7 @@ type
     MenuItem6: TMenuItem;
     MenuItem7: TMenuItem;
     MenuItem8: TMenuItem;
+    pnlInfoContaPix: TPanel;
     pgcCartao: TPageControl;
     pnlBotaoCadCartao: TPanel;
     pnlBotaoListaPix: TPanel;
@@ -71,6 +72,7 @@ type
     pnlFundoCartao: TPanel;
     pMenuPix: TPopupMenu;
     pMenuCartao: TPopupMenu;
+    pnlInfoContaCartao: TPanel;
     tbsCadastroCartao: TTabSheet;
     tbsListaPix: TTabSheet;
     tbsCadastroPix: TTabSheet;
@@ -81,9 +83,14 @@ type
     ToolBarCadastroCartao: TToolBar;
     ToolBarListaPix: TToolBar;
     ToolBarListaCartao: TToolBar;
+    procedure actCancelarPixExecute(Sender: TObject);
+    procedure actEditarPixExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
+    procedure actIncluirPixExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
+    procedure actPixExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
+    procedure actSalvarPixExecute(Sender: TObject);
     procedure edtBancoExit(Sender: TObject);
     procedure edtBancoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -97,6 +104,7 @@ type
     procedure CarregarDadosPix;
     procedure LimparCamposPix;
     procedure CarregarSelecionadoPix;
+    procedure ExibirInformacoesConta;
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -178,8 +186,21 @@ begin
 end;
 
 procedure TfrmContaBancaria.CarregarSelecionadoPix;
+var
+  erro: String;
 begin
-  //
+  Controller.BuscarPixPorId(controller.Pix, '', Erro);   //arrumar
+end;
+
+procedure TfrmContaBancaria.ExibirInformacoesConta;
+var
+  texto: String;
+begin
+  Texto := 'Informações da conta selecionada: Nº. '+Controller.ContaBancaria.Numero+
+           ' Agência: '+Controller.ContaBancaria.Agencia+' Banco: '+
+           Controller.ContaBancaria.Banco.Nome;
+  pnlInfoContaCartao.Caption := texto;
+  pnlInfoContaPix.Caption    := texto;
 end;
 
 procedure TfrmContaBancaria.actSalvarExecute(Sender: TObject);
@@ -204,6 +225,36 @@ begin
         TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     end;
     inherited;
+  end;
+end;
+
+procedure TfrmContaBancaria.actSalvarPixExecute(Sender: TObject);
+var
+  Erro: String;
+begin
+  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  begin
+    Controller.Pix.Chave := edtChave.Text;
+    Controller.Pix.Tipo  := cbTipo.Items[cbTipo.ItemIndex];
+    Controller.Pix.ContaBancaria.Id := controller.ContaBancaria.Id;
+    if Operacao = opInserir then
+    begin
+      Controller.Pix.Cadastro := Now;
+      if not Controller.InserirPix(Controller.Pix, Erro) then
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    end;
+
+    if Operacao = opEditar then
+    begin
+      Controller.Pix.Alteracao := Now;
+      if not Controller.EditarPix(Controller.Pix, Erro) then
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    end;
+
+    pgcPix.ActivePage := tbsListaPix;
+    Operacao := opNenhum;
+    CarregarDadosPix;
+
   end;
 end;
 
@@ -261,10 +312,42 @@ begin
   end;
 end;
 
+procedure TfrmContaBancaria.actCancelarPixExecute(Sender: TObject);
+begin
+  if TfrmMessage.Mensagem('Deseja cancelar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  begin
+    pgcPix.ActivePage := tbsListaPix;
+    Operacao := opNenhum;
+  end;
+end;
+
+procedure TfrmContaBancaria.actEditarPixExecute(Sender: TObject);
+begin
+  LimparCamposPix;
+  CarregarSelecionadoPix;
+  Operacao := opEditar;
+  pgcPix.ActivePage := tbsCadastroPix;
+end;
+
+procedure TfrmContaBancaria.actIncluirPixExecute(Sender: TObject);
+begin
+  LimparCamposPix;
+  Operacao := opInserir;
+  pgcPix.ActivePage := tbsCadastroPix;
+end;
+
 procedure TfrmContaBancaria.actPesquisarExecute(Sender: TObject);
 begin
   lvPadrao.Items.Clear;
   Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex], edtPesquisa.Text);
+end;
+
+procedure TfrmContaBancaria.actPixExecute(Sender: TObject);
+begin
+  CarregarSelecionado;
+  CarregarDadosPix;
+  ExibirInformacoesConta;
+  pgcPadrao.ActivePage := tbsPix;
 end;
 
 procedure TfrmContaBancaria.CarregarDados;

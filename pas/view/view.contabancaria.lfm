@@ -188,8 +188,8 @@ inherited frmContaBancaria: TfrmContaBancaria
             TabOrder = 0
             object pgcCartao: TPageControl
               Left = 0
-              Height = 523
-              Top = 0
+              Height = 491
+              Top = 32
               Width = 951
               ActivePage = tbsListaCartao
               Align = alClient
@@ -197,23 +197,23 @@ inherited frmContaBancaria: TfrmContaBancaria
               TabOrder = 0
               object tbsListaCartao: TTabSheet
                 Caption = 'tbsListaCartao'
-                ClientHeight = 490
+                ClientHeight = 458
                 ClientWidth = 943
                 object pnlFundoListaCartao: TPanel
                   Left = 0
-                  Height = 490
+                  Height = 458
                   Top = 0
                   Width = 943
                   Align = alClient
                   BevelOuter = bvNone
-                  ClientHeight = 490
+                  ClientHeight = 458
                   ClientWidth = 943
                   ParentBackground = False
                   TabOrder = 0
                   object pnlBotaoListaCartao: TPanel
                     Left = 5
                     Height = 60
-                    Top = 425
+                    Top = 393
                     Width = 933
                     Align = alBottom
                     BorderSpacing.Around = 5
@@ -262,7 +262,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                   object lvCartao: TListView
                     Cursor = crHandPoint
                     Left = 5
-                    Height = 415
+                    Height = 383
                     Top = 5
                     Width = 933
                     Align = alClient
@@ -290,23 +290,23 @@ inherited frmContaBancaria: TfrmContaBancaria
               end
               object tbsCadastroCartao: TTabSheet
                 Caption = 'tbsCadastroCartao'
-                ClientHeight = 490
+                ClientHeight = 458
                 ClientWidth = 943
                 object pnlFundoCadCartao: TPanel
                   Left = 0
-                  Height = 490
+                  Height = 458
                   Top = 0
                   Width = 943
                   Align = alClient
                   BevelOuter = bvNone
-                  ClientHeight = 490
+                  ClientHeight = 458
                   ClientWidth = 943
                   ParentBackground = False
                   TabOrder = 0
                   object pnlBotaoCadCartao: TPanel
                     Left = 5
                     Height = 60
-                    Top = 425
+                    Top = 393
                     Width = 933
                     Align = alBottom
                     BorderSpacing.Around = 5
@@ -345,6 +345,20 @@ inherited frmContaBancaria: TfrmContaBancaria
                 end
               end
             end
+            object pnlInfoContaCartao: TPanel
+              Left = 0
+              Height = 32
+              Top = 0
+              Width = 951
+              Align = alTop
+              Alignment = taLeftJustify
+              BevelOuter = bvNone
+              Caption = 'Informações da conta'
+              Font.Height = -17
+              ParentBackground = False
+              ParentFont = False
+              TabOrder = 1
+            end
           end
         end
         object tbsPix: TTabSheet[3]
@@ -364,8 +378,8 @@ inherited frmContaBancaria: TfrmContaBancaria
             TabOrder = 0
             object pgcPix: TPageControl
               Left = 0
-              Height = 523
-              Top = 0
+              Height = 491
+              Top = 32
               Width = 951
               ActivePage = tbsCadastroPix
               Align = alClient
@@ -373,23 +387,23 @@ inherited frmContaBancaria: TfrmContaBancaria
               TabOrder = 0
               object tbsListaPix: TTabSheet
                 Caption = 'tbsListaPix'
-                ClientHeight = 490
+                ClientHeight = 458
                 ClientWidth = 943
                 object pnlFundoListaPix: TPanel
                   Left = 0
-                  Height = 490
+                  Height = 458
                   Top = 0
                   Width = 943
                   Align = alClient
                   BevelOuter = bvNone
-                  ClientHeight = 490
+                  ClientHeight = 458
                   ClientWidth = 943
                   ParentBackground = False
                   TabOrder = 0
                   object pnlBotaoListaPix: TPanel
                     Left = 5
                     Height = 60
-                    Top = 425
+                    Top = 393
                     Width = 933
                     Align = alBottom
                     BorderSpacing.Around = 5
@@ -438,7 +452,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                   object lvPix: TListView
                     Cursor = crHandPoint
                     Left = 5
-                    Height = 415
+                    Height = 383
                     Top = 5
                     Width = 933
                     Align = alClient
@@ -466,16 +480,16 @@ inherited frmContaBancaria: TfrmContaBancaria
               end
               object tbsCadastroPix: TTabSheet
                 Caption = 'tbsCadastroPix'
-                ClientHeight = 490
+                ClientHeight = 458
                 ClientWidth = 943
                 object pnlFundoCadPix: TPanel
                   Left = 0
-                  Height = 490
+                  Height = 458
                   Top = 0
                   Width = 943
                   Align = alClient
                   BevelOuter = bvNone
-                  ClientHeight = 490
+                  ClientHeight = 458
                   ClientWidth = 943
                   ParentBackground = False
                   TabOrder = 0
@@ -515,7 +529,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                   object pnlBotaoCadPix: TPanel
                     Left = 5
                     Height = 60
-                    Top = 425
+                    Top = 393
                     Width = 933
                     Align = alBottom
                     BorderSpacing.Around = 5
@@ -554,6 +568,20 @@ inherited frmContaBancaria: TfrmContaBancaria
                 end
               end
             end
+            object pnlInfoContaPix: TPanel
+              Left = 0
+              Height = 32
+              Top = 0
+              Width = 951
+              Align = alTop
+              Alignment = taLeftJustify
+              BevelOuter = bvNone
+              Caption = 'Informações da conta'
+              Font.Height = -17
+              ParentBackground = False
+              ParentFont = False
+              TabOrder = 1
+            end
           end
         end
       end
@@ -576,14 +604,17 @@ inherited frmContaBancaria: TfrmContaBancaria
     object actPix: TAction[9]
       Caption = 'Chaves Pix'
       ImageIndex = 10
+      OnExecute = actPixExecute
     end
     object actSalvarPix: TAction[10]
       Caption = 'Salvar'
       ImageIndex = 6
+      OnExecute = actSalvarPixExecute
     end
     object actCancelarPix: TAction[11]
       Caption = 'Cancelar'
       ImageIndex = 7
+      OnExecute = actCancelarPixExecute
     end
     object actSalvarCartao: TAction[12]
       Caption = 'Salvar'
@@ -596,10 +627,12 @@ inherited frmContaBancaria: TfrmContaBancaria
     object actIncluirPix: TAction[14]
       Caption = 'Incluir'
       ImageIndex = 1
+      OnExecute = actIncluirPixExecute
     end
     object actEditarPix: TAction[15]
       Caption = 'Editar'
       ImageIndex = 2
+      OnExecute = actEditarPixExecute
     end
     object actExcluirPix: TAction[16]
       Caption = 'Excluir'

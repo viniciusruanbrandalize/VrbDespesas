@@ -138,11 +138,16 @@ end;
 
 constructor TPix.Create;
 begin
-  //
+  FUsuarioCadastro := TUsuario.Create;
+  FContaBancaria   := TContaBancaria.Create;
 end;
 
 destructor TPix.Destroy;
 begin
+  if Assigned(FUsuarioCadastro) then
+    FUsuarioCadastro.Free;
+  if Assigned(FContaBancaria) then
+    FContaBancaria.Free;
   inherited Destroy;
 end;
 

@@ -30,7 +30,10 @@ type
 
     {$Region ''}
     procedure ListarPix(lv: TListView; IdConta: Integer);
+    function BuscarPixPorId(objPix : TPix; Id: String; out Erro: String): Boolean;
     function InserirPix(objPix : TPix; out Erro: string): Boolean;
+    function EditarPix(objPix : TPix; out Erro: string): Boolean;
+
     {$EndRegion}
 
     constructor Create;
@@ -85,11 +88,23 @@ begin
   ContaBancariaDAO.ListarPix(lv, IdConta);
 end;
 
+function TContaBancariaController.BuscarPixPorId(objPix: TPix; Id: String; out
+  Erro: String): Boolean;
+begin
+  Result := ContaBancariaDAO.BuscarPixPorId(objPix, id, erro);
+end;
+
 function TContaBancariaController.InserirPix(objPix: TPix; out Erro: string
   ): Boolean;
 begin
   objPix.UsuarioCadastro.Id := dmConexao1.IdUsuario;
   Result := ContaBancariaDAO.InserirPix(objPix, Erro);
+end;
+
+function TContaBancariaController.EditarPix(objPix: TPix; out Erro: string
+  ): Boolean;
+begin
+  Result := ContaBancariaDAO.EditarPix(objPix, Erro);
 end;
 
 constructor TContaBancariaController.Create;
