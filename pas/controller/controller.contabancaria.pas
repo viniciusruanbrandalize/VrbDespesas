@@ -28,12 +28,16 @@ type
     function Editar(objContaBancaria : TContaBancaria; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
 
-    {$Region ''}
+    {$Region 'PIX'}
     procedure ListarPix(lv: TListView; IdConta: Integer);
     function BuscarPixPorId(objPix : TPix; Id: String; out Erro: String): Boolean;
     function InserirPix(objPix : TPix; out Erro: string): Boolean;
     function EditarPix(objPix : TPix; out Erro: string): Boolean;
+    function ExcluirPix(Id: String; out Erro: string): Boolean;
+    {$EndRegion}
 
+    {$Region 'CARTAO'}
+    procedure ListarCartao(lv: TListView; IdConta: Integer);
     {$EndRegion}
 
     constructor Create;
@@ -105,6 +109,18 @@ function TContaBancariaController.EditarPix(objPix: TPix; out Erro: string
   ): Boolean;
 begin
   Result := ContaBancariaDAO.EditarPix(objPix, Erro);
+end;
+
+function TContaBancariaController.ExcluirPix(Id: String; out Erro: string
+  ): Boolean;
+begin
+  Result := ContaBancariaDAO.ExcluirPix(id, erro);
+end;
+
+procedure TContaBancariaController.ListarCartao(lv: TListView; IdConta: Integer
+  );
+begin
+  ContaBancariaDAO.ListarCartao(lv, IdConta);
 end;
 
 constructor TContaBancariaController.Create;

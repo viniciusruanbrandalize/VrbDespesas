@@ -35,6 +35,7 @@ type
 
     {$Region 'Cartao'}
     procedure ListarCartao(lv: TListView; IdConta: Integer);
+    procedure PesquisarBandeira(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarCartaoPorId(Cartao : TCartao; Id: String; out Erro: String): Boolean;
     function InserirCartao(Cartao : TCartao; out Erro: string): Boolean;
     function EditarCartao(Cartao : TCartao; out Erro: string): Boolean;
@@ -542,6 +543,12 @@ begin
   finally
     Qry.Close;
   end;
+end;
+
+procedure TContaBancariaDAO.PesquisarBandeira(lbNome, lbId: TListBox;
+  busca: String; out QtdRegistro: Integer);
+begin
+  //
 end;
 
 function TContaBancariaDAO.BuscarCartaoPorId(Cartao: TCartao; Id: String; out

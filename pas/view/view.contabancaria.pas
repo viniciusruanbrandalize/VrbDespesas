@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   view.cadastropadrao, controller.contabancaria, lib.types, view.mensagem,
-  LCLType, Menus, ActnList, ComCtrls;
+  LCLType, Menus, ActnList, ComCtrls, DateTimePicker;
 
 type
 
@@ -42,14 +42,23 @@ type
     btnVisualizarCartao: TToolButton;
     cbTipo: TComboBox;
     cbTipoChave: TComboBox;
+    ckbAproximacao: TCheckBox;
+    cbTipoCartao: TComboBox;
+    dtpValidade: TDateTimePicker;
     edtAgencia: TLabeledEdit;
     edtChave: TLabeledEdit;
     edtNumero: TLabeledEdit;
     edtBanco: TLabeledEdit;
+    lblTipoCartao: TLabel;
+    lblValidade: TLabel;
+    edtNumeroCartao: TLabeledEdit;
+    edtBandeira: TLabeledEdit;
     lblTipoChavePix: TLabel;
     lblTipoConta: TLabel;
     lbBancoId: TListBox;
     lbBancoNome: TListBox;
+    lbBandeiraId: TListBox;
+    lbBandeiraNome: TListBox;
     lvPix: TListView;
     lvCartao: TListView;
     MenuItem4: TMenuItem;
@@ -86,6 +95,7 @@ type
     procedure actCancelarPixExecute(Sender: TObject);
     procedure actEditarPixExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
+    procedure actExcluirPixExecute(Sender: TObject);
     procedure actIncluirPixExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actPixExecute(Sender: TObject);
@@ -104,6 +114,9 @@ type
     procedure CarregarDadosPix;
     procedure LimparCamposPix;
     procedure CarregarSelecionadoPix;
+    procedure CarregarDadosCartao;
+    procedure LimparCamposCartao;
+    procedure CarregarSelecionadoCartao;
     procedure ExibirInformacoesConta;
   public
     procedure CarregarDados; override;
@@ -187,9 +200,36 @@ end;
 
 procedure TfrmContaBancaria.CarregarSelecionadoPix;
 var
-  erro: String;
+  erro, chave: String;
 begin
-  Controller.BuscarPixPorId(controller.Pix, '', Erro);   //arrumar
+  chave := lvPix.Selected.Caption;
+  if Controller.BuscarPixPorId(controller.Pix, chave, Erro) then
+  begin
+    edtChave.Text := Controller.Pix.Chave;
+    cbTipoChave.ItemIndex := cbTipoChave.Items.IndexOf(Controller.Pix.Tipo);
+  end
+  else
+    TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+end;
+
+procedure TfrmContaBancaria.CarregarDadosCartao;
+begin
+  lvCartao.Items.Clear;
+  Controller.ListarCartao(lvCartao, controller.ContaBancaria.Id);
+end;
+
+procedure TfrmContaBancaria.LimparCamposCartao;
+begin
+  edtNumeroCartao.Clear;
+  cbTipoCartao.ItemIndex := -1;
+  edtBandeira.Clear;
+  dtpValidade.Date := Now;
+  ckbAproximacao.Checked := False;
+end;
+
+procedure TfrmContaBancaria.CarregarSelecionadoCartao;
+begin
+  //
 end;
 
 procedure TfrmContaBancaria.ExibirInformacoesConta;
@@ -235,7 +275,7 @@ begin
   if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
   begin
     Controller.Pix.Chave := edtChave.Text;
-    Controller.Pix.Tipo  := cbTipo.Items[cbTipo.ItemIndex];
+    Controller.Pix.Tipo  := cbTipoChave.Items[cbTipoChave.ItemIndex];
     Controller.Pix.ContaBancaria.Id := controller.ContaBancaria.Id;
     if Operacao = opInserir then
     begin
@@ -306,6 +346,26 @@ begin
     id := StrToInt(lvPadrao.Selected.Caption);
     if Controller.Excluir(id, erro) then
       inherited
+    else
+      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    Operacao := opNenhum;
+  end;
+end;
+
+procedure TfrmContaBancaria.actExcluirPixExecute(Sender: TObject);
+var
+  erro: String;
+  id: String;
+begin
+  if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
+                           [mbNao, mbSim], mbNao) then
+  begin
+    id := lvPix.Selected.Caption;
+    if Controller.ExcluirPix(id, erro) then
+    begin
+      Operacao := opExcluir;
+      CarregarDadosPix;
+    end
     else
       TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Operacao := opNenhum;
