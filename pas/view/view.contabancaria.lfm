@@ -191,9 +191,9 @@ inherited frmContaBancaria: TfrmContaBancaria
               Height = 491
               Top = 32
               Width = 951
-              ActivePage = tbsCadastroCartao
+              ActivePage = tbsListaCartao
               Align = alClient
-              TabIndex = 1
+              TabIndex = 0
               TabOrder = 0
               object tbsListaCartao: TTabSheet
                 Caption = 'tbsListaCartao'
@@ -289,7 +289,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                         Caption = 'Validade'
                         Width = 150
                       end>
-                    PopupMenu = pMenuPix
+                    PopupMenu = pMenuCartao
                     RowSelect = True
                     TabOrder = 1
                     ViewStyle = vsReport
@@ -341,12 +341,12 @@ inherited frmContaBancaria: TfrmContaBancaria
                       object btnSalvarCartao: TToolButton
                         Left = 1
                         Top = 0
-                        Action = actSalvarPix
+                        Action = actSalvarCartao
                       end
                       object btnCancelarCartao: TToolButton
                         Left = 101
                         Top = 0
-                        Action = actCancelarPix
+                        Action = actCancelarCartao
                       end
                     end
                   end
@@ -389,6 +389,8 @@ inherited frmContaBancaria: TfrmContaBancaria
                     ParentFont = False
                     TabOrder = 3
                     Text = 'edtBandeira'
+                    OnExit = edtBandeiraExit
+                    OnKeyUp = edtBandeiraKeyUp
                   end
                   object lblTipoCartao: TLabel
                     Left = 208
@@ -414,6 +416,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     TimeDisplay = tdHMS
                     DateMode = dmComboBox
                     Date = 45693
+                    Time = 0.493840185183217
                     UseDefaultSeparators = True
                     HideDateTimeParts = []
                     MonthNames = 'Long'
@@ -449,6 +452,9 @@ inherited frmContaBancaria: TfrmContaBancaria
                     ItemHeight = 20
                     TabOrder = 6
                     Visible = False
+                    OnDblClick = lbBandeiraNomeDblClick
+                    OnKeyPress = lbBandeiraNomeKeyPress
+                    OnSelectionChange = lbBandeiraNomeSelectionChange
                   end
                   object lbBandeiraId: TListBox
                     Left = 624
@@ -463,6 +469,20 @@ inherited frmContaBancaria: TfrmContaBancaria
                     )
                     ItemHeight = 20
                     TabOrder = 7
+                    Visible = False
+                  end
+                  object lbTipoCartaoValues: TListBox
+                    Left = 208
+                    Height = 19
+                    Top = 56
+                    Width = 125
+                    Items.Strings = (
+                      'C'
+                      'D'
+                      'A'
+                    )
+                    ItemHeight = 20
+                    TabOrder = 8
                     Visible = False
                   end
                 end
@@ -723,6 +743,7 @@ inherited frmContaBancaria: TfrmContaBancaria
     object actCartao: TAction[8]
       Caption = 'Cartões'
       ImageIndex = 9
+      OnExecute = actCartaoExecute
     end
     object actPix: TAction[9]
       Caption = 'Chaves Pix'
@@ -742,10 +763,12 @@ inherited frmContaBancaria: TfrmContaBancaria
     object actSalvarCartao: TAction[12]
       Caption = 'Salvar'
       ImageIndex = 6
+      OnExecute = actSalvarCartaoExecute
     end
     object actCancelarCartao: TAction[13]
       Caption = 'Cancelar'
       ImageIndex = 7
+      OnExecute = actCancelarCartaoExecute
     end
     object actIncluirPix: TAction[14]
       Caption = 'Incluir'
@@ -769,14 +792,17 @@ inherited frmContaBancaria: TfrmContaBancaria
     object actIncluirCartao: TAction[18]
       Caption = 'Incluir'
       ImageIndex = 1
+      OnExecute = actIncluirCartaoExecute
     end
     object actEditarCartao: TAction[19]
       Caption = 'Editar'
       ImageIndex = 2
+      OnExecute = actEditarCartaoExecute
     end
     object actExcluirCartao: TAction[20]
       Caption = 'Excluir'
       ImageIndex = 3
+      OnExecute = actExcluirCartaoExecute
     end
     object actVisualizarCartao: TAction[21]
       Caption = 'Visualizar'
@@ -809,5 +835,14 @@ inherited frmContaBancaria: TfrmContaBancaria
     Images = img
     Left = 512
     Top = 8
+    object MenuItem9: TMenuItem
+      Action = actEditarCartao
+    end
+    object MenuItem10: TMenuItem
+      Action = actExcluirCartao
+    end
+    object MenuItem11: TMenuItem
+      Action = actVisualizarCartao
+    end
   end
 end

@@ -36,7 +36,7 @@ type
     {$Region 'Cartao'}
     procedure ListarCartao(lv: TListView; IdConta: Integer);
     procedure PesquisarBandeira(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
-    function BuscarCartaoPorId(Cartao : TCartao; Id: String; out Erro: String): Boolean;
+    function BuscarCartaoPorId(Cartao : TCartao; Id: Integer; out Erro: String): Boolean;
     function InserirCartao(Cartao : TCartao; out Erro: string): Boolean;
     function EditarCartao(Cartao : TCartao; out Erro: string): Boolean;
     function ExcluirCartao(Id: Integer; out Erro: string): Boolean;
@@ -547,26 +547,57 @@ end;
 
 procedure TContaBancariaDAO.PesquisarBandeira(lbNome, lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
+var
+  sql: String;
 begin
-  //
+  try
+
+    sql := 'select first 10 id, nome from bandeira ' +
+           'where UPPER(nome) like :busca '+
+           'order by nome';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    QtdRegistro := Qry.RecordCount;
+
+    lbNome.Items.Clear;
+    lbNome.Height := 100;
+    lbId.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbId.Items.Add(Qry.FieldByName('id').AsString);
+      lbNome.Items.Add(qry.FieldByName('nome').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
+  end;
 end;
 
-function TContaBancariaDAO.BuscarCartaoPorId(Cartao: TCartao; Id: String; out
+function TContaBancariaDAO.BuscarCartaoPorId(Cartao: TCartao; Id: Integer; out
   Erro: String): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'select c.*, ban.nome as nome_bandeira from cartao card ' +
+    sql := 'select card.*, ban.nome as nome_bandeira from cartao card ' +
            'left join bandeira ban on ban.id = card.id_bandeira ' +
-           'where id = :id ' +
-           'order by id';
+           'where card.id = :id ' +
+           'order by card.id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsString := id;
+    Qry.ParamByName('id').AsInteger := id;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -648,7 +679,7 @@ begin
 
     sql := 'update cartao set numero = :numero, tipo = :tipo, ' +
            'aproximacao = :aproximacao, validade = :validade, ' +
-           'id_bandeira = :id_bandeira, alteracao = :alteracao ' +
+           'id_bandeira = :id_bandeira, alteracao = :alteracao '+
            'where id = :id';
 
     Qry.Close;
@@ -661,9 +692,6 @@ begin
     Qry.ParamByName('validade').AsDateTime   := Cartao.Validade;
     Qry.ParamByName('alteracao').AsDateTime  := Cartao.Alteracao;
     Qry.ParamByName('id_bandeira').AsInteger := Cartao.Bandeira.Id;
-    Qry.ParamByName('id_conta_bancaria').AsInteger   := Cartao.ContaBancaria.Id;
-    Qry.ParamByName('id_usuario_cadastro').AsInteger := Cartao.UsuarioCadastro.Id;
-    //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 

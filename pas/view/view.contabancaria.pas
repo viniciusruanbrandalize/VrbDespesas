@@ -49,6 +49,7 @@ type
     edtChave: TLabeledEdit;
     edtNumero: TLabeledEdit;
     edtBanco: TLabeledEdit;
+    lbTipoCartaoValues: TListBox;
     lblTipoCartao: TLabel;
     lblValidade: TLabel;
     edtNumeroCartao: TLabeledEdit;
@@ -61,11 +62,14 @@ type
     lbBandeiraNome: TListBox;
     lvPix: TListView;
     lvCartao: TListView;
+    MenuItem10: TMenuItem;
+    MenuItem11: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
     MenuItem6: TMenuItem;
     MenuItem7: TMenuItem;
     MenuItem8: TMenuItem;
+    MenuItem9: TMenuItem;
     pnlInfoContaPix: TPanel;
     pgcCartao: TPageControl;
     pnlBotaoCadCartao: TPanel;
@@ -92,23 +96,35 @@ type
     ToolBarCadastroCartao: TToolBar;
     ToolBarListaPix: TToolBar;
     ToolBarListaCartao: TToolBar;
+    procedure actCancelarCartaoExecute(Sender: TObject);
     procedure actCancelarPixExecute(Sender: TObject);
+    procedure actCartaoExecute(Sender: TObject);
+    procedure actEditarCartaoExecute(Sender: TObject);
     procedure actEditarPixExecute(Sender: TObject);
+    procedure actExcluirCartaoExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
     procedure actExcluirPixExecute(Sender: TObject);
+    procedure actIncluirCartaoExecute(Sender: TObject);
     procedure actIncluirPixExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actPixExecute(Sender: TObject);
+    procedure actSalvarCartaoExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure actSalvarPixExecute(Sender: TObject);
     procedure edtBancoExit(Sender: TObject);
     procedure edtBancoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtBandeiraExit(Sender: TObject);
+    procedure edtBandeiraKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure lbBancoNomeDblClick(Sender: TObject);
     procedure lbBancoNomeKeyPress(Sender: TObject; var Key: char);
     procedure lbBancoNomeSelectionChange(Sender: TObject; User: boolean);
+    procedure lbBandeiraNomeDblClick(Sender: TObject);
+    procedure lbBandeiraNomeKeyPress(Sender: TObject; var Key: char);
+    procedure lbBandeiraNomeSelectionChange(Sender: TObject; User: boolean);
   private
     Controller: TContaBancariaController;
     procedure CarregarDadosPix;
@@ -186,6 +202,36 @@ begin
   edtBanco.Text := lbBancoNome.Items[lbBancoNome.ItemIndex];
 end;
 
+procedure TfrmContaBancaria.lbBandeiraNomeDblClick(Sender: TObject);
+begin
+  if lbBandeiraNome.ItemIndex <> -1 then
+  begin
+    edtBandeira.Text := lbBandeiraNome.Items[lbBandeiraNome.ItemIndex];
+    controller.Cartao.Bandeira.Id := StrToInt(lbBandeiraId.Items[lbBandeiraNome.ItemIndex]);
+    lbBandeiraNome.Visible := False;
+  end
+  else
+  begin
+    edtBandeira.Text := '';
+    controller.Cartao.Bandeira.Id := 0;
+  end;
+end;
+
+procedure TfrmContaBancaria.lbBandeiraNomeKeyPress(Sender: TObject;
+  var Key: char);
+begin
+  if key = #13 then
+  begin
+    lbBandeiraNome.OnDblClick(nil);
+  end;
+end;
+
+procedure TfrmContaBancaria.lbBandeiraNomeSelectionChange(Sender: TObject;
+  User: boolean);
+begin
+  edtBandeira.Text := lbBandeiraNome.Items[lbBandeiraNome.ItemIndex];
+end;
+
 procedure TfrmContaBancaria.CarregarDadosPix;
 begin
   lvPix.Items.Clear;
@@ -228,8 +274,24 @@ begin
 end;
 
 procedure TfrmContaBancaria.CarregarSelecionadoCartao;
+var
+  id: Integer;
+  erro: String;
 begin
-  //
+  id := StrToInt(lvCartao.Selected.Caption);
+  if Controller.BuscarCartaoPorId(controller.Cartao, id, erro) then
+  begin
+    edtNumeroCartao.Text   := Controller.Cartao.Numero;
+    dtpValidade.Date       := Controller.Cartao.Validade;
+    ckbAproximacao.Checked := Controller.Cartao.Aproximacao;
+    cbTipoCartao.ItemIndex := lbTipoCartaoValues.Items.IndexOf(Controller.Cartao.Tipo);
+    edtBandeira.Text       := Controller.Cartao.Bandeira.Nome;
+  end
+  else
+  begin
+    TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    Abort;
+  end;
 end;
 
 procedure TfrmContaBancaria.ExibirInformacoesConta;
@@ -330,6 +392,38 @@ begin
   end;
 end;
 
+procedure TfrmContaBancaria.edtBandeiraExit(Sender: TObject);
+begin
+  if not lbBandeiraNome.Focused then
+  begin
+    if lbBandeiraNome.Visible then
+      lbBandeiraNome.Visible := false;
+  end;
+end;
+
+procedure TfrmContaBancaria.edtBandeiraKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if (Length(edtBandeira.Text) > 3) then
+  begin
+    controller.PesquisarBandeira(lbBandeiraNome, lbBandeiraId, edtBandeira.Text, qtdReg);
+    lbBandeiraNome.Visible := qtdReg > 0;
+    if Key = VK_DOWN then
+    begin
+      if lbBandeiraNome.CanFocus then
+        lbBandeiraNome.SetFocus;
+    end;
+  end
+  else
+  begin
+    lbBandeiraNome.Items.Clear;
+    lbBandeiraNome.Visible := False;
+  end;
+end;
+
 procedure TfrmContaBancaria.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuFinanceiro, True);
@@ -372,6 +466,13 @@ begin
   end;
 end;
 
+procedure TfrmContaBancaria.actIncluirCartaoExecute(Sender: TObject);
+begin
+  LimparCamposCartao;
+  Operacao := opInserir;
+  pgcCartao.ActivePage := tbsCadastroCartao;
+end;
+
 procedure TfrmContaBancaria.actCancelarPixExecute(Sender: TObject);
 begin
   if TfrmMessage.Mensagem('Deseja cancelar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
@@ -381,12 +482,57 @@ begin
   end;
 end;
 
+procedure TfrmContaBancaria.actCancelarCartaoExecute(Sender: TObject);
+begin
+  if TfrmMessage.Mensagem('Deseja cancelar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  begin
+    pgcCartao.ActivePage := tbsListaCartao;
+    Operacao := opNenhum;
+  end;
+end;
+
+procedure TfrmContaBancaria.actCartaoExecute(Sender: TObject);
+begin
+  CarregarSelecionado;
+  CarregarDadosCartao;
+  ExibirInformacoesConta;
+  pgcPadrao.ActivePage := tbsCartao;
+end;
+
+procedure TfrmContaBancaria.actEditarCartaoExecute(Sender: TObject);
+begin
+  LimparCamposCartao;
+  CarregarSelecionadoCartao;
+  Operacao := opEditar;
+  pgcCartao.ActivePage := tbsCadastroCartao;
+end;
+
 procedure TfrmContaBancaria.actEditarPixExecute(Sender: TObject);
 begin
   LimparCamposPix;
   CarregarSelecionadoPix;
   Operacao := opEditar;
   pgcPix.ActivePage := tbsCadastroPix;
+end;
+
+procedure TfrmContaBancaria.actExcluirCartaoExecute(Sender: TObject);
+var
+  erro: String;
+  id: Integer;
+begin
+  if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
+                           [mbNao, mbSim], mbNao) then
+  begin
+    id := StrToInt(lvCartao.Selected.Caption);
+    if Controller.ExcluirCartao(id, erro) then
+    begin
+      Operacao := opExcluir;
+      CarregarDadosCartao;
+    end
+    else
+      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    Operacao := opNenhum;
+  end;
 end;
 
 procedure TfrmContaBancaria.actIncluirPixExecute(Sender: TObject);
@@ -408,6 +554,36 @@ begin
   CarregarDadosPix;
   ExibirInformacoesConta;
   pgcPadrao.ActivePage := tbsPix;
+end;
+
+procedure TfrmContaBancaria.actSalvarCartaoExecute(Sender: TObject);
+var
+  Erro: String;
+begin
+  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  begin
+    Controller.Cartao.Numero   := edtNumeroCartao.Text;
+    Controller.Cartao.Tipo     := lbTipoCartaoValues.Items[cbTipoCartao.ItemIndex];
+    Controller.Cartao.Validade := dtpValidade.Date;
+    Controller.Cartao.Aproximacao := ckbAproximacao.Checked;
+    Controller.Cartao.ContaBancaria.Id := Controller.ContaBancaria.Id;
+    if Operacao = opInserir then
+    begin
+      Controller.Cartao.Cadastro := Now;
+      if not Controller.InserirCartao(Controller.Cartao, Erro) then
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    end;
+    if Operacao = opEditar then
+    begin
+      Controller.Cartao.Alteracao := Now;
+      if not Controller.EditarCartao(Controller.Cartao, Erro) then
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    end;
+
+    pgcCartao.ActivePage := tbsListaCartao;
+    Operacao := opNenhum;
+    CarregarDadosCartao;
+  end;
 end;
 
 procedure TfrmContaBancaria.CarregarDados;

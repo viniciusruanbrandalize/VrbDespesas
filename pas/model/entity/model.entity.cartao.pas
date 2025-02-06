@@ -183,11 +183,16 @@ end;
 
 constructor TCartao.Create;
 begin
-  //
+  FBandeira        := TBandeira.Create;
+  FContaBancaria   := TContaBancaria.Create;
+  FUsuarioCadastro := TUsuario.Create;
 end;
 
 destructor TCartao.Destroy;
 begin
+  FBandeira.Free;
+  FContaBancaria.Free;
+  FUsuarioCadastro.Free;
   inherited Destroy;
 end;
 

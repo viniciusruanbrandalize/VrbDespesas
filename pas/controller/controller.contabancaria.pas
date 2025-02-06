@@ -38,6 +38,11 @@ type
 
     {$Region 'CARTAO'}
     procedure ListarCartao(lv: TListView; IdConta: Integer);
+    procedure PesquisarBandeira(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    function BuscarCartaoPorId(objCartao : TCartao; Id: Integer; out Erro: String): Boolean;
+    function InserirCartao(objCartao : TCartao; out Erro: string): Boolean;
+    function EditarCartao(objCartao : TCartao; out Erro: string): Boolean;
+    function ExcluirCartao(Id: Integer; out Erro: string): Boolean;
     {$EndRegion}
 
     constructor Create;
@@ -121,6 +126,38 @@ procedure TContaBancariaController.ListarCartao(lv: TListView; IdConta: Integer
   );
 begin
   ContaBancariaDAO.ListarCartao(lv, IdConta);
+end;
+
+procedure TContaBancariaController.PesquisarBandeira(lbNome, lbId: TListBox;
+  busca: String; out QtdRegistro: Integer);
+begin
+  ContaBancariaDAO.PesquisarBandeira(lbNome, lbId, busca, QtdRegistro);
+end;
+
+function TContaBancariaController.BuscarCartaoPorId(objCartao: TCartao;
+  Id: Integer; out Erro: String): Boolean;
+begin
+  Result := ContaBancariaDAO.BuscarCartaoPorId(objCartao, id, Erro);
+end;
+
+function TContaBancariaController.InserirCartao(objCartao: TCartao; out
+  Erro: string): Boolean;
+begin
+  objCartao.Id  := ContaBancariaDAO.GerarId('gen_id_cartao');
+  objCartao.UsuarioCadastro.Id := dmConexao1.IdUsuario;
+  Result := ContaBancariaDAO.InserirCartao(objCartao, erro);
+end;
+
+function TContaBancariaController.EditarCartao(objCartao: TCartao; out
+  Erro: string): Boolean;
+begin
+  Result := ContaBancariaDAO.EditarCartao(objCartao, Erro);
+end;
+
+function TContaBancariaController.ExcluirCartao(Id: Integer; out Erro: string
+  ): Boolean;
+begin
+  Result := ContaBancariaDAO.ExcluirCartao(id, Erro);
 end;
 
 constructor TContaBancariaController.Create;
