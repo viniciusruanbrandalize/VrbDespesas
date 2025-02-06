@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   view.cadastropadrao, controller.contabancaria, lib.types, view.mensagem,
-  LCLType, Menus, ActnList, ComCtrls, DateTimePicker;
+  LCLType, Menus, ActnList, ComCtrls, Buttons, DateTimePicker;
 
 type
 
@@ -21,6 +21,7 @@ type
     actIncluirCartao: TAction;
     actEditarCartao: TAction;
     actExcluirCartao: TAction;
+    actVoltar: TAction;
     actVisualizarCartao: TAction;
     actVisualizarPix: TAction;
     actSalvarCartao: TAction;
@@ -34,6 +35,7 @@ type
     btnEditarCartao: TToolButton;
     btnExcluirPix: TToolButton;
     btnExcluirCartao: TToolButton;
+    btnVoltar: TSpeedButton;
     btnIncluirPix: TToolButton;
     btnIncluirCartao: TToolButton;
     btnSalvarPix: TToolButton;
@@ -111,6 +113,7 @@ type
     procedure actSalvarCartaoExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure actSalvarPixExecute(Sender: TObject);
+    procedure actVoltarExecute(Sender: TObject);
     procedure edtBancoExit(Sender: TObject);
     procedure edtBancoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure edtBandeiraExit(Sender: TObject);
@@ -360,6 +363,16 @@ begin
   end;
 end;
 
+procedure TfrmContaBancaria.actVoltarExecute(Sender: TObject);
+begin
+  if Operacao = opNenhum then
+  begin
+    pgcPadrao.ActivePage := tbsLista;
+    btnVoltar.Visible := False;
+    btnFechar.Visible := True;
+  end;
+end;
+
 procedure TfrmContaBancaria.edtBancoExit(Sender: TObject);
 begin
   if not lbBancoNome.Focused then
@@ -497,6 +510,8 @@ begin
   CarregarDadosCartao;
   ExibirInformacoesConta;
   pgcPadrao.ActivePage := tbsCartao;
+  btnVoltar.Visible := True;
+  btnFechar.Visible := False;
 end;
 
 procedure TfrmContaBancaria.actEditarCartaoExecute(Sender: TObject);
@@ -554,6 +569,8 @@ begin
   CarregarDadosPix;
   ExibirInformacoesConta;
   pgcPadrao.ActivePage := tbsPix;
+  btnVoltar.Visible := True;
+  btnFechar.Visible := False;
 end;
 
 procedure TfrmContaBancaria.actSalvarCartaoExecute(Sender: TObject);

@@ -5,6 +5,24 @@ inherited frmContaBancaria: TfrmContaBancaria
   OnDestroy = FormDestroy
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
+      inherited pnlTitulo: TPanel
+        object btnVoltar: TSpeedButton[1]
+          Left = 865
+          Height = 39
+          Top = 0
+          Width = 37
+          Action = actVoltar
+          Align = alRight
+          Flat = True
+          Images = img
+          ImageIndex = 11
+          ImageWidth = 32
+          Visible = False
+          ShowCaption = False
+          ShowHint = True
+          ParentShowHint = False
+        end
+      end
       inherited pgcPadrao: TPageControl
         ActivePage = tbsCartao
         TabIndex = 2
@@ -489,12 +507,13 @@ inherited frmContaBancaria: TfrmContaBancaria
               end
             end
             object pnlInfoContaCartao: TPanel
-              Left = 0
+              Left = 10
               Height = 32
               Top = 0
-              Width = 951
+              Width = 941
               Align = alTop
               Alignment = taLeftJustify
+              BorderSpacing.Left = 10
               BevelOuter = bvNone
               Caption = 'Informações da conta'
               Font.Height = -17
@@ -807,6 +826,11 @@ inherited frmContaBancaria: TfrmContaBancaria
     object actVisualizarCartao: TAction[21]
       Caption = 'Visualizar'
       ImageIndex = 4
+    end
+    object actVoltar: TAction[22]
+      Caption = 'Voltar'
+      ImageIndex = 11
+      OnExecute = actVoltarExecute
     end
   end
   inherited pMenuPadrao: TPopupMenu
