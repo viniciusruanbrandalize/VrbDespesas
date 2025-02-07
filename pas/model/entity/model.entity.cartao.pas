@@ -19,7 +19,7 @@ type
     FBandeira: TBandeira;
     FCadastro: TDateTime;
     FContaBancaria: TContaBancaria;
-    FDonoCadastro: IParticipante;
+    FDonoCadastro: TParticipante;
     FId:   Integer;
     FNumero: String;
     FTipo: String;
@@ -30,7 +30,7 @@ type
     function GetBandeira: TBandeira;
     function GetCadastro: TDateTime;
     function GetContaBancaria: TContaBancaria;
-    function GetDonoCadastro: IParticipante;
+    function GetDonoCadastro: TParticipante;
     function GetId: Integer;
     function GetNumero: String;
     function GetTipo: String;
@@ -41,7 +41,7 @@ type
     procedure SetBandeira(AValue: TBandeira);
     procedure SetCadastro(AValue: TDateTime);
     procedure SetContaBancaria(AValue: TContaBancaria);
-    procedure SetDonoCadastro(AValue: IParticipante);
+    procedure SetDonoCadastro(AValue: TParticipante);
     procedure SetId(AValue: Integer);
     procedure SetNumero(AValue: String);
     procedure SetTipo(AValue: String);
@@ -60,7 +60,7 @@ type
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
     property Bandeira: TBandeira read GetBandeira write SetBandeira;
     property ContaBancaria: TContaBancaria read GetContaBancaria write SetContaBancaria;
-    property DonoCadastro: IParticipante read GetDonoCadastro write SetDonoCadastro;
+    property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
   end;
 
@@ -98,7 +98,7 @@ begin
   Result := FContaBancaria;
 end;
 
-function TCartao.GetDonoCadastro: IParticipante;
+function TCartao.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
 end;
@@ -148,7 +148,7 @@ begin
   FContaBancaria:=AValue;
 end;
 
-procedure TCartao.SetDonoCadastro(AValue: IParticipante);
+procedure TCartao.SetDonoCadastro(AValue: TParticipante);
 begin
   FDonoCadastro:=AValue;
 end;

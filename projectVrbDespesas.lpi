@@ -238,14 +238,6 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\model\entity\model.entity.fornecedor.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\entity\model.entity.donocadastro.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="pas\model\entity\model.entity.contabancaria.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
@@ -275,10 +267,6 @@
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.cartao.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\entity\model.entity.pagador.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

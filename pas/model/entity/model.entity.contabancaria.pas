@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, model.entity.banco, model.entity.usuario,
-  model.entity.participante, model.entity.donocadastro;
+  model.entity.participante;
 
 type
 
@@ -22,12 +22,12 @@ type
     FAlteracao: TDateTime;
     FBanco: TBanco;
     FUsuarioCadastro: TUsuario;
-    FDonoCadastro: IParticipante;
+    FDonoCadastro: TParticipante;
     function GetAgencia: String;
     function GetAlteracao: TDateTime;
     function GetBanco: TBanco;
     function GetCadastro: TDateTime;
-    function GetDonoCadastro: IParticipante;
+    function GetDonoCadastro: TParticipante;
     function GetId: Integer;
     function GetNumero: String;
     function GetTipo: String;
@@ -36,7 +36,7 @@ type
     procedure SetAlteracao(AValue: TDateTime);
     procedure SetBanco(AValue: TBanco);
     procedure SetCadastro(AValue: TDateTime);
-    procedure SetDonoCadastro(AValue: IParticipante);
+    procedure SetDonoCadastro(AValue: TParticipante);
     procedure SetId(AValue: Integer);
     procedure SetNumero(AValue: String);
     procedure SetTipo(AValue: String);
@@ -53,7 +53,7 @@ type
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
     property Banco: TBanco read GetBanco write SetBanco;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
-    property DonoCadastro: IParticipante read GetDonoCadastro write SetDonoCadastro;
+    property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
   end;
 
 implementation
@@ -85,7 +85,7 @@ begin
   Result := FCadastro;
 end;
 
-function TContaBancaria.GetDonoCadastro: IParticipante;
+function TContaBancaria.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
 end;
@@ -133,7 +133,7 @@ begin
   FCadastro:=AValue;
 end;
 
-procedure TContaBancaria.SetDonoCadastro(AValue: IParticipante);
+procedure TContaBancaria.SetDonoCadastro(AValue: TParticipante);
 begin
   FDonoCadastro := AValue;
 end;

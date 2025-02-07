@@ -16,8 +16,8 @@ type
   private
     FAlteracao: TDateTime;
     FCadastro: TDateTime;
-    FDonoCadastro: IParticipante;
-    FFornecedor: IParticipante;
+    FDonoCadastro: TParticipante;
+    FFornecedor: TParticipante;
     FId:   Integer;
     FDescricao: String;
     FObservacao: String;
@@ -38,8 +38,8 @@ type
     function GetChaveNFE: String;
     function GetData: TDate;
     function GetDesconto: Double;
-    function GetDonoCadastro: IParticipante;
-    function GetFornecedor: IParticipante;
+    function GetDonoCadastro: TParticipante;
+    function GetFornecedor: TParticipante;
     function GetFrete: Double;
     function GetHora: TTime;
     function GetId: Integer;
@@ -57,8 +57,8 @@ type
     procedure SetChaveNFE(AValue: String);
     procedure SetData(AValue: TDate);
     procedure SetDesconto(AValue: Double);
-    procedure SetDonoCadastro(AValue: IParticipante);
-    procedure SetFornecedor(AValue: IParticipante);
+    procedure SetDonoCadastro(AValue: TParticipante);
+    procedure SetFornecedor(AValue: TParticipante);
     procedure SetFrete(AValue: Double);
     procedure SetHora(AValue: TTime);
     procedure SetId(AValue: Integer);
@@ -87,8 +87,8 @@ type
     property Outros: Double read GetOutros write SetOutros;
     property Total: Double read GetTotal write SetTotal;
     property SubTipo: TSubtipoDespesa read GetSubTipo write SetSubTipo;
-    property Fornecedor: IParticipante read GetFornecedor write SetFornecedor;
-    property DonoCadastro: IParticipante read GetDonoCadastro write SetDonoCadastro;
+    property Fornecedor: TParticipante read GetFornecedor write SetFornecedor;
+    property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
     property Paga: Boolean read GetPaga write SetPaga;
     property Parcela: Integer read GetParcela write SetParcela;
@@ -130,12 +130,12 @@ begin
   Result := FDesconto;
 end;
 
-function TDespesa.GetDonoCadastro: IParticipante;
+function TDespesa.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
 end;
 
-function TDespesa.GetFornecedor: IParticipante;
+function TDespesa.GetFornecedor: TParticipante;
 begin
   Result := FFornecedor;
 end;
@@ -220,12 +220,12 @@ begin
   FDesconto := AValue;
 end;
 
-procedure TDespesa.SetDonoCadastro(AValue: IParticipante);
+procedure TDespesa.SetDonoCadastro(AValue: TParticipante);
 begin
   FDonoCadastro:=AValue;
 end;
 
-procedure TDespesa.SetFornecedor(AValue: IParticipante);
+procedure TDespesa.SetFornecedor(AValue: TParticipante);
 begin
   FFornecedor:=AValue;
 end;

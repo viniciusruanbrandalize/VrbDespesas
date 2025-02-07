@@ -18,21 +18,21 @@ type
     FCadastro: TDateTime;
     FChave: String;
     FContaBancaria: TContaBancaria;
-    FDonoCadastro: IParticipante;
+    FDonoCadastro: TParticipante;
     FTipo: String;
     FUsuarioCadastro: TUsuario;
     function GetAlteracao: TDateTime;
     function GetCadastro: TDateTime;
     function GetChave: String;
     function GetContaBancaria: TContaBancaria;
-    function GetDonoCadastro: IParticipante;
+    function GetDonoCadastro: TParticipante;
     function GetTipo: String;
     function GetUsuarioCadastro: TUsuario;
     procedure SetAlteracao(AValue: TDateTime);
     procedure SetCadastro(AValue: TDateTime);
     procedure SetChave(AValue: String);
     procedure SetContaBancaria(AValue: TContaBancaria);
-    procedure SetDonoCadastro(AValue: IParticipante);
+    procedure SetDonoCadastro(AValue: TParticipante);
     procedure SetTipo(AValue: String);
     procedure SetUsuarioCadastro(AValue: TUsuario);
 
@@ -45,7 +45,7 @@ type
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
     property ContaBancaria: TContaBancaria read GetContaBancaria write SetContaBancaria;
-    property DonoCadastro: IParticipante read GetDonoCadastro write SetDonoCadastro;
+    property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
   end;
 
@@ -69,7 +69,7 @@ begin
     FContaBancaria := AValue;
 end;
 
-procedure TPix.SetDonoCadastro(AValue: IParticipante);
+procedure TPix.SetDonoCadastro(AValue: TParticipante);
 begin
   if FDonoCadastro=AValue then Exit;
   FDonoCadastro:=AValue;
@@ -107,7 +107,7 @@ begin
   Result := FContaBancaria;
 end;
 
-function TPix.GetDonoCadastro: IParticipante;
+function TPix.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
 end;

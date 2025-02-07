@@ -14,15 +14,15 @@ type
   TUsuarioDonoCadastro = class
   private
     FCadastro: TDateTime;
-    FDonoCadastro: IParticipante;
+    FDonoCadastro: TParticipante;
     FId:   Integer;
     FUsuario: TUsuario;
     function GetCadastro: TDateTime;
-    function GetDonoCadastro: IParticipante;
+    function GetDonoCadastro: TParticipante;
     function GetId: Integer;
     function GetUsuario: TUsuario;
     procedure SetCadastro(AValue: TDateTime);
-    procedure SetDonoCadastro(AValue: IParticipante);
+    procedure SetDonoCadastro(AValue: TParticipante);
     procedure SetId(AValue: Integer);
     procedure SetUsuario(AValue: TUsuario);
   public
@@ -31,7 +31,7 @@ type
   published
     property Id: Integer read GetId write SetId;
     property Usuario: TUsuario read GetUsuario write SetUsuario;
-    property DonoCadastro: IParticipante read GetDonoCadastro write SetDonoCadastro;
+    property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
   end;
 
@@ -49,7 +49,7 @@ begin
   Result := FCadastro;
 end;
 
-function TUsuarioDonoCadastro.GetDonoCadastro: IParticipante;
+function TUsuarioDonoCadastro.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
 end;
@@ -64,7 +64,7 @@ begin
   FCadastro := AValue;
 end;
 
-procedure TUsuarioDonoCadastro.SetDonoCadastro(AValue: IParticipante);
+procedure TUsuarioDonoCadastro.SetDonoCadastro(AValue: TParticipante);
 begin
   if AValue = nil then
     raise Exception.Create('O campo "Dono do Cadastro" precisa ser preenchido!')

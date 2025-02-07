@@ -15,14 +15,14 @@ type
   TRecebimento = class
   private
     FContaBancaria: TContaBancaria;
-    FDonoCadastro: IParticipante;
+    FDonoCadastro: TParticipante;
     FFormaPagamento: TFormaPagamento;
     FId:   Integer;
     FData: TDate;
     FHoraExtra: Double;
     FINSS: Double;
     FIR: Double;
-    FPagador: IParticipante;
+    FPagador: TParticipante;
     FPix: TPix;
     FUsuarioCadastro: TUsuario;
     FValorTotal: Double;
@@ -40,14 +40,14 @@ type
     function GetContaBancaria: TContaBancaria;
     function GetData: TDate;
     function GetDecimoTerceiro: Boolean;
-    function GetDonoCadastro: IParticipante;
+    function GetDonoCadastro: TParticipante;
     function GetFerias: Boolean;
     function GetFormaPagamento: TFormaPagamento;
     function GetHoraExtra: Double;
     function GetId: Integer;
     function GetINSS: Double;
     function GetIR: Double;
-    function GetPagador: IParticipante;
+    function GetPagador: TParticipante;
     function GetPix: TPix;
     function GetUsuarioCadastro: TUsuario;
     function GetValorBase: Double;
@@ -60,14 +60,14 @@ type
     procedure SetContaBancaria(AValue: TContaBancaria);
     procedure SetData(AValue: TDate);
     procedure SetDecimoTerceiro(AValue: Boolean);
-    procedure SetDonoCadastro(AValue: IParticipante);
+    procedure SetDonoCadastro(AValue: TParticipante);
     procedure SetFerias(AValue: Boolean);
     procedure SetFormaPagamento(AValue: TFormaPagamento);
     procedure SetHoraExtra(AValue: Double);
     procedure SetId(AValue: Integer);
     procedure SetINSS(AValue: Double);
     procedure SetIR(AValue: Double);
-    procedure SetPagador(AValue: IParticipante);
+    procedure SetPagador(AValue: TParticipante);
     procedure SetPix(AValue: TPix);
     procedure SetUsuarioCadastro(AValue: TUsuario);
     procedure SetValorBase(AValue: Double);
@@ -95,8 +95,8 @@ type
     property FormaPagamento: TFormaPagamento read GetFormaPagamento write SetFormaPagamento;
     property ContaBancaria: TContaBancaria read GetContaBancaria write SetContaBancaria;
     property Pix: TPix read GetPix write SetPix;
-    property Pagador: IParticipante read GetPagador write SetPagador;
-    property DonoCadastro: IParticipante read GetDonoCadastro write SetDonoCadastro;
+    property Pagador: TParticipante read GetPagador write SetPagador;
+    property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
   end;
 
@@ -139,7 +139,7 @@ begin
   Result := FDecimoTerceiro;
 end;
 
-function TRecebimento.GetDonoCadastro: IParticipante;
+function TRecebimento.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
 end;
@@ -169,7 +169,7 @@ begin
   Result := FIR;
 end;
 
-function TRecebimento.GetPagador: IParticipante;
+function TRecebimento.GetPagador: TParticipante;
 begin
   Result := FPagador;
 end;
@@ -234,7 +234,7 @@ begin
   FDecimoTerceiro := AValue;
 end;
 
-procedure TRecebimento.SetDonoCadastro(AValue: IParticipante);
+procedure TRecebimento.SetDonoCadastro(AValue: TParticipante);
 begin
   FDonoCadastro:=AValue;
 end;
@@ -269,7 +269,7 @@ begin
   FIR := AValue;
 end;
 
-procedure TRecebimento.SetPagador(AValue: IParticipante);
+procedure TRecebimento.SetPagador(AValue: TParticipante);
 begin
   FPagador:=AValue;
 end;
