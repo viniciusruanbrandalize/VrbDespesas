@@ -30,9 +30,10 @@ type
     FObs: String;
     FCadastro: TDateTime;
     FAlteracao: TDateTime;
-    FDonoCadastro: Boolean;
+    FEhDonoCadastro: Boolean;
     FCidade: TCidade;
     FUsuarioCadastro: TUsuario;
+    FDonoCadastro: TParticipante;
 
     function GetAlteracao: TDateTime;
     function GetBairro: String;
@@ -42,7 +43,8 @@ type
     function GetCidade: TCidade;
     function GetCNPJ: String;
     function GetComplemento: String;
-    function GeTParticipante: Boolean;
+    function GetDonoCadastro: TParticipante;
+    function GetEhDonoCadastro: Boolean;
     function GetEmail: String;
     function GetFantasia: String;
     function GetId: Integer;
@@ -62,7 +64,8 @@ type
     procedure SetCidade(AValue: TCidade);
     procedure SetCNPJ(AValue: String);
     procedure SetComplemento(AValue: String);
-    procedure SeTParticipante(AValue: Boolean);
+    procedure SetDonoCadastro(AValue: TParticipante);
+    procedure SetEhDonoCadastro(AValue: Boolean);
     procedure SetEmail(AValue: String);
     procedure SetFantasia(AValue: String);
     procedure SetId(AValue: Integer);
@@ -95,9 +98,10 @@ type
     property Obs: String read GetObs write SetObs;
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
-    property DonoCadastro: Boolean read GeTParticipante write SeTParticipante;
+    property EhDonoCadastro: Boolean read GetEhDonoCadastro write SetEhDonoCadastro;
     property Cidade: TCidade read GetCidade write SetCidade;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
+    property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
   end;
 
 implementation
@@ -149,9 +153,14 @@ begin
   Result := FComplemento;
 end;
 
-function TParticipante.GeTParticipante: Boolean;
+function TParticipante.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
+end;
+
+function TParticipante.GetEhDonoCadastro: Boolean;
+begin
+  Result := FEhDonoCadastro;
 end;
 
 function TParticipante.GetEmail: String;
@@ -244,9 +253,14 @@ begin
   FComplemento := AValue;
 end;
 
-procedure TParticipante.SeTParticipante(AValue: Boolean);
+procedure TParticipante.SetDonoCadastro(AValue: TParticipante);
 begin
   FDonoCadastro := AValue;
+end;
+
+procedure TParticipante.SetEhDonoCadastro(AValue: Boolean);
+begin
+  FEhDonoCadastro := AValue;
 end;
 
 procedure TParticipante.SetEmail(AValue: String);
@@ -312,11 +326,16 @@ end;
 
 constructor TParticipante.Create;
 begin
-  //
+  FCidade := TCidade.Create;
+  FUsuarioCadastro := TUsuario.Create;
+  //FDonoCadastro := TParticipante.Create; //Nao criar leva a um loop
 end;
 
 destructor TParticipante.Destroy;
 begin
+  FreeAndNil(FCidade);
+  FreeAndNil(FUsuarioCadastro);
+  FreeAndNil(FDonoCadastro);
   inherited Destroy;
 end;
 

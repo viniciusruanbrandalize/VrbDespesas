@@ -93,11 +93,12 @@ end;
 
 constructor TCidade.Create;
 begin
-  //
+  FEstado := TEstado.Create;
 end;
 
 destructor TCidade.Destroy;
 begin
+  FreeAndNil(FEstado);
   inherited Destroy;
 end;
 

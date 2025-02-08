@@ -159,6 +159,7 @@ object frmCadastroPadrao: TfrmCadastroPadrao
               BorderStyle = bsNone
               Columns = <>
               PopupMenu = pMenuPadrao
+              ReadOnly = True
               RowSelect = True
               TabOrder = 1
               ViewStyle = vsReport

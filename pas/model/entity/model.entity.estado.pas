@@ -93,11 +93,12 @@ end;
 
 constructor TEstado.Create;
 begin
-  //
+  FPais := TPais.Create;
 end;
 
 destructor TEstado.Destroy;
 begin
+  FreeAndNil(FPais);
   inherited Destroy;
 end;
 

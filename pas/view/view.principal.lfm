@@ -4,7 +4,7 @@ object frmPrincipal: TfrmPrincipal
   Top = 250
   Width = 1000
   BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'Compras'
+  Caption = 'VrbDespesas by Vinícius Ruan Brandalize'
   ClientHeight = 610
   ClientWidth = 1000
   Constraints.MinHeight = 600
@@ -297,12 +297,12 @@ object frmPrincipal: TfrmPrincipal
         Margin = 7
         ParentFont = False
       end
-      object btnLoja: TSpeedButton
+      object btnParticipante: TSpeedButton
         Left = 0
         Height = 40
         Top = 120
         Width = 50
-        Action = actLoja
+        Action = actParticipante
         Align = alTop
         Flat = True
         Font.Color = clWhite
@@ -319,7 +319,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 40
         Top = 160
         Width = 50
-        Action = actSubtipoCompra
+        Action = actSubtipoDespesa
         Align = alTop
         Flat = True
         Font.Color = clWhite
@@ -336,7 +336,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 40
         Top = 200
         Width = 50
-        Action = actTipoCompra
+        Action = actTipoDespesa
         Align = alTop
         Flat = True
         Font.Color = clWhite
@@ -436,7 +436,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 40
         Top = 40
         Width = 50
-        Action = actCompra
+        Action = actDespesa
         Align = alTop
         Flat = True
         Font.Color = clWhite
@@ -748,22 +748,23 @@ object frmPrincipal: TfrmPrincipal
       ImageIndex = 10
       OnExecute = actFormaPagamentoExecute
     end
-    object actLoja: TAction
+    object actParticipante: TAction
       Category = 'Cadastro'
       Caption = 'Participantes'
       ImageIndex = 12
+      OnExecute = actParticipanteExecute
     end
-    object actSubtipoCompra: TAction
+    object actSubtipoDespesa: TAction
       Category = 'Cadastro'
       Caption = 'Subtipo de despesas'
       ImageIndex = 15
-      OnExecute = actSubtipoCompraExecute
+      OnExecute = actSubtipoDespesaExecute
     end
-    object actTipoCompra: TAction
+    object actTipoDespesa: TAction
       Category = 'Cadastro'
       Caption = 'Tipo de despesas'
       ImageIndex = 14
-      OnExecute = actTipoCompraExecute
+      OnExecute = actTipoDespesaExecute
     end
     object actUsuario: TAction
       Category = 'Cadastro'
@@ -771,7 +772,7 @@ object frmPrincipal: TfrmPrincipal
       ImageIndex = 6
       OnExecute = actUsuarioExecute
     end
-    object actCompra: TAction
+    object actDespesa: TAction
       Category = 'Operacao'
       Caption = 'Despesas'
       ImageIndex = 9

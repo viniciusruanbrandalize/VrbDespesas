@@ -8,7 +8,8 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
-  view.logerro, view.loglogin, view.bandeira, view.contabancaria;
+  view.logerro, view.loglogin, view.bandeira, view.contabancaria,
+  view.participante;
 
 type
 
@@ -20,7 +21,7 @@ type
     actDevedor: TAction;
     actFormaPagamento: TAction;
     actBanco: TAction;
-    actCompra: TAction;
+    actDespesa: TAction;
     actContasPagar: TAction;
     actConfiguracaoGlobal: TAction;
     actBackup: TAction;
@@ -33,9 +34,9 @@ type
     actLogErro: TAction;
     actVoltar: TAction;
     actRecebimento: TAction;
-    actSubtipoCompra: TAction;
-    actTipoCompra: TAction;
-    actLoja: TAction;
+    actSubtipoDespesa: TAction;
+    actTipoDespesa: TAction;
+    actParticipante: TAction;
     actUsuario: TAction;
     actOperacao: TAction;
     actUtilitario: TAction;
@@ -56,7 +57,7 @@ type
     btnOperacao: TSpeedButton;
     btnAjuda: TSpeedButton;
     btnDevedor: TSpeedButton;
-    btnLoja: TSpeedButton;
+    btnParticipante: TSpeedButton;
     btnTipo: TSpeedButton;
     btnUsuario: TSpeedButton;
     btnFinanceiro: TSpeedButton;
@@ -96,9 +97,10 @@ type
     procedure actLogErroExecute(Sender: TObject);
     procedure actLogLoginExecute(Sender: TObject);
     procedure actOperacaoExecute(Sender: TObject);
+    procedure actParticipanteExecute(Sender: TObject);
     procedure actRelatorioExecute(Sender: TObject);
-    procedure actSubtipoCompraExecute(Sender: TObject);
-    procedure actTipoCompraExecute(Sender: TObject);
+    procedure actSubtipoDespesaExecute(Sender: TObject);
+    procedure actTipoDespesaExecute(Sender: TObject);
     procedure actUsuarioExecute(Sender: TObject);
     procedure actUtilitarioExecute(Sender: TObject);
     procedure actVoltarExecute(Sender: TObject);
@@ -213,18 +215,24 @@ begin
   mudarMenu(2);
 end;
 
+procedure TfrmPrincipal.actParticipanteExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmParticipante, TfrmParticipante, false, pnlAbreForms, Self);
+  BarraLateralVazia(pnlMenuCadastro, false);
+end;
+
 procedure TfrmPrincipal.actRelatorioExecute(Sender: TObject);
 begin
   mudarMenu(4);
 end;
 
-procedure TfrmPrincipal.actSubtipoCompraExecute(Sender: TObject);
+procedure TfrmPrincipal.actSubtipoDespesaExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmSubtipoDespesa, TfrmSubtipoDespesa, false, pnlAbreForms, Self);
   BarraLateralVazia(pnlMenuCadastro, false);
 end;
 
-procedure TfrmPrincipal.actTipoCompraExecute(Sender: TObject);
+procedure TfrmPrincipal.actTipoDespesaExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmTipoDespesa, TfrmTipoDespesa, false, pnlAbreForms, Self);
   BarraLateralVazia(pnlMenuCadastro, false);

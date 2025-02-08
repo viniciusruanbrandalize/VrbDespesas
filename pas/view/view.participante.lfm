@@ -1,0 +1,353 @@
+inherited frmParticipante: TfrmParticipante
+  Caption = 'Cadastro de Participantes'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  inherited pnlFundo: TPanel
+    inherited pnlPrincipal: TPanel
+      inherited pgcPadrao: TPageControl
+        ActivePage = tbsCadastro
+        TabIndex = 1
+        inherited tbsLista: TTabSheet
+          inherited pnlFundoLista: TPanel
+            inherited lvPadrao: TListView
+              Columns = <              
+                item
+                  Caption = 'Código'
+                  Width = 0
+                end              
+                item
+                  Caption = 'Nome / Razão Social'
+                  Width = 370
+                end              
+                item
+                  Caption = 'Fantasia'
+                  Width = 370
+                end              
+                item
+                  Caption = 'Cadastro'
+                  Width = 180
+                end>
+            end
+            inherited pnlPesquisa: TPanel
+              inherited edtPesquisa: TEdit
+                Text = ''
+              end
+              inherited cbPesquisa: TComboBox
+                Items.Strings = (
+                  'Nome / R. Social'
+                  'Fantasia'
+                )
+                Text = 'Nome / R. Social'
+              end
+            end
+            inherited lbPesquisa: TListBox
+              Items.Strings = (
+                'p.nome'
+                'p.fantasia'
+              )
+              ItemHeight = 20
+            end
+          end
+        end
+        inherited tbsCadastro: TTabSheet
+          inherited pnlFundoCadastro: TPanel
+            object edtNome: TLabeledEdit[1]
+              Left = 8
+              Height = 28
+              Top = 96
+              Width = 400
+              EditLabel.Height = 20
+              EditLabel.Width = 400
+              EditLabel.Caption = 'Nome:'
+              MaxLength = 100
+              TabOrder = 1
+              Text = 'edtNome'
+            end
+            object cbPessoa: TComboBox[2]
+              Left = 5
+              Height = 28
+              Top = 32
+              Width = 107
+              ItemHeight = 20
+              ItemIndex = 0
+              Items.Strings = (
+                'Física'
+                'Jurídica'
+              )
+              Style = csDropDownList
+              TabOrder = 2
+              Text = 'Física'
+              OnChange = cbPessoaChange
+            end
+            object lblPessoa: TLabel[3]
+              Left = 8
+              Height = 20
+              Top = 9
+              Width = 47
+              Caption = 'Pessoa:'
+            end
+            object edtFantasia: TLabeledEdit[4]
+              Left = 424
+              Height = 28
+              Top = 96
+              Width = 392
+              EditLabel.Height = 20
+              EditLabel.Width = 392
+              EditLabel.Caption = 'Fantasia:'
+              MaxLength = 100
+              TabOrder = 3
+              Text = 'edtFantasia'
+            end
+            object edtCnpj: TLabeledEdit[5]
+              Left = 128
+              Height = 28
+              Top = 32
+              Width = 160
+              EditLabel.Height = 20
+              EditLabel.Width = 160
+              EditLabel.Caption = 'CNPJ:'
+              MaxLength = 100
+              TabOrder = 4
+              Text = 'edtCnpj'
+            end
+            object edtIe: TLabeledEdit[6]
+              Left = 304
+              Height = 28
+              Top = 32
+              Width = 160
+              EditLabel.Height = 20
+              EditLabel.Width = 160
+              EditLabel.Caption = 'Inscrição Estadual:'
+              MaxLength = 100
+              TabOrder = 5
+              Text = 'edtIe'
+            end
+            object edtTelefone: TLabeledEdit[7]
+              Left = 8
+              Height = 28
+              Top = 160
+              Width = 160
+              EditLabel.Height = 20
+              EditLabel.Width = 160
+              EditLabel.Caption = 'Telefone:'
+              MaxLength = 100
+              TabOrder = 6
+              Text = 'edtTelefone'
+            end
+            object edtCelular: TLabeledEdit[8]
+              Left = 184
+              Height = 28
+              Top = 160
+              Width = 160
+              EditLabel.Height = 20
+              EditLabel.Width = 160
+              EditLabel.Caption = 'Celular:'
+              MaxLength = 100
+              TabOrder = 7
+              Text = 'edtCelular'
+            end
+            object edtEmail: TLabeledEdit[9]
+              Left = 360
+              Height = 28
+              Top = 160
+              Width = 400
+              EditLabel.Height = 20
+              EditLabel.Width = 400
+              EditLabel.Caption = 'E-mail:'
+              MaxLength = 100
+              TabOrder = 8
+              Text = 'edtEmail'
+            end
+            object edtCep: TLabeledEdit[10]
+              Left = 8
+              Height = 28
+              Top = 224
+              Width = 120
+              EditLabel.Height = 20
+              EditLabel.Width = 120
+              EditLabel.Caption = 'CEP:'
+              MaxLength = 9
+              TabOrder = 9
+              Text = 'edtCep'
+            end
+            object btnBuscaCep: TSpeedButton[11]
+              Cursor = crHandPoint
+              Left = 132
+              Height = 28
+              Top = 224
+              Width = 40
+              Action = actBuscarCep
+              Images = img
+              ImageIndex = 5
+              ShowCaption = False
+            end
+            object edtRua: TLabeledEdit[12]
+              Left = 192
+              Height = 28
+              Top = 224
+              Width = 408
+              EditLabel.Height = 20
+              EditLabel.Width = 408
+              EditLabel.Caption = 'Rua:'
+              MaxLength = 100
+              TabOrder = 10
+              Text = 'edtRua'
+            end
+            object edtNumero: TLabeledEdit[13]
+              Left = 616
+              Height = 28
+              Top = 224
+              Width = 96
+              EditLabel.Height = 20
+              EditLabel.Width = 96
+              EditLabel.Caption = 'Número:'
+              MaxLength = 100
+              NumbersOnly = True
+              TabOrder = 11
+              Text = 'edtNumero'
+            end
+            object edtComplemento: TLabeledEdit[14]
+              Left = 728
+              Height = 28
+              Top = 224
+              Width = 200
+              EditLabel.Height = 20
+              EditLabel.Width = 200
+              EditLabel.Caption = 'Complemento:'
+              MaxLength = 100
+              TabOrder = 12
+              Text = 'edtComplemento'
+            end
+            object edtBairro: TLabeledEdit[15]
+              Left = 8
+              Height = 28
+              Top = 288
+              Width = 280
+              EditLabel.Height = 20
+              EditLabel.Width = 280
+              EditLabel.Caption = 'Bairro:'
+              MaxLength = 100
+              TabOrder = 13
+              Text = 'edtBairro'
+            end
+            object edtCidade: TLabeledEdit[16]
+              Left = 304
+              Height = 28
+              Top = 288
+              Width = 280
+              EditLabel.Height = 20
+              EditLabel.Width = 280
+              EditLabel.Caption = 'Cidade:'
+              Font.Color = 2977025
+              Font.Style = [fsBold]
+              MaxLength = 100
+              ParentFont = False
+              TabOrder = 14
+              Text = 'edtCidade'
+              OnExit = edtCidadeExit
+              OnKeyUp = edtCidadeKeyUp
+            end
+            object edtUf: TLabeledEdit[17]
+              Left = 600
+              Height = 28
+              Top = 288
+              Width = 56
+              EditLabel.Height = 20
+              EditLabel.Width = 56
+              EditLabel.Caption = 'UF:'
+              Font.Color = 2977025
+              Font.Style = [fsBold]
+              MaxLength = 100
+              ParentFont = False
+              ReadOnly = True
+              TabOrder = 15
+              Text = 'edtUf'
+              Visible = False
+            end
+            object mObs: TMemo[18]
+              Left = 8
+              Height = 65
+              Top = 352
+              Width = 920
+              Lines.Strings = (
+                'mObs'
+              )
+              TabOrder = 16
+            end
+            object lblObs: TLabel[19]
+              Left = 8
+              Height = 20
+              Top = 328
+              Width = 254
+              Caption = 'Observações / Informações adicionais:'
+            end
+            object lbPessoaValues: TListBox[20]
+              Left = 5
+              Height = 8
+              Top = 64
+              Width = 109
+              Items.Strings = (
+                'F'
+                'J'
+              )
+              ItemHeight = 20
+              TabOrder = 17
+              Visible = False
+            end
+            object lbCidadeNome: TListBox[21]
+              Left = 304
+              Height = 19
+              Top = 317
+              Width = 280
+              BorderStyle = bsNone
+              Color = 12451746
+              Items.Strings = (
+                'subtipo1'
+                'subtipo2'
+                'subtipo3'
+                'subtipo4'
+              )
+              ItemHeight = 20
+              TabOrder = 18
+              Visible = False
+              OnDblClick = lbCidadeNomeDblClick
+              OnKeyPress = lbCidadeNomeKeyPress
+              OnSelectionChange = lbCidadeNomeSelectionChange
+            end
+            object lbCidadeId: TListBox[22]
+              Left = 592
+              Height = 19
+              Top = 317
+              Width = 144
+              Items.Strings = (
+                'key'
+                'key'
+                'key'
+                'key'
+              )
+              ItemHeight = 20
+              TabOrder = 19
+              Visible = False
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited actList: TActionList
+    inherited actExcluir: TAction
+      OnExecute = actExcluirExecute
+    end
+    inherited actPesquisar: TAction
+      OnExecute = actPesquisarExecute
+    end
+    inherited actSalvar: TAction
+      OnExecute = actSalvarExecute
+    end
+    object actBuscarCep: TAction[8]
+      Caption = 'Buscar CEP'
+      ImageIndex = 5
+    end
+  end
+end
