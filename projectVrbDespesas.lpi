@@ -393,6 +393,17 @@
         <Filename Value="pas\model\dao\model.dao.despesa.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.despesa.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.despesa.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDespesa"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -179,13 +179,34 @@ var
 begin
   try
 
-    sql := 'insert into tipo_despesa(id, nome) values (:id, :nome)';
+    sql := 'insert into despesa (id, data, hora, descricao, chave_nfe, valor, desconto, ' +
+           'frete, outros, total, paga, parcela, cadastro, obs, id_fornecedor, ' +
+           'id_subtipo, id_dono_cadastro, id_usuario_cadastro) values (' +
+           ':id, :data, :hora, :descricao, :chave_nfe, :valor, :desconto, ' +
+           ':frete, :outros, :total, :paga, :parcela, :cadastro, :obs, :id_fornecedor, ' +
+           ':id_subtipo, :id_dono_cadastro, :id_usuario_cadastro)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger  := Despesa.Id;
-    Qry.ParamByName('nome').AsString := Despesa.Nome;
+    Qry.ParamByName('id').AsInteger        := Despesa.Id;
+    Qry.ParamByName('data').AsDate         := Despesa.Data;
+    Qry.ParamByName('hora').AsTime         := Despesa.Hora;
+    Qry.ParamByName('descricao').AsString  := Despesa.Descricao;
+    Qry.ParamByName('chave_nfe').AsString  := Despesa.ChaveNFE;
+    Qry.ParamByName('valor').AsFloat       := Despesa.Valor;
+    Qry.ParamByName('desconto').AsFloat    := Despesa.Desconto;
+    Qry.ParamByName('frete').AsFloat       := Despesa.Frete;
+    Qry.ParamByName('outros').AsFloat      := Despesa.Outros;
+    Qry.ParamByName('total').AsFloat       := Despesa.Total;
+    Qry.ParamByName('paga').AsBoolean      := Despesa.Paga;
+    Qry.ParamByName('parcela').AsFloat     := Despesa.Parcela;
+    Qry.ParamByName('cadastro').AsDateTime := Despesa.Cadastro;
+    Qry.ParamByName('obs').AsString        := Despesa.Observacao;
+    Qry.ParamByName('id_fornecedor').AsInteger := Despesa.Fornecedor.Id;
+    Qry.ParamByName('id_subtipo').AsInteger := Despesa.SubTipo.Id;
+    Qry.ParamByName('id_usuario_cadastro').AsInteger := Despesa.UsuarioCadastro.Id;
+    //Qry.ParamByName('id_dono_cadastro').AsInteger := Despesa.DonoCadastro.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -193,7 +214,7 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao inserir tipo de despesa: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao inserir despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
@@ -205,14 +226,32 @@ var
 begin
   try
 
-    sql := 'update tipo_despesa set nome = :nome ' +
+    sql := 'update despesa set "data"=:data, hora=:hora, descricao=:descricao, ' +
+           'chave_nfe=:chave_nfe, valor=:valor, desconto=:desconto, frete=:frete, ' +
+           'outros=:outros, total=:total, paga=:paga, parcela=:parcela, ' +
+           'alteracao=:alteracao, obs=:obs, id_fornecedor=:id_fornecedor, ' +
+           'id_subtipo=:id_subtipo ' +
            'where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger   := Despesa.Id;
-    Qry.ParamByName('nome').AsString  := Despesa.Nome;
+    Qry.ParamByName('id').AsInteger        := Despesa.Id;
+    Qry.ParamByName('data').AsDate         := Despesa.Data;
+    Qry.ParamByName('hora').AsTime         := Despesa.Hora;
+    Qry.ParamByName('descricao').AsString  := Despesa.Descricao;
+    Qry.ParamByName('chave_nfe').AsString  := Despesa.ChaveNFE;
+    Qry.ParamByName('valor').AsFloat       := Despesa.Valor;
+    Qry.ParamByName('desconto').AsFloat    := Despesa.Desconto;
+    Qry.ParamByName('frete').AsFloat       := Despesa.Frete;
+    Qry.ParamByName('outros').AsFloat      := Despesa.Outros;
+    Qry.ParamByName('total').AsFloat       := Despesa.Total;
+    Qry.ParamByName('paga').AsBoolean      := Despesa.Paga;
+    Qry.ParamByName('parcela').AsFloat     := Despesa.Parcela;
+    Qry.ParamByName('alteracao').AsDateTime := Despesa.Alteracao;
+    Qry.ParamByName('obs').AsString        := Despesa.Observacao;
+    Qry.ParamByName('id_fornecedor').AsInteger := Despesa.Fornecedor.Id;
+    Qry.ParamByName('id_subtipo').AsInteger := Despesa.SubTipo.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -221,7 +260,7 @@ begin
   except on E: Exception do
     begin
       dmConexao1.SQLTransaction.Rollback;
-      Erro := 'Ocorreu um erro ao alterar tipo de despesa: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao alterar despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
@@ -233,7 +272,7 @@ var
 begin
   try
 
-    sql := 'delete from tipo_despesa where id = :id';
+    sql := 'delete from despesa where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -246,7 +285,7 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir tipo de despesa: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao excluir despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;

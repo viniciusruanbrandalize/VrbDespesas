@@ -9,7 +9,7 @@ uses
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
-  view.participante;
+  view.participante, view.despesa;
 
 type
 
@@ -92,6 +92,7 @@ type
     procedure actBandeiraExecute(Sender: TObject);
     procedure actCadastroExecute(Sender: TObject);
     procedure actContaBancariaExecute(Sender: TObject);
+    procedure actDespesaExecute(Sender: TObject);
     procedure actDevedorExecute(Sender: TObject);
     procedure actFinanceiroExecute(Sender: TObject);
     procedure actFormaPagamentoExecute(Sender: TObject);
@@ -171,6 +172,12 @@ procedure TfrmPrincipal.actContaBancariaExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmContaBancaria, TfrmContaBancaria, false, pnlAbreForms, Self);
   BarraLateralVazia(pnlMenuFinanceiro, false);
+end;
+
+procedure TfrmPrincipal.actDespesaExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmDespesa, TfrmDespesa, false, pnlAbreForms, Self);
+  BarraLateralVazia(pnlMenuOperacao, false);
 end;
 
 procedure TfrmPrincipal.actDevedorExecute(Sender: TObject);

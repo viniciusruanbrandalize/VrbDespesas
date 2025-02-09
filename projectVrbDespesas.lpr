@@ -25,12 +25,13 @@ uses
   model.dao.formapagamento, controller.formapagamento, controller.tipodespesa,
   controller.subtipodespesa, controller.usuario, controller.logerro,
   controller.loglogin, controller.login, controller.bandeira,
-  controller.contabancaria, controller.participante, model.dao.tipodespesa,
-  model.dao.subtipodespesa, model.dao.usuario, model.dao.login,
-  model.dao.bandeira, model.dao.contabancaria, model.dao.participante,
-  model.dao.despesa, model.ini.configuracao, model.ini.erro, model.ini.conexao,
-  view.subtipodespesa, view.usuario, view.logerro, view.loglogin, view.login,
-  view.bandeira, view.contabancaria, view.participante, Controls;
+  controller.contabancaria, controller.participante, controller.despesa,
+  model.dao.tipodespesa, model.dao.subtipodespesa, model.dao.usuario,
+  model.dao.login, model.dao.bandeira, model.dao.contabancaria,
+  model.dao.participante, model.dao.despesa, model.ini.configuracao,
+  model.ini.erro, model.ini.conexao, view.subtipodespesa, view.usuario,
+  view.logerro, view.loglogin, view.login, view.bandeira, view.contabancaria,
+  view.participante, view.despesa, Controls;
 
 {$R *.res}
 

@@ -777,6 +777,7 @@ object frmPrincipal: TfrmPrincipal
       Category = 'Operacao'
       Caption = 'Despesas'
       ImageIndex = 9
+      OnExecute = actDespesaExecute
     end
     object actContasPagar: TAction
       Category = 'Operacao'
