@@ -348,6 +348,7 @@ inherited frmParticipante: TfrmParticipante
     object actBuscarCep: TAction[8]
       Caption = 'Buscar CEP'
       ImageIndex = 5
+      OnExecute = actBuscarCepExecute
     end
   end
 end

@@ -1,4 +1,4 @@
-unit model.error.ini;
+unit model.ini.erro;
 
 {$mode ObjFPC}{$H+}
 

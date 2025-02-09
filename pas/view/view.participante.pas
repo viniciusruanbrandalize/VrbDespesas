@@ -37,6 +37,7 @@ type
     lbCidadeId: TListBox;
     lbCidadeNome: TListBox;
     mObs: TMemo;
+    procedure actBuscarCepExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
@@ -172,6 +173,27 @@ begin
     else
       TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Operacao := opNenhum;
+  end;
+end;
+
+procedure TfrmParticipante.actBuscarCepExecute(Sender: TObject);
+var
+  Erro: string;
+begin
+  if Trim( edtCep.Text ) <> EmptyStr then
+  begin
+    Controller.Participante.CEP := edtCep.Text;
+    if Controller.BuscarCEP(Controller.Participante, Erro) then
+    begin
+      edtCep.Text         := Controller.Participante.CEP;
+      edtBairro.Text      := Controller.Participante.Bairro;
+      edtRua.Text         := Controller.Participante.Rua;
+      edtComplemento.Text := Controller.Participante.Complemento;
+      edtCidade.Text      := Controller.Participante.Cidade.Nome;
+      edtUf.Text          := Controller.Participante.Cidade.Estado.UF;
+    end
+    else
+      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
   end;
 end;
 

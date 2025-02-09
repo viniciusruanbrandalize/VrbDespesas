@@ -5,23 +5,19 @@ unit lib.cep;
 interface
 
 uses
-  Classes, SysUtils, dynlibs, view.mensagem;
+  Classes, SysUtils, dynlibs, view.mensagem, model.ini.configuracao;
 
 type
-  TDLLBuscarPorCep = function(eCEP: ShortString; const sResposta: PAnsiChar; out esTamanho: Integer): Integer; stdcall;
-  TDLLInicializar  = function(eArqConfig, eChaveCrypt: String): Integer; stdcall;
-  TDLLFinalizar    = function: Integer; stdcall;
-  TDLLConfigLer    = function(eArqConfig: String): Integer; stdcall;
-  TDLLConfigGravar = function(eArqConfig: String): Integer; stdcall;
-  TDLLConfigGravarValor = function(eSessao, eChave, sValor: String): Integer; stdcall;
-  TDLLUltimoRetorno     = function(sResposta: ShortString; out esTamanho: Integer): Integer; stdcall;
+  TLibCEPBuscarPorCep = function(CEP: PChar): Boolean; stdcall;
+  TLibCEPInicializar  = procedure(WS, TimeOut: Integer; ChaveAcesso, Usuario, Senha: PChar); stdcall;
+  TLibCEPFinalizar    = procedure(); stdcall;
+  TLibCEPGet          = function(): PChar; stdcall; {Todos os Gets da Lib}
 
 type
 
   { TLibVrbConsultaCep }
 
   TLibVrbConsultaCep = class
-
   private
     FNomeDLL:     String;
     FLogradouro:  String;
@@ -33,16 +29,21 @@ type
     FLongitude:   String;
     FCep:         String;
     FHandle:              THandle;
-    CEPBuscarPorCep:      TDLLBuscarPorCep;
-    CEPInicializar:       TDLLInicializar;
-    CEPFinalizar:         TDLLFinalizar;
-    CEPConfigLer:         TDLLConfigLer;
-    CEPConfigGravar:      TDLLConfigGravar;
-    CEPConfigGravarValor: TDLLConfigGravarValor;
-    CEPUltimoRetorno:     TDLLUltimoRetorno;
+    CEPBuscarPorCep:      TLibCEPBuscarPorCep;
+    CEPInicializar:       TLibCEPInicializar;
+    CEPFinalizar:         TLibCEPFinalizar;
+    CEPGetCEP:            TLibCEPGet;
+    CEPGetLogradouro:     TLibCEPGet;
+    CEPGetTipoLogradouro: TLibCEPGet;
+    CEPGetComplemento:    TLibCEPGet;
+    CEPGetBairro:         TLibCEPGet;
+    CEPGetCidade:         TLibCEPGet;
+    CEPGetUF:             TLibCEPGet;
+    CEPGetLatitude:       TLibCEPGet;
+    CEPGETLongitude:      TLibCEPGet;
     procedure AtribuirFuncoesDLL;
   public
-    function BuscarPorCep(bCEP: String): Boolean;
+    function BuscarPorCep(bCEP: String; out Erro: String): Boolean;
     constructor Create;
     destructor Destroy; override;
   published
@@ -64,13 +65,18 @@ procedure TLibVrbConsultaCep.AtribuirFuncoesDLL;
 begin
   if FHandle <> 0 then
   begin
-    Pointer(CEPInicializar)  := GetProcAddress(FHandle, PWideChar('CEP_Inicializar'));
-    Pointer(CEPFinalizar)    := GetProcAddress(FHandle, PWideChar('CEP_Finalizar'));
-    Pointer(CEPBuscarPorCep) := GetProcAddress(FHandle, PWideChar('CEP_BuscarPorCEP'));
-    Pointer(CEPConfigLer)    := GetProcAddress(FHandle, PWideChar('CEP_ConfigLer'));
-    Pointer(CEPConfigGravar) := GetProcAddress(FHandle, PWideChar('CEP_ConfigGravar'));
-    Pointer(CEPConfigGravarValor) := GetProcAddress(FHandle, PWideChar('CEP_ConfigGravarValor'));
-    Pointer(CEPUltimoRetorno)     := GetProcAddress(FHandle, PWideChar('CEP_UltimoRetorno'));
+    Pointer(CEPInicializar)  := GetProcAddress(FHandle, PWideChar('inicializar'));
+    Pointer(CEPFinalizar)    := GetProcAddress(FHandle, PWideChar('finalizar'));
+    Pointer(CEPBuscarPorCep) := GetProcAddress(FHandle, PWideChar('BuscarPorCEP'));
+    Pointer(CEPGetCEP)       := GetProcAddress(FHandle, PWideChar('getCep'));
+    Pointer(CEPGetLogradouro):= GetProcAddress(FHandle, PWideChar('getLogradouro'));
+    Pointer(CEPGetTipoLogradouro):= GetProcAddress(FHandle, PWideChar('getTipoLogradouro'));
+    Pointer(CEPGetComplemento):= GetProcAddress(FHandle, PWideChar('getComplemento'));
+    Pointer(CEPGetBairro)    := GetProcAddress(FHandle, PWideChar('getBairro'));
+    Pointer(CEPGetCidade)    := GetProcAddress(FHandle, PWideChar('getCidade'));
+    Pointer(CEPGetUF)        := GetProcAddress(FHandle, PWideChar('getUF'));
+    Pointer(CEPGetLatitude)  := GetProcAddress(FHandle, PWideChar('getLatitude'));
+    Pointer(CEPGETLongitude) := GetProcAddress(FHandle, PWideChar('getLongitude'));
   end
   else
   begin
@@ -80,26 +86,34 @@ begin
   end;
 end;
 
-function TLibVrbConsultaCep.BuscarPorCep(bCEP: String): Boolean;
+function TLibVrbConsultaCep.BuscarPorCep(bCEP: String; out Erro: String): Boolean;
 var
-  tamanho: Integer;
-  retorno: Integer;
-  resposta: String;
+  consultou: Boolean;
 begin
 
-  tamanho := 198;
-  retorno := CEPBuscarPorCep(bCEP, PAnsiChar(resposta), tamanho);
-  FBairro := resposta;
+  consultou := CEPBuscarPorCep(PChar(bCEP));
 
-  case retorno of
-    -1:  TfrmMessage.Mensagem('API de CEP não inicializada!', 'Erro', 'E', [mbOk],mbOk, 12);
-    -10: TfrmMessage.Mensagem('Erro ao consultar CEP!', 'Erro', 'E', [mbOk], mbOk, 12);
+  if not consultou then
+    Erro := 'Erro ao consultar CEP!'
+  else
+  begin
+    Erro := '';
+    FBairro      := AnsiString( CEPGetBairro );
+    FLogradouro  := AnsiString( CEPGetLogradouro );
+    FComplemento := AnsiString( CEPGetComplemento );
+    FCep         := AnsiString( CEPGetCEP );
+    FCidade      := AnsiString( CEPGetCidade );
+    FUf          := AnsiString( CEPGetUF );
+    FLatitude    := AnsiString( CEPGetLatitude );
+    FLongitude   := AnsiString( CEPGETLongitude );
   end;
 
-  result := (retorno = 0);
+  result := consultou;
 end;
 
 constructor TLibVrbConsultaCep.Create;
+var
+  ConfiguracaoINI: TConfiguracaoINI;
 begin
 
   {$IFDEF WIN32}
@@ -117,10 +131,17 @@ begin
 
   FHandle := LoadLibrary(FNomeDLL);
   AtribuirFuncoesDLL;
-  CEPInicializar('config_acbr.ini', '');
-  CEPConfigGravarValor('CEP','WebService','10');
-  CEPConfigGravarValor('CEP','PesquisarIBGE','1');
-  CEPConfigLer('config_acbr.ini');
+
+  ConfiguracaoINI := TConfiguracaoINI.Create;
+  try
+    CEPInicializar(ConfiguracaoINI.WebService,
+                   ConfiguracaoINI.TimeOut,
+                   Pchar(ConfiguracaoINI.ChaveAcesso),
+                   Pchar(ConfiguracaoINI.Usuario),
+                   Pchar(ConfiguracaoINI.Senha));
+  finally
+    FreeAndNil(ConfiguracaoINI);
+  end;
 end;
 
 destructor TLibVrbConsultaCep.Destroy;

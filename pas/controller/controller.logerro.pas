@@ -5,7 +5,7 @@ unit controller.logerro;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.error.ini;
+  Classes, SysUtils, ComCtrls, model.ini.erro;
 
 type
 

@@ -5,8 +5,8 @@ unit model.connection.conexao1;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, SQLDBLib, IBConnection, model.connection.ini,
-  forms, view.mensagem, DB;
+  Classes, SysUtils, SQLDB, SQLDBLib, IBConnection, model.ini.conexao,
+  forms, view.mensagem, DB ;
 
 type
 

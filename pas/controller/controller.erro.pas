@@ -5,7 +5,7 @@ unit controller.erro;
 interface
 
 uses
-  Classes, SysUtils, Forms, model.error.ini, lib.util, view.mensagem;
+  Classes, SysUtils, Forms, model.ini.erro, lib.util, view.mensagem;
 
 type
 

@@ -26,7 +26,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="pas\view;pas\model;pas\model\entity;pas\model\connection;pas\controller;pas\model\dao;pas\lib;pas\model\error"/>
+            <OtherUnitFiles Value="pas\view;pas\model;pas\model\entity;pas\model\connection;pas\controller;pas\model\dao;pas\lib;pas\model\ini"/>
             <UnitOutputDirectory Value="compile\win32"/>
           </SearchPaths>
           <CodeGeneration>
@@ -117,10 +117,6 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\model\connection\model.connection.ini.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="pas\lib\lib.cryptini.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
@@ -130,10 +126,6 @@
         <ComponentName Value="frmMessage"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\error\model.error.ini.pas"/>
-        <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.principal.pas"/>
@@ -385,6 +377,18 @@
         <Filename Value="pas\lib\lib.cep.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="pas\model\ini\model.ini.configuracao.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\ini\model.ini.conexao.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\ini\model.ini.erro.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -395,7 +399,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="pas\view;pas\model;pas\model\entity;pas\model\connection;pas\controller;pas\model\dao;pas\lib;pas\model\error"/>
+      <OtherUnitFiles Value="pas\view;pas\model;pas\model\entity;pas\model\connection;pas\controller;pas\model\dao;pas\lib;pas\model\ini"/>
       <UnitOutputDirectory Value="compile\win32"/>
     </SearchPaths>
     <CodeGeneration>

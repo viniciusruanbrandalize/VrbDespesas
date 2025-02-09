@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.participante,
-  model.dao.participante, model.connection.conexao1;
+  model.dao.participante, model.connection.conexao1, lib.cep;
 
 type
 
@@ -58,8 +58,26 @@ end;
 
 function TParticipanteController.BuscarCEP(var objParticipante: TParticipante;
   out Erro: String): Boolean;
+var
+  CEP: TLibVrbConsultaCep;
+  consultou: Boolean;
 begin
-  //
+  CEP := TLibVrbConsultaCep.Create;
+  try
+    consultou := CEP.BuscarPorCep(objParticipante.CEP, Erro);
+    if consultou then
+    begin
+      objParticipante.CEP              := CEP.CEP;
+      objParticipante.Rua              := CEP.Logradouro;
+      objParticipante.Complemento      := CEP.Complemento;
+      objParticipante.Bairro           := CEP.Bairro;
+      objParticipante.Cidade.Nome      := CEP.Cidade;
+      objParticipante.Cidade.Estado.UF := CEP.UF;
+    end;
+  finally
+    Result := consultou;
+    FreeAndNil(CEP);
+  end;
 end;
 
 function TParticipanteController.BuscarPorId(objParticipante: TParticipante; Id: Integer; out

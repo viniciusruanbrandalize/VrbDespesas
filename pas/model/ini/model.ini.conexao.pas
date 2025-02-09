@@ -1,4 +1,4 @@
-unit model.connection.ini;
+unit model.ini.conexao;
 
 {$mode ObjFPC}{$H+}
 
