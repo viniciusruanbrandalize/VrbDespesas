@@ -92,6 +92,7 @@ type
     procedure actBandeiraExecute(Sender: TObject);
     procedure actCadastroExecute(Sender: TObject);
     procedure actContaBancariaExecute(Sender: TObject);
+    procedure actDevedorExecute(Sender: TObject);
     procedure actFinanceiroExecute(Sender: TObject);
     procedure actFormaPagamentoExecute(Sender: TObject);
     procedure actLogErroExecute(Sender: TObject);
@@ -172,6 +173,12 @@ begin
   BarraLateralVazia(pnlMenuFinanceiro, false);
 end;
 
+procedure TfrmPrincipal.actDevedorExecute(Sender: TObject);
+begin
+  Controller.AbrirTelaParticipante(frmParticipante, pnlAbreForms, Self, True);
+  BarraLateralVazia(pnlMenuCadastro, false);
+end;
+
 procedure TfrmPrincipal.actFinanceiroExecute(Sender: TObject);
 begin
   mudarMenu(20);
@@ -217,7 +224,7 @@ end;
 
 procedure TfrmPrincipal.actParticipanteExecute(Sender: TObject);
 begin
-  Controller.AbrirTela(frmParticipante, TfrmParticipante, false, pnlAbreForms, Self);
+  Controller.AbrirTelaParticipante(frmParticipante, pnlAbreForms, Self, False);
   BarraLateralVazia(pnlMenuCadastro, false);
 end;
 

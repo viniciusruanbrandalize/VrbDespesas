@@ -741,6 +741,7 @@ object frmPrincipal: TfrmPrincipal
       Category = 'Cadastro'
       Caption = 'Devedores'
       ImageIndex = 11
+      OnExecute = actDevedorExecute
     end
     object actFormaPagamento: TAction
       Category = 'Cadastro'

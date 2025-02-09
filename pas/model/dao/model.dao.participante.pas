@@ -16,8 +16,8 @@ type
   private
     Qry: TSQLQuery;
   public
-    procedure Listar(lv: TListView);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure Listar(lv: TListView; DonoCadastro: Boolean = false);
+    procedure Pesquisar(lv: TListView; Campo, Busca: String; DonoCadastro: Boolean = false);
     procedure PesquisarCidade(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(Participante : TParticipante; Id: Integer; out Erro: String; DonoCadastro: Boolean = false): Boolean;
     function Inserir(Participante : TParticipante; out Erro: string): Boolean;
@@ -32,7 +32,7 @@ implementation
 
 { TParticipanteDAO }
 
-procedure TParticipanteDAO.Listar(lv: TListView);
+procedure TParticipanteDAO.Listar(lv: TListView; DonoCadastro: Boolean = false);
 var
   sql: String;
   item : TListItem;
@@ -40,11 +40,13 @@ begin
   try
 
     sql := 'select p.* from participante p ' +
+           'where p.dono_cadastro = :dono_cadastro ' +
            'order by p.nome';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
+    Qry.ParamByName('dono_cadastro').AsBoolean := DonoCadastro;
     Qry.Open;
 
     Qry.First;
@@ -64,7 +66,8 @@ begin
   end;
 end;
 
-procedure TParticipanteDAO.Pesquisar(lv: TListView; Campo, Busca: String);
+procedure TParticipanteDAO.Pesquisar(lv: TListView; Campo, Busca: String;
+  DonoCadastro: Boolean = false);
 var
   sql: String;
   item : TListItem;
@@ -74,21 +77,24 @@ begin
 
     if TryStrToFloat(Busca, valor) then
     begin
-      sql := 'select * from participante ' +
-             'where '+campo+' = :busca '+
-             'order by nome';
+      sql := 'select p.* from participante p ' +
+             'where '+campo+' = :busca and ' +
+             'p.dono_cadastro = :dono_cadastro '+
+             'order by p.nome';
     end
     else
     begin
-      sql := 'select * from participante ' +
-             'where UPPER('+campo+') like :busca '+
-             'order by nome';
+      sql := 'select p.* from participante p ' +
+             'where UPPER('+campo+') like :busca and '+
+             'p.dono_cadastro = :dono_cadastro '+
+             'order by p.nome';
     end;
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.ParamByName('dono_cadastro').AsBoolean := DonoCadastro;
     Qry.Open;
 
     Qry.First;

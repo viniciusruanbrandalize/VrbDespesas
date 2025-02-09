@@ -52,11 +52,14 @@ type
     procedure lbCidadeNomeKeyPress(Sender: TObject; var Key: char);
     procedure lbCidadeNomeSelectionChange(Sender: TObject; User: boolean);
   private
+    FEhDonoCadastro: Boolean;  {Abrir form de devedor/participantes}
     Controller: TParticipanteController;
+    procedure SetEhDonoCadastro(AValue: Boolean);
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
+    property EhDonoCadastro: Boolean read FEhDonoCadastro write SetEhDonoCadastro;
   end;
 
 var
@@ -200,7 +203,8 @@ end;
 procedure TfrmParticipante.actPesquisarExecute(Sender: TObject);
 begin
   lvPadrao.Items.Clear;
-  Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex], edtPesquisa.Text);
+  Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex],
+                        edtPesquisa.Text, FEhDonoCadastro);
 end;
 
 procedure TfrmParticipante.FormClose(Sender: TObject;
@@ -244,10 +248,17 @@ begin
   //edtUf.Text     := Copy(edtCidade.Text, Pos(edtCidade.Text, '-'), Length(edtCidade.Text));
 end;
 
+procedure TfrmParticipante.SetEhDonoCadastro(AValue: Boolean);
+begin
+  if FEhDonoCadastro = AValue then
+    Exit;
+  FEhDonoCadastro := AValue;
+end;
+
 procedure TfrmParticipante.CarregarDados;
 begin
   lvPadrao.Items.Clear;
-  Controller.Listar(lvPadrao);
+  Controller.Listar(lvPadrao, FEhDonoCadastro);
 end;
 
 procedure TfrmParticipante.LimparCampos;

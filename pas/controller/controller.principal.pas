@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, controls, controller.erro, lib.util,
-  model.connection.conexao1;
+  model.connection.conexao1, view.participante;
 
 type
 
@@ -18,6 +18,7 @@ type
   public
     procedure TratarErros(Sender: TObject; E: Exception);
     procedure AbrirTela(Formulario: TForm; ClasseForm: TFormClass; Modal: Boolean; AParent: TWinControl; FormularioPai: TForm);
+    procedure AbrirTelaParticipante(Formulario: TfrmParticipante; AParent: TWinControl; FormularioPai: TForm; DonoCadastro: Boolean);
     function RetornarNomeUsuario: String;
     constructor Create;
     destructor Destroy; override;
@@ -36,6 +37,20 @@ procedure TPrincipalController.AbrirTela(Formulario: TForm; ClasseForm: TFormCla
   Modal: Boolean; AParent: TWinControl; FormularioPai: TForm);
 begin
   CriarForm(Formulario, ClasseForm, Modal, AParent, FormularioPai);
+end;
+
+procedure TPrincipalController.AbrirTelaParticipante(
+  Formulario: TfrmParticipante; AParent: TWinControl; FormularioPai: TForm;
+  DonoCadastro: Boolean);
+begin
+  Formulario := TfrmParticipante.Create(FormularioPai);
+  Formulario.EhDonoCadastro := DonoCadastro;
+  if AParent <> nil then
+  begin
+    Formulario.Parent := AParent;
+    Formulario.Align  := alClient;
+  end;
+  Formulario.Show;
 end;
 
 function TPrincipalController.RetornarNomeUsuario: String;
