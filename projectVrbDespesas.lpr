@@ -28,10 +28,10 @@ uses
   controller.contabancaria, controller.participante, controller.despesa,
   model.dao.tipodespesa, model.dao.subtipodespesa, model.dao.usuario,
   model.dao.login, model.dao.bandeira, model.dao.contabancaria,
-  model.dao.participante, model.dao.despesa, model.ini.configuracao,
-  model.ini.erro, model.ini.conexao, view.subtipodespesa, view.usuario,
-  view.logerro, view.loglogin, view.login, view.bandeira, view.contabancaria,
-  view.participante, view.despesa, Controls;
+  model.dao.participante, model.dao.despesa, model.dao.sequencia,
+  model.ini.configuracao, model.ini.erro, model.ini.conexao,
+  view.subtipodespesa, view.usuario, view.logerro, view.loglogin, view.login,
+  view.bandeira, view.contabancaria, view.participante, view.despesa, Controls;
 
 {$R *.res}
 

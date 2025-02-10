@@ -33,6 +33,7 @@ inherited frmDespesa: TfrmDespesa
                   Width = 350
                 end              
                 item
+                  Alignment = taRightJustify
                   Caption = 'Valor R$'
                   Width = 130
                 end>
@@ -68,6 +69,7 @@ inherited frmDespesa: TfrmDespesa
                 TimeDisplay = tdHMS
                 DateMode = dmComboBox
                 Date = 45697
+                Time = 0.483964456019748
                 UseDefaultSeparators = True
                 HideDateTimeParts = []
                 MonthNames = 'Long'
@@ -89,6 +91,7 @@ inherited frmDespesa: TfrmDespesa
                 TimeDisplay = tdHMS
                 DateMode = dmComboBox
                 Date = 45697
+                Time = 0.483964456019748
                 UseDefaultSeparators = True
                 HideDateTimeParts = []
                 MonthNames = 'Long'
@@ -142,6 +145,7 @@ inherited frmDespesa: TfrmDespesa
               TimeDisplay = tdHMS
               DateMode = dmComboBox
               Date = 45697
+              Time = 0.483964456019748
               UseDefaultSeparators = True
               HideDateTimeParts = []
               MonthNames = 'Long'
@@ -163,6 +167,7 @@ inherited frmDespesa: TfrmDespesa
               TimeDisplay = tdHMS
               DateMode = dmUpDown
               Date = 45697
+              Time = 0.483964456019748
               UseDefaultSeparators = True
               HideDateTimeParts = []
               MonthNames = 'Long'
@@ -182,7 +187,10 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Height = 20
               EditLabel.Width = 264
               EditLabel.Caption = 'Fornecedor: *'
+              Font.Color = 2977025
+              Font.Style = [fsBold]
               MaxLength = 100
+              ParentFont = False
               TabOrder = 4
               Text = 'edtFornecedor'
             end
@@ -194,7 +202,10 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Height = 20
               EditLabel.Width = 248
               EditLabel.Caption = 'Subtipo: *'
+              Font.Color = 2977025
+              Font.Style = [fsBold]
               MaxLength = 100
+              ParentFont = False
               TabOrder = 5
               Text = 'edtSubtipo'
             end
@@ -290,37 +301,95 @@ inherited frmDespesa: TfrmDespesa
             end
             object pgcMaisOpcoes: TPageControl[15]
               Left = 414
-              Height = 266
-              Top = 160
+              Height = 280
+              Top = 144
               Width = 522
               ActivePage = tbsPagamento
               TabIndex = 0
               TabOrder = 13
               object tbsPagamento: TTabSheet
                 Caption = 'Pagamento'
-                ClientHeight = 233
+                ClientHeight = 247
                 ClientWidth = 514
-                object ListView1: TListView
-                  Left = 8
-                  Height = 88
-                  Top = 8
-                  Width = 489
-                  Columns = <>
+                object lvPagamento: TListView
+                  Left = 0
+                  Height = 80
+                  Top = 0
+                  Width = 514
+                  Align = alTop
+                  BorderStyle = bsNone
+                  Columns = <                  
+                    item
+                    end                  
+                    item
+                    end                  
+                    item
+                    end>
+                  PopupMenu = pMenuFpgto
                   ReadOnly = True
+                  RowSelect = True
                   TabOrder = 0
                   ViewStyle = vsReport
                 end
-                object edtValor1: TLabeledEdit
-                  Left = 72
+                object edtValorFpgto: TLabeledEdit
+                  Left = 368
                   Height = 28
-                  Top = 144
-                  Width = 120
+                  Top = 147
+                  Width = 136
                   EditLabel.Height = 20
-                  EditLabel.Width = 120
+                  EditLabel.Width = 136
                   EditLabel.Caption = 'Valor R$: *'
                   MaxLength = 100
                   TabOrder = 1
-                  Text = 'edtValor1'
+                  Text = 'edtValorFpgto'
+                end
+                object btnIncluirFormaPgto: TSpeedButton
+                  Left = 8
+                  Height = 28
+                  Top = 88
+                  Width = 93
+                  Action = actIncluirFpgto
+                  Images = img
+                  ImageIndex = 1
+                end
+                object btnExcluirFormaPgto: TSpeedButton
+                  Left = 112
+                  Height = 28
+                  Top = 88
+                  Width = 93
+                  Action = actExcluirFpgto
+                  Images = img
+                  ImageIndex = 3
+                end
+                object edtPesquisaGenericaFpgto: TLabeledEdit
+                  Left = 8
+                  Height = 28
+                  Top = 208
+                  Width = 344
+                  EditLabel.Height = 20
+                  EditLabel.Width = 344
+                  EditLabel.Caption = 'Conta Bancária: *'
+                  Font.Color = 2977025
+                  Font.Style = [fsBold]
+                  MaxLength = 100
+                  ParentFont = False
+                  TabOrder = 2
+                  Text = 'edtPesquisaGenericaFpgto'
+                end
+                object edtFormaPagamento: TLabeledEdit
+                  Left = 8
+                  Height = 28
+                  Top = 147
+                  Width = 344
+                  EditLabel.Height = 20
+                  EditLabel.Width = 344
+                  EditLabel.Caption = 'Forma de Pagamento: *'
+                  Font.Color = 2977025
+                  Font.Style = [fsBold]
+                  MaxLength = 100
+                  ParentFont = False
+                  TabOrder = 3
+                  Text = 'edtFormaPagamento'
                 end
               end
               object tbsArquivo: TTabSheet
@@ -341,6 +410,30 @@ inherited frmDespesa: TfrmDespesa
     end
     inherited actSalvar: TAction
       OnExecute = actSalvarExecute
+    end
+    object actIncluirFpgto: TAction[8]
+      Caption = 'Incluir'
+      ImageIndex = 1
+    end
+    object actExcluirFpgto: TAction[9]
+      Caption = 'Excluir'
+      ImageIndex = 3
+    end
+    object actSalvarFpgto: TAction[10]
+      Caption = 'Salvar'
+      ImageIndex = 6
+    end
+    object actCancelarFpgto: TAction[11]
+      Caption = 'Cancelar'
+      ImageIndex = 7
+    end
+  end
+  object pMenuFpgto: TPopupMenu[4]
+    Images = img
+    Left = 440
+    Top = 8
+    object MenuItem4: TMenuItem
+      Action = actExcluirFpgto
     end
   end
 end
