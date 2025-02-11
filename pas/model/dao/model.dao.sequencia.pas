@@ -10,7 +10,7 @@ uses
 
 type
 
-  TGenerator = (GEN_ID_BANCO, GEN_ID_BANDEIRA, GEN_ID_CARTAO, GEN_ID_CIDADE,
+  TSequencia = (GEN_ID_BANCO, GEN_ID_BANDEIRA, GEN_ID_CARTAO, GEN_ID_CIDADE,
                 GEN_ID_COFRE, GEN_ID_CONTA_BANCARIA, GEN_ID_DESPESA,
                 GEN_ID_DESPESA_FORMA_PGTO, GEN_ID_FORMA_PGTO, GEN_ID_LOG_BACKUP,
                 GEN_ID_LOGIN, GEN_ID_PAIS, GEN_ID_PARTICIPANTE, GEN_ID_RECEBIMENTO,
@@ -25,9 +25,9 @@ type
     FDriver:      String;
     FNomeGerador: String;
     FSQL:         String;
-    procedure GeneratorToString(Gerador: TGenerator);
+    procedure GeneratorToString(Sequencia: TSequencia);
   public
-    function GerarId(Gerador: TGenerator; Incremento: Integer=1): Integer;
+    function GerarId(Sequencia: TSequencia; Incremento: Integer=1): Integer;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -36,11 +36,11 @@ implementation
 
 { TSequenciaDAO }
 
-procedure TSequenciaDAO.GeneratorToString(Gerador: TGenerator);
+procedure TSequenciaDAO.GeneratorToString(Sequencia: TSequencia);
 begin
   if FDriver = 'FIREBIRD' Then
   begin
-    case Gerador of
+    case Sequencia of
       GEN_ID_BANCO:    FNomeGerador := 'gen_id_banco';
       GEN_ID_BANDEIRA: FNomeGerador := 'gen_id_bandeira';
       GEN_ID_CARTAO:   FNomeGerador := 'gen_id_cartao';
@@ -49,13 +49,13 @@ begin
   end;
 end;
 
-function TSequenciaDAO.GerarId(Gerador: TGenerator; Incremento: Integer): Integer;
+function TSequenciaDAO.GerarId(Sequencia: TSequencia; Incremento: Integer): Integer;
 var
   id: integer;
 begin
   id := 0;
   try
-    GeneratorToString(Gerador);
+    GeneratorToString(Sequencia);
 
     if FDriver = 'FIREBIRD' then
     begin
