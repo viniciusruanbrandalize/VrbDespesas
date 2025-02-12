@@ -405,7 +405,7 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\model\dao\model.dao.sequencia.pas"/>
+        <Filename Value="pas\model\dao\model.dao.padrao.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
