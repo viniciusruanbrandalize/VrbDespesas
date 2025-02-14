@@ -5,7 +5,8 @@ unit controller.banco;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.entity.banco, model.dao.banco;
+  Classes, SysUtils, ComCtrls, model.entity.banco, model.dao.banco,
+  model.dao.padrao;
 
 type
 
@@ -48,7 +49,7 @@ end;
 
 function TBancoController.Inserir(objBanco: TBanco; out Erro: string): Boolean;
 begin
-  objBanco.Id := BancoDao.GerarId('gen_id_banco');
+  objBanco.Id := BancoDao.GerarId(SEQ_ID_BANCO);
   Result := BancoDao.Inserir(objBanco, Erro);
 end;
 

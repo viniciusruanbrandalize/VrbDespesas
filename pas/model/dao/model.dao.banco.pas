@@ -5,25 +5,24 @@ unit model.dao.banco;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, SQLDB, model.entity.banco,
+  Classes, SysUtils, ComCtrls, SQLDB, model.dao.padrao, model.entity.banco,
   model.connection.conexao1;
 
 type
 
   { TBancoDAO }
 
-  TBancoDAO = class
+  TBancoDAO = class(TPadraoDAO)
   private
-    Qry: TSQLQuery;
+
   public
-    procedure Listar(lv: TListView);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure Listar(lv: TListView); override;
+    procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
     function BuscarPorId(Banco : TBanco; Id: Integer; out Erro: String): Boolean;
     function Inserir(Banco: TBanco; out Erro: string): Boolean;
     function Editar(Banco: TBanco; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
-    function GerarId(Gerador: String; Incremento: Integer=1): Integer;
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
   end;
 
@@ -194,7 +193,7 @@ begin
   except on E: Exception do
     begin
       dmConexao1.SQLTransaction.Rollback;
-      Erro := 'Ocorreu um erro ao inserir banco: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao alterar banco: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
@@ -219,46 +218,19 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao inserir banco: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao excluir banco: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
 end;
 
-function TBancoDAO.GerarId(Gerador: String; Incremento: Integer=1): Integer;
-var
-  qryGerador: TSQLQuery;
-  sql: String;
-  id: integer;
-begin
-  id := 0;
-  qryGerador := TSQLQuery.Create(nil);
-  try
-
-    sql := 'SELECT GEN_ID('+Gerador+', '+IntToStr(Incremento)+') AS ID ' +
-           'FROM RDB$DATABASE';
-
-    qryGerador.SQLConnection := dmConexao1.SQLConnector;
-    qryGerador.SQL.Add(sql);
-    qryGerador.Open;
-
-    id := qryGerador.FieldByName('ID').AsInteger;
-    Result := id;
-
-  finally
-    qryGerador.Free;
-  end;
-end;
-
 constructor TBancoDAO.Create;
 begin
-  Qry := TSQLQuery.Create(nil);
-  qry.SQLConnection := dmConexao1.SQLConnector;
+  inherited;
 end;
 
 destructor TBancoDAO.Destroy;
 begin
-  Qry.Free;
   inherited Destroy;
 end;
 

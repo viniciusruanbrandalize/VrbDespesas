@@ -5,25 +5,25 @@ unit model.dao.contabancaria;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.entity.contabancaria,
-  model.connection.conexao1, model.entity.pix, model.entity.cartao;
+  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.dao.padrao,
+  model.entity.contabancaria, model.connection.conexao1, model.entity.pix,
+  model.entity.cartao;
 
 type
 
   { TContaBancariaDAO }
 
-  TContaBancariaDAO = class
+  TContaBancariaDAO = class(TPadraoDAO)
   private
-    Qry: TSQLQuery;
+
   public
-    procedure Listar(lv: TListView);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure Listar(lv: TListView); override;
+    procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
     procedure PesquisarBanco(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(ContaBancaria : TContaBancaria; Id: Integer; out Erro: String): Boolean;
     function Inserir(ContaBancaria: TContaBancaria; out Erro: string): Boolean;
     function Editar(ContaBancaria: TContaBancaria; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
-    function GerarId(Gerador: String; Incremento: Integer=1): Integer;
 
     {$Region 'Pix'}
     procedure ListarPix(lv: TListView; IdConta: Integer);
@@ -42,7 +42,7 @@ type
     function ExcluirCartao(Id: Integer; out Erro: string): Boolean;
     {$EndRegion}
 
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
   end;
 
@@ -305,31 +305,6 @@ begin
       Erro := 'Ocorreu um erro ao excluir Conta Bancaria: ' + sLineBreak + E.Message;
       Result := False;
     end;
-  end;
-end;
-
-function TContaBancariaDAO.GerarId(Gerador: String; Incremento: Integer=1): Integer;
-var
-  qryGerador: TSQLQuery;
-  sql: String;
-  id: integer;
-begin
-  id := 0;
-  qryGerador := TSQLQuery.Create(nil);
-  try
-
-    sql := 'SELECT GEN_ID('+Gerador+', '+IntToStr(Incremento)+') AS ID ' +
-           'FROM RDB$DATABASE';
-
-    qryGerador.SQLConnection := dmConexao1.SQLConnector;
-    qryGerador.SQL.Add(sql);
-    qryGerador.Open;
-
-    id := qryGerador.FieldByName('ID').AsInteger;
-    Result := id;
-
-  finally
-    qryGerador.Free;
   end;
 end;
 
@@ -733,13 +708,11 @@ end;
 
 constructor TContaBancariaDAO.Create;
 begin
-  Qry := TSQLQuery.Create(nil);
-  qry.SQLConnection := dmConexao1.SQLConnector;
+  inherited;
 end;
 
 destructor TContaBancariaDAO.Destroy;
 begin
-  Qry.Free;
   inherited Destroy;
 end;
 

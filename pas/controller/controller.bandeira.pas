@@ -5,7 +5,8 @@ unit controller.bandeira;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.entity.bandeira, model.dao.bandeira;
+  Classes, SysUtils, ComCtrls, model.entity.bandeira, model.dao.bandeira,
+  model.dao.padrao;
 
 type
 
@@ -48,7 +49,7 @@ end;
 
 function TBandeiraController.Inserir(objBandeira: TBandeira; out Erro: string): Boolean;
 begin
-  objBandeira.Id := BandeiraDAO.GerarId('gen_id_bandeira');
+  objBandeira.Id := BandeiraDAO.GerarId(SEQ_ID_BANDEIRA);
   Result := BandeiraDAO.Inserir(objBandeira, Erro);
 end;
 

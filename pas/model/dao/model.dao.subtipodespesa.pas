@@ -6,25 +6,24 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.entity.subtipodespesa,
-  model.connection.conexao1;
+  model.connection.conexao1, model.dao.padrao;
 
 type
 
   { TSubtipoDespesaDAO }
 
-  TSubtipoDespesaDAO = class
+  TSubtipoDespesaDAO = class(TPadraoDAO)
   private
-    Qry: TSQLQuery;
+
   public
-    procedure Listar(lv: TListView);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure Listar(lv: TListView); override;
+    procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
     procedure PesquisarTipoDespesa(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(SubtipoDespesa : TSubtipoDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(SubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
     function Editar(SubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
-    function GerarId(Gerador: String; Incremento: Integer=1): Integer;
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
   end;
 
@@ -241,7 +240,7 @@ begin
   except on E: Exception do
     begin
       dmConexao1.SQLTransaction.Rollback;
-      Erro := 'Ocorreu um erro ao inserir Subtipo de Despesa: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao alterar Subtipo de Despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
@@ -266,46 +265,19 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao inserir Subtipo de Despesa: ' + sLineBreak + E.Message;
+      Erro := 'Ocorreu um erro ao excluir Subtipo de Despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
 end;
 
-function TSubtipoDespesaDAO.GerarId(Gerador: String; Incremento: Integer=1): Integer;
-var
-  qryGerador: TSQLQuery;
-  sql: String;
-  id: integer;
-begin
-  id := 0;
-  qryGerador := TSQLQuery.Create(nil);
-  try
-
-    sql := 'SELECT GEN_ID('+Gerador+', '+IntToStr(Incremento)+') AS ID ' +
-           'FROM RDB$DATABASE';
-
-    qryGerador.SQLConnection := dmConexao1.SQLConnector;
-    qryGerador.SQL.Add(sql);
-    qryGerador.Open;
-
-    id := qryGerador.FieldByName('ID').AsInteger;
-    Result := id;
-
-  finally
-    qryGerador.Free;
-  end;
-end;
-
 constructor TSubtipoDespesaDAO.Create;
 begin
-  Qry := TSQLQuery.Create(nil);
-  qry.SQLConnection := dmConexao1.SQLConnector;
+  inherited;
 end;
 
 destructor TSubtipoDespesaDAO.Destroy;
 begin
-  Qry.Free;
   inherited Destroy;
 end;
 

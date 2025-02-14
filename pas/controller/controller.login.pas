@@ -5,8 +5,9 @@ unit controller.login;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.dao.login, model.entity.login,
-  model.entity.usuario, lib.bcrypt, model.connection.conexao1;
+  Classes, SysUtils, ComCtrls, model.dao.padrao, model.dao.login,
+  model.entity.login, model.entity.usuario, lib.bcrypt,
+  model.connection.conexao1;
 
 type
 
@@ -51,7 +52,7 @@ end;
 function TLoginController.Inserir(objLogin: TLogin; out Erro: String
   ): Boolean;
 begin
-  objLogin.Id := LoginDAO.GerarId('gen_id_login');
+  objLogin.Id := LoginDAO.GerarId(SEQ_ID_LOGIN);
   Result := LoginDAO.Inserir(objLogin, Erro);
 end;
 

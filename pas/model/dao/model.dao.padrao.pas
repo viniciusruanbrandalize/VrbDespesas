@@ -27,11 +27,11 @@ type
 
   TPadraoDAO = class
   private
-    Qry: TSQLQuery;
     FDriver: String;
     function SequenciaToString(Sequencia: TSequencia): String;
     function TabelaToString(Tabela: TTabela): String;
   public
+    Qry: TSQLQuery;
     procedure Listar(lv: TListView); virtual; abstract;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); virtual; abstract;
     procedure PesquisaGenerica(Tabela: TTabela; lbNome, lbId: TListBox; busca: String; Limitacao: Integer;
@@ -39,8 +39,9 @@ type
     function GerarId(Sequencia: TSequencia; Incremento: Integer=1): Integer;
 
     procedure CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);
-    constructor Create;
+    constructor Create; virtual;
     destructor Destroy; override;
+    property Driver: String read FDriver write FDriver;
   end;
 
 implementation
@@ -170,11 +171,12 @@ begin
 
     if FDriver = 'FIREBIRD' then
     begin
-      sql := 'SELECT GEN_ID('+nomeSequencia+', '+IntToStr(Incremento)+') AS ID ' +
-              'FROM RDB$DATABASE';
+      sql := 'SELECT GEN_ID('+nomeSequencia+','+IntToStr(Incremento)+') AS ID '+
+             'FROM RDB$DATABASE';
     end;
 
     Qry.Close;
+    Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.Open;
 

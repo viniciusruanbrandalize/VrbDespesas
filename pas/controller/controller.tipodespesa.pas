@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, model.entity.tipodespesa,
-  model.dao.tipodespesa;
+  model.dao.padrao, model.dao.tipodespesa;
 
 type
 
@@ -49,7 +49,7 @@ end;
 
 function TTipoDespesaController.Inserir(objTipoDespesa: TTipoDespesa; out Erro: string): Boolean;
 begin
-  objTipoDespesa.Id := TipoDespesaDAO.GerarId('gen_id_tipo_despesa');
+  objTipoDespesa.Id := TipoDespesaDAO.GerarId(SEQ_ID_TIPO_DESPESA);
   Result := TipoDespesaDAO.Inserir(objTipoDespesa, Erro);
 end;
 

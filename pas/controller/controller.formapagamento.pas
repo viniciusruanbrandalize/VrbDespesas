@@ -5,7 +5,7 @@ unit controller.formapagamento;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.entity.formapagamento,
+  Classes, SysUtils, ComCtrls, model.entity.formapagamento, model.dao.padrao,
   model.dao.formapagamento;
 
 type
@@ -50,7 +50,7 @@ end;
 
 function TFormaPagamentoController.Inserir(objFormaPagamento: TFormaPagamento; out Erro: string): Boolean;
 begin
-  objFormaPagamento.Id := FormaPagamentoDAO.GerarId('gen_id_forma_pgto');
+  objFormaPagamento.Id := FormaPagamentoDAO.GerarId(SEQ_ID_FORMA_PGTO);
   Result := FormaPagamentoDAO.Inserir(objFormaPagamento, Erro);
 end;
 

@@ -6,22 +6,21 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, SQLDB, model.entity.login, model.entity.usuario,
-  model.connection.conexao1;
+  model.connection.conexao1, model.dao.padrao;
 
 type
 
   { TLoginDAO }
 
-  TLoginDAO = class
+  TLoginDAO = class(TPadraoDAO)
   private
-    Qry: TSQLQuery;
+
   public
-    procedure Listar(lv: TListView);
+    procedure Listar(lv: TListView); override;
     function Inserir(Login : TLogin; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
     function EncontrarUsuario(Usuario: TUsuario; Nome: String; out Erro: String): Boolean;
-    function GerarId(Gerador: String; Incremento: Integer=1): Integer;
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
   end;
 
@@ -160,41 +159,13 @@ begin
   end;
 end;
 
-function TLoginDAO.GerarId(Gerador: String; Incremento: Integer
-  ): Integer;
-var
-  qryGerador: TSQLQuery;
-  sql: String;
-  id: integer;
-begin
-  id := 0;
-  qryGerador := TSQLQuery.Create(nil);
-  try
-
-    sql := 'SELECT GEN_ID('+Gerador+', '+IntToStr(Incremento)+') AS ID ' +
-           'FROM RDB$DATABASE';
-
-    qryGerador.SQLConnection := dmConexao1.SQLConnector;
-    qryGerador.SQL.Add(sql);
-    qryGerador.Open;
-
-    id := qryGerador.FieldByName('ID').AsInteger;
-    Result := id;
-
-  finally
-    qryGerador.Free;
-  end;
-end;
-
 constructor TLoginDAO.Create;
 begin
-  Qry := TSQLQuery.Create(nil);
-  qry.SQLConnection := dmConexao1.SQLConnector;
+  inherited;
 end;
 
 destructor TLoginDAO.Destroy;
 begin
-  Qry.Free;
   inherited Destroy;
 end;
 

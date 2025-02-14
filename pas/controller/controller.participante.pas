@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.participante,
-  model.dao.participante, model.connection.conexao1, lib.cep;
+  model.dao.participante, model.dao.padrao, model.connection.conexao1, lib.cep;
 
 type
 
@@ -89,7 +89,7 @@ end;
 
 function TParticipanteController.Inserir(objParticipante: TParticipante; out Erro: string): Boolean;
 begin
-  objParticipante.Id := ParticipanteDAO.GerarId('gen_id_participante');
+  objParticipante.Id := ParticipanteDAO.GerarId(SEQ_ID_PARTICIPANTE);
   objParticipante.UsuarioCadastro.Id := dmConexao1.IdUsuario;
   Result := ParticipanteDAO.Inserir(objParticipante, Erro);
 end;

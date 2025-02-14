@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, model.entity.usuario, lib.bcrypt, lib.types,
-  model.dao.usuario;
+  model.dao.padrao, model.dao.usuario;
 
 type
 
@@ -51,7 +51,7 @@ end;
 
 function TUsuarioController.Inserir(objUsuario: TUsuario; out Erro: string): Boolean;
 begin
-  objUsuario.Id := UsuarioDAO.GerarId('gen_id_usuario');
+  objUsuario.Id := UsuarioDAO.GerarId(SEQ_ID_USUARIO);
   Result := UsuarioDAO.Inserir(objUsuario, Erro);
 end;
 

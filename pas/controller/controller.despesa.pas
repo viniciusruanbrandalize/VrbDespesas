@@ -5,7 +5,7 @@ unit controller.despesa;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.entity.despesa,
+  Classes, SysUtils, ComCtrls, model.entity.despesa, model.dao.padrao,
   model.dao.despesa;
 
 type
@@ -49,7 +49,7 @@ end;
 
 function TDespesaController.Inserir(objDespesa: TDespesa; out Erro: string): Boolean;
 begin
-  objDespesa.Id := DespesaDAO.GerarId('gen_id_despesa');
+  objDespesa.Id := DespesaDAO.GerarId(SEQ_ID_DESPESA);
   Result := DespesaDAO.Inserir(objDespesa, Erro);
 end;
 

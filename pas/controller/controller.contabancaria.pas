@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.contabancaria,
   model.entity.cartao, model.entity.pix, model.dao.contabancaria,
-  model.connection.conexao1;
+  model.dao.padrao, model.connection.conexao1;
 
 type
 
@@ -77,7 +77,7 @@ end;
 
 function TContaBancariaController.Inserir(objContaBancaria: TContaBancaria; out Erro: string): Boolean;
 begin
-  objContaBancaria.Id := ContaBancariaDAO.GerarId('gen_id_conta_bancaria');
+  objContaBancaria.Id := ContaBancariaDAO.GerarId(SEQ_ID_CONTA_BANCARIA);
   objContaBancaria.UsuarioCadastro.Id := dmConexao1.IdUsuario;
   Result := ContaBancariaDAO.Inserir(objContaBancaria, Erro);
 end;
@@ -143,7 +143,7 @@ end;
 function TContaBancariaController.InserirCartao(objCartao: TCartao; out
   Erro: string): Boolean;
 begin
-  objCartao.Id  := ContaBancariaDAO.GerarId('gen_id_cartao');
+  objCartao.Id  := ContaBancariaDAO.GerarId(SEQ_ID_CARTAO);
   objCartao.UsuarioCadastro.Id := dmConexao1.IdUsuario;
   Result := ContaBancariaDAO.InserirCartao(objCartao, erro);
 end;

@@ -6,24 +6,23 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, SQLDB, model.entity.tipodespesa,
-  model.connection.conexao1;
+  model.dao.padrao, model.connection.conexao1;
 
 type
 
   { TTipoDespesaDAO }
 
-  TTipoDespesaDAO = class
+  TTipoDespesaDAO = class(TPadraoDAO)
   private
-    Qry: TSQLQuery;
+
   public
-    procedure Listar(lv: TListView);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure Listar(lv: TListView); override;
+    procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
     function BuscarPorId(TipoDespesa : TTipoDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(TipoDespesa : TTipoDespesa; out Erro: string): Boolean;
     function Editar(TipoDespesa : TTipoDespesa; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
-    function GerarId(Gerador: String; Incremento: Integer=1): Integer;
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
   end;
 
@@ -220,40 +219,13 @@ begin
   end;
 end;
 
-function TTipoDespesaDAO.GerarId(Gerador: String; Incremento: Integer): Integer;
-var
-  qryGerador: TSQLQuery;
-  sql: String;
-  id: integer;
-begin
-  id := 0;
-  qryGerador := TSQLQuery.Create(nil);
-  try
-
-    sql := 'SELECT GEN_ID('+Gerador+', '+IntToStr(Incremento)+') AS ID ' +
-           'FROM RDB$DATABASE';
-
-    qryGerador.SQLConnection := dmConexao1.SQLConnector;
-    qryGerador.SQL.Add(sql);
-    qryGerador.Open;
-
-    id := qryGerador.FieldByName('ID').AsInteger;
-    Result := id;
-
-  finally
-    qryGerador.Free;
-  end;
-end;
-
 constructor TTipoDespesaDAO.Create;
 begin
-  Qry := TSQLQuery.Create(nil);
-  qry.SQLConnection := dmConexao1.SQLConnector;
+  inherited;
 end;
 
 destructor TTipoDespesaDAO.Destroy;
 begin
-  Qry.Free;
   inherited Destroy;
 end;
 
