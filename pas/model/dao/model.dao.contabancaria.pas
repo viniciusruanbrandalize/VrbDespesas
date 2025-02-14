@@ -19,7 +19,6 @@ type
   public
     procedure Listar(lv: TListView); override;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
-    procedure PesquisarBanco(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(ContaBancaria : TContaBancaria; Id: Integer; out Erro: String): Boolean;
     function Inserir(ContaBancaria: TContaBancaria; out Erro: string): Boolean;
     function Editar(ContaBancaria: TContaBancaria; out Erro: string): Boolean;
@@ -35,7 +34,6 @@ type
 
     {$Region 'Cartao'}
     procedure ListarCartao(lv: TListView; IdConta: Integer);
-    procedure PesquisarBandeira(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarCartaoPorId(Cartao : TCartao; Id: Integer; out Erro: String): Boolean;
     function InserirCartao(Cartao : TCartao; out Erro: string): Boolean;
     function EditarCartao(Cartao : TCartao; out Erro: string): Boolean;
@@ -121,43 +119,6 @@ begin
       item.SubItems.Add(qry.FieldByName('numero').AsString);
       item.SubItems.Add(qry.FieldByName('agencia').AsString);
       item.SubItems.Add(qry.FieldByName('nome_banco').AsString);
-      Qry.Next;
-    end;
-
-  finally
-    qry.Close;
-  end;
-end;
-
-procedure TContaBancariaDAO.PesquisarBanco(lbNome, lbId: TListBox;
-  busca: String; out QtdRegistro: Integer);
-var
-  sql: String;
-begin
-  try
-
-    sql := 'select first 10 id, nome from banco ' +
-           'where UPPER(nome) like :busca '+
-           'order by nome';
-
-    Qry.Close;
-    Qry.SQL.Clear;
-    Qry.SQL.Add(sql);
-    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
-    Qry.Open;
-
-    Qry.First;
-
-    QtdRegistro := Qry.RecordCount;
-
-    lbNome.Items.Clear;
-    lbNome.Height := 100;
-    lbId.Items.Clear;
-
-    while not Qry.EOF do
-    begin
-      lbId.Items.Add(Qry.FieldByName('id').AsString);
-      lbNome.Items.Add(qry.FieldByName('nome').AsString);
       Qry.Next;
     end;
 
@@ -517,43 +478,6 @@ begin
 
   finally
     Qry.Close;
-  end;
-end;
-
-procedure TContaBancariaDAO.PesquisarBandeira(lbNome, lbId: TListBox;
-  busca: String; out QtdRegistro: Integer);
-var
-  sql: String;
-begin
-  try
-
-    sql := 'select first 10 id, nome from bandeira ' +
-           'where UPPER(nome) like :busca '+
-           'order by nome';
-
-    Qry.Close;
-    Qry.SQL.Clear;
-    Qry.SQL.Add(sql);
-    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
-    Qry.Open;
-
-    Qry.First;
-
-    QtdRegistro := Qry.RecordCount;
-
-    lbNome.Items.Clear;
-    lbNome.Height := 100;
-    lbId.Items.Clear;
-
-    while not Qry.EOF do
-    begin
-      lbId.Items.Add(Qry.FieldByName('id').AsString);
-      lbNome.Items.Add(qry.FieldByName('nome').AsString);
-      Qry.Next;
-    end;
-
-  finally
-    qry.Close;
   end;
 end;
 

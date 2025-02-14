@@ -292,11 +292,18 @@ end;
 
 constructor TDespesa.Create;
 begin
-  //
+  FFornecedor      := TParticipante.Create;
+  FDonoCadastro    := TParticipante.Create;
+  FSubTipo         := TSubtipoDespesa.Create;
+  FUsuarioCadastro := TUsuario.Create;
 end;
 
 destructor TDespesa.Destroy;
 begin
+  FFornecedor.Free;
+  FDonoCadastro.Free;
+  FSubTipo.Free;
+  FUsuarioCadastro.Free;
   inherited Destroy;
 end;
 

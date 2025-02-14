@@ -45,7 +45,7 @@ end;
 procedure TSubtipoDespesaController.PesquisarTipoDespesa(lbNome, lbId: TListBox; busca: String;
   out QtdRegistro: Integer);
 begin
-  SubtipoDespesaDAO.PesquisarTipoDespesa(lbNome, lbId, busca, QtdRegistro);
+  SubtipoDespesaDAO.PesquisaGenerica(TB_TIPO_DESPESA, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
 function TSubtipoDespesaController.BuscarPorId(objSubtipoDespesa: TSubtipoDespesa; Id: Integer; out

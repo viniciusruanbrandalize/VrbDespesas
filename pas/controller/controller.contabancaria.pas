@@ -66,7 +66,7 @@ end;
 procedure TContaBancariaController.PesquisarBanco(lbNome, lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
-  ContaBancariaDAO.PesquisarBanco(lbNome, lbId, busca, QtdRegistro);
+  ContaBancariaDAO.PesquisaGenerica(TB_BANCO, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
 function TContaBancariaController.BuscarPorId(objContaBancaria: TContaBancaria; Id: Integer; out
@@ -131,7 +131,7 @@ end;
 procedure TContaBancariaController.PesquisarBandeira(lbNome, lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
-  ContaBancariaDAO.PesquisarBandeira(lbNome, lbId, busca, QtdRegistro);
+  ContaBancariaDAO.PesquisaGenerica(TB_BANDEIRA, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
 function TContaBancariaController.BuscarCartaoPorId(objCartao: TCartao;

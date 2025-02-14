@@ -5,7 +5,7 @@ unit controller.despesa;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.entity.despesa, model.dao.padrao,
+  Classes, SysUtils, ComCtrls, StdCtrls, model.entity.despesa, model.dao.padrao,
   model.dao.despesa;
 
 type
@@ -19,6 +19,8 @@ type
     Despesa: TDespesa;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure PesquisarSubtipo(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarFornecedor(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(objDespesa : TDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(objDespesa : TDespesa; out Erro: string): Boolean;
     function Editar(objDespesa : TDespesa; out Erro: string): Boolean;
@@ -39,6 +41,18 @@ end;
 procedure TDespesaController.Pesquisar(lv: TListView; Campo, Busca: String);
 begin
   DespesaDAO.Pesquisar(lv, Campo, Busca);
+end;
+
+procedure TDespesaController.PesquisarSubtipo(lbNome, lbId: TListBox;
+  busca: String; out QtdRegistro: Integer);
+begin
+  DespesaDAO.PesquisaGenerica(TB_SUBTIPO_DESPESA, lbNome, lbId, busca, 10, QtdRegistro);
+end;
+
+procedure TDespesaController.PesquisarFornecedor(lbNome, lbId: TListBox;
+  busca: String; out QtdRegistro: Integer);
+begin
+  DespesaDAO.PesquisaGenerica(TB_PARTICIPANTE, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
 function TDespesaController.BuscarPorId(objDespesa: TDespesa; Id: Integer; out

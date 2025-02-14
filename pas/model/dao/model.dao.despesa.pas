@@ -18,7 +18,6 @@ type
   public
     procedure Listar(lv: TListView); override;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
-    procedure PesquisarSubtipo(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(Despesa : TDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(Despesa : TDespesa; out Erro: string): Boolean;
     function Editar(Despesa : TDespesa; out Erro: string): Boolean;
@@ -106,43 +105,6 @@ begin
       item.SubItems.Add(qry.FieldByName('nome_fornecedor').AsString);
       item.SubItems.Add(qry.FieldByName('descricao').AsString);
       item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('total').AsFloat));
-      Qry.Next;
-    end;
-
-  finally
-    qry.Close;
-  end;
-end;
-
-procedure TDespesaDAO.PesquisarSubtipo(lbNome, lbId: TListBox; busca: String;
-  out QtdRegistro: Integer);
-var
-  sql: String;
-begin
-  try
-
-    sql := 'select first 10 id, nome from subtipo_despesa ' +
-           'where UPPER(nome) like :busca '+
-           'order by nome';
-
-    Qry.Close;
-    Qry.SQL.Clear;
-    Qry.SQL.Add(sql);
-    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
-    Qry.Open;
-
-    Qry.First;
-
-    QtdRegistro := Qry.RecordCount;
-
-    lbNome.Items.Clear;
-    lbNome.Height := 100;
-    lbId.Items.Clear;
-
-    while not Qry.EOF do
-    begin
-      lbId.Items.Add(Qry.FieldByName('id').AsString);
-      lbNome.Items.Add(qry.FieldByName('nome').AsString);
       Qry.Next;
     end;
 

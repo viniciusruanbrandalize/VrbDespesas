@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   ComCtrls, Menus, Buttons, ActnList, DateTimePicker, view.cadastropadrao,
-  lib.types, controller.despesa, view.mensagem;
+  lib.types, controller.despesa, view.mensagem, LCLType;
 
 type
 
@@ -38,6 +38,10 @@ type
     lblObs: TLabel;
     lblData: TLabel;
     lblPeriodoFiltro: TLabel;
+    lbSubtipoId: TListBox;
+    lbFornecedorId: TListBox;
+    lbSubtipoNome: TListBox;
+    lbFornecedorNome: TListBox;
     lvPagamento: TListView;
     MenuItem4: TMenuItem;
     mObs: TMemo;
@@ -49,9 +53,21 @@ type
     procedure actExcluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
+    procedure edtFornecedorExit(Sender: TObject);
+    procedure edtFornecedorKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edtSubtipoExit(Sender: TObject);
+    procedure edtSubtipoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState
+      );
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure lbFornecedorNomeDblClick(Sender: TObject);
+    procedure lbFornecedorNomeKeyPress(Sender: TObject; var Key: char);
+    procedure lbFornecedorNomeSelectionChange(Sender: TObject; User: boolean);
+    procedure lbSubtipoNomeDblClick(Sender: TObject);
+    procedure lbSubtipoNomeKeyPress(Sender: TObject; var Key: char);
+    procedure lbSubtipoNomeSelectionChange(Sender: TObject; User: boolean);
   private
     Controller: TDespesaController;
   public
@@ -110,6 +126,70 @@ begin
   end;
 end;
 
+procedure TfrmDespesa.edtFornecedorExit(Sender: TObject);
+begin
+  if not lbFornecedorNome.Focused then
+  begin
+    if lbFornecedorNome.Visible then
+      lbFornecedorNome.Visible := false;
+  end;
+end;
+
+procedure TfrmDespesa.edtFornecedorKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if (Length(edtFornecedor.Text) > 3) then
+  begin
+    controller.PesquisarFornecedor(lbFornecedorNome, lbFornecedorId, edtFornecedor.Text, qtdReg);
+    lbFornecedorNome.Visible := qtdReg > 0;
+    if Key = VK_DOWN then
+    begin
+      if lbFornecedorNome.CanFocus then
+        lbFornecedorNome.SetFocus;
+    end;
+  end
+  else
+  begin
+    lbFornecedorNome.Items.Clear;
+    lbFornecedorNome.Visible := False;
+  end;
+end;
+
+procedure TfrmDespesa.edtSubtipoExit(Sender: TObject);
+begin
+  if not lbSubtipoNome.Focused then
+  begin
+    if lbSubtipoNome.Visible then
+      lbSubtipoNome.Visible := false;
+  end;
+end;
+
+procedure TfrmDespesa.edtSubtipoKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if (Length(edtSubtipo.Text) > 3) then
+  begin
+    controller.PesquisarSubtipo(lbSubtipoNome, lbSubtipoId, edtSubtipo.Text, qtdReg);
+    lbSubtipoNome.Visible := qtdReg > 0;
+    if Key = VK_DOWN then
+    begin
+      if lbSubtipoNome.CanFocus then
+        lbSubtipoNome.SetFocus;
+    end;
+  end
+  else
+  begin
+    lbSubtipoNome.Items.Clear;
+    lbSubtipoNome.Visible := False;
+  end;
+end;
+
 procedure TfrmDespesa.actExcluirExecute(Sender: TObject);
 var
   erro: String;
@@ -142,6 +222,64 @@ end;
 procedure TfrmDespesa.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmDespesa.lbFornecedorNomeDblClick(Sender: TObject);
+begin
+  if lbFornecedorNome.ItemIndex <> -1 then
+  begin
+    edtFornecedor.Text := lbFornecedorNome.Items[lbFornecedorNome.ItemIndex];
+    controller.Despesa.Fornecedor.Id := StrToInt(lbFornecedorId.Items[lbFornecedorNome.ItemIndex]);
+    lbFornecedorNome.Visible := False;
+  end
+  else
+  begin
+    edtFornecedor.Text := '';
+    controller.Despesa.Fornecedor.Id := 0;
+  end;
+end;
+
+procedure TfrmDespesa.lbFornecedorNomeKeyPress(Sender: TObject; var Key: char);
+begin
+  if key = #13 then
+  begin
+    lbFornecedorNome.OnDblClick(nil);
+  end;
+end;
+
+procedure TfrmDespesa.lbFornecedorNomeSelectionChange(Sender: TObject;
+  User: boolean);
+begin
+  edtFornecedor.Text := lbFornecedorNome.Items[lbFornecedorNome.ItemIndex];
+end;
+
+procedure TfrmDespesa.lbSubtipoNomeDblClick(Sender: TObject);
+begin
+  if lbSubtipoNome.ItemIndex <> -1 then
+  begin
+    edtSubtipo.Text := lbSubtipoNome.Items[lbSubtipoNome.ItemIndex];
+    controller.Despesa.SubTipo.Id := StrToInt(lbSubtipoId.Items[lbSubtipoNome.ItemIndex]);
+    lbSubtipoNome.Visible := False;
+  end
+  else
+  begin
+    edtSubtipo.Text := '';
+    controller.Despesa.SubTipo.Id := 0;
+  end;
+end;
+
+procedure TfrmDespesa.lbSubtipoNomeKeyPress(Sender: TObject; var Key: char);
+begin
+  if key = #13 then
+  begin
+    lbSubtipoNome.OnDblClick(nil);
+  end;
+end;
+
+procedure TfrmDespesa.lbSubtipoNomeSelectionChange(Sender: TObject;
+  User: boolean);
+begin
+  edtSubtipo.Text := lbSubtipoNome.Items[lbSubtipoNome.ItemIndex];
 end;
 
 procedure TfrmDespesa.CarregarDados;
