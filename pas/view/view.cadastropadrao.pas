@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons,
-  ComCtrls, ActnList, StdCtrls, Menus, lib.types, view.mensagem;
+  ComCtrls, ActnList, StdCtrls, Menus, lib.types, view.mensagem, DateTimePicker,
+  lib.visual;
 
 type
 
@@ -62,12 +63,15 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
-
+    procedure SetarFocoPrimeiroCampo();
   public
     Operacao: TOperacaoCRUD;
     procedure CarregarDados; virtual; abstract;
     procedure CarregarSelecionado; virtual; abstract;
     procedure LimparCampos; virtual; abstract;
+    procedure NumericoExit(Sender: TObject);
+    procedure NumericoEnter(Sender: TObject);
+    procedure NumericoKeyPress(Sender: TObject; var Key: char);
   end;
 
 var
@@ -91,6 +95,7 @@ begin
   CarregarSelecionado;
   Operacao := opEditar;
   pgcPadrao.ActivePage := tbsCadastro;
+  SetarFocoPrimeiroCampo();
 end;
 
 procedure TfrmCadastroPadrao.actCancelarExecute(Sender: TObject);
@@ -113,6 +118,7 @@ begin
   LimparCampos;
   Operacao := opInserir;
   pgcPadrao.ActivePage := tbsCadastro;
+  SetarFocoPrimeiroCampo();
 end;
 
 procedure TfrmCadastroPadrao.actSalvarExecute(Sender: TObject);
@@ -126,6 +132,7 @@ procedure TfrmCadastroPadrao.actVisualizarExecute(Sender: TObject);
 begin
   Operacao := opVisualizar;
   pgcPadrao.ActivePage := tbsCadastro;
+  SetarFocoPrimeiroCampo();
 end;
 
 procedure TfrmCadastroPadrao.FormCreate(Sender: TObject);
@@ -140,6 +147,71 @@ procedure TfrmCadastroPadrao.FormShow(Sender: TObject);
 begin
   pnlTitulo.Caption := Self.Caption;
   CarregarDados;
+end;
+
+procedure TfrmCadastroPadrao.SetarFocoPrimeiroCampo();
+var
+  i: Integer;
+  Ctrl: TControl;
+begin
+  for i := 0 to pnlFundoCadastro.ControlCount-1 do
+  begin
+    Ctrl := pnlFundoCadastro.Controls[i];
+    if (Ctrl is TLabeledEdit) then
+    begin
+      if (TLabeledEdit(Ctrl).TabOrder = 0) and
+           (TLabeledEdit(Ctrl).CanFocus) then
+      begin
+        TLabeledEdit(Ctrl).SetFocus;
+        Break;
+      end;
+    end
+    else
+    if (Ctrl is TEdit) then
+    begin
+      if (TEdit(Ctrl).TabOrder = 0) and
+           (TEdit(Ctrl).CanFocus) then
+      begin
+        TEdit(Ctrl).SetFocus;
+        Break;
+      end;
+    end
+    else
+    if (Ctrl is TDateTimePicker) then
+    begin
+      if (TDateTimePicker(Ctrl).TabOrder = 0) and
+           (TDateTimePicker(Ctrl).CanFocus) then
+      begin
+        TDateTimePicker(Ctrl).SetFocus;
+        Break;
+      end;
+    end
+    else
+    if (Ctrl is TMemo) then
+    begin
+      if (TMemo(Ctrl).TabOrder = 0) and
+           (TMemo(Ctrl).CanFocus) then
+      begin
+        TMemo(Ctrl).SetFocus;
+        Break;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmCadastroPadrao.NumericoExit(Sender: TObject);
+begin
+  CampoNumericoExit(Sender);
+end;
+
+procedure TfrmCadastroPadrao.NumericoEnter(Sender: TObject);
+begin
+  CampoNumericoEnter(Sender);
+end;
+
+procedure TfrmCadastroPadrao.NumericoKeyPress(Sender: TObject; var Key: char);
+begin
+  CampoNumericoKeyPress(Sender, Key);
 end;
 
 end.

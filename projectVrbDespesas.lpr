@@ -31,7 +31,8 @@ uses
   model.dao.participante, model.dao.despesa, model.dao.padrao,
   model.ini.configuracao, model.ini.erro, model.ini.conexao,
   view.subtipodespesa, view.usuario, view.logerro, view.loglogin, view.login,
-  view.bandeira, view.contabancaria, view.participante, view.despesa, Controls;
+  view.bandeira, view.contabancaria, view.participante, view.despesa, Controls,
+  lib.visual;
 
 {$R *.res}
 

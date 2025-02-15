@@ -408,6 +408,10 @@
         <Filename Value="pas\model\dao\model.dao.padrao.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="pas\lib\lib.visual.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

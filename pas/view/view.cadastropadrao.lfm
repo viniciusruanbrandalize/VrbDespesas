@@ -10,6 +10,7 @@ object frmCadastroPadrao: TfrmCadastroPadrao
   DesignTimePPI = 120
   OnCreate = FormCreate
   OnShow = FormShow
+  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 607

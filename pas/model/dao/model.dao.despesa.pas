@@ -205,7 +205,7 @@ begin
     Qry.ParamByName('id_fornecedor').AsInteger := Despesa.Fornecedor.Id;
     Qry.ParamByName('id_subtipo').AsInteger := Despesa.SubTipo.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Despesa.UsuarioCadastro.Id;
-    //Qry.ParamByName('id_dono_cadastro').AsInteger := Despesa.DonoCadastro.Id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := Despesa.DonoCadastro.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 

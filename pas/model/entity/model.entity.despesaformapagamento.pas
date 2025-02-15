@@ -5,7 +5,7 @@ unit model.entity.despesaformapagamento;
 interface
 
 uses
-  Classes, SysUtils, model.entity.despesa, model.entity.contabancaria,
+  Classes, SysUtils, Generics.Collections, model.entity.contabancaria,
   model.entity.pix, model.entity.formapagamento, model.entity.cartao;
 
 type
@@ -16,21 +16,21 @@ type
   private
     FCartao: TCartao;
     FContaBancaria: TContaBancaria;
-    FDespesa: TDespesa;
+    //FDespesa: TDespesa;
     FFormaPagamento: TFormaPagamento;
     FId:   Integer;
     FPix: TPix;
     FValor: Double;
     function GetCartao: TCartao;
     function GetContaBancaria: TContaBancaria;
-    function GetDespesa: TDespesa;
+    //function GetDespesa: TDespesa;
     function GetFormaPagamento: TFormaPagamento;
     function GetId: Integer;
     function GetPix: TPix;
     function GetValor: Double;
     procedure SetCartao(AValue: TCartao);
     procedure SetContaBancaria(AValue: TContaBancaria);
-    procedure SetDespesa(AValue: TDespesa);
+    //procedure SetDespesa(AValue: TDespesa);
     procedure SetFormaPagamento(AValue: TFormaPagamento);
     procedure SetId(AValue: Integer);
     procedure SetPix(AValue: TPix);
@@ -45,8 +45,11 @@ type
     property Pix: TPix read GetPix write SetPix;
     property Cartao: TCartao read GetCartao write SetCartao;
     property FormaPagamento: TFormaPagamento read GetFormaPagamento write SetFormaPagamento;
-    property Despesa: TDespesa read GetDespesa write SetDespesa;
+    //property Despesa: TDespesa read GetDespesa write SetDespesa;
   end;
+
+type
+  TDespesaFormaPagamentoLista = specialize TObjectList<TDespesaFormaPagamento>;
 
 implementation
 
@@ -67,10 +70,10 @@ begin
   Result := FContaBancaria;
 end;
 
-function TDespesaFormaPagamento.GetDespesa: TDespesa;
-begin
-  Result := FDespesa;
-end;
+//function TDespesaFormaPagamento.GetDespesa: TDespesa;
+//begin
+//  Result := FDespesa;
+//end;
 
 function TDespesaFormaPagamento.GetFormaPagamento: TFormaPagamento;
 begin
@@ -97,10 +100,10 @@ begin
   FContaBancaria:=AValue;
 end;
 
-procedure TDespesaFormaPagamento.SetDespesa(AValue: TDespesa);
-begin
-  FDespesa:=AValue;
-end;
+//procedure TDespesaFormaPagamento.SetDespesa(AValue: TDespesa);
+//begin
+//  FDespesa:=AValue;
+//end;
 
 procedure TDespesaFormaPagamento.SetFormaPagamento(AValue: TFormaPagamento);
 begin

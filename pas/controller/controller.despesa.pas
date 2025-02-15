@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.despesa, model.dao.padrao,
-  model.dao.despesa;
+  model.dao.despesa, model.entity.despesaformapagamento, model.connection.conexao1;
 
 type
 
@@ -17,6 +17,7 @@ type
     DespesaDAO: TDespesaDAO;
   public
     Despesa: TDespesa;
+    DespesaFormaPagamento: TDespesaFormaPagamento;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
     procedure PesquisarSubtipo(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
@@ -63,6 +64,8 @@ end;
 
 function TDespesaController.Inserir(objDespesa: TDespesa; out Erro: string): Boolean;
 begin
+  objDespesa.DonoCadastro.Id    := 77;  //alterar
+  objDespesa.UsuarioCadastro.Id := dmConexao1.IdUsuario;
   objDespesa.Id := DespesaDAO.GerarId(SEQ_ID_DESPESA);
   Result := DespesaDAO.Inserir(objDespesa, Erro);
 end;

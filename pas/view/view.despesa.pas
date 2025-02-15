@@ -92,6 +92,21 @@ procedure TfrmDespesa.FormCreate(Sender: TObject);
 begin
   inherited;
   Controller := TDespesaController.Create;
+  edtValor.OnExit         := @NumericoExit;
+  edtValor.OnEnter        := @NumericoEnter;
+  edtValor.OnKeyPress     := @NumericoKeyPress;
+  edtDesconto.OnExit      := @NumericoExit;
+  edtDesconto.OnEnter     := @NumericoEnter;
+  edtDesconto.OnKeyPress  := @NumericoKeyPress;
+  edtFrete.OnExit         := @NumericoExit;
+  edtFrete.OnEnter        := @NumericoEnter;
+  edtFrete.OnKeyPress     := @NumericoKeyPress;
+  edtOutros.OnExit        := @NumericoExit;
+  edtOutros.OnEnter       := @NumericoEnter;
+  edtOutros.OnKeyPress    := @NumericoKeyPress;
+  edtTotal.OnExit         := @NumericoExit;
+  edtTotal.OnEnter        := @NumericoEnter;
+  edtTotal.OnKeyPress     := @NumericoKeyPress;
 end;
 
 procedure TfrmDespesa.actSalvarExecute(Sender: TObject);
@@ -110,6 +125,7 @@ begin
     Controller.Despesa.Total      := StrToFloat(edtTotal.Text);
     Controller.Despesa.ChaveNFE   := edtChaveNfe.Text;
     Controller.Despesa.Observacao := mObs.Lines.Text;
+    Controller.Despesa.Paga       := True;
     if Operacao = opInserir then
     begin
       Controller.Despesa.Cadastro := Now;

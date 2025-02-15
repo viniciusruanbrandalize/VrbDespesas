@@ -116,6 +116,9 @@ inherited frmDespesa: TfrmDespesa
         end
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
+            inherited pnlBotaoCad: TPanel
+              TabOrder = 13
+            end
             object edtDescricao: TLabeledEdit[1]
               Left = 216
               Height = 28
@@ -125,7 +128,7 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 440
               EditLabel.Caption = 'Descrição: *'
               MaxLength = 100
-              TabOrder = 1
+              TabOrder = 2
               Text = 'edtDescricao'
             end
             object dtpData: TDateTimePicker[2]
@@ -136,7 +139,7 @@ inherited frmDespesa: TfrmDespesa
               CenturyFrom = 1941
               MaxDate = 2958465
               MinDate = -53780
-              TabOrder = 2
+              TabOrder = 0
               TrailingSeparator = False
               TextForNullDate = '  /  /    '
               LeadingZeros = True
@@ -158,7 +161,7 @@ inherited frmDespesa: TfrmDespesa
               CenturyFrom = 1941
               MaxDate = 2958465
               MinDate = -53780
-              TabOrder = 3
+              TabOrder = 1
               TrailingSeparator = False
               TextForNullDate = '00:00:00'
               LeadingZeros = True
@@ -191,7 +194,7 @@ inherited frmDespesa: TfrmDespesa
               Font.Style = [fsBold]
               MaxLength = 100
               ParentFont = False
-              TabOrder = 4
+              TabOrder = 3
               Text = 'edtFornecedor'
               OnExit = edtFornecedorExit
               OnKeyUp = edtFornecedorKeyUp
@@ -208,7 +211,7 @@ inherited frmDespesa: TfrmDespesa
               Font.Style = [fsBold]
               MaxLength = 100
               ParentFont = False
-              TabOrder = 5
+              TabOrder = 4
               Text = 'edtSubtipo'
               OnExit = edtSubtipoExit
               OnKeyUp = edtSubtipoKeyUp
@@ -222,7 +225,7 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Valor R$: *'
               MaxLength = 100
-              TabOrder = 6
+              TabOrder = 5
               Text = 'edtValor'
             end
             object edtDesconto: TLabeledEdit[8]
@@ -234,7 +237,7 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Desconto R$: *'
               MaxLength = 100
-              TabOrder = 7
+              TabOrder = 6
               Text = 'edtDesconto'
             end
             object edtFrete: TLabeledEdit[9]
@@ -246,7 +249,7 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Frete R$: *'
               MaxLength = 100
-              TabOrder = 8
+              TabOrder = 7
               Text = 'edtFrete'
             end
             object edtOutros: TLabeledEdit[10]
@@ -258,7 +261,7 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Outros R$: *'
               MaxLength = 100
-              TabOrder = 9
+              TabOrder = 8
               Text = 'edtOutros'
             end
             object edtTotal: TLabeledEdit[11]
@@ -270,7 +273,7 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Total R$: *'
               MaxLength = 100
-              TabOrder = 10
+              TabOrder = 9
               Text = 'edtTotal'
             end
             object edtChaveNfe: TLabeledEdit[12]
@@ -283,7 +286,7 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Caption = 'Chave NF-e:'
               MaxLength = 44
               NumbersOnly = True
-              TabOrder = 11
+              TabOrder = 10
               Text = 'edtChaveNfe'
             end
             object mObs: TMemo[13]
@@ -294,7 +297,7 @@ inherited frmDespesa: TfrmDespesa
               Lines.Strings = (
                 'mObs'
               )
-              TabOrder = 12
+              TabOrder = 11
             end
             object lblObs: TLabel[14]
               Left = 8
@@ -310,7 +313,7 @@ inherited frmDespesa: TfrmDespesa
               Width = 522
               ActivePage = tbsPagamento
               TabIndex = 0
-              TabOrder = 13
+              TabOrder = 12
               object tbsPagamento: TTabSheet
                 Caption = 'Pagamento'
                 ClientHeight = 247

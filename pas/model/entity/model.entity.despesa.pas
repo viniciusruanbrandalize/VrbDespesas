@@ -5,8 +5,9 @@ unit model.entity.despesa;
 interface
 
 uses
-  Classes, SysUtils, model.entity.subtipodespesa, model.entity.usuario,
-  model.entity.participante;
+  Classes, SysUtils, model.entity.subtipodespesa,
+  model.entity.usuario, model.entity.participante,
+  model.entity.despesaformapagamento;
 
 type
 
@@ -33,11 +34,13 @@ type
     FOutros: Double;
     FTotal: Double;
     FSubTipo: TSubtipoDespesa;
+    FDespesaFormaPagamento: TDespesaFormaPagamentoLista;
     function GetAlteracao: TDateTime;
     function GetCadastro: TDateTime;
     function GetChaveNFE: String;
     function GetData: TDate;
     function GetDesconto: Double;
+    function GetDespesaFormaPagamento: TDespesaFormaPagamentoLista;
     function GetDonoCadastro: TParticipante;
     function GetFornecedor: TParticipante;
     function GetFrete: Double;
@@ -57,6 +60,7 @@ type
     procedure SetChaveNFE(AValue: String);
     procedure SetData(AValue: TDate);
     procedure SetDesconto(AValue: Double);
+    procedure SetDespesaFormaPagamento(AValue: TDespesaFormaPagamentoLista);
     procedure SetDonoCadastro(AValue: TParticipante);
     procedure SetFornecedor(AValue: TParticipante);
     procedure SetFrete(AValue: Double);
@@ -94,6 +98,7 @@ type
     property Parcela: Integer read GetParcela write SetParcela;
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
+    property DespesaFormaPagamento: TDespesaFormaPagamentoLista read GetDespesaFormaPagamento write SetDespesaFormaPagamento;
   end;
 
 implementation
@@ -128,6 +133,11 @@ end;
 function TDespesa.GetDesconto: Double;
 begin
   Result := FDesconto;
+end;
+
+function TDespesa.GetDespesaFormaPagamento: TDespesaFormaPagamentoLista;
+begin
+  Result := FDespesaFormaPagamento;
 end;
 
 function TDespesa.GetDonoCadastro: TParticipante;
@@ -220,6 +230,12 @@ begin
   FDesconto := AValue;
 end;
 
+procedure TDespesa.SetDespesaFormaPagamento(AValue: TDespesaFormaPagamentoLista
+  );
+begin
+  FDespesaFormaPagamento := AValue;
+end;
+
 procedure TDespesa.SetDonoCadastro(AValue: TParticipante);
 begin
   FDonoCadastro:=AValue;
@@ -296,6 +312,7 @@ begin
   FDonoCadastro    := TParticipante.Create;
   FSubTipo         := TSubtipoDespesa.Create;
   FUsuarioCadastro := TUsuario.Create;
+  FDespesaFormaPagamento := TDespesaFormaPagamentoLista.Create;
 end;
 
 destructor TDespesa.Destroy;
@@ -304,6 +321,7 @@ begin
   FDonoCadastro.Free;
   FSubTipo.Free;
   FUsuarioCadastro.Free;
+  FDespesaFormaPagamento.Free;
   inherited Destroy;
 end;
 
