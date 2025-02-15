@@ -19,14 +19,16 @@ type
     actSalvarFpgto: TAction;
     actCancelarFpgto: TAction;
     btnExcluirFormaPgto: TSpeedButton;
+    btnIncluirFormaPgto: TSpeedButton;
     dtpData: TDateTimePicker;
     dtpHora: TDateTimePicker;
     dtpInicial: TDateTimePicker;
     dtpFinal: TDateTimePicker;
-    edtFormaPagamento: TLabeledEdit;
     edtDescricao: TLabeledEdit;
     edtChaveNfe: TLabeledEdit;
+    edtFormaPagamento: TLabeledEdit;
     edtFornecedor: TLabeledEdit;
+    edtPesquisaGenericaFpgto: TLabeledEdit;
     edtTotal: TLabeledEdit;
     edtSubtipo: TLabeledEdit;
     edtValor: TLabeledEdit;
@@ -34,7 +36,6 @@ type
     edtFrete: TLabeledEdit;
     edtOutros: TLabeledEdit;
     edtValorFpgto: TLabeledEdit;
-    edtPesquisaGenericaFpgto: TLabeledEdit;
     lblObs: TLabel;
     lblData: TLabel;
     lblPeriodoFiltro: TLabel;
@@ -45,9 +46,10 @@ type
     lvPagamento: TListView;
     MenuItem4: TMenuItem;
     mObs: TMemo;
+    pnlIncluiPagamento: TPanel;
+    pnlBotoesPagamento: TPanel;
     pgcMaisOpcoes: TPageControl;
     pMenuFpgto: TPopupMenu;
-    btnIncluirFormaPgto: TSpeedButton;
     tbsPagamento: TTabSheet;
     tbsArquivo: TTabSheet;
     procedure actExcluirExecute(Sender: TObject);
@@ -70,6 +72,7 @@ type
     procedure lbSubtipoNomeSelectionChange(Sender: TObject; User: boolean);
   private
     Controller: TDespesaController;
+    procedure AjustarTelaPagamento(Inserindo: Boolean);
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -298,10 +301,27 @@ begin
   edtSubtipo.Text := lbSubtipoNome.Items[lbSubtipoNome.ItemIndex];
 end;
 
+procedure TfrmDespesa.AjustarTelaPagamento(Inserindo: Boolean);
+begin
+  pnlIncluiPagamento.Visible := inserindo;
+  pnlBotoesPagamento.Visible := not Inserindo;
+  lvPagamento.Visible        := not Inserindo;
+  if Inserindo then
+  begin
+    pnlIncluiPagamento.Align := alClient;
+  end
+  else
+  begin
+    lvPagamento.Align        := alClient;
+    pnlBotoesPagamento.Align := alBottom;
+  end;
+end;
+
 procedure TfrmDespesa.CarregarDados;
 begin
   lvPadrao.Items.Clear;
   Controller.Listar(lvPadrao);
+  AjustarTelaPagamento(False);
 end;
 
 procedure TfrmDespesa.LimparCampos;
@@ -343,6 +363,7 @@ begin
     edtTotal.Text      := FormatFloat(',#0.00', Controller.Despesa.Total);
     edtChaveNfe.Text   := Controller.Despesa.ChaveNFE;
     mObs.Lines.Text    := Controller.Despesa.Observacao;
+    Controller.ListarPagamento(lvPagamento, id);
   end
   else
   begin

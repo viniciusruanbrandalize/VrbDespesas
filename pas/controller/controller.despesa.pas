@@ -26,6 +26,10 @@ type
     function Inserir(objDespesa : TDespesa; out Erro: string): Boolean;
     function Editar(objDespesa : TDespesa; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+
+    procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
+    function BuscarPagamentoPorId(objPagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
+
     constructor Create;
     destructor Destroy; override;
   end;
@@ -78,6 +82,17 @@ end;
 function TDespesaController.Excluir(Id: Integer; out Erro: string): Boolean;
 begin
   Result := DespesaDAO.Excluir(Id, Erro);
+end;
+
+procedure TDespesaController.ListarPagamento(lv: TListView; IdDespesa: Integer);
+begin
+  DespesaDAO.ListarPagamento(lv, IdDespesa);
+end;
+
+function TDespesaController.BuscarPagamentoPorId(
+  objPagamento: TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
+begin
+  Result := DespesaDAO.BuscarPagamentoPorId(objPagamento, Id, Erro);
 end;
 
 constructor TDespesaController.Create;

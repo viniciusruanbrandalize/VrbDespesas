@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.dao.padrao,
-  model.entity.despesa, model.connection.conexao1;
+  model.entity.despesa, model.entity.despesaformapagamento,
+  model.connection.conexao1;
 
 type
 
@@ -22,6 +23,10 @@ type
     function Inserir(Despesa : TDespesa; out Erro: string): Boolean;
     function Editar(Despesa : TDespesa; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+
+    procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
+    function BuscarPagamentoPorId(Pagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
+
     constructor Create; override;
     destructor Destroy; override;
   end;
@@ -175,6 +180,7 @@ end;
 function TDespesaDAO.Inserir(Despesa : TDespesa; out Erro: string): Boolean;
 var
   sql: String;
+  i: Integer;
 begin
   try
 
@@ -207,6 +213,27 @@ begin
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Despesa.UsuarioCadastro.Id;
     Qry.ParamByName('id_dono_cadastro').AsInteger := Despesa.DonoCadastro.Id;
     Qry.ExecSQL;
+
+    sql := 'insert into despesa_forma_pgto (id, valor, id_conta_bancaria, ' +
+           'chave_pix, id_cartao, id_despesa, id_forma_pgto) values (:id, :valor, ' +
+           ':id_conta_bancaria, :chave_pix, :id_cartao, :id_despesa, :id_forma_pgto)';
+
+    for i := 0 to Despesa.DespesaFormaPagamento.Count-1 do
+    begin
+      Despesa.DespesaFormaPagamento[i].Id := GerarId(SEQ_ID_DESPESA_FORMA_PGTO);
+      Qry.Close;
+      Qry.SQL.Clear;
+      Qry.SQL.Add(sql);
+      Qry.ParamByName('id').AsInteger                := Despesa.DespesaFormaPagamento[i].Id;
+      Qry.ParamByName('valor').AsFloat               := Despesa.DespesaFormaPagamento[i].Valor;
+      Qry.ParamByName('id_conta_bancaria').AsInteger := Despesa.DespesaFormaPagamento[i].ContaBancaria.Id;
+      Qry.ParamByName('id_cartao').AsInteger         := Despesa.DespesaFormaPagamento[i].Cartao.Id;
+      Qry.ParamByName('id_forma_pgto').AsInteger     := Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
+      Qry.ParamByName('id_despesa').AsInteger        := Despesa.Id;
+      Qry.ParamByName('chave_pix').AsString          := Despesa.DespesaFormaPagamento[i].Pix.Chave;
+      Qry.ExecSQL;
+    end;
+
     dmConexao1.SQLTransaction.Commit;
 
     Result := True;
@@ -287,6 +314,98 @@ begin
       Erro := 'Ocorreu um erro ao excluir despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
+  end;
+end;
+
+procedure TDespesaDAO.ListarPagamento(lv: TListView; IdDespesa: Integer);
+var
+  sql: String;
+  item : TListItem;
+begin
+  try
+
+    sql := 'select pgto.*, fp.nome as nome_forma_pgto from despesa_forma_pgto pgto ' +
+           'left join forma_pgto fp on fp.id = pgto.id_forma_pgto ' +
+           'where pgto.id_despesa = :id ' +
+           'order by pgto.id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger := IdDespesa;
+    Qry.Open;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('nome_forma_pgto').AsString);
+      item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('valor').AsFloat));
+      Qry.Next;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TDespesaDAO.BuscarPagamentoPorId(Pagamento: TDespesaFormaPagamento;
+  Id: Integer; out Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select pgto.*, fp.nome as nome_forma_pgto, card.numero as numero_cartao, ' +
+           'ban.nome as nome_bandeira, cb.numero as numero_conta, cb.agencia as agencia_conta, ' +
+           'bco.nome as nome_banco ' +
+           'from despesa_forma_pgto pgto ' +
+           'left join conta_bancaria cb on cb.id = pgto.id_conta_bancaria ' +
+           'left join forma_pgto fp on fp.id = pgto.id_forma_pgto ' +
+           'left join cartao card on card.id = pgto.id_cartao ' +
+           'left join bandeira ban on ban.id = card.id_bandeira ' +
+           'left join banco bco on bco.id = cb.id_banco ' +
+           'where pgto.id_despesa = :id ' +
+           'order by pgto.id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger := id;
+    Qry.Open;
+
+    if Qry.RecordCount = 1 then
+    begin
+      Pagamento.Id                   := Qry.FieldByName('id').AsInteger;
+      Pagamento.Valor                := Qry.FieldByName('valor').AsFloat;
+      Pagamento.FormaPagamento.Id    := Qry.FieldByName('id_forma_pgto').AsInteger;
+      Pagamento.FormaPagamento.Nome  := Qry.FieldByName('nome_forma_pgto').AsString;
+      Pagamento.Cartao.Id            := Qry.FieldByName('id_cartao').AsInteger;
+      Pagamento.Cartao.Numero        := Qry.FieldByName('numero_cartao').AsString;
+      Pagamento.Cartao.Bandeira.Nome := Qry.FieldByName('nome_bandeira').AsString;
+      Pagamento.ContaBancaria.Id     := Qry.FieldByName('id_conta_bancaria').AsInteger;
+      Pagamento.ContaBancaria.Numero := Qry.FieldByName('numero_conta').AsString;
+      Pagamento.ContaBancaria.Agencia:= Qry.FieldByName('agencia_conta').AsString;
+      Pagamento.ContaBancaria.Banco.Nome := Qry.FieldByName('nome_banco').AsString;
+      Pagamento.Pix.Chave            := Qry.FieldByName('chave_pix').AsString;
+      Result := True;
+    end
+    else
+    if Qry.RecordCount > 1 then
+    begin
+      Erro := 'Mais de um objeto foi retornado na busca por código!';
+      Result := False;
+    end
+    else
+    begin
+      Erro := 'Nenhum objeto foi encontrado!';
+      Result := False;
+    end;
+
+  finally
+    Qry.Close;
   end;
 end;
 

@@ -6,8 +6,6 @@ inherited frmDespesa: TfrmDespesa
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -307,30 +305,39 @@ inherited frmDespesa: TfrmDespesa
               Caption = 'Observações / Informações adicionais:'
             end
             object pgcMaisOpcoes: TPageControl[15]
+              Cursor = crHandPoint
               Left = 414
               Height = 280
               Top = 144
               Width = 522
               ActivePage = tbsPagamento
+              Images = img
               TabIndex = 0
               TabOrder = 12
               object tbsPagamento: TTabSheet
                 Caption = 'Pagamento'
                 ClientHeight = 247
                 ClientWidth = 514
+                ImageIndex = 13
                 object lvPagamento: TListView
                   Left = 0
-                  Height = 80
+                  Height = 56
                   Top = 0
-                  Width = 514
-                  Align = alTop
+                  Width = 496
                   BorderStyle = bsNone
                   Columns = <                  
                     item
+                      Caption = 'Código'
+                      Width = 0
                     end                  
                     item
+                      Caption = 'Forma de Pagamento'
+                      Width = 350
                     end                  
                     item
+                      Alignment = taRightJustify
+                      Caption = 'Valor R$'
+                      Width = 150
                     end>
                   PopupMenu = pMenuFpgto
                   ReadOnly = True
@@ -338,69 +345,93 @@ inherited frmDespesa: TfrmDespesa
                   TabOrder = 0
                   ViewStyle = vsReport
                 end
-                object edtValorFpgto: TLabeledEdit
-                  Left = 368
-                  Height = 28
-                  Top = 147
-                  Width = 136
-                  EditLabel.Height = 20
-                  EditLabel.Width = 136
-                  EditLabel.Caption = 'Valor R$: *'
-                  MaxLength = 100
+                object pnlIncluiPagamento: TPanel
+                  Left = -8
+                  Height = 136
+                  Top = 120
+                  Width = 504
+                  BevelOuter = bvNone
+                  ClientHeight = 136
+                  ClientWidth = 504
+                  ParentBackground = False
                   TabOrder = 1
-                  Text = 'edtValorFpgto'
+                  Visible = False
+                  object edtFormaPagamento: TLabeledEdit
+                    Left = 8
+                    Height = 28
+                    Top = 32
+                    Width = 344
+                    EditLabel.Height = 20
+                    EditLabel.Width = 344
+                    EditLabel.Caption = 'Forma de Pagamento: *'
+                    Font.Color = 2977025
+                    Font.Style = [fsBold]
+                    MaxLength = 100
+                    ParentFont = False
+                    TabOrder = 0
+                    Text = 'edtFormaPagamento'
+                  end
+                  object edtPesquisaGenericaFpgto: TLabeledEdit
+                    Left = 8
+                    Height = 28
+                    Top = 88
+                    Width = 344
+                    EditLabel.Height = 20
+                    EditLabel.Width = 344
+                    EditLabel.Caption = 'Conta Bancária: *'
+                    Font.Color = 2977025
+                    Font.Style = [fsBold]
+                    MaxLength = 100
+                    ParentFont = False
+                    TabOrder = 1
+                    Text = 'edtPesquisaGenericaFpgto'
+                  end
+                  object edtValorFpgto: TLabeledEdit
+                    Left = 368
+                    Height = 28
+                    Top = 32
+                    Width = 136
+                    EditLabel.Height = 20
+                    EditLabel.Width = 136
+                    EditLabel.Caption = 'Valor R$: *'
+                    MaxLength = 100
+                    TabOrder = 2
+                    Text = 'edtValorFpgto'
+                  end
                 end
-                object btnIncluirFormaPgto: TSpeedButton
-                  Left = 8
-                  Height = 28
-                  Top = 88
-                  Width = 93
-                  Action = actIncluirFpgto
-                  Images = img
-                  ImageIndex = 1
-                end
-                object btnExcluirFormaPgto: TSpeedButton
-                  Left = 112
-                  Height = 28
-                  Top = 88
-                  Width = 93
-                  Action = actExcluirFpgto
-                  Images = img
-                  ImageIndex = 3
-                end
-                object edtPesquisaGenericaFpgto: TLabeledEdit
-                  Left = 8
-                  Height = 28
-                  Top = 208
-                  Width = 344
-                  EditLabel.Height = 20
-                  EditLabel.Width = 344
-                  EditLabel.Caption = 'Conta Bancária: *'
-                  Font.Color = 2977025
-                  Font.Style = [fsBold]
-                  MaxLength = 100
-                  ParentFont = False
+                object pnlBotoesPagamento: TPanel
+                  Left = 0
+                  Height = 48
+                  Top = 64
+                  Width = 501
+                  BevelOuter = bvNone
+                  ClientHeight = 48
+                  ClientWidth = 501
+                  ParentBackground = False
                   TabOrder = 2
-                  Text = 'edtPesquisaGenericaFpgto'
-                end
-                object edtFormaPagamento: TLabeledEdit
-                  Left = 8
-                  Height = 28
-                  Top = 147
-                  Width = 344
-                  EditLabel.Height = 20
-                  EditLabel.Width = 344
-                  EditLabel.Caption = 'Forma de Pagamento: *'
-                  Font.Color = 2977025
-                  Font.Style = [fsBold]
-                  MaxLength = 100
-                  ParentFont = False
-                  TabOrder = 3
-                  Text = 'edtFormaPagamento'
+                  object btnIncluirFormaPgto: TSpeedButton
+                    Left = 8
+                    Height = 28
+                    Top = 8
+                    Width = 93
+                    Action = actIncluirFpgto
+                    Images = img
+                    ImageIndex = 1
+                  end
+                  object btnExcluirFormaPgto: TSpeedButton
+                    Left = 112
+                    Height = 28
+                    Top = 8
+                    Width = 93
+                    Action = actExcluirFpgto
+                    Images = img
+                    ImageIndex = 3
+                  end
                 end
               end
               object tbsArquivo: TTabSheet
                 Caption = 'Arquivos'
+                ImageIndex = 12
               end
             end
             object lbSubtipoNome: TListBox[16]
