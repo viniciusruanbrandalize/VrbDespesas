@@ -130,11 +130,18 @@ end;
 
 constructor TDespesaFormaPagamento.Create;
 begin
-  //
+  FFormaPagamento := TFormaPagamento.Create;
+  FPix            := TPix.Create;
+  FContaBancaria  := TContaBancaria.Create;
+  FCartao         := TCartao.Create;
 end;
 
 destructor TDespesaFormaPagamento.Destroy;
 begin
+  FFormaPagamento.Free;
+  FPix.Free;
+  FContaBancaria.Free;
+  FCartao.Free;
   inherited Destroy;
 end;
 

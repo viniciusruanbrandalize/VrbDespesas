@@ -226,11 +226,11 @@ begin
       Qry.SQL.Add(sql);
       Qry.ParamByName('id').AsInteger                := Despesa.DespesaFormaPagamento[i].Id;
       Qry.ParamByName('valor').AsFloat               := Despesa.DespesaFormaPagamento[i].Valor;
-      Qry.ParamByName('id_conta_bancaria').AsInteger := Despesa.DespesaFormaPagamento[i].ContaBancaria.Id;
-      Qry.ParamByName('id_cartao').AsInteger         := Despesa.DespesaFormaPagamento[i].Cartao.Id;
+      //Qry.ParamByName('id_conta_bancaria').AsInteger := Despesa.DespesaFormaPagamento[i].ContaBancaria.Id;
+      //Qry.ParamByName('id_cartao').AsInteger         := Despesa.DespesaFormaPagamento[i].Cartao.Id;
       Qry.ParamByName('id_forma_pgto').AsInteger     := Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
       Qry.ParamByName('id_despesa').AsInteger        := Despesa.Id;
-      Qry.ParamByName('chave_pix').AsString          := Despesa.DespesaFormaPagamento[i].Pix.Chave;
+      //Qry.ParamByName('chave_pix').AsString          := Despesa.DespesaFormaPagamento[i].Pix.Chave;
       Qry.ExecSQL;
     end;
 
@@ -240,6 +240,7 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao inserir despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;

@@ -16,10 +16,19 @@ type
   TfrmDespesa = class(TfrmCadastroPadrao)
     actIncluirFpgto: TAction;
     actExcluirFpgto: TAction;
+    actIncluirArquivo: TAction;
+    actExcluirArquivo: TAction;
+    actExportarArquivo: TAction;
     actSalvarFpgto: TAction;
     actCancelarFpgto: TAction;
+    btnExportarArquivo: TSpeedButton;
     btnExcluirFormaPgto: TSpeedButton;
+    btnCancelarFormaPgto: TSpeedButton;
+    btnExcluirArquivo: TSpeedButton;
     btnIncluirFormaPgto: TSpeedButton;
+    btnIncluirArquivo: TSpeedButton;
+    btnSalvarFormaPgto: TSpeedButton;
+    ComboBox1: TComboBox;
     dtpData: TDateTimePicker;
     dtpHora: TDateTimePicker;
     dtpInicial: TDateTimePicker;
@@ -36,25 +45,38 @@ type
     edtFrete: TLabeledEdit;
     edtOutros: TLabeledEdit;
     edtValorFpgto: TLabeledEdit;
+    lbFormaPagamentoNome: TListBox;
     lblObs: TLabel;
     lblData: TLabel;
     lblPeriodoFiltro: TLabel;
     lbSubtipoId: TListBox;
     lbFornecedorId: TListBox;
+    lbFormaPagamentoId: TListBox;
     lbSubtipoNome: TListBox;
     lbFornecedorNome: TListBox;
     lvPagamento: TListView;
+    lvArquivo: TListView;
     MenuItem4: TMenuItem;
     mObs: TMemo;
+    pnlBotoesArquivo: TPanel;
+    pnlBotoesSalvarCancelarPagamento: TPanel;
     pnlIncluiPagamento: TPanel;
     pnlBotoesPagamento: TPanel;
     pgcMaisOpcoes: TPageControl;
     pMenuFpgto: TPopupMenu;
     tbsPagamento: TTabSheet;
     tbsArquivo: TTabSheet;
+    procedure actCancelarFpgtoExecute(Sender: TObject);
+    procedure actEditarExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
+    procedure actExcluirFpgtoExecute(Sender: TObject);
+    procedure actIncluirFpgtoExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
+    procedure actSalvarFpgtoExecute(Sender: TObject);
+    procedure edtFormaPagamentoExit(Sender: TObject);
+    procedure edtFormaPagamentoKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure edtFornecedorExit(Sender: TObject);
     procedure edtFornecedorKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -64,6 +86,10 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure lbFormaPagamentoNomeDblClick(Sender: TObject);
+    procedure lbFormaPagamentoNomeKeyPress(Sender: TObject; var Key: char);
+    procedure lbFormaPagamentoNomeSelectionChange(Sender: TObject; User: boolean
+      );
     procedure lbFornecedorNomeDblClick(Sender: TObject);
     procedure lbFornecedorNomeKeyPress(Sender: TObject; var Key: char);
     procedure lbFornecedorNomeSelectionChange(Sender: TObject; User: boolean);
@@ -73,6 +99,8 @@ type
   private
     Controller: TDespesaController;
     procedure AjustarTelaPagamento(Inserindo: Boolean);
+    procedure IncluirPagamento();
+    procedure LimparCamposPagamento();
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -110,6 +138,9 @@ begin
   edtTotal.OnExit         := @NumericoExit;
   edtTotal.OnEnter        := @NumericoEnter;
   edtTotal.OnKeyPress     := @NumericoKeyPress;
+  edtValorFpgto.OnExit    := @NumericoExit;
+  edtValorFpgto.OnEnter   := @NumericoEnter;
+  edtValorFpgto.OnKeyPress:= @NumericoKeyPress;
 end;
 
 procedure TfrmDespesa.actSalvarExecute(Sender: TObject);
@@ -142,6 +173,48 @@ begin
         TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     end;
     inherited;
+  end;
+end;
+
+procedure TfrmDespesa.actSalvarFpgtoExecute(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
+  AjustarTelaPagamento(False);
+  Controller.Despesa.DespesaFormaPagamento[i].Valor := StrToFloat(edtValorFpgto.Text);
+  IncluirPagamento();
+end;
+
+procedure TfrmDespesa.edtFormaPagamentoExit(Sender: TObject);
+begin
+  if not lbFormaPagamentoNome.Focused then
+  begin
+    if lbFormaPagamentoNome.Visible then
+      lbFormaPagamentoNome.Visible := false;
+  end;
+end;
+
+procedure TfrmDespesa.edtFormaPagamentoKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if (Length(edtFormaPagamento.Text) > 3) then
+  begin
+    controller.PesquisarFormaPagamento(lbFormaPagamentoNome, lbFormaPagamentoId, edtFormaPagamento.Text, qtdReg);
+    lbFormaPagamentoNome.Visible := qtdReg > 0;
+    if Key = VK_DOWN then
+    begin
+      if lbFormaPagamentoNome.CanFocus then
+        lbFormaPagamentoNome.SetFocus;
+    end;
+  end
+  else
+  begin
+    lbFormaPagamentoNome.Items.Clear;
+    lbFormaPagamentoNome.Visible := False;
   end;
 end;
 
@@ -226,6 +299,36 @@ begin
   end;
 end;
 
+procedure TfrmDespesa.actExcluirFpgtoExecute(Sender: TObject);
+begin
+  Controller.ExcluirPagamento(lvPagamento.Selected.Index);
+  lvPagamento.Selected.Delete;
+end;
+
+procedure TfrmDespesa.actCancelarFpgtoExecute(Sender: TObject);
+begin
+  Controller.DestruirUltimoPagamento();
+  AjustarTelaPagamento(False);
+end;
+
+procedure TfrmDespesa.actEditarExecute(Sender: TObject);
+begin
+  inherited;
+  tbsPagamento.Enabled := False;
+  edtValor.Enabled     := False;
+  edtDesconto.Enabled  := False;
+  edtFrete.Enabled     := False;
+  edtOutros.Enabled    := False;
+  edtTotal.Enabled     := False;
+end;
+
+procedure TfrmDespesa.actIncluirFpgtoExecute(Sender: TObject);
+begin
+  AjustarTelaPagamento(True);
+  LimparCamposPagamento();
+  Controller.CriarPagamento();
+end;
+
 procedure TfrmDespesa.actPesquisarExecute(Sender: TObject);
 begin
   lvPadrao.Items.Clear;
@@ -241,6 +344,40 @@ end;
 procedure TfrmDespesa.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmDespesa.lbFormaPagamentoNomeDblClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
+  if lbFormaPagamentoNome.ItemIndex <> -1 then
+  begin
+    edtFormaPagamento.Text := lbFormaPagamentoNome.Items[lbFormaPagamentoNome.ItemIndex];
+    Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id := StrToInt(lbFormaPagamentoId.Items[lbFormaPagamentoNome.ItemIndex]);
+    Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Nome := edtFormaPagamento.Text;
+    lbFormaPagamentoNome.Visible := False;
+  end
+  else
+  begin
+    edtFormaPagamento.Text := '';
+    Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id := 0;
+  end;
+end;
+
+procedure TfrmDespesa.lbFormaPagamentoNomeKeyPress(Sender: TObject;
+  var Key: char);
+begin
+  if key = #13 then
+  begin
+    lbFormaPagamentoNome.OnDblClick(nil);
+  end;
+end;
+
+procedure TfrmDespesa.lbFormaPagamentoNomeSelectionChange(Sender: TObject;
+  User: boolean);
+begin
+  edtFormaPagamento.Text := lbFormaPagamentoNome.Items[lbFormaPagamentoNome.ItemIndex];
 end;
 
 procedure TfrmDespesa.lbFornecedorNomeDblClick(Sender: TObject);
@@ -304,17 +441,37 @@ end;
 procedure TfrmDespesa.AjustarTelaPagamento(Inserindo: Boolean);
 begin
   pnlIncluiPagamento.Visible := inserindo;
+  pnlBotoesSalvarCancelarPagamento.Visible := Inserindo;
   pnlBotoesPagamento.Visible := not Inserindo;
   lvPagamento.Visible        := not Inserindo;
   if Inserindo then
   begin
     pnlIncluiPagamento.Align := alClient;
+    pnlBotoesSalvarCancelarPagamento.Align := alBottom;
   end
   else
   begin
     lvPagamento.Align        := alClient;
     pnlBotoesPagamento.Align := alBottom;
   end;
+end;
+
+procedure TfrmDespesa.IncluirPagamento();
+var
+  item: TListItem;
+  i: Integer;
+begin
+  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
+  item := lvPagamento.Items.Add;
+  item.Caption := '0';
+  item.SubItems.Add(controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Nome);
+  item.SubItems.Add(FormatFloat(',#0.00', controller.Despesa.DespesaFormaPagamento[i].Valor));
+end;
+
+procedure TfrmDespesa.LimparCamposPagamento();
+begin
+  edtValorFpgto.Text     := '0,00';
+  edtFormaPagamento.Clear;
 end;
 
 procedure TfrmDespesa.CarregarDados;
@@ -363,6 +520,7 @@ begin
     edtTotal.Text      := FormatFloat(',#0.00', Controller.Despesa.Total);
     edtChaveNfe.Text   := Controller.Despesa.ChaveNFE;
     mObs.Lines.Text    := Controller.Despesa.Observacao;
+    lvPagamento.Items.Clear;
     Controller.ListarPagamento(lvPagamento, id);
   end
   else

@@ -17,11 +17,11 @@ type
     DespesaDAO: TDespesaDAO;
   public
     Despesa: TDespesa;
-    DespesaFormaPagamento: TDespesaFormaPagamento;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
     procedure PesquisarSubtipo(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     procedure PesquisarFornecedor(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarFormaPagamento(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(objDespesa : TDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(objDespesa : TDespesa; out Erro: string): Boolean;
     function Editar(objDespesa : TDespesa; out Erro: string): Boolean;
@@ -29,6 +29,11 @@ type
 
     procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
     function BuscarPagamentoPorId(objPagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
+    procedure CriarPagamento();
+    procedure DestruirUltimoPagamento();
+    function ExcluirPagamento(Id: Integer): Boolean;
+    function CalcularValorTotal(Valor, Desconto, Frete, Outros: Currency): Currency;
+    function ValorPagoEhValido(Total, Pago: Currency): Boolean;
 
     constructor Create;
     destructor Destroy; override;
@@ -58,6 +63,12 @@ procedure TDespesaController.PesquisarFornecedor(lbNome, lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
   DespesaDAO.PesquisaGenerica(TB_PARTICIPANTE, lbNome, lbId, busca, 10, QtdRegistro);
+end;
+
+procedure TDespesaController.PesquisarFormaPagamento(lbNome, lbId: TListBox;
+  busca: String; out QtdRegistro: Integer);
+begin
+  DespesaDAO.PesquisaGenerica(TB_FORMA_PGTO, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
 function TDespesaController.BuscarPorId(objDespesa: TDespesa; Id: Integer; out
@@ -93,6 +104,33 @@ function TDespesaController.BuscarPagamentoPorId(
   objPagamento: TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
 begin
   Result := DespesaDAO.BuscarPagamentoPorId(objPagamento, Id, Erro);
+end;
+
+procedure TDespesaController.CriarPagamento();
+begin
+  Despesa.DespesaFormaPagamento.Add(TDespesaFormaPagamento.Create);
+end;
+
+procedure TDespesaController.DestruirUltimoPagamento();
+begin
+  Despesa.DespesaFormaPagamento.Delete(Despesa.DespesaFormaPagamento.Count-1);
+end;
+
+function TDespesaController.ExcluirPagamento(Id: Integer): Boolean;
+begin
+  Despesa.DespesaFormaPagamento.Delete(id);
+  Result := True;
+end;
+
+function TDespesaController.CalcularValorTotal(Valor, Desconto, Frete,
+  Outros: Currency): Currency;
+begin
+  Result := (Valor + Outros + Frete) - Desconto;
+end;
+
+function TDespesaController.ValorPagoEhValido(Total, Pago: Currency): Boolean;
+begin
+  Result := Pago <= Total;
 end;
 
 constructor TDespesaController.Create;
