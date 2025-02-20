@@ -18,7 +18,7 @@ uses
   model.entity.estado, model.entity.cidade, model.entity.contabancaria,
   model.entity.bandeira, model.entity.usuariodonocadastro, model.entity.pix,
   model.entity.login, model.entity.logbackup, model.entity.despesa,
-  model.entity.despesaformapagamento, model.entity.cartao,
+  model.entity.despesaformapagamento, model.entity.cartao, model.entity.arquivo,
   model.connection.conexao1, model.connection.conexao2, model.dao.banco,
   lib.cryptini, lib.util, lib.types, indylaz, view.cadastropadrao, view.banco,
   lib.bcrypt, lib.cep, view.formapagamento, view.tipodespesa,

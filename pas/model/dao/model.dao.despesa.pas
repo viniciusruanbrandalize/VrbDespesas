@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.dao.padrao,
   model.entity.despesa, model.entity.despesaformapagamento,
-  model.connection.conexao1;
+  model.entity.arquivo, model.connection.conexao1, model.connection.conexao2;
 
 type
 
@@ -15,7 +15,7 @@ type
 
   TDespesaDAO = class(TPadraoDAO)
   private
-
+    QryArquivo: TSQLQuery;
   public
     procedure Listar(lv: TListView); override;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
@@ -26,6 +26,8 @@ type
 
     procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
     function BuscarPagamentoPorId(Pagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
+
+    procedure ListarArquivos(lv: TListView; IdDespesa: Integer);
 
     constructor Create; override;
     destructor Destroy; override;
@@ -410,13 +412,49 @@ begin
   end;
 end;
 
+procedure TDespesaDAO.ListarArquivos(lv: TListView; IdDespesa: Integer);
+var
+  sql: String;
+  item : TListItem;
+begin
+  try
+
+    sql := 'select id, nome, extensao, data_hora_upload from arquivo ' +
+           'where id_despesa = :id ' +
+           'order by nome';
+
+    QryArquivo.Close;
+    QryArquivo.SQL.Clear;
+    QryArquivo.SQL.Add(sql);
+    QryArquivo.ParamByName('id').AsInteger := IdDespesa;
+    QryArquivo.Open;
+
+    QryArquivo.First;
+
+    while not QryArquivo.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := QryArquivo.FieldByName('id').AsString;
+      item.SubItems.Add(QryArquivo.FieldByName('nome').AsString);
+      item.SubItems.Add(QryArquivo.FieldByName('extensao').AsString);
+      item.SubItems.Add(QryArquivo.FieldByName('data_hora_upload').AsString);
+      QryArquivo.Next;
+    end;
+
+  finally
+    QryArquivo.Close;
+  end;
+end;
+
 constructor TDespesaDAO.Create;
 begin
   inherited;
+  CriarQuery(QryArquivo, dmConexao2.SQLConnector);
 end;
 
 destructor TDespesaDAO.Destroy;
 begin
+  QryArquivo.Free;
   inherited Destroy;
 end;
 
