@@ -70,6 +70,7 @@ type
     procedure actEditarExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
     procedure actExcluirFpgtoExecute(Sender: TObject);
+    procedure actIncluirExecute(Sender: TObject);
     procedure actIncluirFpgtoExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
@@ -83,6 +84,7 @@ type
     procedure edtSubtipoExit(Sender: TObject);
     procedure edtSubtipoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState
       );
+    procedure edtValorChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -101,6 +103,7 @@ type
     procedure AjustarTelaPagamento(Inserindo: Boolean);
     procedure IncluirPagamento();
     procedure LimparCamposPagamento();
+    procedure HabilitarCampos(Hab: Boolean);
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -146,17 +149,28 @@ end;
 procedure TfrmDespesa.actSalvarExecute(Sender: TObject);
 var
   erro: String;
+  valor: Double;
 begin
   if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
   begin
     Controller.Despesa.Descricao  := edtDescricao.Text;
     Controller.Despesa.Data       := dtpData.Date;
     Controller.Despesa.Hora       := dtpHora.Time;
-    Controller.Despesa.Valor      := StrToFloat(edtValor.Text);
-    Controller.Despesa.Desconto   := StrToFloat(edtDesconto.Text);
-    Controller.Despesa.Frete      := StrToFloat(edtFrete.Text);
-    Controller.Despesa.Outros     := StrToFloat(edtOutros.Text);
-    Controller.Despesa.Total      := StrToFloat(edtTotal.Text);
+    if not TryStrToFloat(edtValor.Text, valor) then
+      valor := 0;
+    Controller.Despesa.Valor := valor;
+    if not TryStrToFloat(edtDesconto.Text, valor) then
+      valor := 0;
+    Controller.Despesa.Desconto := valor;
+    if not TryStrToFloat(edtFrete.Text, valor) then
+      valor := 0;
+    Controller.Despesa.Frete := valor;
+    if not TryStrToFloat(edtOutros.Text, valor) then
+      valor := 0;
+    Controller.Despesa.Outros := valor;
+    if not TryStrToFloat(edtTotal.Text, valor) then
+      valor := 0;
+    Controller.Despesa.Total := valor;
     Controller.Despesa.ChaveNFE   := edtChaveNfe.Text;
     Controller.Despesa.Observacao := mObs.Lines.Text;
     Controller.Despesa.Paga       := True;
@@ -282,6 +296,26 @@ begin
   end;
 end;
 
+procedure TfrmDespesa.edtValorChange(Sender: TObject);
+var
+  Valor,
+  Desc,
+  Frete,
+  Outros,
+  Total: Double;
+begin
+  if not TryStrToFloat(edtValor.Text, Valor) then
+    Valor := 0;
+  if not TryStrToFloat(edtDesconto.Text, Desc) then
+    Desc := 0;
+  if not TryStrToFloat(edtFrete.Text, Frete) then
+    Frete := 0;
+  if not TryStrToFloat(edtOutros.Text, Outros) then
+    Outros := 0;
+  Total  := Controller.CalcularValorTotal(valor, desc, frete, outros);
+  edtTotal.Text := FormatFloat(',#0.00', Total);
+end;
+
 procedure TfrmDespesa.actExcluirExecute(Sender: TObject);
 var
   erro: String;
@@ -305,6 +339,13 @@ begin
   lvPagamento.Selected.Delete;
 end;
 
+procedure TfrmDespesa.actIncluirExecute(Sender: TObject);
+begin
+  inherited;
+  HabilitarCampos(True);
+  lvPagamento.Items.Clear;
+end;
+
 procedure TfrmDespesa.actCancelarFpgtoExecute(Sender: TObject);
 begin
   Controller.DestruirUltimoPagamento();
@@ -314,19 +355,24 @@ end;
 procedure TfrmDespesa.actEditarExecute(Sender: TObject);
 begin
   inherited;
-  tbsPagamento.Enabled := False;
-  edtValor.Enabled     := False;
-  edtDesconto.Enabled  := False;
-  edtFrete.Enabled     := False;
-  edtOutros.Enabled    := False;
-  edtTotal.Enabled     := False;
+  HabilitarCampos(False);
 end;
 
 procedure TfrmDespesa.actIncluirFpgtoExecute(Sender: TObject);
+var
+  total: Double;
 begin
-  AjustarTelaPagamento(True);
-  LimparCamposPagamento();
-  Controller.CriarPagamento();
+  if not TryStrToFloat(edtTotal.Text, total) then
+    total := 0;
+
+  if Controller.ValorPagoEhValido(total) then
+  begin
+    AjustarTelaPagamento(True);
+    LimparCamposPagamento();
+    Controller.CriarPagamento();
+  end
+  else
+    TfrmMessage.Mensagem('Valor pago já foi alcançado!', 'Aviso', 'C', [mbOk], mbOk);
 end;
 
 procedure TfrmDespesa.actPesquisarExecute(Sender: TObject);
@@ -472,6 +518,16 @@ procedure TfrmDespesa.LimparCamposPagamento();
 begin
   edtValorFpgto.Text     := '0,00';
   edtFormaPagamento.Clear;
+end;
+
+procedure TfrmDespesa.HabilitarCampos(Hab: Boolean);
+begin
+  tbsPagamento.Enabled := Hab;
+  edtValor.Enabled     := Hab;
+  edtDesconto.Enabled  := Hab;
+  edtFrete.Enabled     := Hab;
+  edtOutros.Enabled    := Hab;
+  edtTotal.Enabled     := Hab;
 end;
 
 procedure TfrmDespesa.CarregarDados;

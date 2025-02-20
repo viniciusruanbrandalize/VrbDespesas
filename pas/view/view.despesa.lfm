@@ -227,6 +227,7 @@ inherited frmDespesa: TfrmDespesa
               MaxLength = 100
               TabOrder = 5
               Text = 'edtValor'
+              OnChange = edtValorChange
             end
             object edtDesconto: TLabeledEdit[8]
               Left = 408
@@ -239,6 +240,7 @@ inherited frmDespesa: TfrmDespesa
               MaxLength = 100
               TabOrder = 6
               Text = 'edtDesconto'
+              OnChange = edtValorChange
             end
             object edtFrete: TLabeledEdit[9]
               Left = 544
@@ -251,6 +253,7 @@ inherited frmDespesa: TfrmDespesa
               MaxLength = 100
               TabOrder = 7
               Text = 'edtFrete'
+              OnChange = edtValorChange
             end
             object edtOutros: TLabeledEdit[10]
               Left = 680
@@ -263,6 +266,7 @@ inherited frmDespesa: TfrmDespesa
               MaxLength = 100
               TabOrder = 8
               Text = 'edtOutros'
+              OnChange = edtValorChange
             end
             object edtTotal: TLabeledEdit[11]
               Left = 816
@@ -652,6 +656,9 @@ inherited frmDespesa: TfrmDespesa
     end
   end
   inherited actList: TActionList
+    inherited actIncluir: TAction
+      OnExecute = actIncluirExecute
+    end
     inherited actEditar: TAction
       OnExecute = actEditarExecute
     end

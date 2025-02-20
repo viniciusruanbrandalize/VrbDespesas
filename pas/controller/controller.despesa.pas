@@ -33,7 +33,7 @@ type
     procedure DestruirUltimoPagamento();
     function ExcluirPagamento(Id: Integer): Boolean;
     function CalcularValorTotal(Valor, Desconto, Frete, Outros: Currency): Currency;
-    function ValorPagoEhValido(Total, Pago: Currency): Boolean;
+    function ValorPagoEhValido(Total: Double): Boolean;
 
     constructor Create;
     destructor Destroy; override;
@@ -128,9 +128,19 @@ begin
   Result := (Valor + Outros + Frete) - Desconto;
 end;
 
-function TDespesaController.ValorPagoEhValido(Total, Pago: Currency): Boolean;
+function TDespesaController.ValorPagoEhValido(Total: Double): Boolean;
+var
+  i: Integer;
+  Pago: Double;
 begin
-  Result := Pago <= Total;
+  Pago := 0;
+
+  for i := 0 to Despesa.DespesaFormaPagamento.Count-1 do
+  begin
+    Pago := Pago + Despesa.DespesaFormaPagamento[i].Valor;
+  end;
+
+  Result := Pago < Total;
 end;
 
 constructor TDespesaController.Create;
