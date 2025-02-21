@@ -35,6 +35,8 @@ type
     function CalcularValorTotal(Valor, Desconto, Frete, Outros: Currency): Currency;
     function ValorPagoEhValido(Total: Double): Boolean;
 
+    procedure ListarArquivos(lv: TListView; IdDespesa: Integer);
+
     constructor Create;
     destructor Destroy; override;
   end;
@@ -141,6 +143,11 @@ begin
   end;
 
   Result := Pago < Total;
+end;
+
+procedure TDespesaController.ListarArquivos(lv: TListView; IdDespesa: Integer);
+begin
+  DespesaDAO.ListarArquivos(lv, IdDespesa);
 end;
 
 constructor TDespesaController.Create;

@@ -5,7 +5,7 @@ unit model.dao.despesa;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.dao.padrao,
+  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, DB, model.dao.padrao,
   model.entity.despesa, model.entity.despesaformapagamento,
   model.entity.arquivo, model.connection.conexao1, model.connection.conexao2;
 
@@ -28,6 +28,7 @@ type
     function BuscarPagamentoPorId(Pagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
 
     procedure ListarArquivos(lv: TListView; IdDespesa: Integer);
+    function BuscarArquivoPorId(Arquivo: TArquivo; Id: Integer; out Erro: String): Boolean;
 
     constructor Create; override;
     destructor Destroy; override;
@@ -236,13 +237,34 @@ begin
       Qry.ExecSQL;
     end;
 
+    sql := 'insert into arquivo (id, nome, extensao, base64, data_hora_upload, ' +
+           'id_despesa) values (:id, :nome, :extensao, :base64, :data_hora_upload, ' +
+           ':id_despesa)';
+
+    for i := 0 to Despesa.Arquivo.Count-1 do
+    begin
+      Despesa.Arquivo[i].Id := 0;
+      QryArquivo.Close;
+      QryArquivo.SQL.Clear;
+      QryArquivo.SQL.Add(sql);
+      QryArquivo.ParamByName('id').AsInteger           := Despesa.Arquivo[i].Id;
+      QryArquivo.ParamByName('nome').AsString          := Despesa.Arquivo[i].Nome;
+      QryArquivo.ParamByName('extensao').AsString      := Despesa.Arquivo[i].Extensao;
+      QryArquivo.ParamByName('data_hora_upload').AsDateTime := Despesa.Arquivo[i].DataHoraUpload;
+      //QryArquivo.ParamByName('base64').AsBlob          := Despesa.Arquivo[i].Base64;
+      QryArquivo.ParamByName('id_despesa').AsInteger   := Despesa.Id;
+      QryArquivo.ExecSQL;
+    end;
+
     dmConexao1.SQLTransaction.Commit;
+    dmConexao2.SQLTransaction.Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
       dmConexao1.SQLTransaction.Rollback;
+      dmConexao2.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao inserir despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -439,6 +461,50 @@ begin
       item.SubItems.Add(QryArquivo.FieldByName('extensao').AsString);
       item.SubItems.Add(QryArquivo.FieldByName('data_hora_upload').AsString);
       QryArquivo.Next;
+    end;
+
+  finally
+    QryArquivo.Close;
+  end;
+end;
+
+function TDespesaDAO.BuscarArquivoPorId(Arquivo: TArquivo; Id: Integer; out
+  Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select * from arquivo ' +
+           'where id = :id ' +
+           'order by id';
+
+    QryArquivo.Close;
+    QryArquivo.SQL.Clear;
+    QryArquivo.SQL.Add(sql);
+    QryArquivo.ParamByName('id').AsInteger := id;
+    QryArquivo.Open;
+
+    if QryArquivo.RecordCount = 1 then
+    begin
+      Arquivo.Id              := QryArquivo.FieldByName('id').AsInteger;
+      Arquivo.DataHoraUpload  := QryArquivo.FieldByName('data_hora_upload').AsDateTime;
+      Arquivo.Nome            := QryArquivo.FieldByName('nome').AsString;
+      Arquivo.Extensao        := QryArquivo.FieldByName('extensao').AsString;
+      Arquivo.IdDespesa       := QryArquivo.FieldByName('id_despesa').AsInteger;
+      Arquivo.Base64          := QryArquivo.CreateBlobStream(QryArquivo.FieldByName('base64'), bmRead);
+      Result := True;
+    end
+    else
+    if QryArquivo.RecordCount > 1 then
+    begin
+      Erro := 'Mais de um objeto foi retornado na busca por código!';
+      Result := False;
+    end
+    else
+    begin
+      Erro := 'Nenhum objeto foi encontrado!';
+      Result := False;
     end;
 
   finally

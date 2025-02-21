@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, model.entity.subtipodespesa,
   model.entity.usuario, model.entity.participante,
-  model.entity.despesaformapagamento;
+  model.entity.despesaformapagamento, model.entity.arquivo;
 
 type
 
@@ -35,7 +35,9 @@ type
     FTotal: Double;
     FSubTipo: TSubtipoDespesa;
     FDespesaFormaPagamento: TDespesaFormaPagamentoLista;
+    FArquivo: TArquivoLista;
     function GetAlteracao: TDateTime;
+    function GetArquivo: TArquivoLista;
     function GetCadastro: TDateTime;
     function GetChaveNFE: String;
     function GetData: TDate;
@@ -56,6 +58,7 @@ type
     function GetUsuarioCadastro: TUsuario;
     function GetValor: Double;
     procedure SetAlteracao(AValue: TDateTime);
+    procedure SetArquivo(AValue: TArquivoLista);
     procedure SetCadastro(AValue: TDateTime);
     procedure SetChaveNFE(AValue: String);
     procedure SetData(AValue: TDate);
@@ -99,6 +102,7 @@ type
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
     property DespesaFormaPagamento: TDespesaFormaPagamentoLista read GetDespesaFormaPagamento write SetDespesaFormaPagamento;
+    property Arquivo: TArquivoLista read GetArquivo write SetArquivo;
   end;
 
 implementation
@@ -118,6 +122,11 @@ end;
 function TDespesa.GetAlteracao: TDateTime;
 begin
   Result := FAlteracao;
+end;
+
+function TDespesa.GetArquivo: TArquivoLista;
+begin
+  Result := FArquivo;
 end;
 
 function TDespesa.GetCadastro: TDateTime;
@@ -208,6 +217,11 @@ end;
 procedure TDespesa.SetAlteracao(AValue: TDateTime);
 begin
   FAlteracao:=AValue;
+end;
+
+procedure TDespesa.SetArquivo(AValue: TArquivoLista);
+begin
+  FArquivo := AValue;
 end;
 
 procedure TDespesa.SetCadastro(AValue: TDateTime);
@@ -313,6 +327,7 @@ begin
   FSubTipo         := TSubtipoDespesa.Create;
   FUsuarioCadastro := TUsuario.Create;
   FDespesaFormaPagamento := TDespesaFormaPagamentoLista.Create;
+  FArquivo         := TArquivoLista.Create;
 end;
 
 destructor TDespesa.Destroy;
@@ -322,6 +337,7 @@ begin
   FSubTipo.Free;
   FUsuarioCadastro.Free;
   FDespesaFormaPagamento.Free;
+  FArquivo.Free;
   inherited Destroy;
 end;
 

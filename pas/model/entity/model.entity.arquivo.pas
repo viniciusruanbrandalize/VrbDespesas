@@ -5,7 +5,7 @@ unit model.entity.arquivo;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, Generics.Collections;
 
 type
 
@@ -42,6 +42,9 @@ type
     property DataHoraUpload: TDateTime read GetDataHoraUpload write SetDataHoraUpload;
     property IdDespesa: Integer read GetIdDespesa write SetIdDespesa;
   end;
+
+type
+  TArquivoLista = specialize TObjectList<TArquivo>;
 
 implementation
 
