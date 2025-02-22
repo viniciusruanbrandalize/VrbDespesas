@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.despesa, model.dao.padrao,
-  model.dao.despesa, model.entity.despesaformapagamento, model.connection.conexao1;
+  model.dao.despesa, model.entity.despesaformapagamento, model.entity.arquivo,
+  model.connection.conexao1;
 
 type
 
@@ -29,13 +30,15 @@ type
 
     procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
     function BuscarPagamentoPorId(objPagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
-    procedure CriarPagamento();
-    procedure DestruirUltimoPagamento();
+    procedure AdicionarPagamento();
+    procedure DeletarUltimoPagamento();
     function ExcluirPagamento(Id: Integer): Boolean;
     function CalcularValorTotal(Valor, Desconto, Frete, Outros: Currency): Currency;
     function ValorPagoEhValido(Total: Double): Boolean;
 
     procedure ListarArquivos(lv: TListView; IdDespesa: Integer);
+    procedure AdicionarArquivo();
+    function ExcluirArquivo(Id, Index: Integer; out Erro: String): Boolean;
 
     constructor Create;
     destructor Destroy; override;
@@ -108,12 +111,12 @@ begin
   Result := DespesaDAO.BuscarPagamentoPorId(objPagamento, Id, Erro);
 end;
 
-procedure TDespesaController.CriarPagamento();
+procedure TDespesaController.AdicionarPagamento();
 begin
   Despesa.DespesaFormaPagamento.Add(TDespesaFormaPagamento.Create);
 end;
 
-procedure TDespesaController.DestruirUltimoPagamento();
+procedure TDespesaController.DeletarUltimoPagamento();
 begin
   Despesa.DespesaFormaPagamento.Delete(Despesa.DespesaFormaPagamento.Count-1);
 end;
@@ -148,6 +151,19 @@ end;
 procedure TDespesaController.ListarArquivos(lv: TListView; IdDespesa: Integer);
 begin
   DespesaDAO.ListarArquivos(lv, IdDespesa);
+end;
+
+procedure TDespesaController.AdicionarArquivo();
+begin
+  Despesa.Arquivo.Add(TArquivo.Create);
+end;
+
+function TDespesaController.ExcluirArquivo(Id, Index: Integer; out Erro: String
+  ): Boolean;
+begin
+  Despesa.Arquivo.Delete(Index);
+  if not (id = 0) then
+    Result := DespesaDAO.ExcluirArquivo(Id, Erro);
 end;
 
 constructor TDespesaController.Create;

@@ -5,8 +5,10 @@ unit model.connection.conexao1;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, SQLDBLib, IBConnection, model.ini.conexao,
-  forms, view.mensagem, DB ;
+  Classes, SysUtils, SQLDB, SQLDBLib, SQLite3Conn, PQConnection,
+  oracleconnection, odbcconn, mysql40conn, mysql41conn, mysql50conn,
+  mysql51conn, mysql55conn, mysql56conn, mysql57conn, mysql80conn, MSSQLConn,
+  IBConnection, model.ini.conexao, forms, view.mensagem, DB;
 
 type
 

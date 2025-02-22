@@ -1,11 +1,10 @@
 object dmConexao1: TdmConexao1
   OnCreate = DataModuleCreate
   OldCreateOrder = False
-  Height = 345
-  HorizontalOffset = 601
-  VerticalOffset = 313
-  Width = 550
-  PPI = 120
+  Height = 276
+  HorizontalOffset = 481
+  VerticalOffset = 250
+  Width = 440
   object SQLConnector: TSQLConnector
     Connected = False
     LoginPrompt = False
@@ -14,15 +13,15 @@ object dmConexao1: TdmConexao1
     OnLog = SQLConnectorLog
     LogEvents = [detExecute, detCommit, detRollBack, detParamValue]
     ConnectorType = 'Firebird'
-    Left = 60
-    Top = 20
+    Left = 48
+    Top = 16
   end
   object SQLDBLibraryLoader: TSQLDBLibraryLoader
     Enabled = False
     ConnectionType = 'Firebird'
     LibraryName = 'fbclient.dll'
-    Left = 230
-    Top = 20
+    Left = 184
+    Top = 16
   end
   object SQLQuery: TSQLQuery
     PacketRecords = -1
@@ -30,14 +29,14 @@ object dmConexao1: TdmConexao1
     Database = SQLConnector
     Params = <>
     Macros = <>
-    Left = 60
-    Top = 176
+    Left = 48
+    Top = 141
   end
   object SQLTransaction: TSQLTransaction
     Active = False
     Action = caCommit
     Database = SQLConnector
-    Left = 60
-    Top = 96
+    Left = 48
+    Top = 77
   end
 end

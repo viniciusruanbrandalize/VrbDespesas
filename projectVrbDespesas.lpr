@@ -41,6 +41,8 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TdmConexao1, dmConexao1);
+  Application.CreateForm(TdmConexao2, dmConexao2);
+  Application.CreateForm(TfrmPrincipal, frmPrincipal);
 
   {$IFOPT D+}
   {$ELSE}
@@ -53,7 +55,6 @@ begin
     end;
   {$ENDIF}
 
-  Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.Run;
 end.
 

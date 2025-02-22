@@ -29,6 +29,7 @@ type
 
     procedure ListarArquivos(lv: TListView; IdDespesa: Integer);
     function BuscarArquivoPorId(Arquivo: TArquivo; Id: Integer; out Erro: String): Boolean;
+    function ExcluirArquivo(Id: Integer; out Erro: string): Boolean;
 
     constructor Create; override;
     destructor Destroy; override;
@@ -251,7 +252,7 @@ begin
       QryArquivo.ParamByName('nome').AsString          := Despesa.Arquivo[i].Nome;
       QryArquivo.ParamByName('extensao').AsString      := Despesa.Arquivo[i].Extensao;
       QryArquivo.ParamByName('data_hora_upload').AsDateTime := Despesa.Arquivo[i].DataHoraUpload;
-      //QryArquivo.ParamByName('base64').AsBlob          := Despesa.Arquivo[i].Base64;
+      TBlobField(QryArquivo.ParamByName('base64')).LoadFromStream(Despesa.Arquivo[i].Base64);
       QryArquivo.ParamByName('id_despesa').AsInteger   := Despesa.Id;
       QryArquivo.ExecSQL;
     end;
@@ -509,6 +510,30 @@ begin
 
   finally
     QryArquivo.Close;
+  end;
+end;
+
+function TDespesaDAO.ExcluirArquivo(Id: Integer; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'delete from arquivo where id = :id';
+
+    QryArquivo.Close;
+    QryArquivo.SQL.Clear;
+    QryArquivo.SQL.Add(sql);
+    QryArquivo.ParamByName('id').AsInteger  := Id;
+    QryArquivo.ExecSQL;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao excluir arquivo: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
   end;
 end;
 

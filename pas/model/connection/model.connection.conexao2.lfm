@@ -1,37 +1,39 @@
 object dmConexao2: TdmConexao2
+  OnCreate = DataModuleCreate
   OldCreateOrder = False
-  Height = 342
-  HorizontalOffset = 601
-  VerticalOffset = 313
-  Width = 553
-  PPI = 120
+  Height = 274
+  HorizontalOffset = 481
+  VerticalOffset = 250
+  Width = 442
   object SQLConnector: TSQLConnector
     Connected = False
     LoginPrompt = False
     KeepConnection = False
     Transaction = SQLTransaction
-    ConnectorType = 'SQLite3'
-    Left = 70
-    Top = 20
+    OnLog = SQLConnectorLog
+    LogEvents = [detExecute, detCommit, detRollBack, detParamValue]
+    ConnectorType = 'Firebird'
+    Left = 56
+    Top = 16
   end
   object SQLDBLibraryLoader: TSQLDBLibraryLoader
     Enabled = False
-    ConnectionType = 'SQLite3'
-    LibraryName = 'sqlite3.dll'
-    Left = 232
-    Top = 20
+    ConnectionType = 'Firebird'
+    LibraryName = 'fbclient.dll'
+    Left = 186
+    Top = 16
   end
   object SQLTransaction: TSQLTransaction
     Active = False
     Database = SQLConnector
-    Left = 70
-    Top = 96
+    Left = 56
+    Top = 77
   end
-  object SQLQuery1: TSQLQuery
+  object SQLQuery: TSQLQuery
     FieldDefs = <>
     Params = <>
     Macros = <>
-    Left = 70
-    Top = 176
+    Left = 56
+    Top = 141
   end
 end
