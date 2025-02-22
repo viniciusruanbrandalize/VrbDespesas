@@ -12,7 +12,7 @@ uses
   IdStackUnix,
   {$ENDIF}
   Classes, SysUtils, md5, Sha1, TypInfo, IdIPWatch, Forms, controls,
-  ExtCtrls, StdCtrls;
+  ExtCtrls;
 
   {$IFDEF MSWINDOWS}
   function retornarInfoSistemaWindows: String;

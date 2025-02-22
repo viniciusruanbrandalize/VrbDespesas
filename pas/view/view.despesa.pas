@@ -342,10 +342,19 @@ begin
 end;
 
 procedure TfrmDespesa.actExportarArquivoExecute(Sender: TObject);
+var
+  i: Integer;
 begin
-  if saveDlg.Execute then
+  if Assigned(lvArquivo.Selected) then
   begin
-    //
+    i := lvArquivo.Selected.Index;
+    saveDlg.FileName := Controller.Despesa.Arquivo[i].Nome +
+                        Controller.Despesa.Arquivo[i].Extensao;
+    saveDlg.Filter   := Controller.Despesa.Arquivo[i].Extensao;
+    if saveDlg.Execute then
+    begin
+      Controller.Despesa.Arquivo[i].Binario.SaveToFile(saveDlg.FileName);
+    end;
   end;
 end;
 
@@ -357,10 +366,10 @@ begin
   begin
     Controller.AdicionarArquivo();
     i := Controller.Despesa.Arquivo.Count - 1;
-    Controller.Despesa.Arquivo[i].Nome           := ExtractFileName(openDlg.FileName);
+    Controller.Despesa.Arquivo[i].Nome           := ChangeFileExt(ExtractFileName(openDlg.FileName), EmptyStr);
     Controller.Despesa.Arquivo[i].Extensao       := ExtractFileExt(openDlg.FileName);
     Controller.Despesa.Arquivo[i].DataHoraUpload := Now;
-    //Controller.Despesa.Arquivo[i].Base64
+    Controller.Despesa.Arquivo[i].Binario.LoadFromFile(openDlg.FileName);
     IncluirArquivo();
   end;
 end;
@@ -371,6 +380,7 @@ begin
   HabilitarCampos(True);
   lvPagamento.Items.Clear;
   lvArquivo.Items.Clear;
+  pgcMaisOpcoes.ActivePageIndex := 0;
 end;
 
 procedure TfrmDespesa.actCancelarFpgtoExecute(Sender: TObject);
@@ -383,6 +393,7 @@ procedure TfrmDespesa.actEditarExecute(Sender: TObject);
 begin
   inherited;
   HabilitarCampos(False);
+  pgcMaisOpcoes.ActivePageIndex := 0;
 end;
 
 procedure TfrmDespesa.actExcluirArquivoExecute(Sender: TObject);
@@ -390,10 +401,14 @@ var
   id, idx: Integer;
   Erro: String;
 begin
-  id  := StrToInt(lvArquivo.Selected.Caption);
-  idx := lvArquivo.Selected.Index;
-  if not Controller.ExcluirArquivo(id, idx, erro) then
-    TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK], mbOK);
+  if Assigned(lvArquivo.Selected) then
+  begin
+    if not TryStrToInt(lvArquivo.Selected.Caption, id) then
+      id := 0;
+    idx := lvArquivo.Selected.Index;
+    if not Controller.ExcluirArquivo(id, idx, erro) then
+      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK], mbOK);
+  end;
 end;
 
 procedure TfrmDespesa.actIncluirFpgtoExecute(Sender: TObject);
@@ -614,28 +629,33 @@ var
   id: integer;
   erro: string;
 begin
-  id := StrToInt(lvPadrao.Selected.Caption);
-  if Controller.BuscarPorId(controller.Despesa, id, erro) then
+  if Assigned(lvPadrao.Selected) then
   begin
-    dtpData.Date := Controller.Despesa.Data;
-    dtpHora.Time := Controller.Despesa.Hora;
-    edtDescricao.Text := Controller.Despesa.Descricao;
-    edtFornecedor.Text := Controller.Despesa.Fornecedor.Nome;
-    edtSubtipo.Text := Controller.Despesa.SubTipo.Nome;
-    edtValor.Text := FormatFloat(',#0.00', Controller.Despesa.Valor);
-    edtDesconto.Text := FormatFloat(',#0.00', Controller.Despesa.Desconto);
-    edtFrete.Text := FormatFloat(',#0.00', Controller.Despesa.Frete);
-    edtOutros.Text := FormatFloat(',#0.00', Controller.Despesa.Outros);
-    edtTotal.Text := FormatFloat(',#0.00', Controller.Despesa.Total);
-    edtChaveNfe.Text := Controller.Despesa.ChaveNFE;
-    mObs.Lines.Text := Controller.Despesa.Observacao;
-    lvPagamento.Items.Clear;
-    Controller.ListarPagamento(lvPagamento, id);
-  end
-  else
-  begin
-    TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
-    Abort;
+    id := StrToInt(lvPadrao.Selected.Caption);
+    if Controller.BuscarPorId(controller.Despesa, id, erro) then
+    begin
+      dtpData.Date := Controller.Despesa.Data;
+      dtpHora.Time := Controller.Despesa.Hora;
+      edtDescricao.Text := Controller.Despesa.Descricao;
+      edtFornecedor.Text := Controller.Despesa.Fornecedor.Nome;
+      edtSubtipo.Text := Controller.Despesa.SubTipo.Nome;
+      edtValor.Text := FormatFloat(',#0.00', Controller.Despesa.Valor);
+      edtDesconto.Text := FormatFloat(',#0.00', Controller.Despesa.Desconto);
+      edtFrete.Text := FormatFloat(',#0.00', Controller.Despesa.Frete);
+      edtOutros.Text := FormatFloat(',#0.00', Controller.Despesa.Outros);
+      edtTotal.Text := FormatFloat(',#0.00', Controller.Despesa.Total);
+      edtChaveNfe.Text := Controller.Despesa.ChaveNFE;
+      mObs.Lines.Text := Controller.Despesa.Observacao;
+      lvPagamento.Items.Clear;
+      lvArquivo.Items.Clear;
+      Controller.ListarPagamento(lvPagamento, id);
+      Controller.ListarArquivos(lvArquivo, id);
+    end
+    else
+    begin
+      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
+      Abort;
+    end;
   end;
 end;
 

@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, DB, model.dao.padrao,
   model.entity.despesa, model.entity.despesaformapagamento,
-  model.entity.arquivo, model.connection.conexao1, model.connection.conexao2;
+  model.entity.arquivo, model.connection.conexao1, model.connection.conexao2, lib.util;
 
 type
 
@@ -125,6 +125,7 @@ end;
 function TDespesaDAO.BuscarPorId(Despesa : TDespesa; Id: Integer; out Erro: String): Boolean;
 var
   sql: String;
+  i: Integer;
 begin
   try
 
@@ -163,6 +164,57 @@ begin
       Despesa.SubTipo.Id := Qry.FieldByName('id_subtipo').AsInteger;
       Despesa.SubTipo.Nome := Qry.FieldByName('nome_subtipo').AsString;
       Result := True;
+
+      sql := 'select * from arquivo ' +
+             'where id_despesa = :id ' +
+             'order by nome';
+
+      QryArquivo.Close;
+      QryArquivo.SQL.Clear;
+      QryArquivo.SQL.Add(sql);
+      QryArquivo.ParamByName('id').AsInteger := id;
+      QryArquivo.Open;
+
+      QryArquivo.First;
+      Despesa.Arquivo.Clear;
+
+      while not QryArquivo.EOF do
+      begin
+        Despesa.Arquivo.Add(TArquivo.Create);
+        i := Despesa.Arquivo.Count-1;
+        Despesa.Arquivo[i].Id       := QryArquivo.FieldByName('id').AsInteger;
+        Despesa.Arquivo[i].Nome     := QryArquivo.FieldByName('nome').AsString;
+        Despesa.Arquivo[i].Extensao := QryArquivo.FieldByName('extensao').AsString;
+        Despesa.Arquivo[i].DataHoraUpload := QryArquivo.FieldByName('data_hora_upload').AsDateTime;
+        Despesa.Arquivo[i].Binario.WriteString(QryArquivo.FieldByName('binario').AsString);
+        QryArquivo.Next;
+      end;
+
+      sql := 'select pgto.*, fp.nome as nome_forma_pgto from despesa_forma_pgto pgto ' +
+           'left join forma_pgto fp on fp.id = pgto.id_forma_pgto ' +
+           'where pgto.id_despesa = :id ' +
+           'order by pgto.id';
+
+      Qry.Close;
+      Qry.SQL.Clear;
+      Qry.SQL.Add(sql);
+      Qry.ParamByName('id').AsInteger := id;
+      Qry.Open;
+
+      Qry.First;
+      Despesa.DespesaFormaPagamento.Clear;
+
+      while not Qry.EOF do
+      begin
+        Despesa.DespesaFormaPagamento.Add(TDespesaFormaPagamento.Create);
+        i := Despesa.DespesaFormaPagamento.Count-1;
+        Despesa.DespesaFormaPagamento[i].Id    := Qry.FieldByName('id').AsInteger;
+        Despesa.DespesaFormaPagamento[i].Valor := Qry.FieldByName('valor').AsFloat;
+        Despesa.DespesaFormaPagamento[i].FormaPagamento.Id   := Qry.FieldByName('id_forma_pgto').AsInteger;
+        Despesa.DespesaFormaPagamento[i].FormaPagamento.Nome := Qry.FieldByName('nome_forma_pgto').AsString;
+        Qry.Next;
+      end;
+
     end
     else
     if Qry.RecordCount > 1 then
@@ -238,13 +290,13 @@ begin
       Qry.ExecSQL;
     end;
 
-    sql := 'insert into arquivo (id, nome, extensao, base64, data_hora_upload, ' +
-           'id_despesa) values (:id, :nome, :extensao, :base64, :data_hora_upload, ' +
+    sql := 'insert into arquivo (id, nome, extensao, binario, data_hora_upload, ' +
+           'id_despesa) values (:id, :nome, :extensao, :binario, :data_hora_upload, ' +
            ':id_despesa)';
 
     for i := 0 to Despesa.Arquivo.Count-1 do
     begin
-      Despesa.Arquivo[i].Id := 0;
+      Despesa.Arquivo[i].Id := GerarId(SEQ_ID_ARQUIVO, 1, dmConexao2.SQLConnector);
       QryArquivo.Close;
       QryArquivo.SQL.Clear;
       QryArquivo.SQL.Add(sql);
@@ -252,7 +304,7 @@ begin
       QryArquivo.ParamByName('nome').AsString          := Despesa.Arquivo[i].Nome;
       QryArquivo.ParamByName('extensao').AsString      := Despesa.Arquivo[i].Extensao;
       QryArquivo.ParamByName('data_hora_upload').AsDateTime := Despesa.Arquivo[i].DataHoraUpload;
-      TBlobField(QryArquivo.ParamByName('base64')).LoadFromStream(Despesa.Arquivo[i].Base64);
+      QryArquivo.ParamByName('binario').LoadFromStream(Despesa.Arquivo[i].Binario, ftBlob);
       QryArquivo.ParamByName('id_despesa').AsInteger   := Despesa.Id;
       QryArquivo.ExecSQL;
     end;
@@ -275,6 +327,7 @@ end;
 function TDespesaDAO.Editar(Despesa : TDespesa; out Erro: string): Boolean;
 var
   sql: String;
+  i: Integer;
 begin
   try
 
@@ -305,7 +358,34 @@ begin
     Qry.ParamByName('id_fornecedor').AsInteger := Despesa.Fornecedor.Id;
     Qry.ParamByName('id_subtipo').AsInteger := Despesa.SubTipo.Id;
     Qry.ExecSQL;
+
+    for i := 0 to Despesa.Arquivo.Count-1 do
+    begin
+      //se for 0 insere
+      if Despesa.Arquivo[i].Id = 0 then
+      begin
+
+        sql := 'insert into arquivo (id, nome, extensao, binario, data_hora_upload, ' +
+           'id_despesa) values (:id, :nome, :extensao, :binario, :data_hora_upload, ' +
+           ':id_despesa)';
+
+        Despesa.Arquivo[i].Id := GerarId(SEQ_ID_ARQUIVO, 1, dmConexao2.SQLConnector);
+        QryArquivo.Close;
+        QryArquivo.SQL.Clear;
+        QryArquivo.SQL.Add(sql);
+        QryArquivo.ParamByName('id').AsInteger           := Despesa.Arquivo[i].Id;
+        QryArquivo.ParamByName('nome').AsString          := Despesa.Arquivo[i].Nome;
+        QryArquivo.ParamByName('extensao').AsString      := Despesa.Arquivo[i].Extensao;
+        QryArquivo.ParamByName('data_hora_upload').AsDateTime := Despesa.Arquivo[i].DataHoraUpload;
+        QryArquivo.ParamByName('binario').LoadFromStream(Despesa.Arquivo[i].Binario, ftBlob);
+        QryArquivo.ParamByName('id_despesa').AsInteger   := Despesa.Id;
+        QryArquivo.ExecSQL;
+
+      end;
+    end;
+
     dmConexao1.SQLTransaction.Commit;
+    dmConexao2.SQLTransaction.Commit;
 
     Result := True;
 
@@ -493,7 +573,7 @@ begin
       Arquivo.Nome            := QryArquivo.FieldByName('nome').AsString;
       Arquivo.Extensao        := QryArquivo.FieldByName('extensao').AsString;
       Arquivo.IdDespesa       := QryArquivo.FieldByName('id_despesa').AsInteger;
-      Arquivo.Base64          := QryArquivo.CreateBlobStream(QryArquivo.FieldByName('base64'), bmRead);
+      Arquivo.Binario.WriteString(QryArquivo.FieldByName('binario').AsString);
       Result := True;
     end
     else

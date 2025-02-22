@@ -16,16 +16,16 @@ type
     FId:   Integer;
     FNome: String;
     FExtensao: String;
-    FBase64: TStream;
+    FBinario: TStringStream;
     FDataHoraUpload: TDateTime;
     FIdDespesa: Integer;
-    function GetBase64: TStream;
+    function GetBinario: TStringStream;
     function GetDataHoraUpload: TDateTime;
     function GetExtensao: String;
     function GetId: Integer;
     function GetIdDespesa: Integer;
     function GetNome: String;
-    procedure SetBase64(AValue: TStream);
+    procedure SetBinario(AValue: TStringStream);
     procedure SetDataHoraUpload(AValue: TDateTime);
     procedure SetExtensao(AValue: String);
     procedure SetId(AValue: Integer);
@@ -38,7 +38,7 @@ type
     property Id: Integer read GetId write SetId;
     property Nome: String read GetNome write SetNome;
     property Extensao: String read GetExtensao write SetExtensao;
-    property Base64: TStream read GetBase64 write SetBase64;
+    property Binario: TStringStream read GetBinario write SetBinario;
     property DataHoraUpload: TDateTime read GetDataHoraUpload write SetDataHoraUpload;
     property IdDespesa: Integer read GetIdDespesa write SetIdDespesa;
   end;
@@ -60,9 +60,9 @@ begin
   Result := FDataHoraUpload;
 end;
 
-function TArquivo.GetBase64: TStream;
+function TArquivo.GetBinario: TStringStream;
 begin
-  Result := FBase64;
+  Result := FBinario;
 end;
 
 function TArquivo.GetExtensao: String;
@@ -80,12 +80,12 @@ begin
   Result := FNome;
 end;
 
-procedure TArquivo.SetBase64(AValue: TStream);
+procedure TArquivo.SetBinario(AValue: TStringStream);
 begin
   if AValue = nil then
     raise Exception.Create('O campo "Arquivo" precisa ser preenchido!')
   else
-    FBase64 := AValue;
+    FBinario := AValue;
 end;
 
 procedure TArquivo.SetDataHoraUpload(AValue: TDateTime);
@@ -127,11 +127,12 @@ end;
 
 constructor TArquivo.Create;
 begin
-  //
+  FBinario := TStringStream.Create;
 end;
 
 destructor TArquivo.Destroy;
 begin
+  FBinario.Free;
   inherited Destroy;
 end;
 
