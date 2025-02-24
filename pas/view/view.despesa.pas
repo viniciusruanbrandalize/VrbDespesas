@@ -57,6 +57,8 @@ type
     lvPagamento: TListView;
     lvArquivo: TListView;
     MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
+    MenuItem6: TMenuItem;
     mObs: TMemo;
     openDlg: TOpenDialog;
     pnlBotoesArquivo: TPanel;
@@ -65,6 +67,7 @@ type
     pnlBotoesPagamento: TPanel;
     pgcMaisOpcoes: TPageControl;
     pMenuFpgto: TPopupMenu;
+    pMenuArquivo: TPopupMenu;
     saveDlg: TSaveDialog;
     tbsPagamento: TTabSheet;
     tbsArquivo: TTabSheet;
@@ -365,7 +368,7 @@ var
 begin
   if openDlg.Execute then
   begin
-    Controller.AdicionarArquivo();
+    Controller.AdicionarArquivo(Controller.Despesa);
     i := Controller.Despesa.Arquivo.Count - 1;
     Controller.Despesa.Arquivo[i].Nome           := ChangeFileExt(ExtractFileName(openDlg.FileName), EmptyStr);
     Controller.Despesa.Arquivo[i].Extensao       := ExtractFileExt(openDlg.FileName);
@@ -381,6 +384,8 @@ begin
   HabilitarCampos(True);
   lvPagamento.Items.Clear;
   lvArquivo.Items.Clear;
+  Controller.Despesa.Arquivo.Clear;
+  Controller.Despesa.DespesaFormaPagamento.Clear;
   pgcMaisOpcoes.ActivePageIndex := 0;
 end;
 
@@ -417,10 +422,10 @@ begin
     if not TryStrToInt(lvArquivo.Selected.Caption, id) then
       id := 0;
     idx := lvArquivo.Selected.Index;
-    if not Controller.ExcluirArquivo(id, idx, erro) then
+    if not Controller.ExcluirArquivo(Controller.Despesa, id, idx, erro) then
       TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK], mbOK);
     lvArquivo.Items.Clear;
-    Controller.ListarArquivos(lvArquivo, id);
+    Controller.ListarArquivos(lvArquivo, Controller.Despesa);
   end;
 end;
 
@@ -470,6 +475,7 @@ begin
       StrToInt(lbFormaPagamentoId.Items[lbFormaPagamentoNome.ItemIndex]);
     Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Nome :=
       edtFormaPagamento.Text;
+    //if Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id in [] then
     lbFormaPagamentoNome.Visible := False;
   end
   else
@@ -662,7 +668,7 @@ begin
       lvPagamento.Items.Clear;
       lvArquivo.Items.Clear;
       Controller.ListarPagamento(lvPagamento, id);
-      Controller.ListarArquivos(lvArquivo, id);
+      Controller.ListarArquivos(lvArquivo, Controller.Despesa);
     end
     else
     begin

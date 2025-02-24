@@ -36,9 +36,9 @@ type
     function CalcularValorTotal(Valor, Desconto, Frete, Outros: Currency): Currency;
     function ValorPagoEhValido(Total: Double): Boolean;
 
-    procedure ListarArquivos(lv: TListView; IdDespesa: Integer);
-    procedure AdicionarArquivo();
-    function ExcluirArquivo(Id, Index: Integer; out Erro: String): Boolean;
+    procedure ListarArquivos(lv: TListView; objDespesa: TDespesa);
+    procedure AdicionarArquivo(objDespesa: TDespesa);
+    function ExcluirArquivo(objDespesa: TDespesa; Id, Index: Integer; out Erro: String): Boolean;
     procedure CancelarAtualizacaoArquivo();
 
     constructor Create;
@@ -149,20 +149,30 @@ begin
   Result := Pago < Total;
 end;
 
-procedure TDespesaController.ListarArquivos(lv: TListView; IdDespesa: Integer);
+procedure TDespesaController.ListarArquivos(lv: TListView; objDespesa: TDespesa);
+var
+  i: Integer;
+  item: TListItem;
 begin
-  DespesaDAO.ListarArquivos(lv, IdDespesa);
+  for i := 0 to Despesa.Arquivo.Count-1 do
+  begin
+    item := lv.Items.Add;
+    item.Caption := objDespesa.Arquivo[i].Id.ToString;
+    item.SubItems.Add(objDespesa.Arquivo[i].Nome);
+    item.SubItems.Add(objDespesa.Arquivo[i].Extensao);
+    item.SubItems.Add(DateTimeToStr(objDespesa.Arquivo[i].DataHoraUpload));
+  end;
 end;
 
-procedure TDespesaController.AdicionarArquivo();
+procedure TDespesaController.AdicionarArquivo(objDespesa: TDespesa);
 begin
-  Despesa.Arquivo.Add(TArquivo.Create);
+  objDespesa.Arquivo.Add(TArquivo.Create);
 end;
 
-function TDespesaController.ExcluirArquivo(Id, Index: Integer; out Erro: String
-  ): Boolean;
+function TDespesaController.ExcluirArquivo(objDespesa: TDespesa; Id, Index: Integer;
+  out Erro: String): Boolean;
 begin
-  Despesa.Arquivo.Delete(Index);
+  objDespesa.Arquivo.Delete(Index);
   if not (id = 0) then
     Result := DespesaDAO.ExcluirArquivo(Id, Erro);
 end;

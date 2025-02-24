@@ -27,7 +27,6 @@ type
     procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
     function BuscarPagamentoPorId(Pagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
 
-    procedure ListarArquivos(lv: TListView; IdDespesa: Integer);
     function BuscarArquivoPorId(Arquivo: TArquivo; Id: Integer; out Erro: String): Boolean;
     function ExcluirArquivo(Id: Integer; out Erro: string): Boolean;
 
@@ -513,40 +512,6 @@ begin
 
   finally
     Qry.Close;
-  end;
-end;
-
-procedure TDespesaDAO.ListarArquivos(lv: TListView; IdDespesa: Integer);
-var
-  sql: String;
-  item : TListItem;
-begin
-  try
-
-    sql := 'select id, nome, extensao, data_hora_upload from arquivo ' +
-           'where id_despesa = :id ' +
-           'order by nome';
-
-    QryArquivo.Close;
-    QryArquivo.SQL.Clear;
-    QryArquivo.SQL.Add(sql);
-    QryArquivo.ParamByName('id').AsInteger := IdDespesa;
-    QryArquivo.Open;
-
-    QryArquivo.First;
-
-    while not QryArquivo.EOF do
-    begin
-      item := lv.Items.Add;
-      item.Caption := QryArquivo.FieldByName('id').AsString;
-      item.SubItems.Add(QryArquivo.FieldByName('nome').AsString);
-      item.SubItems.Add(QryArquivo.FieldByName('extensao').AsString);
-      item.SubItems.Add(QryArquivo.FieldByName('data_hora_upload').AsString);
-      QryArquivo.Next;
-    end;
-
-  finally
-    QryArquivo.Close;
   end;
 end;
 
