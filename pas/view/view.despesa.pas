@@ -68,6 +68,7 @@ type
     saveDlg: TSaveDialog;
     tbsPagamento: TTabSheet;
     tbsArquivo: TTabSheet;
+    procedure actCancelarExecute(Sender: TObject);
     procedure actCancelarFpgtoExecute(Sender: TObject);
     procedure actEditarExecute(Sender: TObject);
     procedure actExcluirArquivoExecute(Sender: TObject);
@@ -389,6 +390,16 @@ begin
   AjustarTelaPagamento(False);
 end;
 
+procedure TfrmDespesa.actCancelarExecute(Sender: TObject);
+begin
+  if TfrmMessage.Mensagem('Deseja cancelar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  begin
+    pgcPadrao.ActivePage := tbsLista;
+    Operacao := opNenhum;
+    Controller.CancelarAtualizacaoArquivo();
+  end;
+end;
+
 procedure TfrmDespesa.actEditarExecute(Sender: TObject);
 begin
   inherited;
@@ -408,6 +419,8 @@ begin
     idx := lvArquivo.Selected.Index;
     if not Controller.ExcluirArquivo(id, idx, erro) then
       TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK], mbOK);
+    lvArquivo.Items.Clear;
+    Controller.ListarArquivos(lvArquivo, id);
   end;
 end;
 

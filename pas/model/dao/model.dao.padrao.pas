@@ -5,7 +5,8 @@ unit model.dao.padrao;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.connection.conexao1;
+  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.connection.conexao1,
+  model.connection.conexao2;
 
 type
 
@@ -38,10 +39,13 @@ type
     procedure PesquisaGenerica(Tabela: TTabela; lbNome, lbId: TListBox; busca: String; Limitacao: Integer;
                                 out QtdRegistro: Integer);
     function GerarId(Sequencia: TSequencia; Incremento: Integer=1; Conector: TSQLConnector = nil): Integer;
-
     procedure CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);
+    procedure Commit(Conexao: Integer = 1);
+    procedure Roolback(Conexao: Integer = 1);
+
     constructor Create; virtual;
     destructor Destroy; override;
+
     property Driver: String read FDriver write FDriver;
   end;
 
@@ -204,6 +208,22 @@ procedure TPadraoDAO.CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector
 begin
   SQLQuery := TSQLQuery.Create(nil);
   SQLQuery.SQLConnection := Conector;
+end;
+
+procedure TPadraoDAO.Commit(Conexao: Integer = 1);
+begin
+  case Conexao of
+    1: dmConexao1.SQLTransaction.Commit;
+    2: dmConexao2.SQLTransaction.Commit;
+  end;
+end;
+
+procedure TPadraoDAO.Roolback(Conexao: Integer = 1);
+begin
+  case Conexao of
+    1: dmConexao1.SQLTransaction.Rollback;
+    2: dmConexao2.SQLTransaction.Rollback;
+  end;
 end;
 
 constructor TPadraoDAO.Create;

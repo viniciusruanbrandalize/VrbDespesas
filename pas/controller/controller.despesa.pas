@@ -39,6 +39,7 @@ type
     procedure ListarArquivos(lv: TListView; IdDespesa: Integer);
     procedure AdicionarArquivo();
     function ExcluirArquivo(Id, Index: Integer; out Erro: String): Boolean;
+    procedure CancelarAtualizacaoArquivo();
 
     constructor Create;
     destructor Destroy; override;
@@ -164,6 +165,11 @@ begin
   Despesa.Arquivo.Delete(Index);
   if not (id = 0) then
     Result := DespesaDAO.ExcluirArquivo(Id, Erro);
+end;
+
+procedure TDespesaController.CancelarAtualizacaoArquivo();
+begin
+  DespesaDAO.Roolback(2);
 end;
 
 constructor TDespesaController.Create;

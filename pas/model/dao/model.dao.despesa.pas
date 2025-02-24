@@ -331,7 +331,7 @@ var
 begin
   try
 
-    sql := 'update despesa set "data"=:data, hora=:hora, descricao=:descricao, ' +
+    sql := 'update despesa set data=:data, hora=:hora, descricao=:descricao, ' +
            'chave_nfe=:chave_nfe, valor=:valor, desconto=:desconto, frete=:frete, ' +
            'outros=:outros, total=:total, paga=:paga, parcela=:parcela, ' +
            'alteracao=:alteracao, obs=:obs, id_fornecedor=:id_fornecedor, ' +
@@ -392,6 +392,7 @@ begin
   except on E: Exception do
     begin
       dmConexao1.SQLTransaction.Rollback;
+      dmConexao2.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao alterar despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
