@@ -28,7 +28,7 @@ type
     btnIncluirFormaPgto: TSpeedButton;
     btnIncluirArquivo: TSpeedButton;
     btnSalvarFormaPgto: TSpeedButton;
-    ComboBox1: TComboBox;
+    cbPesquisaGenerica: TComboBox;
     dtpData: TDateTimePicker;
     dtpHora: TDateTimePicker;
     dtpInicial: TDateTimePicker;
@@ -37,7 +37,6 @@ type
     edtChaveNfe: TLabeledEdit;
     edtFormaPagamento: TLabeledEdit;
     edtFornecedor: TLabeledEdit;
-    edtPesquisaGenericaFpgto: TLabeledEdit;
     edtTotal: TLabeledEdit;
     edtSubtipo: TLabeledEdit;
     edtValor: TLabeledEdit;
@@ -45,6 +44,7 @@ type
     edtFrete: TLabeledEdit;
     edtOutros: TLabeledEdit;
     edtValorFpgto: TLabeledEdit;
+    lblPesquisaGenerica: TLabel;
     lbFormaPagamentoNome: TListBox;
     lblObs: TLabel;
     lblData: TLabel;
@@ -54,6 +54,7 @@ type
     lbFormaPagamentoId: TListBox;
     lbSubtipoNome: TListBox;
     lbFornecedorNome: TListBox;
+    lbPesquisaGenericaId: TListBox;
     lvPagamento: TListView;
     lvArquivo: TListView;
     MenuItem4: TMenuItem;
@@ -71,6 +72,7 @@ type
     saveDlg: TSaveDialog;
     tbsPagamento: TTabSheet;
     tbsArquivo: TTabSheet;
+    trbNivelPrecisao: TTrackBar;
     procedure actCancelarExecute(Sender: TObject);
     procedure actCancelarFpgtoExecute(Sender: TObject);
     procedure actEditarExecute(Sender: TObject);
@@ -112,6 +114,10 @@ type
     procedure IncluirArquivo();
     procedure LimparCamposPagamento();
     procedure HabilitarCampos(Hab: boolean);
+    procedure PrepararPesquisaGenerica(i: Integer);
+
+    procedure edtCartaoExit(Sender: TObject);
+
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -475,7 +481,7 @@ begin
       StrToInt(lbFormaPagamentoId.Items[lbFormaPagamentoNome.ItemIndex]);
     Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Nome :=
       edtFormaPagamento.Text;
-    //if Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id in [] then
+    PrepararPesquisaGenerica(i);
     lbFormaPagamentoNome.Visible := False;
   end
   else
@@ -615,6 +621,53 @@ begin
   edtFrete.Enabled := Hab;
   edtOutros.Enabled := Hab;
   edtTotal.Enabled := Hab;
+end;
+
+procedure TfrmDespesa.PrepararPesquisaGenerica(i: Integer);
+var
+  idFpgto: Integer;
+begin
+
+  {
+   1  - DINHEIRO
+   2  - CARTAO DEBITO
+   3  - CARTAO CREDITO
+   4  - PIX
+   5  - TRANSFERENCIA BANCARIA
+   6  - BOLETO
+   7  - DEPOSITO
+   8  - VALE
+   9  - CHEQUE
+  }
+
+  idFpgto := Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
+
+  case idFpgto of
+    2, 3:
+    begin
+      edtPesquisaGenericaFpgto.EditLabel.Caption := 'Cartão: *';
+    end;
+    4:
+    begin
+      edtPesquisaGenericaFpgto.EditLabel.Caption := 'Chave PIX: *';
+    end;
+    5, 6:
+    begin
+      edtPesquisaGenericaFpgto.EditLabel.Caption := 'Conta Bancária: *';
+    end;
+  end;
+
+  edtPesquisaGenericaFpgto.Visible := ( idFpgto in  [2, 3, 4, 5, 6] );
+
+end;
+
+procedure TfrmDespesa.edtCartaoExit(Sender: TObject);
+begin
+  if not lb .Focused then
+  begin
+    if lbFormaPagamentoNome.Visible then
+      lbFormaPagamentoNome.Visible := False;
+  end;
 end;
 
 procedure TfrmDespesa.CarregarDados;

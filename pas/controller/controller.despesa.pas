@@ -35,6 +35,7 @@ type
     function ExcluirPagamento(Id: Integer): Boolean;
     function CalcularValorTotal(Valor, Desconto, Frete, Outros: Currency): Currency;
     function ValorPagoEhValido(Total: Double): Boolean;
+    procedure PesquisarCartao(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
 
     procedure ListarArquivos(lv: TListView; objDespesa: TDespesa);
     procedure AdicionarArquivo(objDespesa: TDespesa);
@@ -147,6 +148,12 @@ begin
   end;
 
   Result := Pago < Total;
+end;
+
+procedure TDespesaController.PesquisarCartao(CbNome: TComboBox; lbId: TListBox;
+  out QtdRegistro: Integer);
+begin
+  //
 end;
 
 procedure TDespesaController.ListarArquivos(lv: TListView; objDespesa: TDespesa);
