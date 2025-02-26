@@ -1,68 +1,67 @@
 object frmCadastroPadrao: TfrmCadastroPadrao
   Left = 481
-  Height = 607
+  Height = 600
   Top = 250
-  Width = 961
+  Width = 1000
   BorderStyle = bsNone
   Caption = 'Cadastro Padrão'
-  ClientHeight = 607
-  ClientWidth = 961
-  DesignTimePPI = 120
+  ClientHeight = 600
+  ClientWidth = 1000
   OnCreate = FormCreate
   OnShow = FormShow
   object pnlFundo: TPanel
     Left = 0
-    Height = 607
+    Height = 600
     Top = 0
-    Width = 961
+    Width = 1000
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 607
-    ClientWidth = 961
-    Color = 7077907
+    ClientHeight = 600
+    ClientWidth = 1000
+    Color = 15925228
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object pnlPrincipal: TPanel
       Left = 1
-      Height = 605
+      Height = 598
       Top = 1
-      Width = 959
+      Width = 998
       Align = alClient
       BorderSpacing.Around = 1
       BevelOuter = bvNone
-      ClientHeight = 605
-      ClientWidth = 959
+      ClientHeight = 598
+      ClientWidth = 998
       Color = 15925228
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object pnlTitulo: TPanel
-        Left = 10
-        Height = 39
-        Top = 5
-        Width = 939
+        Left = 8
+        Height = 31
+        Top = 4
+        Width = 982
         Align = alTop
         Alignment = taLeftJustify
-        BorderSpacing.Left = 10
-        BorderSpacing.Top = 5
-        BorderSpacing.Right = 10
-        BorderSpacing.Bottom = 5
+        BorderSpacing.Left = 8
+        BorderSpacing.Top = 4
+        BorderSpacing.Right = 8
+        BorderSpacing.Bottom = 4
         BevelOuter = bvNone
         Caption = 'TITULO DO FORM'
-        ClientHeight = 39
-        ClientWidth = 939
+        ClientHeight = 31
+        ClientWidth = 982
         Font.Color = 1403392
-        Font.Height = -20
+        Font.Height = -16
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
         object btnFechar: TSpeedButton
-          Left = 902
-          Height = 39
+          Left = 952
+          Height = 31
           Top = 0
-          Width = 37
+          Width = 30
           Action = actFechar
           Align = alRight
           Flat = True
@@ -76,48 +75,48 @@ object frmCadastroPadrao: TfrmCadastroPadrao
       end
       object pgcPadrao: TPageControl
         Left = 0
-        Height = 556
-        Top = 49
-        Width = 959
+        Height = 559
+        Top = 39
+        Width = 998
         ActivePage = tbsLista
         Align = alClient
         TabIndex = 0
         TabOrder = 1
         object tbsLista: TTabSheet
           Caption = 'tbsLista'
-          ClientHeight = 523
-          ClientWidth = 951
+          ClientHeight = 531
+          ClientWidth = 990
           object pnlFundoLista: TPanel
             Left = 0
-            Height = 523
+            Height = 531
             Top = 0
-            Width = 951
+            Width = 990
             Align = alClient
             BevelOuter = bvNone
-            ClientHeight = 523
-            ClientWidth = 951
+            ClientHeight = 531
+            ClientWidth = 990
             ParentBackground = False
             TabOrder = 0
             object pnlBotaoLista: TPanel
-              Left = 5
-              Height = 60
-              Top = 458
-              Width = 941
+              Left = 4
+              Height = 48
+              Top = 479
+              Width = 982
               Align = alBottom
-              BorderSpacing.Around = 5
+              BorderSpacing.Around = 4
               BevelOuter = bvNone
-              ClientHeight = 60
-              ClientWidth = 941
+              ClientHeight = 48
+              ClientWidth = 982
               ParentBackground = False
               TabOrder = 0
               object ToolBarLista: TToolBar
                 Left = 0
-                Height = 60
+                Height = 48
                 Top = 0
-                Width = 941
+                Width = 982
                 Align = alClient
-                ButtonHeight = 60
-                ButtonWidth = 100
+                ButtonHeight = 48
+                ButtonWidth = 80
                 Caption = 'ToolBarLista'
                 EdgeInner = esNone
                 EdgeOuter = esNone
@@ -131,17 +130,17 @@ object frmCadastroPadrao: TfrmCadastroPadrao
                   Action = actIncluir
                 end
                 object btnEditar: TToolButton
-                  Left = 101
+                  Left = 81
                   Top = 0
                   Action = actEditar
                 end
                 object btnExcluir: TToolButton
-                  Left = 201
+                  Left = 161
                   Top = 0
                   Action = actExcluir
                 end
                 object btnVisualizar: TToolButton
-                  Left = 301
+                  Left = 241
                   Top = 0
                   Action = actVisualizar
                   Visible = False
@@ -150,12 +149,12 @@ object frmCadastroPadrao: TfrmCadastroPadrao
             end
             object lvPadrao: TListView
               Cursor = crHandPoint
-              Left = 5
-              Height = 392
-              Top = 61
-              Width = 941
+              Left = 4
+              Height = 426
+              Top = 49
+              Width = 982
               Align = alClient
-              BorderSpacing.Around = 5
+              BorderSpacing.Around = 4
               BorderStyle = bsNone
               Columns = <>
               PopupMenu = pMenuPadrao
@@ -166,26 +165,26 @@ object frmCadastroPadrao: TfrmCadastroPadrao
             end
             object pnlPesquisa: TPanel
               Left = 0
-              Height = 56
+              Height = 45
               Top = 0
-              Width = 951
+              Width = 990
               Align = alTop
               BevelOuter = bvNone
-              ClientHeight = 56
-              ClientWidth = 951
+              ClientHeight = 45
+              ClientWidth = 990
               ParentBackground = False
               TabOrder = 2
               object edtPesquisa: TEdit
                 AnchorSideLeft.Control = cbPesquisa
                 AnchorSideLeft.Side = asrBottom
                 AnchorSideRight.Control = btnPesquisar
-                Left = 199
-                Height = 28
-                Top = 16
-                Width = 587
+                Left = 159
+                Height = 23
+                Top = 13
+                Width = 699
                 Anchors = [akTop, akLeft, akRight]
-                BorderSpacing.Left = 10
-                BorderSpacing.Right = 10
+                BorderSpacing.Left = 8
+                BorderSpacing.Right = 8
                 TabOrder = 0
                 Text = 'edtPesquisa'
               end
@@ -194,25 +193,25 @@ object frmCadastroPadrao: TfrmCadastroPadrao
                 AnchorSideRight.Control = pnlPesquisa
                 AnchorSideRight.Side = asrBottom
                 Cursor = crHandPoint
-                Left = 796
-                Height = 28
-                Top = 16
-                Width = 150
+                Left = 866
+                Height = 22
+                Top = 13
+                Width = 120
                 Action = actPesquisar
                 Anchors = [akTop, akRight]
-                BorderSpacing.Right = 5
+                BorderSpacing.Right = 4
                 Images = img
                 ImageIndex = 5
                 Margin = 20
               end
               object cbPesquisa: TComboBox
                 AnchorSideLeft.Control = pnlPesquisa
-                Left = 5
-                Height = 28
-                Top = 16
-                Width = 184
-                BorderSpacing.Left = 5
-                ItemHeight = 20
+                Left = 4
+                Height = 23
+                Top = 13
+                Width = 147
+                BorderSpacing.Left = 4
+                ItemHeight = 15
                 ItemIndex = 0
                 Items.Strings = (
                   'Nome'
@@ -223,10 +222,10 @@ object frmCadastroPadrao: TfrmCadastroPadrao
               end
             end
             object lbPesquisa: TListBox
-              Left = 16
-              Height = 192
-              Top = 152
-              Width = 176
+              Left = 13
+              Height = 154
+              Top = 122
+              Width = 141
               ItemHeight = 0
               TabOrder = 3
               Visible = False
@@ -235,39 +234,39 @@ object frmCadastroPadrao: TfrmCadastroPadrao
         end
         object tbsCadastro: TTabSheet
           Caption = 'tbsCadastro'
-          ClientHeight = 523
-          ClientWidth = 951
+          ClientHeight = 531
+          ClientWidth = 990
           object pnlFundoCadastro: TPanel
             Left = 0
-            Height = 523
+            Height = 531
             Top = 0
-            Width = 951
+            Width = 990
             Align = alClient
             BevelOuter = bvNone
-            ClientHeight = 523
-            ClientWidth = 951
+            ClientHeight = 531
+            ClientWidth = 990
             ParentBackground = False
             TabOrder = 0
             object pnlBotaoCad: TPanel
-              Left = 5
-              Height = 60
-              Top = 458
-              Width = 941
+              Left = 4
+              Height = 48
+              Top = 479
+              Width = 982
               Align = alBottom
-              BorderSpacing.Around = 5
+              BorderSpacing.Around = 4
               BevelOuter = bvNone
-              ClientHeight = 60
-              ClientWidth = 941
+              ClientHeight = 48
+              ClientWidth = 982
               ParentBackground = False
               TabOrder = 0
               object ToolBarCadastro: TToolBar
                 Left = 0
-                Height = 60
+                Height = 48
                 Top = 0
-                Width = 941
+                Width = 982
                 Align = alClient
-                ButtonHeight = 60
-                ButtonWidth = 100
+                ButtonHeight = 48
+                ButtonWidth = 80
                 Caption = 'ToolBarCadastro'
                 EdgeInner = esNone
                 EdgeOuter = esNone
@@ -281,7 +280,7 @@ object frmCadastroPadrao: TfrmCadastroPadrao
                   Action = actSalvar
                 end
                 object btnCancelar: TToolButton
-                  Left = 101
+                  Left = 81
                   Top = 0
                   Action = actCancelar
                 end
@@ -293,8 +292,8 @@ object frmCadastroPadrao: TfrmCadastroPadrao
     end
   end
   object img: TImageList
-    Left = 192
-    Top = 8
+    Left = 154
+    Top = 6
     Bitmap = {
       4C7A0E00000010000000100000008B1100000000000078DAED9A075454D7D6C7
       07E9E5098826EF8B3E15AC5882381023A0221A1BC5284DBAF44BEF060322828D
@@ -780,8 +779,8 @@ object frmCadastroPadrao: TfrmCadastroPadrao
   end
   object actList: TActionList
     Images = img
-    Left = 248
-    Top = 8
+    Left = 198
+    Top = 6
     object actFechar: TAction
       Caption = 'Fechar'
       Hint = 'Fechar'
@@ -826,8 +825,8 @@ object frmCadastroPadrao: TfrmCadastroPadrao
   object pMenuPadrao: TPopupMenu
     Images = img
     ImagesWidth = 32
-    Left = 328
-    Top = 8
+    Left = 262
+    Top = 6
     object MenuItem1: TMenuItem
       Action = actEditar
     end

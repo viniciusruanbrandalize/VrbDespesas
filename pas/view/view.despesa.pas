@@ -44,6 +44,8 @@ type
     edtFrete: TLabeledEdit;
     edtOutros: TLabeledEdit;
     edtValorFpgto: TLabeledEdit;
+    lblInfoPrecisao: TLabel;
+    lblNivelPrecisao: TLabel;
     lblPesquisaGenerica: TLabel;
     lbFormaPagamentoNome: TListBox;
     lblObs: TLabel;
@@ -229,7 +231,7 @@ var
   qtdReg: integer;
 begin
   qtdReg := 0;
-  if (Length(edtFormaPagamento.Text) > 3) then
+  if (Length(edtFormaPagamento.Text) > 2) then
   begin
     controller.PesquisarFormaPagamento(lbFormaPagamentoNome,
       lbFormaPagamentoId, edtFormaPagamento.Text, qtdReg);
@@ -682,8 +684,8 @@ begin
   i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
   Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave :=
                        lbPesquisaGenericaId.Items[cbPesquisaGenerica.ItemIndex];
-  Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := 0;
-  Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := 0;
+  Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := -1;
+  Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := -1;
 end;
 
 procedure TfrmDespesa.edtCartaoChange(Sender: TObject);
@@ -695,7 +697,7 @@ begin
     id := 0;
   Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := id;
   Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '';
-  Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := 0;
+  Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := -1;
 end;
 
 procedure TfrmDespesa.edtContaBancariaChange(Sender: TObject);
@@ -706,8 +708,8 @@ begin
   if not TryStrToInt(lbPesquisaGenericaId.Items[cbPesquisaGenerica.ItemIndex], id) then
     id := 0;
   Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := id;
-  Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := 0;
-  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '';
+  Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := -1;
+  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := ' ';
 end;
 
 procedure TfrmDespesa.CarregarDados;

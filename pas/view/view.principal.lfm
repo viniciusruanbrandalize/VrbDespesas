@@ -1,15 +1,14 @@
 object frmPrincipal: TfrmPrincipal
   Left = 481
-  Height = 610
+  Height = 600
   Top = 250
-  Width = 1000
+  Width = 1024
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'VrbDespesas by Vinícius Ruan Brandalize'
-  ClientHeight = 610
-  ClientWidth = 1000
+  ClientHeight = 600
+  ClientWidth = 1024
   Constraints.MinHeight = 600
-  Constraints.MinWidth = 800
-  DesignTimePPI = 120
+  Constraints.MinWidth = 1024
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -17,40 +16,40 @@ object frmPrincipal: TfrmPrincipal
   Position = poScreenCenter
   object pnlFundo: TPanel
     Left = 0
-    Height = 610
+    Height = 600
     Top = 0
-    Width = 1000
+    Width = 1024
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 610
-    ClientWidth = 1000
+    ClientHeight = 600
+    ClientWidth = 1024
     Color = clWindow
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object pnlMenu: TPanel
       Left = 0
-      Height = 570
-      Top = 40
-      Width = 213
+      Height = 568
+      Top = 32
+      Width = 170
       Align = alLeft
       BevelOuter = bvNone
-      ClientHeight = 570
-      ClientWidth = 213
+      ClientHeight = 568
+      ClientWidth = 170
       Color = 2977025
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object btnCadastro: TSpeedButton
         Left = 0
-        Height = 40
+        Height = 32
         Top = 0
-        Width = 213
+        Width = 170
         Action = actCadastro
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 0
@@ -60,14 +59,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnOperacao: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 40
-        Width = 213
+        Height = 32
+        Top = 32
+        Width = 170
         Action = actOperacao
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 3
@@ -77,14 +76,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnUtilitario: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 80
-        Width = 213
+        Height = 32
+        Top = 64
+        Width = 170
         Action = actUtilitario
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 7
@@ -94,14 +93,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnRelatorio: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 120
-        Width = 213
+        Height = 32
+        Top = 96
+        Width = 170
         Action = actRelatorio
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 4
@@ -111,14 +110,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnAjuda: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 160
-        Width = 213
+        Height = 32
+        Top = 128
+        Width = 170
         Action = actAjuda
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 1
@@ -129,44 +128,44 @@ object frmPrincipal: TfrmPrincipal
     end
     object pnlCabecalho: TPanel
       Left = 0
-      Height = 40
+      Height = 32
       Top = 0
-      Width = 1000
+      Width = 1024
       Align = alTop
       BevelOuter = bvNone
-      ClientHeight = 40
-      ClientWidth = 1000
+      ClientHeight = 32
+      ClientWidth = 1024
       Color = 2977025
       ParentBackground = False
       ParentColor = False
       TabOrder = 1
       object lblHora: TLabel
-        Left = 745
-        Height = 40
+        Left = 821
+        Height = 32
         Top = 0
-        Width = 51
+        Width = 40
         Align = alRight
         Alignment = taCenter
-        BorderSpacing.Right = 10
+        BorderSpacing.Right = 8
         Caption = 'lblHora'
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         ParentFont = False
       end
       object pnlMenuRetair: TPanel
         Cursor = crHandPoint
         Left = 0
-        Height = 40
+        Height = 32
         Top = 0
-        Width = 213
+        Width = 170
         Align = alLeft
         BevelOuter = bvNone
         Caption = 'MENU'
-        ClientHeight = 40
-        ClientWidth = 213
+        ClientHeight = 32
+        ClientWidth = 170
         Font.Color = clWindow
-        Font.Height = -17
+        Font.Height = -14
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
@@ -175,9 +174,9 @@ object frmPrincipal: TfrmPrincipal
         object imgMenu: TImage
           Cursor = crHandPoint
           Left = 0
-          Height = 40
+          Height = 32
           Top = 0
-          Width = 39
+          Width = 31
           Align = alLeft
           Center = True
           ImageIndex = 2
@@ -188,27 +187,27 @@ object frmPrincipal: TfrmPrincipal
         end
       end
       object pnlUsuario: TPanel
-        Left = 806
-        Height = 40
+        Left = 869
+        Height = 32
         Top = 0
-        Width = 184
+        Width = 147
         Align = alRight
         Alignment = taLeftJustify
-        BorderSpacing.Right = 10
+        BorderSpacing.Right = 8
         BevelOuter = bvNone
-        ClientHeight = 40
-        ClientWidth = 184
+        ClientHeight = 32
+        ClientWidth = 147
         Font.Color = clWindow
-        Font.Height = -17
+        Font.Height = -14
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
         TabOrder = 1
         object imgUsuario: TImage
           Left = 0
-          Height = 40
+          Height = 32
           Top = 0
-          Width = 40
+          Width = 32
           Align = alLeft
           Center = True
           ImageIndex = 6
@@ -217,47 +216,47 @@ object frmPrincipal: TfrmPrincipal
           Proportional = True
         end
         object lblNomeUsuario: TLabel
-          Left = 45
-          Height = 30
-          Top = 10
-          Width = 139
+          Left = 36
+          Height = 24
+          Top = 8
+          Width = 111
           Align = alClient
           Alignment = taCenter
-          BorderSpacing.Left = 5
-          BorderSpacing.Top = 10
+          BorderSpacing.Left = 4
+          BorderSpacing.Top = 8
           Caption = 'lblNomeUsuario'
           Font.Color = clWindow
-          Font.Height = -15
+          Font.Height = -12
           Font.Style = [fsBold]
           ParentFont = False
         end
       end
       object lblTitulo: TLabel
-        Left = 218
-        Height = 30
-        Top = 10
-        Width = 522
+        Left = 174
+        Height = 24
+        Top = 8
+        Width = 643
         Align = alClient
         Alignment = taCenter
-        BorderSpacing.Left = 5
-        BorderSpacing.Top = 10
-        BorderSpacing.Right = 5
+        BorderSpacing.Left = 4
+        BorderSpacing.Top = 8
+        BorderSpacing.Right = 4
         Caption = 'SISTEMA DE COMPRAS'
         Font.Color = clWindow
-        Font.Height = -17
+        Font.Height = -14
         Font.Style = [fsBold]
         ParentFont = False
       end
     end
     object pnlMenuCadastro: TPanel
-      Left = 213
-      Height = 570
-      Top = 40
-      Width = 50
+      Left = 170
+      Height = 568
+      Top = 32
+      Width = 40
       Align = alLeft
       BevelOuter = bvNone
-      ClientHeight = 570
-      ClientWidth = 50
+      ClientHeight = 568
+      ClientWidth = 40
       Color = 2977025
       ParentBackground = False
       ParentColor = False
@@ -265,14 +264,14 @@ object frmPrincipal: TfrmPrincipal
       Visible = False
       object btnDevedor: TSpeedButton
         Left = 0
-        Height = 40
+        Height = 32
         Top = 0
-        Width = 50
+        Width = 40
         Action = actDevedor
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 11
@@ -282,14 +281,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnFormaPagamento: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 80
-        Width = 50
+        Height = 32
+        Top = 64
+        Width = 40
         Action = actFormaPagamento
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 10
@@ -299,14 +298,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnParticipante: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 120
-        Width = 50
+        Height = 32
+        Top = 96
+        Width = 40
         Action = actParticipante
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 12
@@ -316,14 +315,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnSubtipo: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 160
-        Width = 50
+        Height = 32
+        Top = 128
+        Width = 40
         Action = actSubtipoDespesa
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 15
@@ -333,14 +332,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnTipo: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 200
-        Width = 50
+        Height = 32
+        Top = 160
+        Width = 40
         Action = actTipoDespesa
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 14
@@ -350,14 +349,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnVoltar: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 530
-        Width = 50
+        Height = 32
+        Top = 536
+        Width = 40
         Action = actVoltar
         Align = alBottom
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 5
@@ -367,14 +366,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnUsuario: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 240
-        Width = 50
+        Height = 32
+        Top = 192
+        Width = 40
         Action = actUsuario
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 6
@@ -384,14 +383,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnFinanceiro: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 40
-        Width = 50
+        Height = 32
+        Top = 32
+        Width = 40
         Action = actFinanceiro
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 21
@@ -401,14 +400,14 @@ object frmPrincipal: TfrmPrincipal
       end
     end
     object pnlMenuOperacao: TPanel
-      Left = 263
-      Height = 570
-      Top = 40
-      Width = 50
+      Left = 210
+      Height = 568
+      Top = 32
+      Width = 40
       Align = alLeft
       BevelOuter = bvNone
-      ClientHeight = 570
-      ClientWidth = 50
+      ClientHeight = 568
+      ClientWidth = 40
       Color = 2977025
       ParentBackground = False
       ParentColor = False
@@ -416,14 +415,14 @@ object frmPrincipal: TfrmPrincipal
       Visible = False
       object btnContasPagar: TSpeedButton
         Left = 0
-        Height = 40
+        Height = 32
         Top = 0
-        Width = 50
+        Width = 40
         Action = actContasPagar
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 8
@@ -433,14 +432,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnDespesa: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 40
-        Width = 50
+        Height = 32
+        Top = 32
+        Width = 40
         Action = actDespesa
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 9
@@ -450,14 +449,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnRecebimento: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 80
-        Width = 50
+        Height = 32
+        Top = 64
+        Width = 40
         Action = actRecebimento
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 16
@@ -467,14 +466,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnVoltar1: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 530
-        Width = 50
+        Height = 32
+        Top = 536
+        Width = 40
         Action = actVoltar
         Align = alBottom
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 5
@@ -484,14 +483,14 @@ object frmPrincipal: TfrmPrincipal
       end
     end
     object pnlMenuUtilitario: TPanel
-      Left = 313
-      Height = 570
-      Top = 40
-      Width = 50
+      Left = 250
+      Height = 568
+      Top = 32
+      Width = 40
       Align = alLeft
       BevelOuter = bvNone
-      ClientHeight = 570
-      ClientWidth = 50
+      ClientHeight = 568
+      ClientWidth = 40
       Color = 2977025
       ParentBackground = False
       ParentColor = False
@@ -499,14 +498,14 @@ object frmPrincipal: TfrmPrincipal
       Visible = False
       object btnConfiguracao: TSpeedButton
         Left = 0
-        Height = 40
+        Height = 32
         Top = 0
-        Width = 50
+        Width = 40
         Action = actConfiguracaoGlobal
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 17
@@ -516,14 +515,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnCopiaSeguranca: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 40
-        Width = 50
+        Height = 32
+        Top = 32
+        Width = 40
         Action = actBackup
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 18
@@ -533,14 +532,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnVoltar2: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 530
-        Width = 50
+        Height = 32
+        Top = 536
+        Width = 40
         Action = actVoltar
         Align = alBottom
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 5
@@ -550,14 +549,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnLogErro: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 80
-        Width = 50
+        Height = 32
+        Top = 64
+        Width = 40
         Action = actLogErro
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 19
@@ -567,14 +566,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnLoglogin: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 120
-        Width = 50
+        Height = 32
+        Top = 96
+        Width = 40
         Action = actLogLogin
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 20
@@ -584,10 +583,10 @@ object frmPrincipal: TfrmPrincipal
       end
     end
     object pnlAbreForms: TPanel
-      Left = 681
-      Height = 107
-      Top = 472
-      Width = 301
+      Left = 545
+      Height = 86
+      Top = 378
+      Width = 241
       BevelOuter = bvNone
       Caption = 'Abre os formulario aqui dentro via codigo'
       Color = 15925228
@@ -596,10 +595,10 @@ object frmPrincipal: TfrmPrincipal
       TabOrder = 5
     end
     object pnlMenuVazio: TPanel
-      Left = 413
-      Height = 570
-      Top = 40
-      Width = 50
+      Left = 330
+      Height = 568
+      Top = 32
+      Width = 40
       Align = alLeft
       BevelOuter = bvNone
       Color = 2977025
@@ -609,14 +608,14 @@ object frmPrincipal: TfrmPrincipal
       Visible = False
     end
     object pnlMenuFinanceiro: TPanel
-      Left = 363
-      Height = 570
-      Top = 40
-      Width = 50
+      Left = 290
+      Height = 568
+      Top = 32
+      Width = 40
       Align = alLeft
       BevelOuter = bvNone
-      ClientHeight = 570
-      ClientWidth = 50
+      ClientHeight = 568
+      ClientWidth = 40
       Color = 2977025
       ParentBackground = False
       ParentColor = False
@@ -624,14 +623,14 @@ object frmPrincipal: TfrmPrincipal
       Visible = False
       object btnVoltar3: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 530
-        Width = 50
+        Height = 32
+        Top = 536
+        Width = 40
         Action = actVoltarFinanceiro
         Align = alBottom
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 5
@@ -641,14 +640,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnBanco: TSpeedButton
         Left = 0
-        Height = 40
+        Height = 32
         Top = 0
-        Width = 50
+        Width = 40
         Action = actBanco
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 13
@@ -658,14 +657,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnBandeira: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 40
-        Width = 50
+        Height = 32
+        Top = 32
+        Width = 40
         Action = actBandeira
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 22
@@ -675,14 +674,14 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnConta: TSpeedButton
         Left = 0
-        Height = 40
-        Top = 80
-        Width = 50
+        Height = 32
+        Top = 64
+        Width = 40
         Action = actContaBancaria
         Align = alTop
         Flat = True
         Font.Color = clWhite
-        Font.Height = -15
+        Font.Height = -12
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 23
@@ -694,13 +693,13 @@ object frmPrincipal: TfrmPrincipal
   end
   object Timer: TTimer
     OnTimer = TimerTimer
-    Left = 32
-    Top = 16
+    Left = 26
+    Top = 13
   end
   object actMenu: TActionList
     Images = imgList
-    Left = 32
-    Top = 96
+    Left = 26
+    Top = 77
     object actCadastro: TAction
       Category = 'Menu'
       Caption = 'Cadastros'
@@ -845,8 +844,8 @@ object frmPrincipal: TfrmPrincipal
     end
   end
   object imgList: TImageList
-    Left = 32
-    Top = 176
+    Left = 26
+    Top = 141
     Bitmap = {
       4C7A190000001000000010000000401300000000000078DAED5C0D545655BA4E
       53F9F107FF512346C58C848576F1875CE290A83464A6A5201742512352FC9941
@@ -1313,7 +1312,7 @@ object frmPrincipal: TfrmPrincipal
   end
   object AppProperties: TApplicationProperties
     OnException = AppPropertiesException
-    Left = 32
-    Top = 248
+    Left = 26
+    Top = 198
   end
 end

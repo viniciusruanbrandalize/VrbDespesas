@@ -4,54 +4,13 @@ inherited frmDespesa: TfrmDespesa
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   inherited pnlFundo: TPanel
-    Height = 486
-    Width = 769
-    ClientHeight = 486
-    ClientWidth = 769
     inherited pnlPrincipal: TPanel
-      Height = 484
-      Width = 767
-      ClientHeight = 484
-      ClientWidth = 767
-      inherited pnlTitulo: TPanel
-        Left = 8
-        Top = 4
-        Width = 751
-        ClientWidth = 751
-        inherited btnFechar: TSpeedButton
-          Left = 721
-          Height = 31
-        end
-      end
       inherited pgcPadrao: TPageControl
-        Height = 445
-        Top = 39
-        Width = 767
         ActivePage = tbsCadastro
         TabIndex = 1
         inherited tbsLista: TTabSheet
-          ClientHeight = 417
-          ClientWidth = 759
           inherited pnlFundoLista: TPanel
-            Height = 417
-            Width = 759
-            ClientHeight = 417
-            ClientWidth = 759
-            inherited pnlBotaoLista: TPanel
-              Left = 4
-              Top = 365
-              Width = 751
-              ClientWidth = 751
-              inherited ToolBarLista: TToolBar
-                Height = 48
-                Width = 751
-              end
-            end
             inherited lvPadrao: TListView
-              Left = 4
-              Height = 312
-              Top = 49
-              Width = 751
               Columns = <              
                 item
                   Caption = 'Código'
@@ -80,21 +39,16 @@ inherited frmDespesa: TfrmDespesa
                 end>
             end
             inherited pnlPesquisa: TPanel
-              Width = 759
-              ClientWidth = 759
               inherited edtPesquisa: TEdit
                 AnchorSideLeft.Control = dtpFinal
-                Left = 419
-                Height = 23
-                Width = 208
+                Left = 358
+                Width = 500
                 Text = ''
               end
               inherited btnPesquisar: TSpeedButton
-                Left = 635
+                Top = 14
               end
               inherited cbPesquisa: TComboBox
-                Height = 23
-                ItemHeight = 15
                 Items.Strings = (
                   'Descrição'
                   'Fornecedor'
@@ -102,9 +56,9 @@ inherited frmDespesa: TfrmDespesa
                 Text = 'Descrição'
               end
               object dtpInicial: TDateTimePicker[3]
-                Left = 200
+                Left = 160
                 Height = 23
-                Top = 16
+                Top = 13
                 Width = 83
                 CenturyFrom = 1941
                 MaxDate = 2958465
@@ -124,9 +78,9 @@ inherited frmDespesa: TfrmDespesa
                 MonthNames = 'Long'
               end
               object dtpFinal: TDateTimePicker[4]
-                Left = 328
+                Left = 267
                 Height = 23
-                Top = 16
+                Top = 13
                 Width = 83
                 CenturyFrom = 1941
                 MaxDate = 2958465
@@ -146,9 +100,9 @@ inherited frmDespesa: TfrmDespesa
                 MonthNames = 'Long'
               end
               object lblPeriodoFiltro: TLabel[5]
-                Left = 309
+                Left = 248
                 Height = 20
-                Top = 24
+                Top = 16
                 Width = 16
                 AutoSize = False
                 Caption = ' à '
@@ -164,31 +118,17 @@ inherited frmDespesa: TfrmDespesa
           end
         end
         inherited tbsCadastro: TTabSheet
-          ClientHeight = 417
-          ClientWidth = 759
           inherited pnlFundoCadastro: TPanel
-            Height = 417
-            Width = 759
-            ClientHeight = 417
-            ClientWidth = 759
             inherited pnlBotaoCad: TPanel
-              Left = 4
-              Top = 365
-              Width = 751
-              ClientWidth = 751
               TabOrder = 15
-              inherited ToolBarCadastro: TToolBar
-                Height = 48
-                Width = 751
-              end
             end
             object edtDescricao: TLabeledEdit[1]
-              Left = 216
+              Left = 176
               Height = 23
-              Top = 32
-              Width = 440
+              Top = 18
+              Width = 360
               EditLabel.Height = 15
-              EditLabel.Width = 440
+              EditLabel.Width = 360
               EditLabel.Caption = 'Descrição: *'
               MaxLength = 100
               TabOrder = 2
@@ -197,7 +137,7 @@ inherited frmDespesa: TfrmDespesa
             object dtpData: TDateTimePicker[2]
               Left = 8
               Height = 23
-              Top = 32
+              Top = 18
               Width = 83
               CenturyFrom = 1941
               MaxDate = 2958465
@@ -217,9 +157,9 @@ inherited frmDespesa: TfrmDespesa
               MonthNames = 'Long'
             end
             object dtpHora: TDateTimePicker[3]
-              Left = 120
+              Left = 96
               Height = 23
-              Top = 32
+              Top = 18
               Width = 65
               CenturyFrom = 1941
               MaxDate = 2958465
@@ -241,14 +181,14 @@ inherited frmDespesa: TfrmDespesa
             object lblData: TLabel[4]
               Left = 8
               Height = 15
-              Top = 8
+              Top = 1
               Width = 35
               Caption = 'Data: *'
             end
             object edtFornecedor: TLabeledEdit[5]
-              Left = 672
+              Left = 544
               Height = 23
-              Top = 32
+              Top = 18
               Width = 264
               EditLabel.Height = 15
               EditLabel.Width = 264
@@ -265,7 +205,7 @@ inherited frmDespesa: TfrmDespesa
             object edtSubtipo: TLabeledEdit[6]
               Left = 8
               Height = 23
-              Top = 96
+              Top = 72
               Width = 248
               EditLabel.Height = 15
               EditLabel.Width = 248
@@ -280,9 +220,9 @@ inherited frmDespesa: TfrmDespesa
               OnKeyUp = edtSubtipoKeyUp
             end
             object edtValor: TLabeledEdit[7]
-              Left = 272
+              Left = 264
               Height = 23
-              Top = 96
+              Top = 72
               Width = 120
               EditLabel.Height = 15
               EditLabel.Width = 120
@@ -293,9 +233,9 @@ inherited frmDespesa: TfrmDespesa
               OnChange = edtValorChange
             end
             object edtDesconto: TLabeledEdit[8]
-              Left = 408
+              Left = 392
               Height = 23
-              Top = 96
+              Top = 72
               Width = 120
               EditLabel.Height = 15
               EditLabel.Width = 120
@@ -306,9 +246,9 @@ inherited frmDespesa: TfrmDespesa
               OnChange = edtValorChange
             end
             object edtFrete: TLabeledEdit[9]
-              Left = 544
+              Left = 520
               Height = 23
-              Top = 96
+              Top = 72
               Width = 120
               EditLabel.Height = 15
               EditLabel.Width = 120
@@ -319,9 +259,9 @@ inherited frmDespesa: TfrmDespesa
               OnChange = edtValorChange
             end
             object edtOutros: TLabeledEdit[10]
-              Left = 680
+              Left = 648
               Height = 23
-              Top = 96
+              Top = 72
               Width = 120
               EditLabel.Height = 15
               EditLabel.Width = 120
@@ -332,9 +272,9 @@ inherited frmDespesa: TfrmDespesa
               OnChange = edtValorChange
             end
             object edtTotal: TLabeledEdit[11]
-              Left = 816
+              Left = 776
               Height = 23
-              Top = 96
+              Top = 72
               Width = 120
               EditLabel.Height = 15
               EditLabel.Width = 120
@@ -346,7 +286,7 @@ inherited frmDespesa: TfrmDespesa
             object edtChaveNfe: TLabeledEdit[12]
               Left = 8
               Height = 23
-              Top = 160
+              Top = 128
               Width = 384
               EditLabel.Height = 15
               EditLabel.Width = 384
@@ -359,7 +299,7 @@ inherited frmDespesa: TfrmDespesa
             object mObs: TMemo[13]
               Left = 8
               Height = 160
-              Top = 232
+              Top = 179
               Width = 384
               Lines.Strings = (
                 'mObs'
@@ -369,19 +309,19 @@ inherited frmDespesa: TfrmDespesa
             object lblObs: TLabel[14]
               Left = 8
               Height = 15
-              Top = 208
+              Top = 160
               Width = 203
               Caption = 'Observações / Informações adicionais:'
             end
             object pgcMaisOpcoes: TPageControl[15]
               Cursor = crHandPoint
-              Left = 414
+              Left = 408
               Height = 280
-              Top = 144
+              Top = 112
               Width = 522
-              ActivePage = tbsPagamento
+              ActivePage = tbsArquivo
               Images = img
-              TabIndex = 0
+              TabIndex = 1
               TabOrder = 14
               object tbsPagamento: TTabSheet
                 Caption = 'Pagamento'
@@ -650,7 +590,7 @@ inherited frmDespesa: TfrmDespesa
             object lbSubtipoNome: TListBox[16]
               Left = 8
               Height = 19
-              Top = 126
+              Top = 96
               Width = 248
               BorderStyle = bsNone
               Color = 12451746
@@ -670,7 +610,7 @@ inherited frmDespesa: TfrmDespesa
             object lbSubtipoId: TListBox[17]
               Left = 264
               Height = 19
-              Top = 126
+              Top = 96
               Width = 144
               Items.Strings = (
                 'key'
@@ -683,9 +623,9 @@ inherited frmDespesa: TfrmDespesa
               Visible = False
             end
             object lbFornecedorNome: TListBox[18]
-              Left = 672
+              Left = 544
               Height = 19
-              Top = 61
+              Top = 42
               Width = 264
               BorderStyle = bsNone
               Color = 12451746
@@ -701,9 +641,9 @@ inherited frmDespesa: TfrmDespesa
               OnSelectionChange = lbFornecedorNomeSelectionChange
             end
             object lbFornecedorId: TListBox[19]
-              Left = 942
+              Left = 816
               Height = 19
-              Top = 61
+              Top = 42
               Width = 144
               Items.Strings = (
                 'key'
@@ -716,13 +656,31 @@ inherited frmDespesa: TfrmDespesa
               Visible = False
             end
             object trbNivelPrecisao: TTrackBar[20]
+              Cursor = crHandPoint
               Left = 8
-              Height = 31
-              Top = 416
+              Height = 24
+              Top = 368
               Width = 384
-              Max = 5
+              PageSize = 1
               Position = 0
+              ShowSelRange = False
               TabOrder = 18
+            end
+            object lblNivelPrecisao: TLabel[21]
+              Left = 8
+              Height = 15
+              Top = 352
+              Width = 141
+              Caption = 'Nível de Precisão: * (0 - 10)'
+            end
+            object lblInfoPrecisao: TLabel[22]
+              Left = 48
+              Height = 13
+              Top = 392
+              Width = 281
+              Caption = 'em que 0 - Gasto desnecessário / 10 - Gasto necessário'
+              Font.Height = -11
+              ParentFont = False
             end
           end
         end

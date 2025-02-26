@@ -288,13 +288,13 @@ begin
       Qry.ParamByName('id').AsInteger                := Despesa.DespesaFormaPagamento[i].Id;
       Qry.ParamByName('valor').AsFloat               := Despesa.DespesaFormaPagamento[i].Valor;
 
-      if Despesa.DespesaFormaPagamento[i].ContaBancaria.Id <> 0 then
+      if Despesa.DespesaFormaPagamento[i].ContaBancaria.Id > 0 then
         Qry.ParamByName('id_conta_bancaria').AsInteger := Despesa.DespesaFormaPagamento[i].ContaBancaria.Id
       else
-      if Despesa.DespesaFormaPagamento[i].Cartao.Id <> 0 then
+      if Despesa.DespesaFormaPagamento[i].Cartao.Id > 0 then
         Qry.ParamByName('id_cartao').AsInteger         := Despesa.DespesaFormaPagamento[i].Cartao.Id
       else
-      if Despesa.DespesaFormaPagamento[i].Pix.Chave <> '' then
+      if Despesa.DespesaFormaPagamento[i].Pix.Chave <> ' ' then
         Qry.ParamByName('chave_pix').AsString          := Despesa.DespesaFormaPagamento[i].Pix.Chave;
 
       Qry.ParamByName('id_forma_pgto').AsInteger     := Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
