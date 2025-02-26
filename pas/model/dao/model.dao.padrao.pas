@@ -36,8 +36,8 @@ type
     Qry: TSQLQuery;
     procedure Listar(lv: TListView); virtual; abstract;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); virtual; abstract;
-    procedure PesquisaGenerica(Tabela: TTabela; lbNome, lbId: TListBox; busca: String; Limitacao: Integer;
-                                out QtdRegistro: Integer);
+    procedure PesquisaGenerica(Tabela: TTabela; objNome: TObject; lbId: TListBox; busca: String;
+                                Limitacao: Integer; out QtdRegistro: Integer);
     function GerarId(Sequencia: TSequencia; Incremento: Integer=1; Conector: TSQLConnector = nil): Integer;
     procedure CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);
     procedure Commit(Conexao: Integer = 1);
@@ -123,19 +123,24 @@ begin
   Result := NomeTb;
 end;
 
-procedure TPadraoDAO.PesquisaGenerica(Tabela: TTabela; lbNome, lbId: TListBox;
-  busca: String; Limitacao: Integer; out QtdRegistro: Integer);
+procedure TPadraoDAO.PesquisaGenerica(Tabela: TTabela; objNome: TObject;
+  lbId: TListBox; busca: String; Limitacao: Integer; out QtdRegistro: Integer);
 var
   sql: String;
   NomeTabela: String;
+  CmdLimit: String;
 begin
   try
 
+    CmdLimit := '';
     NomeTabela := TabelaToString(Tabela);
 
     if FDriver = 'FIREBIRD' then
     begin
-      sql := 'select first '+Limitacao.ToString+' id, nome from '+NomeTabela+' '+
+      if Limitacao <> -1 then
+        CmdLimit := 'first '+Limitacao.ToString;
+
+      sql := 'select '+CmdLimit+' id, nome from '+NomeTabela+' '+
              'where UPPER(nome) like :busca '+
              'order by nome';
     end;
@@ -150,14 +155,25 @@ begin
 
     QtdRegistro := Qry.RecordCount;
 
-    lbNome.Items.Clear;
-    lbNome.Height := 100;
+    if objNome is TListBox then
+    begin
+      (objNome as TListBox).Items.Clear;
+      (objNome as TListBox).Height := 100;
+    end
+    else
+    if objNome is TComboBox then
+      (objNome as TComboBox).Items.Clear;
+
     lbId.Items.Clear;
 
     while not Qry.EOF do
     begin
       lbId.Items.Add(Qry.FieldByName('id').AsString);
-      lbNome.Items.Add(qry.FieldByName('nome').AsString);
+      if objNome is TListBox then
+        (objNome as TListBox).Items.Add(qry.FieldByName('nome').AsString)
+      else
+      if objNome is TComboBox then
+        (objNome as TComboBox).Items.Add(qry.FieldByName('nome').AsString);
       Qry.Next;
     end;
 

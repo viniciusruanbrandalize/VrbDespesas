@@ -26,6 +26,12 @@ type
 
     procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
     function BuscarPagamentoPorId(Pagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
+    procedure PesquisarPix(cbNome: TComboBox; lbId: TListBox; busca: String;
+                                Limitacao: Integer; out QtdRegistro: Integer);
+    procedure PesquisarCartao(cbNome: TComboBox; lbId: TListBox; busca: String;
+                                Limitacao: Integer; out QtdRegistro: Integer);
+    procedure PesquisarContaBancaria(cbNome: TComboBox; lbId: TListBox; busca: String;
+                                      Limitacao: Integer; out QtdRegistro: Integer);
 
     function BuscarArquivoPorId(Arquivo: TArquivo; Id: Integer; out Erro: String): Boolean;
     function ExcluirArquivo(Id: Integer; out Erro: string): Boolean;
@@ -281,11 +287,18 @@ begin
       Qry.SQL.Add(sql);
       Qry.ParamByName('id').AsInteger                := Despesa.DespesaFormaPagamento[i].Id;
       Qry.ParamByName('valor').AsFloat               := Despesa.DespesaFormaPagamento[i].Valor;
-      //Qry.ParamByName('id_conta_bancaria').AsInteger := Despesa.DespesaFormaPagamento[i].ContaBancaria.Id;
-      //Qry.ParamByName('id_cartao').AsInteger         := Despesa.DespesaFormaPagamento[i].Cartao.Id;
+
+      if Despesa.DespesaFormaPagamento[i].ContaBancaria.Id <> 0 then
+        Qry.ParamByName('id_conta_bancaria').AsInteger := Despesa.DespesaFormaPagamento[i].ContaBancaria.Id
+      else
+      if Despesa.DespesaFormaPagamento[i].Cartao.Id <> 0 then
+        Qry.ParamByName('id_cartao').AsInteger         := Despesa.DespesaFormaPagamento[i].Cartao.Id
+      else
+      if Despesa.DespesaFormaPagamento[i].Pix.Chave <> '' then
+        Qry.ParamByName('chave_pix').AsString          := Despesa.DespesaFormaPagamento[i].Pix.Chave;
+
       Qry.ParamByName('id_forma_pgto').AsInteger     := Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
       Qry.ParamByName('id_despesa').AsInteger        := Despesa.Id;
-      //Qry.ParamByName('chave_pix').AsString          := Despesa.DespesaFormaPagamento[i].Pix.Chave;
       Qry.ExecSQL;
     end;
 
@@ -512,6 +525,159 @@ begin
 
   finally
     Qry.Close;
+  end;
+end;
+
+procedure TDespesaDAO.PesquisarPix(cbNome: TComboBox; lbId: TListBox;
+  busca: String; Limitacao: Integer; out QtdRegistro: Integer);
+var
+  sql: String;
+  CmdLimit: String;
+begin
+  try
+
+    CmdLimit := '';
+
+    if Driver = 'FIREBIRD' then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'first '+Limitacao.ToString;
+
+      sql := 'select '+CmdLimit+' chave from pix '+
+             'where UPPER(chave) like :busca '+
+             'order by chave';
+    end;
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    QtdRegistro := Qry.RecordCount;
+
+    cbNome.Items.Clear;
+    cbNome.Height := 100;
+
+    lbId.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbId.Items.Add(Qry.FieldByName('chave').AsString);
+      cbNome.Items.Add(qry.FieldByName('chave').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
+  end;
+end;
+
+procedure TDespesaDAO.PesquisarCartao(cbNome: TComboBox; lbId: TListBox;
+  busca: String; Limitacao: Integer; out QtdRegistro: Integer);
+var
+  sql: String;
+  CmdLimit: String;
+begin
+  try
+
+    CmdLimit := '';
+
+    if Driver = 'FIREBIRD' then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'first '+Limitacao.ToString;
+
+      sql := 'select '+CmdLimit+' c.id, c.numero, bnc.nome as nome_banco, ' +
+             'b.nome as nome_bandeira ' +
+             'from cartao c ' +
+             'left join bandeira b on b.id = c.id_bandeira ' +
+             'left join conta_bancaria cb on cb.id = c.id_conta_bancaria ' +
+             'left join banco bnc on bnc.id = cb.id_banco '+
+             'where UPPER(c.numero) like :busca '+
+             'order by c.numero';
+    end;
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    QtdRegistro := Qry.RecordCount;
+
+    cbNome.Items.Clear;
+    cbNome.Height := 100;
+
+    lbId.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbId.Items.Add(Qry.FieldByName('id').AsString);
+      cbNome.Items.Add(qry.FieldByName('numero').AsString+' - '+
+                       qry.FieldByName('nome_bandeira').AsString+' - '+
+                       qry.FieldByName('nome_banco').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
+  end;
+end;
+
+procedure TDespesaDAO.PesquisarContaBancaria(cbNome: TComboBox; lbId: TListBox;
+  busca: String; Limitacao: Integer; out QtdRegistro: Integer);
+var
+  sql: String;
+  CmdLimit: String;
+begin
+  try
+
+    CmdLimit := '';
+
+    if Driver = 'FIREBIRD' then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'first '+Limitacao.ToString;
+
+      sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
+             'from conta_bancaria cb ' +
+             'left join banco bnc on bnc.id = cb.id_banco '+
+             'where UPPER(cb.numero) like :busca '+
+             'order by cb.numero';
+
+    end;
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    QtdRegistro := Qry.RecordCount;
+
+    cbNome.Items.Clear;
+    cbNome.Height := 100;
+
+    lbId.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbId.Items.Add(Qry.FieldByName('id').AsString);
+      cbNome.Items.Add('Nº. '+qry.FieldByName('numero').AsString+' Ag. '+
+                       qry.FieldByName('agencia').AsString+' - '+
+                       qry.FieldByName('nome_banco').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
   end;
 end;
 

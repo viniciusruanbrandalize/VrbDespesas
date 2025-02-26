@@ -115,9 +115,9 @@ type
     procedure LimparCamposPagamento();
     procedure HabilitarCampos(Hab: boolean);
     procedure PrepararPesquisaGenerica(i: Integer);
-
-    procedure edtCartaoExit(Sender: TObject);
-
+    procedure edtPixChange(Sender: TObject);
+    procedure edtCartaoChange(Sender: TObject);
+    procedure edtContaBancariaChange(Sender: TObject);
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -625,7 +625,8 @@ end;
 
 procedure TfrmDespesa.PrepararPesquisaGenerica(i: Integer);
 var
-  idFpgto: Integer;
+  idFpgto,
+  qtdReg: Integer;
 begin
 
   {
@@ -645,29 +646,68 @@ begin
   case idFpgto of
     2, 3:
     begin
-      edtPesquisaGenericaFpgto.EditLabel.Caption := 'Cartão: *';
+      lblPesquisaGenerica.Caption := 'Cartão: *';
+      Controller.PesquisarCartao(cbPesquisaGenerica, lbPesquisaGenericaId, qtdReg);
+      cbPesquisaGenerica.OnChange := @edtCartaoChange;
+      if qtdReg = 0 then
+        TfrmMessage.Mensagem('Nenhum cartão cadastrado!', 'Aviso', 'C', [mbOK]);
     end;
     4:
     begin
-      edtPesquisaGenericaFpgto.EditLabel.Caption := 'Chave PIX: *';
+      lblPesquisaGenerica.Caption := 'Chave PIX: *';
+      Controller.PesquisarPix(cbPesquisaGenerica, lbPesquisaGenericaId, qtdReg);
+      cbPesquisaGenerica.OnChange := @edtPixChange;
+      if qtdReg = 0 then
+        TfrmMessage.Mensagem('Nenhuma chave pix cadastrada!', 'Aviso', 'C', [mbOK]);
     end;
     5, 6:
     begin
-      edtPesquisaGenericaFpgto.EditLabel.Caption := 'Conta Bancária: *';
+      lblPesquisaGenerica.Caption := 'Conta Bancária: *';
+      Controller.PesquisarContaBancaria(cbPesquisaGenerica, lbPesquisaGenericaId, qtdReg);
+      cbPesquisaGenerica.OnChange := @edtContaBancariaChange;
+      if qtdReg = 0 then
+        TfrmMessage.Mensagem('Nenhuma conta bancária cadastrada!', 'Aviso', 'C', [mbOK]);
     end;
   end;
 
-  edtPesquisaGenericaFpgto.Visible := ( idFpgto in  [2, 3, 4, 5, 6] );
+  cbPesquisaGenerica.Visible  := ( idFpgto in  [2, 3, 4, 5, 6] );
+  lblPesquisaGenerica.Visible := ( idFpgto in  [2, 3, 4, 5, 6] );
 
 end;
 
-procedure TfrmDespesa.edtCartaoExit(Sender: TObject);
+procedure TfrmDespesa.edtPixChange(Sender: TObject);
+var
+  i: Integer;
 begin
-  if not lb .Focused then
-  begin
-    if lbFormaPagamentoNome.Visible then
-      lbFormaPagamentoNome.Visible := False;
-  end;
+  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
+  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave :=
+                       lbPesquisaGenericaId.Items[cbPesquisaGenerica.ItemIndex];
+  Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := 0;
+  Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := 0;
+end;
+
+procedure TfrmDespesa.edtCartaoChange(Sender: TObject);
+var
+  i, id: Integer;
+begin
+  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
+  if not TryStrToInt(lbPesquisaGenericaId.Items[cbPesquisaGenerica.ItemIndex], id) then
+    id := 0;
+  Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := id;
+  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '';
+  Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := 0;
+end;
+
+procedure TfrmDespesa.edtContaBancariaChange(Sender: TObject);
+var
+  i, id: Integer;
+begin
+  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
+  if not TryStrToInt(lbPesquisaGenericaId.Items[cbPesquisaGenerica.ItemIndex], id) then
+    id := 0;
+  Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := id;
+  Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := 0;
+  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '';
 end;
 
 procedure TfrmDespesa.CarregarDados;
@@ -693,7 +733,6 @@ begin
   mObs.Lines.Clear;
   edtFormaPagamento.Clear;
   edtValorFpgto.Text := FormatFloat(',#0.00', 0);
-  edtPesquisaGenericaFpgto.Clear;
 end;
 
 procedure TfrmDespesa.CarregarSelecionado;

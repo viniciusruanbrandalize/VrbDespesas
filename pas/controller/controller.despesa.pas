@@ -36,6 +36,8 @@ type
     function CalcularValorTotal(Valor, Desconto, Frete, Outros: Currency): Currency;
     function ValorPagoEhValido(Total: Double): Boolean;
     procedure PesquisarCartao(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
+    procedure PesquisarPix(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
+    procedure PesquisarContaBancaria(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
 
     procedure ListarArquivos(lv: TListView; objDespesa: TDespesa);
     procedure AdicionarArquivo(objDespesa: TDespesa);
@@ -153,7 +155,19 @@ end;
 procedure TDespesaController.PesquisarCartao(CbNome: TComboBox; lbId: TListBox;
   out QtdRegistro: Integer);
 begin
-  //
+  DespesaDAO.PesquisarCartao(CbNome, lbId, '', -1, QtdRegistro);
+end;
+
+procedure TDespesaController.PesquisarPix(CbNome: TComboBox; lbId: TListBox;
+  out QtdRegistro: Integer);
+begin
+  DespesaDAO.PesquisarPix(CbNome, lbId, '', -1, QtdRegistro);
+end;
+
+procedure TDespesaController.PesquisarContaBancaria(CbNome: TComboBox;
+  lbId: TListBox; out QtdRegistro: Integer);
+begin
+  DespesaDAO.PesquisarContaBancaria(CbNome, lbId, '', -1, QtdRegistro);
 end;
 
 procedure TDespesaController.ListarArquivos(lv: TListView; objDespesa: TDespesa);
