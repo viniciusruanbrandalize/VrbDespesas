@@ -24,6 +24,7 @@ type
     FObservacao: String;
     FPaga: Boolean;
     FParcela: Integer;
+    FNivelPrecisao: Integer;
     FUsuarioCadastro: TUsuario;
     FValor: Double;
     FData: TDate;
@@ -49,6 +50,7 @@ type
     function GetHora: TTime;
     function GetId: Integer;
     function GetDescricao: String;
+    function GetNivelPrecisao: Integer;
     function GetObservacao: String;
     function GetOutros: Double;
     function GetPaga: Boolean;
@@ -70,6 +72,7 @@ type
     procedure SetHora(AValue: TTime);
     procedure SetId(AValue: Integer);
     procedure SetDescricao(AValue: String);
+    procedure SetNivelPrecisao(AValue: Integer);
     procedure SetObservacao(AValue: String);
     procedure SetOutros(AValue: Double);
     procedure SetPaga(AValue: Boolean);
@@ -99,6 +102,7 @@ type
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
     property Paga: Boolean read GetPaga write SetPaga;
     property Parcela: Integer read GetParcela write SetParcela;
+    property NivelPrecisao: Integer read GetNivelPrecisao write SetNivelPrecisao;
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
     property DespesaFormaPagamento: TDespesaFormaPagamentoLista read GetDespesaFormaPagamento write SetDespesaFormaPagamento;
@@ -172,6 +176,11 @@ end;
 function TDespesa.GetDescricao: String;
 begin
   Result := FDescricao;
+end;
+
+function TDespesa.GetNivelPrecisao: Integer;
+begin
+  Result := FNivelPrecisao;
 end;
 
 function TDespesa.GetObservacao: String;
@@ -278,6 +287,11 @@ end;
 procedure TDespesa.SetDescricao(AValue: String);
 begin
   FDescricao := AValue;
+end;
+
+procedure TDespesa.SetNivelPrecisao(AValue: Integer);
+begin
+  FNivelPrecisao := AValue;
 end;
 
 procedure TDespesa.SetObservacao(AValue: String);

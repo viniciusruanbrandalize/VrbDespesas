@@ -161,6 +161,7 @@ begin
       Despesa.Total     := Qry.FieldByName('total').AsFloat;
       Despesa.Paga      := Qry.FieldByName('paga').AsBoolean;
       Despesa.Parcela   := Qry.FieldByName('parcela').AsInteger;
+      Despesa.NivelPrecisao := Qry.FieldByName('nivel_precisao').AsInteger;
       Despesa.Cadastro  := Qry.FieldByName('cadastro').AsDateTime;
       Despesa.Alteracao := Qry.FieldByName('alteracao').AsDateTime;
       Despesa.Observacao:= Qry.FieldByName('obs').AsString;
@@ -246,10 +247,10 @@ begin
   try
 
     sql := 'insert into despesa (id, data, hora, descricao, chave_nfe, valor, desconto, ' +
-           'frete, outros, total, paga, parcela, cadastro, obs, id_fornecedor, ' +
+           'frete, outros, total, paga, parcela, nivel_precisao, cadastro, obs, id_fornecedor, ' +
            'id_subtipo, id_dono_cadastro, id_usuario_cadastro) values (' +
            ':id, :data, :hora, :descricao, :chave_nfe, :valor, :desconto, ' +
-           ':frete, :outros, :total, :paga, :parcela, :cadastro, :obs, :id_fornecedor, ' +
+           ':frete, :outros, :total, :paga, :parcela, :nivel_precisao, :cadastro, :obs, :id_fornecedor, ' +
            ':id_subtipo, :id_dono_cadastro, :id_usuario_cadastro)';
 
     Qry.Close;
@@ -273,6 +274,7 @@ begin
     Qry.ParamByName('id_subtipo').AsInteger := Despesa.SubTipo.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Despesa.UsuarioCadastro.Id;
     Qry.ParamByName('id_dono_cadastro').AsInteger := Despesa.DonoCadastro.Id;
+    Qry.ParamByName('nivel_precisao').AsInteger := Despesa.NivelPrecisao;
     Qry.ExecSQL;
 
     sql := 'insert into despesa_forma_pgto (id, valor, id_conta_bancaria, ' +
@@ -294,7 +296,7 @@ begin
       if Despesa.DespesaFormaPagamento[i].Cartao.Id > 0 then
         Qry.ParamByName('id_cartao').AsInteger         := Despesa.DespesaFormaPagamento[i].Cartao.Id
       else
-      if Despesa.DespesaFormaPagamento[i].Pix.Chave <> ' ' then
+      if Despesa.DespesaFormaPagamento[i].Pix.Chave <> '-1' then
         Qry.ParamByName('chave_pix').AsString          := Despesa.DespesaFormaPagamento[i].Pix.Chave;
 
       Qry.ParamByName('id_forma_pgto').AsInteger     := Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
@@ -347,7 +349,7 @@ begin
            'chave_nfe=:chave_nfe, valor=:valor, desconto=:desconto, frete=:frete, ' +
            'outros=:outros, total=:total, paga=:paga, parcela=:parcela, ' +
            'alteracao=:alteracao, obs=:obs, id_fornecedor=:id_fornecedor, ' +
-           'id_subtipo=:id_subtipo ' +
+           'id_subtipo=:id_subtipo, nivel_precisao = :nivel_precisao ' +
            'where id = :id';
 
     Qry.Close;
@@ -369,6 +371,7 @@ begin
     Qry.ParamByName('obs').AsString        := Despesa.Observacao;
     Qry.ParamByName('id_fornecedor').AsInteger := Despesa.Fornecedor.Id;
     Qry.ParamByName('id_subtipo').AsInteger := Despesa.SubTipo.Id;
+    Qry.ParamByName('nivel_precisao').AsInteger := Despesa.NivelPrecisao;
     Qry.ExecSQL;
 
     for i := 0 to Despesa.Arquivo.Count-1 do

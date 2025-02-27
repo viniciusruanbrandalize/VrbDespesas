@@ -319,9 +319,9 @@ inherited frmDespesa: TfrmDespesa
               Height = 280
               Top = 112
               Width = 522
-              ActivePage = tbsArquivo
+              ActivePage = tbsPagamento
               Images = img
-              TabIndex = 1
+              TabIndex = 0
               TabOrder = 14
               object tbsPagamento: TTabSheet
                 Caption = 'Pagamento'

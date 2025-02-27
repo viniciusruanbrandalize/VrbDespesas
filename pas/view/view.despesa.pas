@@ -189,6 +189,7 @@ begin
     Controller.Despesa.Total := valor;
     Controller.Despesa.ChaveNFE := edtChaveNfe.Text;
     Controller.Despesa.Observacao := mObs.Lines.Text;
+    Controller.Despesa.NivelPrecisao := trbNivelPrecisao.Position;
     Controller.Despesa.Paga := True;
     if Operacao = opInserir then
     begin
@@ -349,8 +350,11 @@ end;
 
 procedure TfrmDespesa.actExcluirFpgtoExecute(Sender: TObject);
 begin
-  Controller.ExcluirPagamento(lvPagamento.Selected.Index);
-  lvPagamento.Selected.Delete;
+  if Assigned(lvPagamento.Selected) then
+  begin
+    Controller.ExcluirPagamento(lvPagamento.Selected.Index);
+    lvPagamento.Selected.Delete;
+  end;
 end;
 
 procedure TfrmDespesa.actExportarArquivoExecute(Sender: TObject);
@@ -613,6 +617,10 @@ procedure TfrmDespesa.LimparCamposPagamento();
 begin
   edtValorFpgto.Text := '0,00';
   edtFormaPagamento.Clear;
+  cbPesquisaGenerica.Items.Clear;
+  lbPesquisaGenericaId.Items.Clear;
+  cbPesquisaGenerica.Visible  := False;
+  lblPesquisaGenerica.Visible := False;
 end;
 
 procedure TfrmDespesa.HabilitarCampos(Hab: boolean);
@@ -644,6 +652,8 @@ begin
   }
 
   idFpgto := Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
+
+  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '-1';
 
   case idFpgto of
     2, 3:
@@ -696,7 +706,7 @@ begin
   if not TryStrToInt(lbPesquisaGenericaId.Items[cbPesquisaGenerica.ItemIndex], id) then
     id := 0;
   Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := id;
-  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '';
+  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '-1';
   Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := -1;
 end;
 
@@ -709,7 +719,7 @@ begin
     id := 0;
   Controller.Despesa.DespesaFormaPagamento[i].ContaBancaria.Id := id;
   Controller.Despesa.DespesaFormaPagamento[i].Cartao.Id := -1;
-  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := ' ';
+  Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '-1';
 end;
 
 procedure TfrmDespesa.CarregarDados;
@@ -759,6 +769,7 @@ begin
       edtTotal.Text := FormatFloat(',#0.00', Controller.Despesa.Total);
       edtChaveNfe.Text := Controller.Despesa.ChaveNFE;
       mObs.Lines.Text := Controller.Despesa.Observacao;
+      trbNivelPrecisao.Position := Controller.Despesa.NivelPrecisao;
       lvPagamento.Items.Clear;
       lvArquivo.Items.Clear;
       Controller.ListarPagamento(lvPagamento, id);
