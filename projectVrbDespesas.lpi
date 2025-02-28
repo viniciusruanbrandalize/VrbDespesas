@@ -26,7 +26,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="pas\view;pas\model;pas\model\entity;pas\model\connection;pas\controller;pas\model\dao;pas\lib;pas\model\ini"/>
+            <OtherUnitFiles Value="pas\view;pas\model;pas\model\entity;pas\model\connection;pas\controller;pas\model\dao;pas\lib;pas\model\ini;pas\model\report"/>
             <UnitOutputDirectory Value="compile\win32"/>
           </SearchPaths>
           <CodeGeneration>
@@ -57,13 +57,19 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="lazreportpdfexport"/>
+      </Item>
+      <Item>
+        <PackageName Value="lazreport"/>
+      </Item>
+      <Item>
+        <PackageName Value="indylaz"/>
+      </Item>
+      <Item>
         <PackageName Value="DateTimeCtrlsDsgn"/>
       </Item>
       <Item>
         <PackageName Value="DateTimeCtrls"/>
-      </Item>
-      <Item>
-        <PackageName Value="indylaz"/>
       </Item>
       <Item>
         <PackageName Value="SQLDBLaz"/>
@@ -416,6 +422,12 @@
         <Filename Value="pas\model\entity\model.entity.arquivo.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="pas\model\report\model.report.padrao.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="PadraoReport"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -426,7 +438,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="pas\view;pas\model;pas\model\entity;pas\model\connection;pas\controller;pas\model\dao;pas\lib;pas\model\ini"/>
+      <OtherUnitFiles Value="pas\view;pas\model;pas\model\entity;pas\model\connection;pas\controller;pas\model\dao;pas\lib;pas\model\ini;pas\model\report"/>
       <UnitOutputDirectory Value="compile\win32"/>
     </SearchPaths>
     <CodeGeneration>

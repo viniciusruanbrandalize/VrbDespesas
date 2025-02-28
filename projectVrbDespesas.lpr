@@ -10,8 +10,8 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, datetimectrls, view.principal, view.mensagem, controller.banco,
-  controller.principal, controller.erro, model.entity.banco,
+  Forms, datetimectrls, lazreportpdfexport, view.principal, view.mensagem,
+  controller.banco, controller.principal, controller.erro, model.entity.banco,
   model.entity.configuracao, model.entity.formapagamento,
   model.entity.recebimento, model.entity.usuario, model.entity.subtipodespesa,
   model.entity.tipodespesa, model.entity.participante, model.entity.pais,
@@ -20,7 +20,7 @@ uses
   model.entity.login, model.entity.logbackup, model.entity.despesa,
   model.entity.despesaformapagamento, model.entity.cartao, model.entity.arquivo,
   model.connection.conexao1, model.connection.conexao2, model.dao.banco,
-  lib.cryptini, lib.util, lib.types, indylaz, view.cadastropadrao, view.banco,
+  lib.cryptini, lib.util, lib.types, view.cadastropadrao, view.banco,
   lib.bcrypt, lib.cep, view.formapagamento, view.tipodespesa,
   model.dao.formapagamento, controller.formapagamento, controller.tipodespesa,
   controller.subtipodespesa, controller.usuario, controller.logerro,
@@ -32,7 +32,7 @@ uses
   model.ini.configuracao, model.ini.erro, model.ini.conexao,
   view.subtipodespesa, view.usuario, view.logerro, view.loglogin, view.login,
   view.bandeira, view.contabancaria, view.participante, view.despesa, Controls,
-  lib.visual;
+  lib.visual, indylaz, model.report.padrao;
 
 {$R *.res}
 
