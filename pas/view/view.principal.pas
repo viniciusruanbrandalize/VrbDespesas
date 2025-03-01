@@ -9,7 +9,7 @@ uses
   Menus, StdCtrls, Buttons, controller.principal, view.banco,
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
-  view.participante, view.despesa;
+  view.participante, view.despesa, view.relatoriodespesa;
 
 type
 
@@ -25,10 +25,10 @@ type
     actContasPagar: TAction;
     actConfiguracaoGlobal: TAction;
     actBackup: TAction;
-    actHistoricoLogin: TAction;
     actFinanceiro: TAction;
     actBandeira: TAction;
     actContaBancaria: TAction;
+    actRelatorioDespesa: TAction;
     actVoltarFinanceiro: TAction;
     actLogLogin: TAction;
     actLogErro: TAction;
@@ -44,6 +44,7 @@ type
     actMenu: TActionList;
     AppProperties: TApplicationProperties;
     btnBanco: TSpeedButton;
+    btnRelDespesa: TSpeedButton;
     btnBandeira: TSpeedButton;
     btnConta: TSpeedButton;
     btnContasPagar: TSpeedButton;
@@ -68,6 +69,7 @@ type
     btnVoltar1: TSpeedButton;
     btnVoltar2: TSpeedButton;
     btnVoltar3: TSpeedButton;
+    btnVoltar4: TSpeedButton;
     imgMenu: TImage;
     imgUsuario: TImage;
     imgList: TImageList;
@@ -76,6 +78,7 @@ type
     lblHora: TLabel;
     pnlAbreForms: TPanel;
     pnlMenuCadastro: TPanel;
+    pnlMenuRelatorio: TPanel;
     pnlMenuOperacao: TPanel;
     pnlMenuUtilitario: TPanel;
     pnlMenuFinanceiro: TPanel;
@@ -100,6 +103,7 @@ type
     procedure actLogLoginExecute(Sender: TObject);
     procedure actOperacaoExecute(Sender: TObject);
     procedure actParticipanteExecute(Sender: TObject);
+    procedure actRelatorioDespesaExecute(Sender: TObject);
     procedure actRelatorioExecute(Sender: TObject);
     procedure actSubtipoDespesaExecute(Sender: TObject);
     procedure actTipoDespesaExecute(Sender: TObject);
@@ -235,6 +239,12 @@ begin
   BarraLateralVazia(pnlMenuCadastro, false);
 end;
 
+procedure TfrmPrincipal.actRelatorioDespesaExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmRelatorioDespesa, TfrmRelatorioDespesa, false, pnlAbreForms, Self);
+  BarraLateralVazia(pnlMenuRelatorio, false);
+end;
+
 procedure TfrmPrincipal.actRelatorioExecute(Sender: TObject);
 begin
   mudarMenu(4);
@@ -300,6 +310,7 @@ begin
     pnlMenuOperacao.Width   := 215;
     pnlMenuUtilitario.Width := 215;
     pnlMenuFinanceiro.Width := 215;
+    pnlMenuRelatorio.Width  := 215;
     //pnlMenuVazio.Width      := 215;
     pnlMenuRetair.Caption := 'MENU';
   end
@@ -311,6 +322,7 @@ begin
     pnlMenuOperacao.Width   := 50;
     pnlMenuUtilitario.Width := 50;
     pnlMenuFinanceiro.Width := 50;
+    pnlMenuRelatorio.Width  := 50;
     //pnlMenuVazio.Width      := 50;
     pnlMenuRetair.Caption := '';
   end;
@@ -333,6 +345,7 @@ begin
   pnlMenuCadastro.Visible   := index = 1;
   pnlMenuOperacao.Visible   := Index = 2;
   pnlMenuUtilitario.Visible := Index = 3;
+  pnlMenuRelatorio.Visible  := Index = 4;
   pnlMenuFinanceiro.Visible := Index = 20;
 end;
 

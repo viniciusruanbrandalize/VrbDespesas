@@ -425,8 +425,38 @@
       <Unit>
         <Filename Value="pas\model\report\model.report.padrao.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="PadraoReport"/>
+        <ComponentName Value="dmPadraoReport"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.relatoriopadrao.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRelatorioPadrao"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRelatorioDespesa"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.relatorioparametro.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRelatorioParametro"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\report\model.report.despesa.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.relatoriodespesa.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
   </ProjectOptions>

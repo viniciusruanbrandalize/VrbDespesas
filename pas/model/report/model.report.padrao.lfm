@@ -1,4 +1,4 @@
-object PadraoReport: TPadraoReport
+object dmPadraoReport: TdmPadraoReport
   OnCreate = DataModuleCreate
   OldCreateOrder = False
   Height = 500
@@ -17,7 +17,7 @@ object PadraoReport: TPadraoReport
   end
   object frDBDataSet: TfrDBDataSet
     DataSet = qryPadrao
-    Left = 24
+    Left = 32
     Top = 80
   end
   object qryPadrao: TSQLQuery
@@ -46,8 +46,9 @@ object PadraoReport: TPadraoReport
       'order by nome'
     )
     Params = <>
+    ParamCheck = False
     Macros = <>
-    Left = 104
+    Left = 112
     Top = 80
   end
   object frTNPDFExport: TfrTNPDFExport
@@ -92,5 +93,13 @@ object PadraoReport: TPadraoReport
     Database = SQLConnector
     Left = 272
     Top = 152
+  end
+  object frDesigner: TfrDesigner
+    Left = 344
+    Top = 16
+  end
+  object frShapeObject: TfrShapeObject
+    Left = 424
+    Top = 16
   end
 end

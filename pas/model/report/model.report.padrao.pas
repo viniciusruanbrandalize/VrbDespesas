@@ -3,7 +3,7 @@ unit model.report.padrao;
 {
   Componentes SQLConnector, SQLTransaction, SQLDBLibraryLoader são usados
   apenas para a criação/atualização de relatórios e testes internos de
-  conexão do banco.
+  conexão com o banco de dados.
 }
 
 {$mode ObjFPC}{$H+}
@@ -12,16 +12,18 @@ interface
 
 uses
   Classes, SysUtils, SQLDB, SQLDBLib, IBConnection, LR_Class, LR_DBSet,
-  LR_E_CSV, LR_E_TXT, lr_e_pdf, model.connection.conexao1;
+  LR_E_CSV, LR_E_TXT, LR_Desgn, LR_Shape, lr_e_pdf, model.connection.conexao1;
 
 type
 
-  { TPadraoReport }
+  { TdmPadraoReport }
 
-  TPadraoReport = class(TDataModule)
+  TdmPadraoReport = class(TDataModule)
     frCSVExport: TfrCSVExport;
     frDBDataSet: TfrDBDataSet;
+    frDesigner: TfrDesigner;
     frReport: TfrReport;
+    frShapeObject: TfrShapeObject;
     frTextExport: TfrTextExport;
     frTNPDFExport: TfrTNPDFExport;
     qryPadrao: TSQLQuery;
@@ -37,20 +39,20 @@ type
   end;
 
 var
-  PadraoReport: TPadraoReport;
+  dmPadraoReport: TdmPadraoReport;
 
 implementation
 
 {$R *.lfm}
 
-{ TPadraoReport }
+{ TdmPadraoReport }
 
-procedure TPadraoReport.DataModuleCreate(Sender: TObject);
+procedure TdmPadraoReport.DataModuleCreate(Sender: TObject);
 begin
   ConfiguraComponentes();
 end;
 
-procedure TPadraoReport.ConfiguraComponentes();
+procedure TdmPadraoReport.ConfiguraComponentes();
 begin
   FDir := ExtractFilePath(ParamStr(0))+'reports\';
   if qryPadrao.Active then

@@ -32,7 +32,9 @@ uses
   model.ini.configuracao, model.ini.erro, model.ini.conexao,
   view.subtipodespesa, view.usuario, view.logerro, view.loglogin, view.login,
   view.bandeira, view.contabancaria, view.participante, view.despesa, Controls,
-  lib.visual, indylaz, model.report.padrao;
+  lib.visual, indylaz, model.report.padrao, view.relatoriopadrao, 
+view.relatoriodespesa, view.relatorioparametro, model.report.despesa, 
+controller.relatoriodespesa;
 
 {$R *.res}
 
