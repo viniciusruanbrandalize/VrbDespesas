@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2023-08-29 22:52:49"/>
+    <ReportLastChange Value="2025-03-02 12:41:14"/>
     <ReportVersionBuild Value=""/>
     <ReportVersionMajor Value=""/>
     <ReportVersionMinor Value=""/>
@@ -75,7 +75,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="0"/>
-            <Top Value="20"/>
+            <Top Value="13"/>
             <Width Value="752"/>
             <Height Value="121"/>
           </Size>
@@ -159,7 +159,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="0"/>
-            <Top Value="292"/>
+            <Top Value="290"/>
             <Width Value="752"/>
             <Height Value="52"/>
           </Size>
@@ -218,7 +218,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value="fsBold"/>
@@ -243,12 +243,12 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="0"/>
-            <Top Value="20"/>
-            <Width Value="749"/>
+            <Top Value="13"/>
+            <Width Value="751"/>
             <Height Value="45"/>
           </Size>
           <Flags Value="3"/>
-          <FillColor Value="clNone"/>
+          <FillColor Value="clBtnFace"/>
           <Frames>
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
@@ -259,7 +259,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Relatório de Compras/Despesas&#xD;&#xA;"/>
+            <Memo Value="Relatório de Despesas&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -356,7 +356,7 @@
           <Size>
             <Left Value="0"/>
             <Top Value="1016"/>
-            <Width Value="748"/>
+            <Width Value="750"/>
             <Height Value="32"/>
           </Size>
           <Flags Value="3"/>
@@ -427,7 +427,7 @@
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
-            <Memo Value="[frDBDataSet.&quot;ID_COMPRA&quot;]&#xD;&#xA;"/>
+            <Memo Value="[qryPadrao.&quot;ID&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -442,7 +442,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value=""/>
@@ -498,7 +498,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value="fsBold"/>
@@ -539,7 +539,7 @@
           <Data>
             <Format Value="33816620"/>
             <FormatStr Value="dd/mm/yyyy"/>
-            <Memo Value="[frDBDataSet.&quot;DATA_COMPRA&quot;]&#xD;&#xA;"/>
+            <Memo Value="[qryPadrao.&quot;DATA&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -554,7 +554,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value=""/>
@@ -565,7 +565,7 @@
             <FillColor Value="clWhite"/>
             <HighlightStr Value=""/>
           </Highlight>
-          <Alignment Value="taCenter"/>
+          <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
@@ -610,7 +610,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value="fsBold"/>
@@ -621,7 +621,7 @@
             <FillColor Value="clWhite"/>
             <HighlightStr Value=""/>
           </Highlight>
-          <Alignment Value="taCenter"/>
+          <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
@@ -651,7 +651,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Forma de Pgto.&#xD;&#xA;"/>
+            <Memo Value="Forma de Pagamento&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -666,7 +666,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value="fsBold"/>
@@ -690,7 +690,7 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="622"/>
+            <Left Value="623"/>
             <Top Value="167"/>
             <Width Value="120"/>
             <Height Value="21"/>
@@ -722,7 +722,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value="fsBold"/>
@@ -746,9 +746,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="199"/>
+            <Left Value="197"/>
             <Top Value="214"/>
-            <Width Value="254"/>
+            <Width Value="256"/>
             <Height Value="22"/>
           </Size>
           <Flags Value="3"/>
@@ -763,7 +763,7 @@
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
-            <Memo Value="[frDBDataSet.&quot;DESC_COMPRA&quot;]&#xD;&#xA;"/>
+            <Memo Value="[qryPadrao.&quot;DESCRICAO&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -778,7 +778,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value=""/>
@@ -819,7 +819,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[frDBDataSet.&quot;NOME_FORMA_PGTO&quot;]&#xD;&#xA;"/>
+            <Memo Value="[qryPadrao.&quot;NOME_FPGTO&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -834,7 +834,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value=""/>
@@ -875,7 +875,7 @@
           <Data>
             <Format Value="16974380"/>
             <FormatStr Value=""/>
-            <Memo Value="[frDBDataSet.&quot;TOTAL_COMPRA&quot;]&#xD;&#xA;"/>
+            <Memo Value="[qryPadrao.&quot;TOTAL&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -890,7 +890,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clRed"/>
             <Charset Value="0"/>
             <Style Value=""/>
@@ -915,8 +915,8 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="0"/>
-            <Top Value="64"/>
-            <Width Value="749"/>
+            <Top Value="57"/>
+            <Width Value="751"/>
             <Height Value="23"/>
           </Size>
           <Flags Value="3"/>
@@ -970,10 +970,10 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="8"/>
-            <Top Value="312"/>
-            <Width Value="732"/>
-            <Height Value="30"/>
+            <Left Value="0"/>
+            <Top Value="318"/>
+            <Width Value="751"/>
+            <Height Value="24"/>
           </Size>
           <Flags Value="3"/>
           <FillColor Value="clNone"/>
@@ -987,7 +987,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Total: [FORMATFLOAT(['#,0.00'], [SUM([frDBDataSet.&quot;TOTAL_COMPRA&quot;])])]&#xD;&#xA;"/>
+            <Memo Value="Total: [FORMATFLOAT(['#,0.00'], [SUM([qryPadrao.&quot;TOTAL&quot;])])]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1002,7 +1002,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="14"/>
+            <Size Value="12"/>
             <Color Value="clRed"/>
             <Charset Value="0"/>
             <Style Value="fsBold"/>
@@ -1020,15 +1020,15 @@
           <Cursor Value="0"/>
         </Object20>
         <Object21>
-          <Name Value="Memo4"/>
+          <Name Value="mInformacao"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="14"/>
-            <Top Value="95"/>
-            <Width Value="721"/>
+            <Left Value="0"/>
+            <Top Value="90"/>
+            <Width Value="751"/>
             <Height Value="23"/>
           </Size>
           <Flags Value="3"/>
@@ -1043,7 +1043,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="&#xD;&#xA;"/>
+            <Memo Value=""/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1058,7 +1058,7 @@
           <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
-            <Size Value="12"/>
+            <Size Value="10"/>
             <Color Value="clBlack"/>
             <Charset Value="0"/>
             <Style Value=""/>
@@ -1078,37 +1078,30 @@
         <ObjectCount Value="21"/>
       </Page1>
       <FVal>
-        <Count Value="4"/>
+        <Count Value="3"/>
         <Objects1>
           <Typ Value="0"/>
           <OtherKind Value="0"/>
           <Dataset Value=""/>
           <Field Value=""/>
-          <Item Value="mesini"/>
+          <Item Value="dinicial"/>
         </Objects1>
         <Objects2>
           <Typ Value="0"/>
           <OtherKind Value="0"/>
           <Dataset Value=""/>
           <Field Value=""/>
-          <Item Value="anoini"/>
+          <Item Value="dfinal"/>
         </Objects2>
         <Objects3>
           <Typ Value="0"/>
           <OtherKind Value="0"/>
           <Dataset Value=""/>
           <Field Value=""/>
-          <Item Value="mesfin"/>
+          <Item Value="buscapor"/>
         </Objects3>
-        <Objects4>
-          <Typ Value="0"/>
-          <OtherKind Value="0"/>
-          <Dataset Value=""/>
-          <Field Value=""/>
-          <Item Value="anofin"/>
-        </Objects4>
       </FVal>
-      <ParentVars Value=" &#xD;&#xA; mesini&#xD;&#xA; anoini&#xD;&#xA; mesfin&#xD;&#xA; anofin&#xD;&#xA;"/>
+      <ParentVars Value="minhas_variaveis&#xD;&#xA; dinicial&#xD;&#xA; dfinal&#xD;&#xA; buscapor&#xD;&#xA;"/>
     </Pages>
     <DetailReports>
       <Count Value="0"/>

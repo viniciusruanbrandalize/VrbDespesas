@@ -5,7 +5,7 @@ unit controller.relatoriodespesa;
 interface
 
 uses
-  Classes, SysUtils, model.report.despesa;
+  Classes, SysUtils, model.report.despesa, LR_View;
 
 type
 
@@ -15,7 +15,8 @@ type
   private
     Relatorio: TDespesaReport;
   public
-    function PorPeriodo(dInicial, dFinal: TDate; Tipo: Integer; Busca: String; out Erro: String): Boolean;
+    function PorPeriodo(var Preview: TfrPreview; dInicial, dFinal: TDate; Tipo: Integer;
+                          Busca: String; out Erro: String): Boolean;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -24,9 +25,10 @@ implementation
 
 { TRelatorioDespesaController }
 
-function TRelatorioDespesaController.PorPeriodo(dInicial, dFinal: TDate;
-  Tipo: Integer; Busca: String; out Erro: String): Boolean;
+function TRelatorioDespesaController.PorPeriodo(var Preview: TfrPreview;
+  dInicial, dFinal: TDate; Tipo: Integer; Busca: String; out Erro: String): Boolean;
 begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
   Result := Relatorio.PorPeriodo(dInicial, dFinal, Tipo, Busca, Erro);
 end;
 

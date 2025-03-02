@@ -69,7 +69,10 @@ begin
     Close
   else
   if pgc.ActivePage = tbsDesigner then
+  begin
     pgc.ActivePage := tbsPrincipal;
+    actFechar.ImageIndex := 0;
+  end;
 end;
 
 procedure TfrmRelatorioPadrao.actCsvExecute(Sender: TObject);

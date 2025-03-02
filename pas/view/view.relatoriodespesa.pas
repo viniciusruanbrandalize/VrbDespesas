@@ -75,8 +75,11 @@ begin
       Final   := frmRelatorioParametro.dtpFinal0.date;
       Tipo    := frmRelatorioParametro.cbTipo0.ItemIndex;
       Busca   := frmRelatorioParametro.edtPesquisa0.Text;
-      if Controller.PorPeriodo(Inicial, Final, Tipo, Busca, Erro) then
-        pgc.ActivePage := tbsDesigner
+      if Controller.PorPeriodo(frPreview, Inicial, Final, Tipo, Busca, Erro) then
+      begin
+        pgc.ActivePage := tbsDesigner;
+        actFechar.ImageIndex := 1;
+      end
       else
         TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
     end;
