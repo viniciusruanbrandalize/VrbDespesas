@@ -42,6 +42,7 @@ type
     tbs0: TTabSheet;
     procedure actCancelarExecute(Sender: TObject);
     procedure actGerarExecute(Sender: TObject);
+    procedure cbTipo0Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -100,6 +101,11 @@ procedure TfrmRelatorioParametro.actGerarExecute(Sender: TObject);
 begin
   //a implementar...
   ModalResult := mrOK;
+end;
+
+procedure TfrmRelatorioParametro.cbTipo0Change(Sender: TObject);
+begin
+  edtPesquisa0.Clear;
 end;
 
 end.

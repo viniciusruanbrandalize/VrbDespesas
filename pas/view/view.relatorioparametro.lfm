@@ -124,6 +124,7 @@ object frmRelatorioParametro: TfrmRelatorioParametro
             TimeDisplay = tdHMS
             DateMode = dmComboBox
             Date = 45717
+            Time = 0.379777407404617
             UseDefaultSeparators = True
             HideDateTimeParts = []
             MonthNames = 'Long'
@@ -174,15 +175,19 @@ object frmRelatorioParametro: TfrmRelatorioParametro
             Items.Strings = (
               'Código'
               'Descrição'
-              'Participante'
+              'Fornecedor'
               'Conta Bancária'
               'Bandeira'
               'Banco'
               'Chave PIX'
-              'Forma Pagamento'
+              'Forma de Pagamento'
+              'Subtipo de Despesa'
+              'Tipo de Despesa'
             )
+            Style = csDropDownList
             TabOrder = 2
             Text = 'Código'
+            OnChange = cbTipo0Change
           end
           object edtPesquisa0: TEdit
             Left = 160

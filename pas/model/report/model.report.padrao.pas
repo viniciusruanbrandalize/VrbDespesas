@@ -12,7 +12,7 @@ interface
 
 uses
   Classes, SysUtils, SQLDB, SQLDBLib, IBConnection, LR_Class, LR_DBSet,
-  LR_E_CSV, LR_E_TXT, LR_Desgn, LR_Shape, lr_e_pdf, model.connection.conexao1;
+  LR_E_CSV, LR_E_TXT, LR_Desgn, LR_Shape, lr_e_pdf, model.connection.conexao1, LR_View;
 
 type
 
@@ -35,6 +35,7 @@ type
     FDir: String;
     procedure ConfiguraComponentes();
   public
+    procedure CarregarLogo();
     property DiretorioRelatorios: String read FDir write FDir;
   end;
 
@@ -61,6 +62,12 @@ begin
   qryPadrao.DataBase   := dmConexao1.SQLConnector;
   frDBDataSet.DataSet  := qryPadrao;
   frReport.Dataset     := frDBDataSet;
+end;
+
+procedure TdmPadraoReport.CarregarLogo();
+begin
+  if Assigned(frReport.FindObject('imgLogo')) then
+    TfrPictureView(frReport.FindObject('imgLogo')).Picture.LoadFromFile(FDir+'logo.ico');
 end;
 
 end.

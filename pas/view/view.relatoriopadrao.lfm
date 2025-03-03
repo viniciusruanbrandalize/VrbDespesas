@@ -166,6 +166,8 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
               ImageIndex = 4
               ImageWidth = 32
               ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
             end
             object btnTxt: TSpeedButton
               Left = 126
@@ -179,6 +181,8 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
               ImageIndex = 5
               ImageWidth = 32
               ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
             end
             object btnCsv: TSpeedButton
               Left = 63
@@ -192,6 +196,8 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
               ImageIndex = 3
               ImageWidth = 32
               ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
             end
             object btnProcurar: TSpeedButton
               Left = 919
@@ -205,6 +211,8 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
               ImageIndex = 2
               ImageWidth = 32
               ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
             end
           end
         end
@@ -476,5 +484,10 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
       ImageIndex = 2
       OnExecute = actProcurarExecute
     end
+  end
+  object SaveDlg: TSaveDialog
+    Title = 'Salvar relatório como'
+    Left = 256
+    Top = 8
   end
 end

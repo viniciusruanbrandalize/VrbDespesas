@@ -27,6 +27,8 @@ implementation
 
 function TDespesaReport.PorPeriodo(dInicial, dFinal: TDate; Tipo: Integer;
   Busca: String; out Erro: String): Boolean;
+var
+  TipoDeBusca: String;
 begin
   try
 
@@ -39,20 +41,64 @@ begin
             'left join cartao card on card.id_conta_bancaria = cb.id ' +
             'left join bandeira ban on ban.id = card.id_bandeira ' +
             'left join banco bco on bco.id = cb.id_banco ' +
+            'left join subtipo_despesa sd on sd.id = d.id_subtipo ' +
+            'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
             'where d.data between :inicial and :final ';
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
 
     case Tipo of
-      0: FSQL := FSQL + 'and d.id = :busca ';
-      1: FSQL := FSQL + 'and Upper(d.descricao) like :busca ';
-      2: FSQL := FSQL + 'and Upper(p.nome) like :busca ';
-      3: FSQL := FSQL + 'and Upper(cb.numero) = :busca ';
-      4: FSQL := FSQL + 'and Upper(ban.nome) like :busca ';
-      5: FSQL := FSQL + 'and Upper(bco.nome) like :busca ';
-      6: FSQL := FSQL + 'and Upper(df.chave_pix) like :busca ';
-      7: FSQL := FSQL + 'and Upper(f.nome) like :busca ';
+      0:
+      begin
+        FSQL := FSQL + 'and d.id = :busca ';
+        TipoDeBusca := 'Código';
+      end;
+      1:
+      begin
+        FSQL := FSQL + 'and Upper(d.descricao) like :busca ';
+        TipoDeBusca := 'Descrição';
+      end;
+      2:
+      begin
+        FSQL := FSQL + 'and Upper(p.nome) like :busca ';
+        TipoDeBusca := 'Fornecedor';
+      end;
+      3:
+      begin
+        FSQL := FSQL + 'and Upper(cb.numero) = :busca ';
+        TipoDeBusca := 'Conta Bancária';
+      end;
+      4:
+      begin
+        FSQL := FSQL + 'and Upper(ban.nome) like :busca ';
+        TipoDeBusca := 'Bandeira';
+      end;
+      5:
+      begin
+        FSQL := FSQL + 'and Upper(bco.nome) like :busca ';
+        TipoDeBusca := 'Banco';
+      end;
+      6:
+      begin
+        FSQL := FSQL + 'and Upper(df.chave_pix) like :busca ';
+        TipoDeBusca := 'Chave PIX';
+      end;
+      7:
+      begin
+        FSQL := FSQL + 'and Upper(f.nome) like :busca ';
+        TipoDeBusca := 'Forma de Pagamento';
+      end;
+      8:
+      begin
+        FSQL := FSQL + 'and Upper(sd.nome) like :busca ';
+        TipoDeBusca := 'Subtipo de despesa';
+      end;
+      9:
+      begin
+        FSQL := FSQL + 'and Upper(td.nome) like :busca ';
+        TipoDeBusca := 'Tipo de despesa';
+      end;
     end;
 
     FSQL := FSQL +
@@ -68,7 +114,9 @@ begin
                                          'despesa_periodo.lrf');
 
     dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
-                                                   DateToStr(dInicial)+' à '+DateToStr(dFinal);
+                                                   DateToStr(dInicial)+' à '+DateToStr(dFinal)+
+                                                   '     busca por '+TipoDeBusca+': '+Busca;
+    dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
     Result := True;

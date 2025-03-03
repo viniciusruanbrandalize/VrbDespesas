@@ -36,6 +36,7 @@ type
     btnTxt: TSpeedButton;
     btnCsv: TSpeedButton;
     btnProcurar: TSpeedButton;
+    SaveDlg: TSaveDialog;
     tbsDesigner: TTabSheet;
     tbsPrincipal: TTabSheet;
     procedure actCsvExecute(Sender: TObject);
@@ -77,22 +78,31 @@ end;
 
 procedure TfrmRelatorioPadrao.actCsvExecute(Sender: TObject);
 begin
-  //
+  SaveDlg.Filter := 'CSV|.csv';
+  SaveDlg.FileName := 'despesaporperido_'+FormatDateTime('ddmmyyyy_hhnnss', now);
+  if SaveDlg.Execute then
+    frPreview.ExportTo(SaveDlg.FileName);
 end;
 
 procedure TfrmRelatorioPadrao.actPdfExecute(Sender: TObject);
 begin
-  //
+  SaveDlg.Filter := 'PDF|.pdf';
+  SaveDlg.FileName := 'despesaporperido_'+FormatDateTime('ddmmyyyy_hhnnss', now);
+  if SaveDlg.Execute then
+    frPreview.ExportTo(SaveDlg.FileName);
 end;
 
 procedure TfrmRelatorioPadrao.actProcurarExecute(Sender: TObject);
 begin
-  //
+  frPreview.Find;
 end;
 
 procedure TfrmRelatorioPadrao.actTxtExecute(Sender: TObject);
 begin
-  //
+  SaveDlg.Filter := 'Arquivo de Texto|.txt';
+  SaveDlg.FileName := 'despesaporperido_'+FormatDateTime('ddmmyyyy_hhnnss', now);
+  if SaveDlg.Execute then
+    frPreview.ExportTo(SaveDlg.FileName);
 end;
 
 procedure TfrmRelatorioPadrao.FormCreate(Sender: TObject);
@@ -101,6 +111,7 @@ begin
   pgc.Style           := tsButtons;
   pgc.ActivePageIndex := 0;
   fpnlOpcoes.Align    := alClient;
+  SaveDlg.InitialDir  := ExtractFilePath(ParamStr(0));
 end;
 
 procedure TfrmRelatorioPadrao.FormResize(Sender: TObject);
