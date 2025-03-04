@@ -86,11 +86,11 @@ object frmRelatorioParametro: TfrmRelatorioParametro
       Height = 242
       Top = 36
       Width = 474
-      ActivePage = tbs0
+      ActivePage = tbs1
       Align = alClient
       BorderSpacing.Left = 5
       BorderSpacing.Right = 5
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 2
       object tbs0: TTabSheet
         Caption = 'tbs0'
@@ -208,6 +208,86 @@ object frmRelatorioParametro: TfrmRelatorioParametro
       end
       object tbs1: TTabSheet
         Caption = 'tbs1'
+        ClientHeight = 214
+        ClientWidth = 466
+        object pnlFundo1: TPanel
+          Left = 0
+          Height = 214
+          Top = 0
+          Width = 466
+          Align = alClient
+          BevelOuter = bvNone
+          ClientHeight = 214
+          ClientWidth = 466
+          ParentBackground = False
+          TabOrder = 0
+          object edtAnoInicial1: TSpinEdit
+            Left = 8
+            Height = 23
+            Top = 32
+            Width = 88
+            MaxValue = 3000
+            MinValue = 1900
+            TabOrder = 0
+            Value = 1900
+          end
+          object edtAnoFinal1: TSpinEdit
+            Left = 112
+            Height = 23
+            Top = 32
+            Width = 88
+            MaxValue = 3000
+            MinValue = 1900
+            TabOrder = 1
+            Value = 1900
+          end
+          object lblAnoInicial1: TLabel
+            Left = 8
+            Height = 15
+            Top = 16
+            Width = 59
+            Caption = 'Ano Inicial:'
+          end
+          object lblAnoFinal1: TLabel
+            Left = 112
+            Height = 15
+            Top = 16
+            Width = 53
+            Caption = 'Ano Final:'
+          end
+          object cbMes1: TComboBox
+            Left = 216
+            Height = 23
+            Top = 32
+            Width = 136
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'Janeiro'
+              'Fevereiro'
+              'Março'
+              'Abril'
+              'Maio'
+              'Junho'
+              'Julho'
+              'Agosto'
+              'Setembro'
+              'Outubro'
+              'Novembro'
+              'Dezembro'
+            )
+            Style = csDropDownList
+            TabOrder = 2
+            Text = 'Janeiro'
+          end
+          object lblMes1: TLabel
+            Left = 216
+            Height = 15
+            Top = 16
+            Width = 25
+            Caption = 'Mês:'
+          end
+        end
       end
       object tbs2: TTabSheet
         Caption = 'tbs2'

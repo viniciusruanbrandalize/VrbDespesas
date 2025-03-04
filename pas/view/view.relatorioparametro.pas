@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
-  Buttons, ComCtrls, StdCtrls, DateTimePicker;
+  Buttons, ComCtrls, StdCtrls, Spin, DateTimePicker, DateUtils;
 
 type
 
@@ -17,13 +17,18 @@ type
     actCancelar: TAction;
     actList: TActionList;
     cbTipo0: TComboBox;
+    cbMes1: TComboBox;
     dtpInicial0: TDateTimePicker;
     dtpFinal0: TDateTimePicker;
     edtPesquisa0: TEdit;
     img: TImageList;
+    lblMes1: TLabel;
+    lblAnoInicial1: TLabel;
+    lblAnoFinal1: TLabel;
     lblPesquisa0: TLabel;
     lblDataInicial0: TLabel;
     lblDataFinal0: TLabel;
+    pnlFundo1: TPanel;
     pnlFundo0: TPanel;
     pgc: TPageControl;
     pnlTitulo: TPanel;
@@ -31,6 +36,8 @@ type
     pnlFundo: TPanel;
     btnGerar: TSpeedButton;
     btnCancelar: TSpeedButton;
+    edtAnoInicial1: TSpinEdit;
+    edtAnoFinal1: TSpinEdit;
     tbs6: TTabSheet;
     tbs7: TTabSheet;
     tbs8: TTabSheet;
@@ -87,7 +94,8 @@ begin
     end;
     1:
     begin
-      //a implementar...
+      edtAnoInicial1.Value := YearOf(Now);
+      edtAnoFinal1.Value   := YearOf(Now);
     end;
   end;
 end;

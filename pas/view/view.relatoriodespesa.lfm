@@ -19,14 +19,9 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                   Index = 0
                 end              
                 item
-                  Control = pnlSubtipo
+                  Control = pnlComparativoMensal
                   WrapAfter = waAuto
                   Index = 1
-                end              
-                item
-                  Control = pnlTipo
-                  WrapAfter = waAuto
-                  Index = 2
                 end>
               object pnlPeriodo: TPanel[0]
                 Left = 5
@@ -46,7 +41,7 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                 TabOrder = 0
                 OnClick = pnlPeriodoClick
               end
-              object pnlSubtipo: TPanel[1]
+              object pnlComparativoMensal: TPanel[1]
                 Left = 185
                 Height = 50
                 Top = 5
@@ -54,7 +49,7 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                 Anchors = []
                 BorderSpacing.Around = 5
                 BevelOuter = bvNone
-                Caption = 'Por Subtipo'
+                Caption = 'Comparativo Mensal'
                 Color = 2977025
                 Font.Color = clWhite
                 Font.Style = [fsBold]
@@ -62,23 +57,7 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                 ParentColor = False
                 ParentFont = False
                 TabOrder = 1
-              end
-              object pnlTipo: TPanel[2]
-                Left = 365
-                Height = 50
-                Top = 5
-                Width = 170
-                Anchors = []
-                BorderSpacing.Around = 5
-                BevelOuter = bvNone
-                Caption = 'Por Tipo'
-                Color = 2977025
-                Font.Color = clWhite
-                Font.Style = [fsBold]
-                ParentBackground = False
-                ParentColor = False
-                ParentFont = False
-                TabOrder = 2
+                OnClick = pnlComparativoMensalClick
               end
             end
           end
@@ -97,11 +76,9 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
       Caption = 'Por Período'
       OnExecute = actPorPeriodoExecute
     end
-    object actPorSubtipo: TAction[8]
-      Caption = 'Por Subtipo'
-    end
-    object actPorTipo: TAction[9]
-      Caption = 'Por Tipo'
+    object actComparativoMensal: TAction[8]
+      Caption = 'actComparativoMensal'
+      OnExecute = actComparativoMensalExecute
     end
   end
 end

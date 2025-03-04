@@ -14,9 +14,14 @@ type
   TDespesaReport = Class
   private
     FSQL: String;
+    const
+      NomeMes: array  [1..12] of string = ('Janeiro', 'Fevereiro', 'Março',
+      'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+      'Novembro', 'Dezembro');
   public
     dmRelatorio: TdmPadraoReport;
     function PorPeriodo(dInicial, dFinal: TDate; Tipo: Integer; Busca: String; out Erro: String): Boolean;
+    function ComparativoMensal(anoInicial, anoFinal, mes: Integer; out Erro: String): Boolean;
     constructor Create;
     destructor Destroy; override;
 end;
@@ -116,6 +121,60 @@ begin
     dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
                                                    DateToStr(dInicial)+' à '+DateToStr(dFinal)+
                                                    '     busca por '+TipoDeBusca+': '+Busca;
+    dmRelatorio.CarregarLogo();
+    dmRelatorio.frReport.ShowReport;
+
+    Result := True;
+
+  except
+    on e: Exception do
+    begin
+      Erro := 'Erro ao gerar o relatório: ' + e.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TDespesaReport.ComparativoMensal(anoInicial, anoFinal, mes: Integer; out
+  Erro: String): Boolean;
+begin
+  try
+
+    FSQL := 'select sum(total)/30 as med_diaria, avg(total) as media, '+
+            'sum(total) as total, extract(month from data) as mes, '+
+            'extract(year from data) as ano, count(id) as qtd_despesa, '+
+            '(case when extract(month from data) = ''1'' then ''Janeiro'' else '+
+            '(case when extract(month from data) = ''2'' then ''Fevereiro'' else '+
+            '(case when extract(month from data) = ''3'' then ''Março'' else '+
+            '(case when extract(month from data) = ''4'' then ''Abril'' else '+
+            '(case when extract(month from data) = ''5'' then ''Maio'' else '+
+            '(case when extract(month from data) = ''6'' then ''Junho'' else '+
+            '(case when extract(month from data) = ''7'' then ''Julho'' else '+
+            '(case when extract(month from data) = ''8'' then ''Agosto'' else '+
+            '(case when extract(month from data) = ''9'' then ''Setembro'' else '+
+            '(case when extract(month from data) = ''10'' then ''Outubro'' else '+
+            '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
+            '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
+            ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
+            'group by mes, ano '+
+            'having extract(year from data) between :ano_inicial and :ano_final ' +
+            'and extract(month from data) = :mes_informado '+
+            'order by ano desc, mes desc';
+
+    dmRelatorio.qryPadrao.Close;
+    dmRelatorio.qryPadrao.SQL.Clear;
+    dmRelatorio.qryPadrao.SQL.Add(FSQL);
+    dmRelatorio.qryPadrao.ParamByName('ano_inicial').AsInteger  := anoInicial;
+    dmRelatorio.qryPadrao.ParamByName('ano_final').AsInteger    := anoFinal;
+    dmRelatorio.qryPadrao.ParamByName('mes_informado').AsString := FormatFloat('00', mes);
+    dmRelatorio.qryPadrao.Open;
+
+    dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+                                         'despesa_comparativo_mensal.lrf');
+
+    dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+anoInicial.ToString+
+                                                                ' à '+anoFinal.ToString+' - '+
+                                                                NomeMes[mes];
     dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
