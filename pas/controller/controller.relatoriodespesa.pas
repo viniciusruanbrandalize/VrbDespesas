@@ -5,7 +5,7 @@ unit controller.relatoriodespesa;
 interface
 
 uses
-  Classes, SysUtils, model.report.despesa, LR_View;
+  Classes, SysUtils, LR_View, model.report.despesa;
 
 type
 
@@ -19,6 +19,9 @@ type
                           Busca: String; out Erro: String): Boolean;
     function ComparativoMensal(var Preview: TfrPreview; anoInicial, anoFinal, mes: Integer;
                           out Erro: String): Boolean;
+    function ComparativoAnual(var Preview: TfrPreview; anoInicial, anoFinal: Integer;
+                          out Erro: String): Boolean;
+    function TotalPorMes(var Preview: TfrPreview; ano: Integer; out Erro: String): Boolean;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -39,6 +42,20 @@ function TRelatorioDespesaController.ComparativoMensal(var Preview: TfrPreview;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
   Result := Relatorio.ComparativoMensal(anoInicial, anoFinal, mes, Erro);
+end;
+
+function TRelatorioDespesaController.ComparativoAnual(var Preview: TfrPreview;
+  anoInicial, anoFinal: Integer; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.ComparativoAnual(anoInicial, anoFinal, Erro);
+end;
+
+function TRelatorioDespesaController.TotalPorMes(var Preview: TfrPreview;
+  ano: Integer; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.TotalPorMes(ano, Erro);
 end;
 
 constructor TRelatorioDespesaController.Create;

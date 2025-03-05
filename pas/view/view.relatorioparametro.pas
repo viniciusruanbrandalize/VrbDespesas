@@ -20,14 +20,22 @@ type
     cbMes1: TComboBox;
     dtpInicial0: TDateTimePicker;
     dtpFinal0: TDateTimePicker;
+    edtAnoFinal2: TSpinEdit;
+    edtAnoInicial2: TSpinEdit;
+    edtAno3: TSpinEdit;
     edtPesquisa0: TEdit;
     img: TImageList;
+    lblAnoFinal2: TLabel;
+    lblAnoInicial2: TLabel;
+    lblAno3: TLabel;
     lblMes1: TLabel;
     lblAnoInicial1: TLabel;
     lblAnoFinal1: TLabel;
     lblPesquisa0: TLabel;
     lblDataInicial0: TLabel;
     lblDataFinal0: TLabel;
+    pnlFundo3: TPanel;
+    pnlFundo2: TPanel;
     pnlFundo1: TPanel;
     pnlFundo0: TPanel;
     pgc: TPageControl;
@@ -97,6 +105,15 @@ begin
       edtAnoInicial1.Value := YearOf(Now);
       edtAnoFinal1.Value   := YearOf(Now);
     end;
+    2:
+    begin
+      edtAnoInicial2.Value := YearOf(Now);
+      edtAnoFinal2.Value   := YearOf(Now);
+    end;
+    3:
+    Begin
+      edtAno3.Value := YearOf(Now);
+    end;
   end;
 end;
 
@@ -107,7 +124,6 @@ end;
 
 procedure TfrmRelatorioParametro.actGerarExecute(Sender: TObject);
 begin
-  //a implementar...
   ModalResult := mrOK;
 end;
 

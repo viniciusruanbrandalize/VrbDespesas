@@ -22,6 +22,16 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                   Control = pnlComparativoMensal
                   WrapAfter = waAuto
                   Index = 1
+                end              
+                item
+                  Control = pnlComparativoAnual
+                  WrapAfter = waAuto
+                  Index = 2
+                end              
+                item
+                  Control = pnlTotalPorMes
+                  WrapAfter = waAuto
+                  Index = 3
                 end>
               object pnlPeriodo: TPanel[0]
                 Left = 5
@@ -59,6 +69,42 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                 TabOrder = 1
                 OnClick = pnlComparativoMensalClick
               end
+              object pnlComparativoAnual: TPanel[2]
+                Left = 365
+                Height = 50
+                Top = 5
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Comparativo Anual'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 2
+                OnClick = pnlComparativoAnualClick
+              end
+              object pnlTotalPorMes: TPanel[3]
+                Left = 545
+                Height = 50
+                Top = 5
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Total Anual Por Mês'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 3
+                OnClick = pnlTotalPorMesClick
+              end
             end
           end
         end
@@ -77,8 +123,16 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
       OnExecute = actPorPeriodoExecute
     end
     object actComparativoMensal: TAction[8]
-      Caption = 'actComparativoMensal'
+      Caption = 'Comparativo Mensal'
       OnExecute = actComparativoMensalExecute
+    end
+    object actComparativoAnual: TAction[9]
+      Caption = 'Comparativo Anual'
+      OnExecute = actComparativoAnualExecute
+    end
+    object actTotalPorMes: TAction[10]
+      Caption = 'Total Anual Por Mês'
+      OnExecute = actTotalPorMesExecute
     end
   end
 end
