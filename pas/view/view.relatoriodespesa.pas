@@ -34,9 +34,9 @@ type
     procedure pnlPeriodoClick(Sender: TObject);
     procedure pnlTotalPorMesClick(Sender: TObject);
   private
-    Controller : TRelatorioDespesaController;
-  public
 
+  public
+    Controller : TRelatorioDespesaController;
   end;
 
 var
@@ -81,7 +81,7 @@ end;
 procedure TfrmRelatorioDespesa.actPorPeriodoExecute(Sender: TObject);
 var
   Inicial, Final: TDate;
-  Tipo: Integer;
+  Tipo, BuscaId: Integer;
   Busca, Erro: String;
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
@@ -92,8 +92,20 @@ begin
       Inicial := frmRelatorioParametro.dtpInicial0.date;
       Final   := frmRelatorioParametro.dtpFinal0.date;
       Tipo    := frmRelatorioParametro.cbTipo0.ItemIndex;
-      Busca   := frmRelatorioParametro.edtPesquisa0.Text;
-      if Controller.PorPeriodo(frPreview, Inicial, Final, Tipo, Busca, Erro) then
+      BuscaId := 0;
+
+      if frmRelatorioParametro.cbPesquisa0.Items.Count > 0 then
+      begin
+        TryStrToInt(frmRelatorioParametro.lbPesquisaId0.Items[
+                     frmRelatorioParametro.cbPesquisa0.ItemIndex], BuscaId);
+      end;
+
+      if BuscaId > 0 then
+        Busca := frmRelatorioParametro.cbPesquisa0.Items[frmRelatorioParametro.cbPesquisa0.ItemIndex]
+      else
+        Busca := frmRelatorioParametro.edtPesquisa0.Text;
+
+      if Controller.PorPeriodo(frPreview, Inicial, Final, Tipo, BuscaId, Busca, Erro) then
       begin
         pgc.ActivePage := tbsDesigner;
         actFechar.ImageIndex := 1;

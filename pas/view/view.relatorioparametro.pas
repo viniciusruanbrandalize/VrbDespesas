@@ -18,6 +18,7 @@ type
     actList: TActionList;
     cbTipo0: TComboBox;
     cbMes1: TComboBox;
+    cbPesquisa0: TComboBox;
     dtpInicial0: TDateTimePicker;
     dtpFinal0: TDateTimePicker;
     edtAnoFinal2: TSpinEdit;
@@ -34,6 +35,7 @@ type
     lblPesquisa0: TLabel;
     lblDataInicial0: TLabel;
     lblDataFinal0: TLabel;
+    lbPesquisaId0: TListBox;
     pnlFundo3: TPanel;
     pnlFundo2: TPanel;
     pnlFundo1: TPanel;
@@ -71,6 +73,9 @@ var
   frmRelatorioParametro: TfrmRelatorioParametro;
 
 implementation
+
+uses
+  view.relatoriodespesa;
 
 {$R *.lfm}
 
@@ -128,8 +133,44 @@ begin
 end;
 
 procedure TfrmRelatorioParametro.cbTipo0Change(Sender: TObject);
+var
+  qtdRegistro: Integer;
 begin
   edtPesquisa0.Clear;
+  cbPesquisa0.Items.Clear;
+  lbPesquisaId0.Items.Clear;
+
+  cbPesquisa0.Left := edtPesquisa0.Left;
+  cbPesquisa0.Top  := edtPesquisa0.Top;
+
+  edtPesquisa0.Visible := False;
+
+  case cbTipo0.ItemIndex of
+    7:
+    begin
+      TfrmRelatorioDespesa(Self.Owner).Controller.PesquisarFormaPagamento(cbPesquisa0,
+                                                    lbPesquisaId0, qtdRegistro);
+    end;
+    8:
+    begin
+      TfrmRelatorioDespesa(Self.Owner).Controller.PesquisarSubtipo(cbPesquisa0,
+                                                    lbPesquisaId0, qtdRegistro);
+    end;
+    9:
+    begin
+      TfrmRelatorioDespesa(Self.Owner).Controller.PesquisarTipo(cbPesquisa0,
+                                                    lbPesquisaId0, qtdRegistro);
+    end
+    else
+    begin
+      edtPesquisa0.Visible := True;
+    end;
+  end;
+
+  if cbPesquisa0.Items.Count > 0 then
+    cbPesquisa0.ItemIndex := 0;
+
+  cbPesquisa0.Visible := (cbTipo0.ItemIndex in [7, 8, 9]);
 end;
 
 end.

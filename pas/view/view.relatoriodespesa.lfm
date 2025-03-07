@@ -5,8 +5,6 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
   OnDestroy = FormDestroy
   inherited pnlFundo: TPanel
     inherited pgc: TPageControl
-      ActivePage = tbsPrincipal
-      TabIndex = 0
       inherited tbsPrincipal: TTabSheet
         inherited pnlFundoTbs1: TPanel
           inherited pnlOpcoes: TPanel
@@ -133,6 +131,8 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
     object actTotalPorMes: TAction[10]
       Caption = 'Total Anual Por Mês'
       OnExecute = actTotalPorMesExecute
+    end
+    inherited actImprimir: TAction[11]
     end
   end
 end

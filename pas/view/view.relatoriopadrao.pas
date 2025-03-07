@@ -14,6 +14,7 @@ type
 
   TfrmRelatorioPadrao = class(TForm)
     actFechar: TAction;
+    actImprimir: TAction;
     actProcurar: TAction;
     actMaisZoom: TAction;
     actMenosZoom: TAction;
@@ -22,6 +23,7 @@ type
     actTxt: TAction;
     actList: TActionList;
     btnFechar: TSpeedButton;
+    btnImprimir: TSpeedButton;
     fpnlOpcoes: TFlowPanel;
     frPreview: TfrPreview;
     img: TImageList;
@@ -41,6 +43,7 @@ type
     tbsPrincipal: TTabSheet;
     procedure actCsvExecute(Sender: TObject);
     procedure actFecharExecute(Sender: TObject);
+    procedure actImprimirExecute(Sender: TObject);
     procedure actPdfExecute(Sender: TObject);
     procedure actProcurarExecute(Sender: TObject);
     procedure actTxtExecute(Sender: TObject);
@@ -74,6 +77,11 @@ begin
     pgc.ActivePage := tbsPrincipal;
     actFechar.ImageIndex := 0;
   end;
+end;
+
+procedure TfrmRelatorioPadrao.actImprimirExecute(Sender: TObject);
+begin
+  frPreview.Print;
 end;
 
 procedure TfrmRelatorioPadrao.actCsvExecute(Sender: TObject);

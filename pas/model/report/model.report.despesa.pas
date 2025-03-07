@@ -5,7 +5,7 @@ unit model.report.despesa;
 interface
 
 uses
-  Classes, SysUtils, model.report.padrao;
+  Classes, SysUtils, StdCtrls, model.report.padrao, model.dao.padrao;
 
 type
 
@@ -13,6 +13,7 @@ type
 
   TDespesaReport = Class
   private
+    DAO: TPadraoDAO;
     FSQL: String;
     const
       NomeMes: array  [1..12] of string = ('Janeiro', 'Fevereiro', 'Março',
@@ -20,10 +21,19 @@ type
       'Novembro', 'Dezembro');
   public
     dmRelatorio: TdmPadraoReport;
-    function PorPeriodo(dInicial, dFinal: TDate; Tipo: Integer; Busca: String; out Erro: String): Boolean;
+
+    {$Region 'Relatorios'}
+    function PorPeriodo(dInicial, dFinal: TDate; Tipo, BuscaId: Integer; Busca: String; out Erro: String): Boolean;
     function ComparativoMensal(anoInicial, anoFinal, mes: Integer; out Erro: String): Boolean;
     function ComparativoAnual(anoInicial, anoFinal: Integer; out Erro: String): Boolean;
     function TotalPorMes(ano: Integer; out Erro: String): Boolean;
+    {$EndRegion}
+
+    {$Region 'Buscas Filtros'}
+    procedure PesquisaGenerica(Tabela: TTabela; objNome: TObject; lbId: TListBox; busca: String;
+                                Limitacao: Integer; out QtdRegistro: Integer);
+    {$EndRegion}
+
     constructor Create;
     destructor Destroy; override;
 end;
@@ -32,7 +42,7 @@ implementation
 
 { TDespesaReport }
 
-function TDespesaReport.PorPeriodo(dInicial, dFinal: TDate; Tipo: Integer;
+function TDespesaReport.PorPeriodo(dInicial, dFinal: TDate; Tipo, BuscaId: Integer;
   Busca: String; out Erro: String): Boolean;
 var
   TipoDeBusca: String;
@@ -50,7 +60,7 @@ begin
             'left join banco bco on bco.id = cb.id_banco ' +
             'left join subtipo_despesa sd on sd.id = d.id_subtipo ' +
             'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-            'where d.data between :inicial and :final ';
+            'where d.paga = true and d.data between :inicial and :final ';
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
@@ -93,17 +103,17 @@ begin
       end;
       7:
       begin
-        FSQL := FSQL + 'and Upper(f.nome) like :busca ';
+        FSQL := FSQL + 'and f.id = :busca ';
         TipoDeBusca := 'Forma de Pagamento';
       end;
       8:
       begin
-        FSQL := FSQL + 'and Upper(sd.nome) like :busca ';
+        FSQL := FSQL + 'and sd.id = :busca ';
         TipoDeBusca := 'Subtipo de despesa';
       end;
       9:
       begin
-        FSQL := FSQL + 'and Upper(td.nome) like :busca ';
+        FSQL := FSQL + 'and td.id = :busca ';
         TipoDeBusca := 'Tipo de despesa';
       end;
     end;
@@ -114,7 +124,11 @@ begin
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
     dmRelatorio.qryPadrao.ParamByName('inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('final').AsDate    := dFinal;
-    dmRelatorio.qryPadrao.ParamByName('busca').AsString  := '%'+UpperCase(Busca)+'%';
+
+    if BuscaId > 0 then
+      dmRelatorio.qryPadrao.ParamByName('busca').AsInteger := BuscaId
+    else
+      dmRelatorio.qryPadrao.ParamByName('busca').AsString  := '%'+UpperCase(Busca)+'%';
 
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
@@ -158,9 +172,10 @@ begin
             '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
             '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
             ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-            'group by mes, ano '+
+            'group by mes, ano, paga '+
             'having extract(year from data) between :ano_inicial and :ano_final ' +
-            'and extract(month from data) = :mes_informado '+
+            'and extract(month from data) = :mes_informado and ' +
+            'paga = true '+
             'order by ano desc, mes desc';
 
     dmRelatorio.qryPadrao.Close;
@@ -199,8 +214,9 @@ begin
     FSQL := 'select sum(total)/365 as med_diaria, avg(total) as media, '+
             'sum(total) as total, extract(year from data) as ano, ' +
             'count(id) as qtd_despesa from despesa '+
-            'group by ano '+
+            'group by ano, paga '+
             'having extract(year from data) between :ano_inicial and :ano_final ' +
+            'and paga = true ' +
             'order by ano desc';
 
     dmRelatorio.qryPadrao.Close;
@@ -249,8 +265,9 @@ begin
             '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
             '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
             ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-            'group by mes, ano '+
-            'having extract(year from data) = :ano_informado ' +
+            'group by mes, ano, paga '+
+            'having extract(year from data) = :ano_informado and ' +
+            'paga = true ' +
             'order by mes asc';
 
     dmRelatorio.qryPadrao.Close;
@@ -277,14 +294,22 @@ begin
   end;
 end;
 
+procedure TDespesaReport.PesquisaGenerica(Tabela: TTabela; objNome: TObject;
+  lbId: TListBox; busca: String; Limitacao: Integer; out QtdRegistro: Integer);
+begin
+  DAO.PesquisaGenerica(Tabela, objNome, lbId, busca, Limitacao, QtdRegistro);
+end;
+
 constructor TDespesaReport.Create;
 begin
+  DAO := TPadraoDAO.Create;
   dmRelatorio := TdmPadraoReport.Create(nil);
   FSQL := '';
 end;
 
 destructor TDespesaReport.Destroy;
 begin
+  FreeAndNil(DAO);
   FreeAndNil(dmRelatorio);
   inherited Destroy;
 end;
