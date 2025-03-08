@@ -1,4 +1,4 @@
-object dmPadraoReport: TdmPadraoReport
+object dmConexaoReport: TdmConexaoReport
   OnCreate = DataModuleCreate
   OldCreateOrder = False
   Height = 500

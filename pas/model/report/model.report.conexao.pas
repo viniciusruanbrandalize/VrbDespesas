@@ -1,4 +1,4 @@
-unit model.report.padrao;
+unit model.report.conexao;
 
 {
   Componentes SQLConnector, SQLTransaction, SQLDBLibraryLoader são usados
@@ -16,9 +16,9 @@ uses
 
 type
 
-  { TdmPadraoReport }
+  { TdmConexaoReport }
 
-  TdmPadraoReport = class(TDataModule)
+  TdmConexaoReport = class(TDataModule)
     frCSVExport: TfrCSVExport;
     frDBDataSet: TfrDBDataSet;
     frDesigner: TfrDesigner;
@@ -40,20 +40,20 @@ type
   end;
 
 var
-  dmPadraoReport: TdmPadraoReport;
+  dmConexaoReport: TdmConexaoReport;
 
 implementation
 
 {$R *.lfm}
 
-{ TdmPadraoReport }
+{ TdmConexaoReport }
 
-procedure TdmPadraoReport.DataModuleCreate(Sender: TObject);
+procedure TdmConexaoReport.DataModuleCreate(Sender: TObject);
 begin
   ConfiguraComponentes();
 end;
 
-procedure TdmPadraoReport.ConfiguraComponentes();
+procedure TdmConexaoReport.ConfiguraComponentes();
 begin
   FDir := ExtractFilePath(ParamStr(0))+'reports\';
   if qryPadrao.Active then
@@ -64,7 +64,7 @@ begin
   frReport.Dataset     := frDBDataSet;
 end;
 
-procedure TdmPadraoReport.CarregarLogo();
+procedure TdmConexaoReport.CarregarLogo();
 begin
   if Assigned(frReport.FindObject('imgLogo')) then
     TfrPictureView(frReport.FindObject('imgLogo')).Picture.LoadFromFile(FDir+'logo.ico');

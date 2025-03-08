@@ -34,12 +34,15 @@ type
     FAntecipacao: Double;
     FCadastro: TDateTime;
     FAlteracao: TDateTime;
+    FTipo: Integer;
+    FDescricao: String;
     function GetAlteracao: TDateTime;
     function GetAntecipacao: Double;
     function GetCadastro: TDateTime;
     function GetContaBancaria: TContaBancaria;
     function GetData: TDate;
     function GetDecimoTerceiro: Boolean;
+    function GetDescricao: String;
     function GetDonoCadastro: TParticipante;
     function GetFerias: Boolean;
     function GetFormaPagamento: TFormaPagamento;
@@ -49,6 +52,7 @@ type
     function GetIR: Double;
     function GetPagador: TParticipante;
     function GetPix: TPix;
+    function GetTipo: Integer;
     function GetUsuarioCadastro: TUsuario;
     function GetValorBase: Double;
     function GetValorDecimoTerceiro: Double;
@@ -60,6 +64,7 @@ type
     procedure SetContaBancaria(AValue: TContaBancaria);
     procedure SetData(AValue: TDate);
     procedure SetDecimoTerceiro(AValue: Boolean);
+    procedure SetDescricao(AValue: String);
     procedure SetDonoCadastro(AValue: TParticipante);
     procedure SetFerias(AValue: Boolean);
     procedure SetFormaPagamento(AValue: TFormaPagamento);
@@ -69,6 +74,7 @@ type
     procedure SetIR(AValue: Double);
     procedure SetPagador(AValue: TParticipante);
     procedure SetPix(AValue: TPix);
+    procedure SetTipo(AValue: Integer);
     procedure SetUsuarioCadastro(AValue: TUsuario);
     procedure SetValorBase(AValue: Double);
     procedure SetValorDecimoTerceiro(AValue: Double);
@@ -79,6 +85,8 @@ type
     destructor Destroy; override;
   published
     property Id: Integer read GetId write SetId;
+    property Tipo: Integer read GetTipo write SetTipo;
+    property Descricao: String read GetDescricao write SetDescricao;
     property Data: TDate read GetData write SetData;
     property HoraExtra: Double read GetHoraExtra write SetHoraExtra;
     property INSS: Double read GetINSS write SetINSS;
@@ -139,6 +147,11 @@ begin
   Result := FDecimoTerceiro;
 end;
 
+function TRecebimento.GetDescricao: String;
+begin
+  Result := FDescricao;
+end;
+
 function TRecebimento.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
@@ -177,6 +190,11 @@ end;
 function TRecebimento.GetPix: TPix;
 begin
   Result := FPix;
+end;
+
+function TRecebimento.GetTipo: Integer;
+begin
+  Result := FTipo;
 end;
 
 function TRecebimento.GetUsuarioCadastro: TUsuario;
@@ -234,6 +252,11 @@ begin
   FDecimoTerceiro := AValue;
 end;
 
+procedure TRecebimento.SetDescricao(AValue: String);
+begin
+  FDescricao := AValue;
+end;
+
 procedure TRecebimento.SetDonoCadastro(AValue: TParticipante);
 begin
   FDonoCadastro:=AValue;
@@ -279,6 +302,11 @@ begin
   FPix:=AValue;
 end;
 
+procedure TRecebimento.SetTipo(AValue: Integer);
+begin
+  FTipo := AValue;
+end;
+
 procedure TRecebimento.SetUsuarioCadastro(AValue: TUsuario);
 begin
   FUsuarioCadastro:=AValue;
@@ -306,11 +334,20 @@ end;
 
 constructor TRecebimento.Create;
 begin
-  //
+  FFormaPagamento  := TFormaPagamento.Create;
+  FContaBancaria   := TContaBancaria.Create;
+  FUsuarioCadastro := TUsuario.Create;
+  FPagador         := TParticipante.Create;
+  FDonoCadastro    := TParticipante.Create;
 end;
 
 destructor TRecebimento.Destroy;
 begin
+  FreeAndNil(FFormaPagamento);
+  FreeAndNil(FContaBancaria);
+  FreeAndNil(FUsuarioCadastro);
+  FreeAndNil(FPagador);
+  FreeAndNil(FDonoCadastro);
   inherited Destroy;
 end;
 

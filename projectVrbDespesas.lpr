@@ -29,12 +29,13 @@ uses
   model.dao.tipodespesa, model.dao.subtipodespesa, model.dao.usuario,
   model.dao.login, model.dao.bandeira, model.dao.contabancaria,
   model.dao.participante, model.dao.despesa, model.dao.padrao,
-  model.ini.configuracao, model.ini.erro, model.ini.conexao,
-  view.subtipodespesa, view.usuario, view.logerro, view.loglogin, view.login,
-  view.bandeira, view.contabancaria, view.participante, view.despesa, Controls,
-  lib.visual, indylaz, model.report.padrao, view.relatoriopadrao, 
-view.relatoriodespesa, view.relatorioparametro, model.report.despesa, 
-controller.relatoriodespesa;
+  model.dao.recebimento, model.ini.configuracao, model.ini.erro,
+  model.ini.conexao, view.subtipodespesa, view.usuario, view.logerro,
+  view.loglogin, view.login, view.bandeira, view.contabancaria,
+  view.participante, view.despesa, Controls, lib.visual, indylaz,
+  view.relatoriopadrao, view.relatoriodespesa, view.relatorioparametro,
+  model.report.despesa, model.report.conexao, controller.relatoriodespesa,
+  controller.recebimento, view.recebimento;
 
 {$R *.res}
 

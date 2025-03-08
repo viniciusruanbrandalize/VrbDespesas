@@ -1,0 +1,320 @@
+unit model.dao.recebimento;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, ComCtrls, SQLDB, model.dao.padrao, model.entity.recebimento,
+  model.connection.conexao1;
+
+type
+
+  { TRecebimentoDAO }
+
+  TRecebimentoDAO = class(TPadraoDAO)
+  private
+
+  public
+    procedure Listar(lv: TListView; Tipo: Integer);
+    procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
+    function BuscarPorId(Recebimento : TRecebimento; Id: Integer; out Erro: String): Boolean;
+    function Inserir(Recebimento: TRecebimento; out Erro: string): Boolean;
+    function Editar(Recebimento: TRecebimento; out Erro: string): Boolean;
+    function Excluir(Id: Integer; out Erro: string): Boolean;
+    constructor Create; override;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TRecebimentoDAO }
+
+procedure TRecebimentoDAO.Listar(lv: TListView; Tipo: Integer);
+var
+  sql: String;
+  item : TListItem;
+begin
+  try
+
+    sql := 'select r.*, p.nome as nome_pagador from recebimento r ' +
+           'left join participante p on p.id = r.id_pagador ' +
+           'where r.tipo = :tipo ' +
+           'order by r.data desc';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('tipo').AsInteger := Tipo;
+    Qry.Open;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('data').AsString);
+      item.SubItems.Add(qry.FieldByName('nome_pagador').AsString);
+      case tipo of
+        0:
+        begin
+          item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('hora_extra').AsFloat));
+          item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('inss').AsFloat));
+          item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('ir').AsFloat));
+          item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('valor_base').AsFloat));
+        end;
+        1:
+        begin
+          item.SubItems.Add(qry.FieldByName('descricao').AsString);
+        end;
+      end;
+      item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('valor_total').AsFloat));
+      Qry.Next;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+procedure TRecebimentoDAO.Pesquisar(lv: TListView; Campo, Busca: String);
+var
+  sql: String;
+  item : TListItem;
+  valor: Double;
+begin
+  try
+
+    if TryStrToFloat(Busca, valor) then
+    begin
+      sql := 'select * from recebimento ' +
+             'where '+campo+' = :busca '+
+             'order by data desc';
+    end
+    else
+    begin
+      sql := 'select * from recebimento ' +
+             'where UPPER('+campo+') like :busca '+
+             'order by data desc';
+    end;
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('nome').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
+  end;
+end;
+
+function TRecebimentoDAO.BuscarPorId(Recebimento: TRecebimento; Id: Integer; out Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select r.*, p.nome as nome_pagador, f.nome as nome_forma_pgto, ' +
+           'bco.nome as nome_banco, cb.numero as numero_conta, cb.agencia as agencia_conta ' +
+           'from recebimento r ' +
+           'left join participante p on p.id = r.id_pagador ' +
+           'left join forma_pgto f on f.id = r.id_forma_pgto ' +
+           'left join conta_bancaria cb on cb.id = r.id_conta_bancaria ' +
+           'left join banco bco on bco.id = cb.id_banco ' +
+           'where r.id = :id ' +
+           'order by r.id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger := id;
+    Qry.Open;
+
+    if Qry.RecordCount = 1 then
+    begin
+      Recebimento.Id                  := Qry.FieldByName('id').AsInteger;
+      Recebimento.Data                := Qry.FieldByName('data').AsDateTime;
+      Recebimento.HoraExtra           := Qry.FieldByName('hora_extra').AsFloat;
+      Recebimento.HoraExtra           := Qry.FieldByName('hora_extra').AsFloat;
+      Recebimento.IR                  := Qry.FieldByName('ir').AsFloat;
+      Recebimento.ValorTotal          := Qry.FieldByName('valor_total').AsFloat;
+      Recebimento.ValorBase           := Qry.FieldByName('valor_base').AsFloat;
+      Recebimento.ValorDecimoTerceiro := Qry.FieldByName('valor_13salario').AsFloat;
+      Recebimento.ValorFerias         := Qry.FieldByName('valor_ferias').AsFloat;
+      Recebimento.Antecipacao         := Qry.FieldByName('antecipacao').AsFloat;
+      Recebimento.DecimoTerceiro      := Qry.FieldByName('salario13').AsBoolean;
+      Recebimento.Ferias              := Qry.FieldByName('ferias').AsBoolean;
+      Recebimento.Cadastro            := Qry.FieldByName('cadastro').AsDateTime;
+      Recebimento.Alteracao           := Qry.FieldByName('alteracao').AsDateTime;
+      Recebimento.FormaPagamento.Id   := Qry.FieldByName('id_forma_pgto').AsInteger;
+      Recebimento.ContaBancaria.Id    := Qry.FieldByName('id_conta_bancaria').AsInteger;
+      Recebimento.Pagador.Id          := Qry.FieldByName('id_pagador').AsInteger;
+      Result := True;
+    end
+    else
+    if Qry.RecordCount > 1 then
+    begin
+      Erro := 'Mais de um objeto foi retornado na busca por código!';
+      Result := False;
+    end
+    else
+    begin
+      Erro := 'Nenhum objeto foi encontrado!';
+      Result := False;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TRecebimentoDAO.Inserir(Recebimento: TRecebimento; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'insert into recebimento (id, data, hora_extra, inss, ir, valor_total, ' +
+           'valor_base, salario13, ferias, valor_13salario, valor_ferias, antecipacao, ' +
+           'id_forma_pgto, id_conta_bancaria, id_pagador, id_dono_cadastro, id_usuario_cadastro, ' +
+           'cadastro) values (:id, :data, :hora_extra, :inss, :ir, :valor_total, ' +
+           ':valor_base, :salario13, :ferias, :valor_13salario, :valor_ferias, :antecipacao, ' +
+           ':id_forma_pgto, :id_conta_bancaria, :id_pagador, :id_dono_cadastro, :id_usuario_cadastro, ' +
+           ':cadastro)';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger               := Recebimento.Id;
+    Qry.ParamByName('data').AsDate                := Recebimento.Data;
+    Qry.ParamByName('hora_extra').AsFloat         := Recebimento.HoraExtra;
+    Qry.ParamByName('inss').AsFloat               := Recebimento.INSS;
+    Qry.ParamByName('ir').AsFloat                 := Recebimento.IR;
+    Qry.ParamByName('valor_total').AsFloat        := Recebimento.ValorTotal;
+    Qry.ParamByName('valor_base').AsFloat         := Recebimento.ValorBase;
+    Qry.ParamByName('valor_13salario').AsFloat    := Recebimento.ValorDecimoTerceiro;
+    Qry.ParamByName('valor_ferias').AsFloat       := Recebimento.ValorFerias;
+    Qry.ParamByName('antecipacao').AsFloat        := Recebimento.Antecipacao;
+    Qry.ParamByName('salario13').AsBoolean        := Recebimento.DecimoTerceiro;
+    Qry.ParamByName('ferias').AsBoolean           := Recebimento.Ferias;
+    Qry.ParamByName('cadastro').AsDateTime        := Recebimento.Cadastro;
+    Qry.ParamByName('id_forma_pgto').AsInteger    := Recebimento.FormaPagamento.Id;
+    Qry.ParamByName('id_pagador').AsInteger       := Recebimento.Pagador.Id;
+    Qry.ParamByName('id_usuario_cadastro').AsInteger := Recebimento.UsuarioCadastro.Id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := 77;  //arrumar
+
+    if Recebimento.ContaBancaria.Id > 0 then
+      Qry.ParamByName('id_conta_bancaria').AsInteger := Recebimento.ContaBancaria.Id;
+
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao inserir Recebimento: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TRecebimentoDAO.Editar(Recebimento: TRecebimento; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'update recebimento set data=:data, hora_extra=:hora_extra, inss=:inss, ' +
+           'ir=:ir, valor_total=:valor_total, valor_base=:valor_base, salario13=:salario13, ' +
+           'ferias=:ferias, valor_13salario=:valor_13salario, valor_ferias=:valor_ferias, ' +
+           'antecipacao=:antecipacao, id_forma_pgto=:id_forma_pgto, ' +
+           'id_conta_bancaria=:id_conta_bancaria, id_pagador=:id_pagador, ' +
+           'alteracao=:alteracao '+
+           'where id = :id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger               := Recebimento.Id;
+    Qry.ParamByName('data').AsDate                := Recebimento.Data;
+    Qry.ParamByName('hora_extra').AsFloat         := Recebimento.HoraExtra;
+    Qry.ParamByName('inss').AsFloat               := Recebimento.INSS;
+    Qry.ParamByName('ir').AsFloat                 := Recebimento.IR;
+    Qry.ParamByName('valor_total').AsFloat        := Recebimento.ValorTotal;
+    Qry.ParamByName('valor_base').AsFloat         := Recebimento.ValorBase;
+    Qry.ParamByName('valor_13salario').AsFloat    := Recebimento.ValorDecimoTerceiro;
+    Qry.ParamByName('valor_ferias').AsFloat       := Recebimento.ValorFerias;
+    Qry.ParamByName('antecipacao').AsFloat        := Recebimento.Antecipacao;
+    Qry.ParamByName('salario13').AsBoolean        := Recebimento.DecimoTerceiro;
+    Qry.ParamByName('ferias').AsBoolean           := Recebimento.Ferias;
+    Qry.ParamByName('alteracao').AsDateTime       := Recebimento.Alteracao;
+    Qry.ParamByName('id_forma_pgto').AsInteger    := Recebimento.FormaPagamento.Id;
+    Qry.ParamByName('id_pagador').AsInteger       := Recebimento.Pagador.Id;
+
+    if Recebimento.ContaBancaria.Id > 0 then
+      Qry.ParamByName('id_conta_bancaria').AsInteger := Recebimento.ContaBancaria.Id;
+
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := 'Ocorreu um erro ao alterar Recebimento: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TRecebimentoDAO.Excluir(Id: Integer; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'delete from recebimento where id = :id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id').AsInteger  := Id;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao excluir Recebimento: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+constructor TRecebimentoDAO.Create;
+begin
+  inherited;
+end;
+
+destructor TRecebimentoDAO.Destroy;
+begin
+  inherited Destroy;
+end;
+
+end.
+

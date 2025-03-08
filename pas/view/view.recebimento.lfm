@@ -1,0 +1,11 @@
+inherited frmRecebimento: TfrmRecebimento
+  Caption = 'Lançamento de Recebimentos'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  inherited actList: TActionList
+    inherited actPesquisar: TAction
+      OnExecute = actPesquisarExecute
+    end
+  end
+end

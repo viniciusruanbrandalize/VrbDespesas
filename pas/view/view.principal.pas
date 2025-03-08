@@ -6,10 +6,10 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
-  Menus, StdCtrls, Buttons, controller.principal, view.banco,
+  Menus, StdCtrls, Buttons, controller.principal, view.banco, lib.types,
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
-  view.participante, view.despesa, view.relatoriodespesa;
+  view.participante, view.despesa, view.relatoriodespesa, view.recebimento;
 
 type
 
@@ -28,12 +28,13 @@ type
     actFinanceiro: TAction;
     actBandeira: TAction;
     actContaBancaria: TAction;
+    actRecebimentoGeral: TAction;
     actRelatorioDespesa: TAction;
     actVoltarFinanceiro: TAction;
     actLogLogin: TAction;
     actLogErro: TAction;
     actVoltar: TAction;
-    actRecebimento: TAction;
+    actRecebimentoSalario: TAction;
     actSubtipoDespesa: TAction;
     actTipoDespesa: TAction;
     actParticipante: TAction;
@@ -44,6 +45,7 @@ type
     actMenu: TActionList;
     AppProperties: TApplicationProperties;
     btnBanco: TSpeedButton;
+    btnRecebimentoGeral: TSpeedButton;
     btnRelDespesa: TSpeedButton;
     btnBandeira: TSpeedButton;
     btnConta: TSpeedButton;
@@ -53,7 +55,7 @@ type
     btnDespesa: TSpeedButton;
     btnCopiaSeguranca: TSpeedButton;
     btnLoglogin: TSpeedButton;
-    btnRecebimento: TSpeedButton;
+    btnRecebimentoSalario: TSpeedButton;
     btnSubtipo: TSpeedButton;
     btnOperacao: TSpeedButton;
     btnAjuda: TSpeedButton;
@@ -103,6 +105,8 @@ type
     procedure actLogLoginExecute(Sender: TObject);
     procedure actOperacaoExecute(Sender: TObject);
     procedure actParticipanteExecute(Sender: TObject);
+    procedure actRecebimentoGeralExecute(Sender: TObject);
+    procedure actRecebimentoSalarioExecute(Sender: TObject);
     procedure actRelatorioDespesaExecute(Sender: TObject);
     procedure actRelatorioExecute(Sender: TObject);
     procedure actSubtipoDespesaExecute(Sender: TObject);
@@ -237,6 +241,18 @@ procedure TfrmPrincipal.actParticipanteExecute(Sender: TObject);
 begin
   Controller.AbrirTelaParticipante(frmParticipante, pnlAbreForms, Self, False);
   BarraLateralVazia(pnlMenuCadastro, false);
+end;
+
+procedure TfrmPrincipal.actRecebimentoGeralExecute(Sender: TObject);
+begin
+  Controller.AbrirTelaRecebimento(frmRecebimento, pnlAbreForms, Self, telaGeral);
+  BarraLateralVazia(pnlMenuOperacao , false);
+end;
+
+procedure TfrmPrincipal.actRecebimentoSalarioExecute(Sender: TObject);
+begin
+  Controller.AbrirTelaRecebimento(frmRecebimento, pnlAbreForms, Self, telaSalario);
+  BarraLateralVazia(pnlMenuOperacao , false);
 end;
 
 procedure TfrmPrincipal.actRelatorioDespesaExecute(Sender: TObject);

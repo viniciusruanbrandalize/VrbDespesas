@@ -9,8 +9,8 @@
         <Filename Value="projectVrbDespesas.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="21"/>
-        <CursorPos X="56" Y="44"/>
+        <TopLine Value="4"/>
+        <CursorPos X="72" Y="42"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -19,10 +19,12 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="298"/>
-        <CursorPos X="5" Y="358"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="335"/>
+        <CursorPos X="5" Y="374"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.banco.pas"/>
@@ -57,8 +59,8 @@
         <Filename Value="pas\model\entity\model.entity.recebimento.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="257"/>
-        <CursorPos X="44" Y="272"/>
+        <TopLine Value="212"/>
+        <CursorPos X="5" Y="354"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -106,8 +108,8 @@
         <Filename Value="pas\controller\controller.principal.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="18"/>
-        <CursorPos X="17" Y="33"/>
+        <TopLine Value="47"/>
+        <CursorPos X="6" Y="87"/>
         <UsageCount Value="202"/>
       </Unit>
       <Unit>
@@ -149,6 +151,7 @@
         <Filename Value="pas\lib\lib.types.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
+        <CursorPos X="10" Y="18"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -168,10 +171,12 @@
         <ComponentName Value="frmBanco"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="74"/>
-        <CursorPos X="36" Y="103"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="101"/>
+        <CursorPos X="17" Y="118"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="pas\lib\lib.bcrypt.pas"/>
@@ -419,21 +424,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="23"/>
         <CursorPos X="18" Y="53"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="201"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.loglogin.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="23" Y="44"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="201"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.login.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="25" Y="158"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="201"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.login.pas"/>
@@ -444,7 +449,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="75"/>
         <CursorPos X="53" Y="100"/>
-        <UsageCount Value="194"/>
+        <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.login.pas"/>
@@ -452,7 +457,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="44"/>
         <CursorPos X="36" Y="68"/>
-        <UsageCount Value="194"/>
+        <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.bandeira.pas"/>
@@ -460,14 +465,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="204"/>
         <CursorPos X="48" Y="227"/>
-        <UsageCount Value="188"/>
+        <UsageCount Value="195"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.bandeira.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="55" Y="60"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="194"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.bandeira.pas"/>
@@ -478,21 +483,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="104"/>
         <CursorPos X="33" Y="34"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="194"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.contabancaria.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5" Y="644"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="193"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.contabancaria.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="55" Y="33"/>
-        <UsageCount Value="184"/>
+        <UsageCount Value="191"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.contabancaria.pas"/>
@@ -503,22 +508,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="612"/>
         <CursorPos X="79" Y="631"/>
-        <UsageCount Value="179"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.participante.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="121"/>
-        <UsageCount Value="164"/>
+        <UsageCount Value="171"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.participante.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="90"/>
         <CursorPos X="68" Y="92"/>
-        <UsageCount Value="163"/>
+        <UsageCount Value="170"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.participante.pas"/>
@@ -527,16 +531,16 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="288"/>
-        <CursorPos Y="253"/>
-        <UsageCount Value="163"/>
+        <TopLine Value="32"/>
+        <CursorPos X="53" Y="61"/>
+        <UsageCount Value="170"/>
       </Unit>
       <Unit>
         <Filename Value="pas\lib\lib.cep.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="45" Y="99"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="164"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\ini\model.ini.configuracao.pas"/>
@@ -544,19 +548,19 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="57"/>
         <CursorPos X="22" Y="78"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="164"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\ini\model.ini.conexao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="154"/>
+        <UsageCount Value="161"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\ini\model.ini.erro.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="154"/>
+        <UsageCount Value="161"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.despesa.pas"/>
@@ -564,14 +568,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="3"/>
         <CursorPos X="81" Y="286"/>
-        <UsageCount Value="150"/>
+        <UsageCount Value="157"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.despesa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="44" Y="18"/>
-        <UsageCount Value="147"/>
+        <UsageCount Value="154"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.despesa.pas"/>
@@ -582,7 +586,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="746"/>
         <CursorPos X="55" Y="780"/>
-        <UsageCount Value="147"/>
+        <UsageCount Value="154"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.padrao.pas"/>
@@ -590,14 +594,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="133"/>
         <CursorPos X="3" Y="133"/>
-        <UsageCount Value="138"/>
+        <UsageCount Value="145"/>
       </Unit>
       <Unit>
         <Filename Value="pas\lib\lib.visual.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="55" Y="19"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="133"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.arquivo.pas"/>
@@ -605,18 +609,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="100"/>
         <CursorPos X="36" Y="19"/>
-        <UsageCount Value="101"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\report\model.report.padrao.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="dmPadraoReport"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-        <CursorPos X="32" Y="20"/>
-        <UsageCount Value="64"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.relatoriopadrao.pas"/>
@@ -627,7 +620,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="79"/>
         <CursorPos X="46" Y="100"/>
-        <UsageCount Value="62"/>
+        <UsageCount Value="69"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.relatoriodespesa.pas"/>
@@ -635,12 +628,10 @@
         <ComponentName Value="frmRelatorioDespesa"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="168"/>
-        <CursorPos X="38" Y="193"/>
-        <UsageCount Value="59"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="66"/>
+        <CursorPos X="61" Y="182"/>
+        <UsageCount Value="66"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.relatorioparametro.pas"/>
@@ -648,31 +639,76 @@
         <ComponentName Value="frmRelatorioParametro"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="114"/>
         <CursorPos Y="132"/>
-        <UsageCount Value="55"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="62"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\report\model.report.despesa.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="241"/>
-        <CursorPos X="79" Y="248"/>
-        <UsageCount Value="52"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="277"/>
+        <CursorPos X="34" Y="16"/>
+        <UsageCount Value="59"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.relatoriodespesa.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="60"/>
         <CursorPos X="28" Y="98"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="59"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\report\model.report.conexao.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dmConexaoReport"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="68" Y="7"/>
+        <UsageCount Value="27"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.recebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRecebimento"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="12"/>
+        <CursorPos X="47" Y="21"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\dao\model.dao.recebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="38"/>
+        <CursorPos X="44" Y="80"/>
+        <UsageCount Value="27"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.recebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="9"/>
+        <CursorPos X="36" Y="37"/>
+        <UsageCount Value="27"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\report\model.report.padrao.pas"/>
+        <ComponentName Value="dmConexaoReport"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="46" Y="19"/>
+        <UsageCount Value="64"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.sequencia.pas"/>
@@ -984,126 +1020,70 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
+    <JumpHistory HistoryIndex="15">
       <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="235" TopLine="201"/>
+        <Filename Value="pas\view\view.recebimento.pas"/>
+        <Caret Line="19" Column="52"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="186" TopLine="162"/>
+        <Filename Value="pas\view\view.recebimento.pas"/>
+        <Caret Line="47" Column="42" TopLine="16"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="187" TopLine="162"/>
+        <Filename Value="pas\view\view.recebimento.pas"/>
+        <Caret Line="35" Column="18" TopLine="26"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="194" TopLine="162"/>
+        <Filename Value="pas\view\view.recebimento.pas"/>
+        <Caret Line="9" Column="33" TopLine="2"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="193" TopLine="162"/>
+        <Filename Value="pas\view\view.recebimento.pas"/>
+        <Caret Line="67" Column="20" TopLine="36"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="194" TopLine="162"/>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="46" Column="32" TopLine="319"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="177" TopLine="162"/>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="47" Column="32" TopLine="47"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="179" TopLine="162"/>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="240" Column="18" TopLine="221"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatorioparametro.pas"/>
-        <Caret Line="132" TopLine="114"/>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="256" Column="49" TopLine="234"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="182" TopLine="162"/>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="249" Column="50" TopLine="334"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="183" TopLine="162"/>
+        <Filename Value="pas\view\view.principal.pas"/>
+        <Caret Line="250" Column="50" TopLine="250"/>
       </Position>
       <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="184" TopLine="162"/>
+        <Filename Value="pas\view\view.recebimento.pas"/>
+        <Caret Line="9" Column="52" TopLine="42"/>
       </Position>
       <Position>
-        <Filename Value="pas\controller\controller.relatoriodespesa.pas"/>
-        <Caret Line="60" TopLine="39"/>
+        <Filename Value="pas\model\dao\model.dao.recebimento.pas"/>
+        <Caret Line="19" Column="18"/>
       </Position>
       <Position>
-        <Filename Value="pas\controller\controller.relatoriodespesa.pas"/>
-        <Caret Line="61" TopLine="39"/>
+        <Filename Value="pas\model\dao\model.dao.recebimento.pas"/>
+        <Caret Line="15" Column="45"/>
       </Position>
       <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="220" TopLine="201"/>
+        <Filename Value="pas\model\dao\model.dao.recebimento.pas"/>
+        <Caret Line="59" Column="16" TopLine="36"/>
       </Position>
       <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="221" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="222" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="225" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="227" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="230" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="232" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="233" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="235" TopLine="201"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="186" TopLine="162"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="187" TopLine="162"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="194" TopLine="162"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="193" TopLine="162"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="194" TopLine="162"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\view\view.relatoriodespesa.pas"/>
-        <Caret Line="191" Column="25" TopLine="151"/>
-      </Position>
-      <Position>
-        <Filename Value="pas\model\report\model.report.despesa.pas"/>
-        <Caret Line="273" Column="39" TopLine="257"/>
+        <Filename Value="pas\controller\controller.recebimento.pas"/>
+        <Caret Line="37" Column="36" TopLine="9"/>
       </Position>
     </JumpHistory>
     <RunParams>

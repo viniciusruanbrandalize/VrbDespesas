@@ -447,12 +447,12 @@ object frmPrincipal: TfrmPrincipal
         Margin = 7
         ParentFont = False
       end
-      object btnRecebimento: TSpeedButton
+      object btnRecebimentoSalario: TSpeedButton
         Left = 0
         Height = 32
         Top = 64
         Width = 40
-        Action = actRecebimento
+        Action = actRecebimentoSalario
         Align = alTop
         Flat = True
         Font.Color = clWhite
@@ -477,6 +477,23 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = [fsBold]
         Images = imgList
         ImageIndex = 5
+        ImageWidth = 32
+        Margin = 7
+        ParentFont = False
+      end
+      object btnRecebimentoGeral: TSpeedButton
+        Left = 0
+        Height = 32
+        Top = 96
+        Width = 40
+        Action = actRecebimentoGeral
+        Align = alTop
+        Flat = True
+        Font.Color = clWhite
+        Font.Height = -12
+        Font.Style = [fsBold]
+        Images = imgList
+        ImageIndex = 16
         ImageWidth = 32
         Margin = 7
         ParentFont = False
@@ -832,10 +849,11 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Contas a pagar'
       ImageIndex = 8
     end
-    object actRecebimento: TAction
+    object actRecebimentoSalario: TAction
       Category = 'Operacao'
-      Caption = 'Recebimentos'
+      Caption = 'Salários'
       ImageIndex = 16
+      OnExecute = actRecebimentoSalarioExecute
     end
     object actConfiguracaoGlobal: TAction
       Category = 'Utilitario'
@@ -892,6 +910,12 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Relatório de Despesas'
       ImageIndex = 25
       OnExecute = actRelatorioDespesaExecute
+    end
+    object actRecebimentoGeral: TAction
+      Category = 'Operacao'
+      Caption = 'Recebimentos'
+      ImageIndex = 16
+      OnExecute = actRecebimentoGeralExecute
     end
   end
   object imgList: TImageList

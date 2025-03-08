@@ -10,6 +10,9 @@ uses
 type
   TOperacaoCRUD = (opNenhum, opInserir, opEditar, opExcluir, opVisualizar);
 
+type
+  TTelaRecebimento = (telaSalario, telaGeral);
+
 implementation
 
 end.

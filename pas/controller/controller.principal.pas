@@ -5,8 +5,8 @@ unit controller.principal;
 interface
 
 uses
-  Classes, SysUtils, Forms, controls, controller.erro, lib.util,
-  model.connection.conexao1, view.participante;
+  Classes, SysUtils, Forms, controls, controller.erro, lib.util, lib.types,
+  model.connection.conexao1, view.participante, view.recebimento;
 
 type
 
@@ -19,6 +19,7 @@ type
     procedure TratarErros(Sender: TObject; E: Exception);
     procedure AbrirTela(Formulario: TForm; ClasseForm: TFormClass; Modal: Boolean; AParent: TWinControl; FormularioPai: TForm);
     procedure AbrirTelaParticipante(Formulario: TfrmParticipante; AParent: TWinControl; FormularioPai: TForm; DonoCadastro: Boolean);
+    procedure AbrirTelaRecebimento(Formulario: TfrmRecebimento; AParent: TWinControl; FormularioPai: TForm; Tipo: TTelaRecebimento);
     function RetornarNomeUsuario: String;
     constructor Create;
     destructor Destroy; override;
@@ -45,6 +46,20 @@ procedure TPrincipalController.AbrirTelaParticipante(
 begin
   Formulario := TfrmParticipante.Create(FormularioPai);
   Formulario.EhDonoCadastro := DonoCadastro;
+  if AParent <> nil then
+  begin
+    Formulario.Parent := AParent;
+    Formulario.Align  := alClient;
+  end;
+  Formulario.Show;
+end;
+
+procedure TPrincipalController.AbrirTelaRecebimento(
+  Formulario: TfrmRecebimento; AParent: TWinControl; FormularioPai: TForm;
+  Tipo: TTelaRecebimento);
+begin
+  Formulario := TfrmRecebimento.Create(FormularioPai);
+  Formulario.Tipo := Tipo;
   if AParent <> nil then
   begin
     Formulario.Parent := AParent;

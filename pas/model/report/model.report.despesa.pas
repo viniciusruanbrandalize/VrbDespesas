@@ -5,7 +5,7 @@ unit model.report.despesa;
 interface
 
 uses
-  Classes, SysUtils, StdCtrls, model.report.padrao, model.dao.padrao;
+  Classes, SysUtils, StdCtrls, model.report.conexao, model.dao.padrao;
 
 type
 
@@ -20,7 +20,7 @@ type
       'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
       'Novembro', 'Dezembro');
   public
-    dmRelatorio: TdmPadraoReport;
+    dmRelatorio: TdmConexaoReport;
 
     {$Region 'Relatorios'}
     function PorPeriodo(dInicial, dFinal: TDate; Tipo, BuscaId: Integer; Busca: String; out Erro: String): Boolean;
@@ -303,7 +303,7 @@ end;
 constructor TDespesaReport.Create;
 begin
   DAO := TPadraoDAO.Create;
-  dmRelatorio := TdmPadraoReport.Create(nil);
+  dmRelatorio := TdmConexaoReport.Create(nil);
   FSQL := '';
 end;
 
