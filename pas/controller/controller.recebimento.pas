@@ -5,8 +5,8 @@ unit controller.recebimento;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, model.entity.recebimento, model.dao.recebimento,
-  model.dao.padrao;
+  Classes, SysUtils, ComCtrls, StdCtrls, model.entity.recebimento,
+  model.dao.recebimento, model.dao.padrao, model.connection.conexao1;
 
 type
 
@@ -19,6 +19,8 @@ type
     Recebimento: TRecebimento;
     procedure Listar(lv: TListView; Tipo: Integer);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure PesquisarPagador(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarFormaPagamento(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(objRecebimento : TRecebimento; Id: Integer; out Erro: String): Boolean;
     function Inserir(objRecebimento: TRecebimento; out Erro: string): Boolean;
     function Editar(objRecebimento: TRecebimento; out Erro: string): Boolean;
@@ -41,6 +43,18 @@ begin
   RecebimentoDao.Pesquisar(lv, campo, busca);
 end;
 
+procedure TRecebimentoController.PesquisarPagador(lbNome, lbId: TListBox;
+  busca: String; out QtdRegistro: Integer);
+begin
+  RecebimentoDao.PesquisaGenerica(TB_PARTICIPANTE, lbNome, lbId, busca, 10, QtdRegistro);
+end;
+
+procedure TRecebimentoController.PesquisarFormaPagamento(lbNome,
+  lbId: TListBox; busca: String; out QtdRegistro: Integer);
+begin
+  RecebimentoDao.PesquisaGenerica(TB_FORMA_PGTO, lbNome, lbId, busca, 10, QtdRegistro);
+end;
+
 function TRecebimentoController.BuscarPorId(objRecebimento: TRecebimento; Id: Integer; out
   Erro: String): Boolean;
 begin
@@ -50,6 +64,7 @@ end;
 function TRecebimentoController.Inserir(objRecebimento: TRecebimento; out Erro: string): Boolean;
 begin
   objRecebimento.Id := RecebimentoDao.GerarId(SEQ_ID_Recebimento);
+  objRecebimento.UsuarioCadastro.Id := dmConexao1.IdUsuario;
   Result := RecebimentoDao.Inserir(objRecebimento, Erro);
 end;
 

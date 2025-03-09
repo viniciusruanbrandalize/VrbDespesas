@@ -145,10 +145,13 @@ begin
     if Qry.RecordCount = 1 then
     begin
       Recebimento.Id                  := Qry.FieldByName('id').AsInteger;
+      Recebimento.Tipo                := Qry.FieldByName('tipo').AsInteger;
+      Recebimento.Descricao           := Qry.FieldByName('descricao').AsString;
       Recebimento.Data                := Qry.FieldByName('data').AsDateTime;
       Recebimento.HoraExtra           := Qry.FieldByName('hora_extra').AsFloat;
       Recebimento.HoraExtra           := Qry.FieldByName('hora_extra').AsFloat;
       Recebimento.IR                  := Qry.FieldByName('ir').AsFloat;
+      Recebimento.INSS                := Qry.FieldByName('inss').AsFloat;
       Recebimento.ValorTotal          := Qry.FieldByName('valor_total').AsFloat;
       Recebimento.ValorBase           := Qry.FieldByName('valor_base').AsFloat;
       Recebimento.ValorDecimoTerceiro := Qry.FieldByName('valor_13salario').AsFloat;
@@ -159,8 +162,13 @@ begin
       Recebimento.Cadastro            := Qry.FieldByName('cadastro').AsDateTime;
       Recebimento.Alteracao           := Qry.FieldByName('alteracao').AsDateTime;
       Recebimento.FormaPagamento.Id   := Qry.FieldByName('id_forma_pgto').AsInteger;
-      Recebimento.ContaBancaria.Id    := Qry.FieldByName('id_conta_bancaria').AsInteger;
+      if Qry.FieldByName('id_conta_bancaria').AsInteger > 0 then
+        Recebimento.ContaBancaria.Id    := Qry.FieldByName('id_conta_bancaria').AsInteger
+      else
+        Recebimento.ContaBancaria.Id  := -1;
       Recebimento.Pagador.Id          := Qry.FieldByName('id_pagador').AsInteger;
+      Recebimento.FormaPagamento.Nome := Qry.FieldByName('nome_forma_pgto').AsString;
+      Recebimento.Pagador.Nome        := Qry.FieldByName('nome_pagador').AsString;
       Result := True;
     end
     else
@@ -189,15 +197,17 @@ begin
     sql := 'insert into recebimento (id, data, hora_extra, inss, ir, valor_total, ' +
            'valor_base, salario13, ferias, valor_13salario, valor_ferias, antecipacao, ' +
            'id_forma_pgto, id_conta_bancaria, id_pagador, id_dono_cadastro, id_usuario_cadastro, ' +
-           'cadastro) values (:id, :data, :hora_extra, :inss, :ir, :valor_total, ' +
+           'cadastro, tipo, descricao) values (:id, :data, :hora_extra, :inss, :ir, :valor_total, ' +
            ':valor_base, :salario13, :ferias, :valor_13salario, :valor_ferias, :antecipacao, ' +
            ':id_forma_pgto, :id_conta_bancaria, :id_pagador, :id_dono_cadastro, :id_usuario_cadastro, ' +
-           ':cadastro)';
+           ':cadastro, :tipo, :descricao)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger               := Recebimento.Id;
+    Qry.ParamByName('tipo').AsInteger             := Recebimento.Tipo;
+    Qry.ParamByName('descricao').AsString         := Recebimento.Descricao;
     Qry.ParamByName('data').AsDate                := Recebimento.Data;
     Qry.ParamByName('hora_extra').AsFloat         := Recebimento.HoraExtra;
     Qry.ParamByName('inss').AsFloat               := Recebimento.INSS;
@@ -242,13 +252,14 @@ begin
            'ferias=:ferias, valor_13salario=:valor_13salario, valor_ferias=:valor_ferias, ' +
            'antecipacao=:antecipacao, id_forma_pgto=:id_forma_pgto, ' +
            'id_conta_bancaria=:id_conta_bancaria, id_pagador=:id_pagador, ' +
-           'alteracao=:alteracao '+
+           'alteracao=:alteracao, descricao=:descricao '+
            'where id = :id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger               := Recebimento.Id;
+    Qry.ParamByName('descricao').AsString         := Recebimento.Descricao;
     Qry.ParamByName('data').AsDate                := Recebimento.Data;
     Qry.ParamByName('hora_extra').AsFloat         := Recebimento.HoraExtra;
     Qry.ParamByName('inss').AsFloat               := Recebimento.INSS;
