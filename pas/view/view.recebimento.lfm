@@ -119,6 +119,7 @@ inherited frmRecebimento: TfrmRecebimento
                       EditLabel.Caption = 'INSS: *'
                       TabOrder = 0
                       Text = 'edtINSS'
+                      OnChange = edtINSSChange
                     end
                     object edtIR: TLabeledEdit
                       Left = 152
@@ -131,6 +132,7 @@ inherited frmRecebimento: TfrmRecebimento
                       EditLabel.Caption = 'Imposto de Renda: *'
                       TabOrder = 1
                       Text = 'edtIR'
+                      OnChange = edtIRChange
                     end
                   end
                   object gbExtra: TGroupBox
@@ -154,6 +156,7 @@ inherited frmRecebimento: TfrmRecebimento
                       EditLabel.Caption = 'Hora Extra: *'
                       TabOrder = 0
                       Text = 'edtHE'
+                      OnChange = edtHEChange
                     end
                     object edtOutros: TLabeledEdit
                       Left = 152
@@ -166,6 +169,7 @@ inherited frmRecebimento: TfrmRecebimento
                       EditLabel.Caption = 'Outros: *'
                       TabOrder = 1
                       Text = 'edtOutros'
+                      OnChange = edtOutrosChange
                     end
                   end
                   object gbAdc: TGroupBox
@@ -224,6 +228,7 @@ inherited frmRecebimento: TfrmRecebimento
                       EditLabel.Caption = 'Valor Base: *'
                       TabOrder = 0
                       Text = 'edtValorBaseSal'
+                      OnChange = edtValorBaseSalChange
                     end
                     object edtValorTotalSal: TLabeledEdit
                       Left = 152
@@ -287,6 +292,7 @@ inherited frmRecebimento: TfrmRecebimento
                     Style = csDropDownList
                     TabOrder = 9
                     Visible = False
+                    OnChange = cbContaBancariaSalChange
                   end
                   object lbPagadorNomeSal: TListBox
                     Left = 8
@@ -352,6 +358,15 @@ inherited frmRecebimento: TfrmRecebimento
                     )
                     ItemHeight = 15
                     TabOrder = 13
+                    Visible = False
+                  end
+                  object lbContaBancariaSalId: TListBox
+                    Left = 480
+                    Height = 19
+                    Top = 248
+                    Width = 224
+                    ItemHeight = 0
+                    TabOrder = 14
                     Visible = False
                   end
                 end
@@ -456,22 +471,23 @@ inherited frmRecebimento: TfrmRecebimento
                     OnKeyUp = edtFormaPagamentoRecKeyUp
                   end
                   object lblContaBancariaRec: TLabel
-                    Left = 224
+                    Left = 368
                     Height = 15
-                    Top = 104
+                    Top = 54
                     Width = 91
                     Caption = 'Conta Bancária: *'
                     Visible = False
                   end
                   object cbContaBancariaRec: TComboBox
-                    Left = 224
+                    Left = 368
                     Height = 23
-                    Top = 121
+                    Top = 72
                     Width = 224
                     ItemHeight = 15
                     Style = csDropDownList
                     TabOrder = 5
                     Visible = False
+                    OnChange = cbContaBancariaRecChange
                   end
                   object lbPagadorNomeRec: TListBox
                     Left = 568
@@ -537,6 +553,15 @@ inherited frmRecebimento: TfrmRecebimento
                     )
                     ItemHeight = 15
                     TabOrder = 9
+                    Visible = False
+                  end
+                  object lbContaBancariaRecId: TListBox
+                    Left = 368
+                    Height = 16
+                    Top = 97
+                    Width = 224
+                    ItemHeight = 0
+                    TabOrder = 10
                     Visible = False
                   end
                 end

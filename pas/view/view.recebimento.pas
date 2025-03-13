@@ -48,6 +48,8 @@ type
     lbFormaPagamentoNomeSal: TListBox;
     lbPagadorNomeRec: TListBox;
     lbFormaPagamentoNomeRec: TListBox;
+    lbContaBancariaSalId: TListBox;
+    lbContaBancariaRecId: TListBox;
     pnlFundoRecGeral: TPanel;
     pgcCadastro: TPageControl;
     pnlFundoSalario: TPanel;
@@ -60,18 +62,25 @@ type
     procedure actIncluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
+    procedure cbContaBancariaRecChange(Sender: TObject);
+    procedure cbContaBancariaSalChange(Sender: TObject);
     procedure edtFormaPagamentoRecExit(Sender: TObject);
     procedure edtFormaPagamentoRecKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure edtFormaPagamentoSalExit(Sender: TObject);
     procedure edtFormaPagamentoSalKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtHEChange(Sender: TObject);
+    procedure edtINSSChange(Sender: TObject);
+    procedure edtIRChange(Sender: TObject);
+    procedure edtOutrosChange(Sender: TObject);
     procedure edtPagadorRecExit(Sender: TObject);
     procedure edtPagadorRecKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure edtPagadorSalExit(Sender: TObject);
     procedure edtPagadorSalKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtValorBaseSalChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -95,6 +104,7 @@ type
     FTipo: TTelaRecebimento;
     procedure AjustarListView();
     procedure AjustarCbLbPesquisa();
+    procedure CalcularTotal();
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -198,6 +208,26 @@ begin
   end;
 end;
 
+procedure TfrmRecebimento.cbContaBancariaRecChange(Sender: TObject);
+var
+  id: Integer;
+begin
+  if not TryStrToInt(lbContaBancariaRecId.Items[cbContaBancariaRec.ItemIndex], id) then
+    Controller.Recebimento.ContaBancaria.Id := -1
+  else
+    Controller.Recebimento.ContaBancaria.Id := id;
+end;
+
+procedure TfrmRecebimento.cbContaBancariaSalChange(Sender: TObject);
+var
+  id: Integer;
+begin
+  if not TryStrToInt(lbContaBancariaSalId.Items[cbContaBancariaSal.ItemIndex], id) then
+    Controller.Recebimento.ContaBancaria.Id := -1
+  else
+    Controller.Recebimento.ContaBancaria.Id := id;
+end;
+
 procedure TfrmRecebimento.edtFormaPagamentoRecExit(Sender: TObject);
 begin
   if not lbFormaPagamentoNomeRec.Focused then
@@ -213,7 +243,7 @@ var
   qtdReg: integer;
 begin
   qtdReg := 0;
-  if (Length(edtFormaPagamentoRec.Text) > 3) then
+  if (Length(edtFormaPagamentoRec.Text) > 2) then
   begin
     controller.PesquisarFormaPagamento(lbFormaPagamentoNomeRec, lbFormaPagamentoIdRec,
       edtFormaPagamentoRec.Text, qtdReg);
@@ -246,7 +276,7 @@ var
   qtdReg: integer;
 begin
   qtdReg := 0;
-  if (Length(edtFormaPagamentoSal.Text) > 3) then
+  if (Length(edtFormaPagamentoSal.Text) > 2) then
   begin
     controller.PesquisarFormaPagamento(lbFormaPagamentoNomeSal, lbFormaPagamentoIdSal,
       edtFormaPagamentoSal.Text, qtdReg);
@@ -262,6 +292,26 @@ begin
     lbFormaPagamentoNomeSal.Items.Clear;
     lbFormaPagamentoNomeSal.Visible := False;
   end;
+end;
+
+procedure TfrmRecebimento.edtHEChange(Sender: TObject);
+begin
+  CalcularTotal();
+end;
+
+procedure TfrmRecebimento.edtINSSChange(Sender: TObject);
+begin
+  CalcularTotal();
+end;
+
+procedure TfrmRecebimento.edtIRChange(Sender: TObject);
+begin
+  CalcularTotal();
+end;
+
+procedure TfrmRecebimento.edtOutrosChange(Sender: TObject);
+begin
+  CalcularTotal();
 end;
 
 procedure TfrmRecebimento.edtPagadorRecExit(Sender: TObject);
@@ -330,12 +380,31 @@ begin
   end;
 end;
 
+procedure TfrmRecebimento.edtValorBaseSalChange(Sender: TObject);
+begin
+  CalcularTotal();
+end;
+
 procedure TfrmRecebimento.actIncluirExecute(Sender: TObject);
+var
+  qtd: Integer;
 begin
   inherited;
   case FTipo of
-    telaSalario: pgcCadastro.ActivePage := tbsSalario;
-    telaGeral:   pgcCadastro.ActivePage := tbsRecGeral;
+    telaSalario:
+    begin
+      pgcCadastro.ActivePage := tbsSalario;
+      controller.PesquisarContaBancaria(cbContaBancariaSal, lbContaBancariaSalId, qtd);
+      lblContaBancariaSal.Visible := False;
+      cbContaBancariaSal.Visible := False;
+    end;
+    telaGeral:
+    begin
+      pgcCadastro.ActivePage := tbsRecGeral;
+      controller.PesquisarContaBancaria(cbContaBancariaRec, lbContaBancariaRecId, qtd);
+      lblContaBancariaRec.Visible := False;
+      cbContaBancariaRec.Visible := False;
+    end;
   end;
 end;
 
@@ -426,11 +495,16 @@ begin
     controller.Recebimento.FormaPagamento.Id :=
       StrToInt(lbFormaPagamentoIdRec.Items[lbFormaPagamentoNomeRec.ItemIndex]);
     lbFormaPagamentoNomeRec.Visible := False;
+    cbContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
+    lblContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
+    if not cbContaBancariaRec.Visible then
+      Controller.Recebimento.ContaBancaria.Id := -1;
   end
   else
   begin
     edtFormaPagamentoRec.Text := '';
     controller.Recebimento.FormaPagamento.Id := 0;
+    Controller.Recebimento.ContaBancaria.Id := -1;
   end;
 end;
 
@@ -457,11 +531,16 @@ begin
     controller.Recebimento.FormaPagamento.Id :=
       StrToInt(lbFormaPagamentoIdSal.Items[lbFormaPagamentoNomeSal.ItemIndex]);
     lbFormaPagamentoNomeSal.Visible := False;
+    cbContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
+    lblContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
+    if not cbContaBancariaSal.Visible then
+      Controller.Recebimento.ContaBancaria.Id := -1;
   end
   else
   begin
     edtFormaPagamentoSal.Text := '';
     controller.Recebimento.FormaPagamento.Id := 0;
+    Controller.Recebimento.ContaBancaria.Id := -1;
   end;
 end;
 
@@ -620,6 +699,24 @@ begin
   end;
 end;
 
+procedure TfrmRecebimento.CalcularTotal();
+var
+  inss, ir, outros, he, base, total: Double;
+begin
+  if not TryStrToFloat(edtINSS.Text, inss) then
+    inss := 0;
+  if not TryStrToFloat(edtIR.Text, ir) then
+    ir := 0;
+  if not TryStrToFloat(edtOutros.Text, outros) then
+    outros := 0;
+  if not TryStrToFloat(edtHE.Text, he) then
+    he := 0;
+  if not TryStrToFloat(edtValorBaseSal.Text, base) then
+    base := 0;
+  total := Controller.CalcularValorTotal(inss, ir, he, outros, base);
+  edtValorTotalSal.Text := FormatFloat(',#0.00', total);
+end;
+
 procedure TfrmRecebimento.CarregarDados;
 begin
   lvPadrao.Items.Clear;
@@ -655,7 +752,7 @@ end;
 
 procedure TfrmRecebimento.CarregarSelecionado;
 var
-  id: Integer;
+  id, qtd: Integer;
   erro: String;
 begin
   id := StrToInt(lvPadrao.Selected.Caption);
@@ -682,8 +779,14 @@ begin
       edtValorTotalSal.Text := FormatFloat(',#0.00', Controller.Recebimento.ValorTotal);
       edtPagadorSal.Text := Controller.Recebimento.Pagador.Nome;
       edtFormaPagamentoSal.Text := Controller.Recebimento.FormaPagamento.Nome;
-      cbContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 6, 7];
-      //if Controller.Recebimento.FormaPagamento.Id in [4, 6, 7] then
+      cbContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
+      lblContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
+      if cbContaBancariaSal.Visible then
+      begin
+        controller.PesquisarContaBancaria(cbContaBancariaSal, lbContaBancariaSalId, qtd);
+        cbContaBancariaSal.ItemIndex := lbContaBancariaSalId.Items.IndexOf(
+                                         Controller.Recebimento.ContaBancaria.Id.ToString);
+      end;
     end
     else
     if FTipo = telaGeral then
@@ -693,7 +796,14 @@ begin
       edtPagadorRec.Text := Controller.Recebimento.Pagador.Nome;
       edtFormaPagamentoRec.Text := Controller.Recebimento.FormaPagamento.Nome;
       edtValorTotalRec.Text     := FormatFloat(',#0.00', Controller.Recebimento.ValorTotal);
-      cbContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 6, 7];
+      cbContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
+      lblContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
+      if cbContaBancariaRec.Visible then
+      begin
+        controller.PesquisarContaBancaria(cbContaBancariaRec, lbContaBancariaRecId, qtd);
+        cbContaBancariaRec.ItemIndex := lbContaBancariaRecId.Items.IndexOf(
+                                         Controller.Recebimento.ContaBancaria.Id.ToString);
+      end;
     end;
   end
   else

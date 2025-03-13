@@ -21,10 +21,12 @@ type
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
     procedure PesquisarPagador(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     procedure PesquisarFormaPagamento(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarContaBancaria(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
     function BuscarPorId(objRecebimento : TRecebimento; Id: Integer; out Erro: String): Boolean;
     function Inserir(objRecebimento: TRecebimento; out Erro: string): Boolean;
     function Editar(objRecebimento: TRecebimento; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+    function CalcularValorTotal(INSS, IR, HE, Outros, ValorBase: Currency): Currency;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -55,6 +57,12 @@ begin
   RecebimentoDao.PesquisaGenerica(TB_FORMA_PGTO, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
+procedure TRecebimentoController.PesquisarContaBancaria(CbNome: TComboBox;
+  lbId: TListBox; out QtdRegistro: Integer);
+begin
+  RecebimentoDao.PesquisarContaBancaria(CbNome, lbId, '', -1, QtdRegistro);
+end;
+
 function TRecebimentoController.BuscarPorId(objRecebimento: TRecebimento; Id: Integer; out
   Erro: String): Boolean;
 begin
@@ -76,6 +84,12 @@ end;
 function TRecebimentoController.Excluir(Id: Integer; out Erro: string): Boolean;
 begin
   Result := RecebimentoDao.Excluir(Id, Erro);
+end;
+
+function TRecebimentoController.CalcularValorTotal(INSS, IR, HE, Outros,
+  ValorBase: Currency): Currency;
+begin
+  Result := (ValorBase + HE + Outros) - (INSS + IR);
 end;
 
 constructor TRecebimentoController.Create;

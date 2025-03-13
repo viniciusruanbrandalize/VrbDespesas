@@ -5,7 +5,7 @@ unit model.dao.recebimento;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, SQLDB, model.dao.padrao, model.entity.recebimento,
+  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.dao.padrao, model.entity.recebimento,
   model.connection.conexao1;
 
 type
@@ -22,6 +22,8 @@ type
     function Inserir(Recebimento: TRecebimento; out Erro: string): Boolean;
     function Editar(Recebimento: TRecebimento; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+    procedure PesquisarContaBancaria(cbNome: TComboBox; lbId: TListBox; busca: String;
+                                      Limitacao: Integer; out QtdRegistro: Integer);
     constructor Create; override;
     destructor Destroy; override;
   end;
@@ -314,6 +316,58 @@ begin
       Erro := 'Ocorreu um erro ao excluir Recebimento: ' + sLineBreak + E.Message;
       Result := False;
     end;
+  end;
+end;
+
+procedure TRecebimentoDAO.PesquisarContaBancaria(cbNome: TComboBox;
+  lbId: TListBox; busca: String; Limitacao: Integer; out QtdRegistro: Integer);
+var
+  sql: String;
+  CmdLimit: String;
+begin
+  try
+
+    CmdLimit := '';
+
+    if Driver = 'FIREBIRD' then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'first '+Limitacao.ToString;
+
+      sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
+             'from conta_bancaria cb ' +
+             'left join banco bnc on bnc.id = cb.id_banco '+
+             'where UPPER(cb.numero) like :busca '+
+             'order by cb.numero';
+
+    end;
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.Open;
+
+    Qry.First;
+
+    QtdRegistro := Qry.RecordCount;
+
+    cbNome.Items.Clear;
+    cbNome.Height := 100;
+
+    lbId.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbId.Items.Add(Qry.FieldByName('id').AsString);
+      cbNome.Items.Add('Nº. '+qry.FieldByName('numero').AsString+' Ag. '+
+                       qry.FieldByName('agencia').AsString+' - '+
+                       qry.FieldByName('nome_banco').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
   end;
 end;
 
