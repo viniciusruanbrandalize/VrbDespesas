@@ -257,14 +257,22 @@ begin
     if FDriver = 'POSTGRESQL' then
     begin
       sql := 'select nextval('+QuotedStr('public.'+nomeSequencia)+') AS ID ';
+    end
+    else
+    if FDriver = 'MSSQLSERVER' then
+    begin
+      sql := 'SELECT NEXT VALUE FOR dbo.'+nomeSequencia+' AS ID';
     end;
 
-    QryTemp.Close;
-    QryTemp.SQL.Clear;
-    QryTemp.SQL.Add(sql);
-    QryTemp.Open;
+    if sql <> EmptyStr then
+    begin
+      QryTemp.Close;
+      QryTemp.SQL.Clear;
+      QryTemp.SQL.Add(sql);
+      QryTemp.Open;
+      id := QryTemp.FieldByName('ID').AsInteger;
+    end;
 
-    id := QryTemp.FieldByName('ID').AsInteger;
     Result := id;
 
   finally

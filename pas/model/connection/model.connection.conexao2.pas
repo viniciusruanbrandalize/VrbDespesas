@@ -157,6 +157,70 @@ begin
     {$IFDEF LINUX64}
     Lib := ExtractFilePath(ParamStr(0))+'libpq.so';
     {$ENDIF}
+  end
+  else
+  if UpperCase(Driver) = 'MSSQLSERVER' then
+  begin
+    {$IFDEF WIN32}
+    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv32.dll';
+    {$ENDIF}
+    {$IFDEF WIN64}
+    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv64.dll';
+    {$ENDIF}
+    {$IFDEF LINUX32}
+    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv32.so';
+    {$ENDIF}
+    {$IFDEF LINUX64}
+    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv64.so';
+    {$ENDIF}
+  end
+  else
+  if UpperCase(Driver) = 'MYSQL 5.7' then
+  begin
+    {$IFDEF WIN32}
+    Lib := ExtractFilePath(ParamStr(0))+'libmariadb.dll';
+    {$ENDIF}
+    {$IFDEF WIN64}
+    Lib := ExtractFilePath(ParamStr(0))+'libmariadb.dll';
+    {$ENDIF}
+    {$IFDEF LINUX32}
+    Lib := ExtractFilePath(ParamStr(0))+'libmariadb.so';
+    {$ENDIF}
+    {$IFDEF LINUX64}
+    Lib := ExtractFilePath(ParamStr(0))+'libmariadb.so';
+    {$ENDIF}
+  end
+  else
+  if Pos('MYSQL', UpperCase(Driver)) <> 0 then
+  begin
+    {$IFDEF WIN32}
+    Lib := ExtractFilePath(ParamStr(0))+'libmysql.dll';
+    {$ENDIF}
+    {$IFDEF WIN64}
+    Lib := ExtractFilePath(ParamStr(0))+'libmysql.dll';
+    {$ENDIF}
+    {$IFDEF LINUX32}
+    Lib := ExtractFilePath(ParamStr(0))+'libmysql.so';
+    {$ENDIF}
+    {$IFDEF LINUX64}
+    Lib := ExtractFilePath(ParamStr(0))+'libmysql.so';
+    {$ENDIF}
+  end
+  else
+  if UpperCase(Driver) = 'SQLITE3' then
+  begin
+    {$IFDEF WIN32}
+    Lib := ExtractFilePath(ParamStr(0))+'SQLite3.dll';
+    {$ENDIF}
+    {$IFDEF WIN64}
+    Lib := ExtractFilePath(ParamStr(0))+'SQLite3.dll';
+    {$ENDIF}
+    {$IFDEF LINUX32}
+    Lib := ExtractFilePath(ParamStr(0))+'SQLite3.so';
+    {$ENDIF}
+    {$IFDEF LINUX64}
+    Lib := ExtractFilePath(ParamStr(0))+'SQLite3.so';
+    {$ENDIF}
   end;
   Result := Lib;
 end;
