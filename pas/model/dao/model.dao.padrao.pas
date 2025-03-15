@@ -82,6 +82,31 @@ begin
       SEQ_ID_USUARIO_DONO_CADASTRO: NomeSeq := 'gen_id_usuario_dono_cadastro';
       SEQ_ID_ARQUIVO:               NomeSeq := 'gen_id_arquivo';
     end;
+  end
+  else
+  if FDriver = 'POSTGRESQL' Then
+  begin
+    case Sequencia of
+      SEQ_ID_BANCO:                 NomeSeq := 'seq_id_banco';
+      SEQ_ID_BANDEIRA:              NomeSeq := 'seq_id_bandeira';
+      SEQ_ID_CARTAO:                NomeSeq := 'seq_id_cartao';
+      SEQ_ID_CIDADE:                NomeSeq := 'seq_id_cidade';
+      SEQ_ID_COFRE:                 NomeSeq := 'seq_id_cofre';
+      SEQ_ID_CONTA_BANCARIA:        NomeSeq := 'seq_id_conta_bancaria';
+      SEQ_ID_DESPESA:               NomeSeq := 'seq_id_despesa';
+      SEQ_ID_DESPESA_FORMA_PGTO:    NomeSeq := 'seq_id_despesa_forma_pgto';
+      SEQ_ID_FORMA_PGTO:            NomeSeq := 'seq_id_forma_pgto';
+      SEQ_ID_LOG_BACKUP:            NomeSeq := 'seq_id_log_backup';
+      SEQ_ID_LOGIN:                 NomeSeq := 'seq_id_login';
+      SEQ_ID_PAIS:                  NomeSeq := 'seq_id_pais';
+      SEQ_ID_PARTICIPANTE:          NomeSeq := 'seq_id_participante';
+      SEQ_ID_RECEBIMENTO:           NomeSeq := 'seq_id_recebimento';
+      SEQ_ID_SUBTIPO_DESPESA:       NomeSeq := 'seq_id_subtipo_despesa';
+      SEQ_ID_TIPO_DESPESA:          NomeSeq := 'seq_id_tipo_despesa';
+      SEQ_ID_USUARIO:               NomeSeq := 'seq_id_usuario';
+      SEQ_ID_USUARIO_DONO_CADASTRO: NomeSeq := 'seq_id_usuario_dono_cadastro';
+      SEQ_ID_ARQUIVO:               NomeSeq := 'seq_id_arquivo';
+    end;
   end;
   Result := NomeSeq;
 end;
@@ -91,7 +116,7 @@ var
   NomeTb: String;
 begin
   NomeTb := '';
-  if FDriver = 'FIREBIRD' Then
+  if (FDriver = 'FIREBIRD') or (FDriver = 'POSTGRESQL') Then
   begin
     case Tabela of
       TB_BANCO:                 NomeTb := 'banco';
@@ -156,6 +181,16 @@ begin
       sql := 'select '+CmdLimit+' id, nome from '+NomeTabela+' '+
              'where UPPER(nome) like :busca '+WhereExcluido+
              'order by nome';
+    end
+    else
+    if FDriver = 'POSTGRESQL' then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'limit '+Limitacao.ToString;
+
+      sql := 'select id, nome from public.'+NomeTabela+' '+
+             'where UPPER(nome) like :busca '+WhereExcluido+
+             'order by nome ' +CmdLimit;
     end;
 
     Qry.Close;
@@ -217,6 +252,11 @@ begin
     begin
       sql := 'SELECT GEN_ID('+nomeSequencia+','+IntToStr(Incremento)+') AS ID '+
              'FROM RDB$DATABASE';
+    end
+    else
+    if FDriver = 'POSTGRESQL' then
+    begin
+      sql := 'select nextval('+QuotedStr('public.'+nomeSequencia)+') AS ID ';
     end;
 
     QryTemp.Close;

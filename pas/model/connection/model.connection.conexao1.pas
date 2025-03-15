@@ -116,7 +116,7 @@ begin
       HostName              := ini.Servidor1;
       UserName              := ini.Usuario1;
       Password              := ini.Senha1;
-      Params.Values['Port'] := ini.Porta1.ToString;
+      Params.Values['port'] := ini.Porta1.ToString;
     end;
 
     try
@@ -138,16 +138,48 @@ begin
   if UpperCase(Driver) = 'FIREBIRD' then
   begin
     {$IFDEF WIN32}
-    Lib := ExtractFilePath(ParamStr(0))+'fbclient32.dll';
+    Lib := ExtractFilePath(ParamStr(0))+'fbclient.dll';
     {$ENDIF}
     {$IFDEF WIN64}
-    Lib := ExtractFilePath(ParamStr(0))+'fbclient64.dll';
+    Lib := ExtractFilePath(ParamStr(0))+'fbclient.dll';
     {$ENDIF}
     {$IFDEF LINUX32}
-    Lib := ExtractFilePath(ParamStr(0))+'fbclient32.so';
+    Lib := ExtractFilePath(ParamStr(0))+'fbclient.so';
     {$ENDIF}
     {$IFDEF LINUX64}
-    Lib := ExtractFilePath(ParamStr(0))+'fbclient64.so';
+    Lib := ExtractFilePath(ParamStr(0))+'fbclient.so';
+    {$ENDIF}
+  end
+  else
+  if UpperCase(Driver) = 'POSTGRESQL' then
+  begin
+    {$IFDEF WIN32}
+    Lib := ExtractFilePath(ParamStr(0))+'libpq.dll';
+    {$ENDIF}
+    {$IFDEF WIN64}
+    Lib := ExtractFilePath(ParamStr(0))+'libpq.dll';
+    {$ENDIF}
+    {$IFDEF LINUX32}
+    Lib := ExtractFilePath(ParamStr(0))+'libpq.so';
+    {$ENDIF}
+    {$IFDEF LINUX64}
+    Lib := ExtractFilePath(ParamStr(0))+'libpq.so';
+    {$ENDIF}
+  end
+  else
+  if UpperCase(Driver) = 'MSSQLSERVER' then
+  begin
+    {$IFDEF WIN32}
+    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv32.dll';
+    {$ENDIF}
+    {$IFDEF WIN64}
+    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv64.dll';
+    {$ENDIF}
+    {$IFDEF LINUX32}
+    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv32.so';
+    {$ENDIF}
+    {$IFDEF LINUX64}
+    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv64.so';
     {$ENDIF}
   end;
   Result := Lib;
