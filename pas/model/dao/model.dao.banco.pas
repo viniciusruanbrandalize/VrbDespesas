@@ -37,7 +37,7 @@ var
 begin
   try
 
-    sql := 'select * from banco order by nome';
+    sql := 'select * from banco where excluido = false order by nome';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -70,13 +70,13 @@ begin
     if TryStrToFloat(Busca, valor) then
     begin
       sql := 'select * from banco ' +
-             'where '+campo+' = :busca '+
+             'where '+campo+' = :busca and excluido = false '+
              'order by nome';
     end
     else
     begin
       sql := 'select * from banco ' +
-             'where UPPER('+campo+') like :busca '+
+             'where UPPER('+campo+') like :busca and excluido = false '+
              'order by nome';
     end;
 
@@ -108,7 +108,7 @@ begin
   try
 
     sql := 'select * from banco ' +
-           'where id = :id ' +
+           'where id = :id and excluido = false ' +
            'order by id';
 
     Qry.Close;
@@ -147,7 +147,8 @@ var
 begin
   try
 
-    sql := 'insert into banco(id, nome, numero) values (:id, :nome, :numero)';
+    sql := 'insert into banco(id, nome, numero, excluido) values ' +
+           '(:id, :nome, :numero, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -155,6 +156,7 @@ begin
     Qry.ParamByName('id').AsInteger  := Banco.Id;
     Qry.ParamByName('nome').AsString := Banco.Nome;
     Qry.ParamByName('numero').AsInteger  := Banco.Numero;
+    Qry.ParamByName('excluido').AsBoolean := Banco.Excluido;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -184,7 +186,6 @@ begin
     Qry.ParamByName('nome').AsString := Banco.Nome;
     Qry.ParamByName('numero').AsInteger  := Banco.Numero;
 
-    //dmConexao1.SQLTransaction.StartTransaction;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -218,8 +219,23 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir banco: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+        sql := 'update banco set excluido = true ' +
+               'where id = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir banco: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;

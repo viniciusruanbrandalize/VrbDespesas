@@ -19,15 +19,18 @@ type
     FEmail: String;
     FCadastro: TDateTime;
     FAlteracao: TDateTime;
+    FExcluido: Boolean;
     function GetAlteracao: TDateTime;
     function GetCadastro: TDateTime;
     function GetEmail: String;
+    function GetExcluido: Boolean;
     function GetId: Integer;
     function GetNome: String;
     function GetSenha: String;
     procedure SetAlteracao(AValue: TDateTime);
     procedure SetCadastro(AValue: TDateTime);
     procedure SetEmail(AValue: String);
+    procedure SetExcluido(AValue: Boolean);
     procedure SetId(AValue: Integer);
     procedure SetNome(AValue: String);
     procedure SetSenha(AValue: String);
@@ -41,6 +44,7 @@ type
     property Email: String read GetEmail write SetEmail;
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
+    property Excluido: Boolean read GetExcluido write SetExcluido;
   end;
 
 implementation
@@ -50,6 +54,11 @@ implementation
 function TUsuario.GetEmail: String;
 begin
   Result := FEmail;
+end;
+
+function TUsuario.GetExcluido: Boolean;
+begin
+  Result := FExcluido;
 end;
 
 function TUsuario.GetAlteracao: TDateTime;
@@ -80,6 +89,11 @@ end;
 procedure TUsuario.SetEmail(AValue: String);
 begin
   FEmail := AValue;
+end;
+
+procedure TUsuario.SetExcluido(AValue: Boolean);
+begin
+  FExcluido := AValue;
 end;
 
 procedure TUsuario.SetSenha(AValue: String);

@@ -127,7 +127,7 @@ begin
   try
 
     sql := 'select * from usuario ' +
-           'where nome = :busca ' +
+           'where nome = :busca and excluido = false ' +
            'order by id asc';
 
     Qry.Close;

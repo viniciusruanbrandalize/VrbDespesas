@@ -12,7 +12,8 @@ interface
 
 uses
   Classes, SysUtils, SQLDB, SQLDBLib, IBConnection, LR_Class, LR_DBSet,
-  LR_E_CSV, LR_E_TXT, LR_Desgn, LR_Shape, lr_e_pdf, model.connection.conexao1, LR_View;
+  LR_E_CSV, LR_E_TXT, LR_Desgn, LR_Shape, lr_e_pdf, model.connection.conexao1,
+  LR_View;
 
 type
 

@@ -18,6 +18,7 @@ type
     FId:   Integer;
     FNumero: String;
     FTipo: String;
+    FExcluido: Boolean;
     FCadastro: TDateTime;
     FAlteracao: TDateTime;
     FBanco: TBanco;
@@ -28,6 +29,7 @@ type
     function GetBanco: TBanco;
     function GetCadastro: TDateTime;
     function GetDonoCadastro: TParticipante;
+    function GetExcluido: Boolean;
     function GetId: Integer;
     function GetNumero: String;
     function GetTipo: String;
@@ -37,6 +39,7 @@ type
     procedure SetBanco(AValue: TBanco);
     procedure SetCadastro(AValue: TDateTime);
     procedure SetDonoCadastro(AValue: TParticipante);
+    procedure SetExcluido(AValue: Boolean);
     procedure SetId(AValue: Integer);
     procedure SetNumero(AValue: String);
     procedure SetTipo(AValue: String);
@@ -49,6 +52,7 @@ type
     property Numero: String read GetNumero write SetNumero;
     property Agencia: String read GetAgencia write SetAgencia;
     property Tipo: String read GetTipo write SetTipo;
+    property Excluido: Boolean read GetExcluido write SetExcluido;
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
     property Banco: TBanco read GetBanco write SetBanco;
@@ -88,6 +92,11 @@ end;
 function TContaBancaria.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
+end;
+
+function TContaBancaria.GetExcluido: Boolean;
+begin
+  Result := FExcluido;
 end;
 
 function TContaBancaria.GetNumero: String;
@@ -136,6 +145,11 @@ end;
 procedure TContaBancaria.SetDonoCadastro(AValue: TParticipante);
 begin
   FDonoCadastro := AValue;
+end;
+
+procedure TContaBancaria.SetExcluido(AValue: Boolean);
+begin
+  FExcluido := AValue;
 end;
 
 procedure TContaBancaria.SetId(AValue: Integer);

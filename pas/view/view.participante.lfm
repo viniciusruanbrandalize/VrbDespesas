@@ -46,7 +46,7 @@ inherited frmParticipante: TfrmParticipante
                 'p.nome'
                 'p.fantasia'
               )
-              ItemHeight = 20
+              ItemHeight = 15
             end
           end
         end
@@ -54,10 +54,10 @@ inherited frmParticipante: TfrmParticipante
           inherited pnlFundoCadastro: TPanel
             object edtNome: TLabeledEdit[1]
               Left = 8
-              Height = 28
-              Top = 96
+              Height = 23
+              Top = 89
               Width = 400
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 400
               EditLabel.Caption = 'Nome:'
               MaxLength = 100
@@ -66,10 +66,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object cbPessoa: TComboBox[2]
               Left = 5
-              Height = 28
+              Height = 23
               Top = 32
               Width = 107
-              ItemHeight = 20
+              ItemHeight = 15
               ItemIndex = 0
               Items.Strings = (
                 'Física'
@@ -82,17 +82,17 @@ inherited frmParticipante: TfrmParticipante
             end
             object lblPessoa: TLabel[3]
               Left = 8
-              Height = 20
-              Top = 9
-              Width = 47
+              Height = 15
+              Top = 14
+              Width = 39
               Caption = 'Pessoa:'
             end
             object edtFantasia: TLabeledEdit[4]
               Left = 424
-              Height = 28
-              Top = 96
+              Height = 23
+              Top = 89
               Width = 392
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 392
               EditLabel.Caption = 'Fantasia:'
               MaxLength = 100
@@ -101,10 +101,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtCnpj: TLabeledEdit[5]
               Left = 128
-              Height = 28
+              Height = 23
               Top = 32
               Width = 160
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'CNPJ:'
               MaxLength = 100
@@ -113,10 +113,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtIe: TLabeledEdit[6]
               Left = 304
-              Height = 28
+              Height = 23
               Top = 32
               Width = 160
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'Inscrição Estadual:'
               MaxLength = 100
@@ -125,10 +125,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtTelefone: TLabeledEdit[7]
               Left = 8
-              Height = 28
-              Top = 160
+              Height = 23
+              Top = 140
               Width = 160
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'Telefone:'
               MaxLength = 100
@@ -137,10 +137,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtCelular: TLabeledEdit[8]
               Left = 184
-              Height = 28
-              Top = 160
+              Height = 23
+              Top = 140
               Width = 160
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'Celular:'
               MaxLength = 100
@@ -149,10 +149,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtEmail: TLabeledEdit[9]
               Left = 360
-              Height = 28
-              Top = 160
+              Height = 23
+              Top = 140
               Width = 400
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 400
               EditLabel.Caption = 'E-mail:'
               MaxLength = 100
@@ -161,10 +161,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtCep: TLabeledEdit[10]
               Left = 8
-              Height = 28
-              Top = 224
+              Height = 23
+              Top = 194
               Width = 120
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 120
               EditLabel.Caption = 'CEP:'
               MaxLength = 9
@@ -174,8 +174,8 @@ inherited frmParticipante: TfrmParticipante
             object btnBuscaCep: TSpeedButton[11]
               Cursor = crHandPoint
               Left = 132
-              Height = 28
-              Top = 224
+              Height = 23
+              Top = 194
               Width = 40
               Action = actBuscarCep
               Images = img
@@ -184,10 +184,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtRua: TLabeledEdit[12]
               Left = 192
-              Height = 28
-              Top = 224
+              Height = 23
+              Top = 194
               Width = 408
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 408
               EditLabel.Caption = 'Rua:'
               MaxLength = 100
@@ -196,10 +196,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtNumero: TLabeledEdit[13]
               Left = 616
-              Height = 28
-              Top = 224
+              Height = 23
+              Top = 194
               Width = 96
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 96
               EditLabel.Caption = 'Número:'
               MaxLength = 100
@@ -209,10 +209,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtComplemento: TLabeledEdit[14]
               Left = 728
-              Height = 28
-              Top = 224
+              Height = 23
+              Top = 194
               Width = 200
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 200
               EditLabel.Caption = 'Complemento:'
               MaxLength = 100
@@ -221,10 +221,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtBairro: TLabeledEdit[15]
               Left = 8
-              Height = 28
-              Top = 288
+              Height = 23
+              Top = 246
               Width = 280
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 280
               EditLabel.Caption = 'Bairro:'
               MaxLength = 100
@@ -233,10 +233,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtCidade: TLabeledEdit[16]
               Left = 304
-              Height = 28
-              Top = 288
+              Height = 23
+              Top = 246
               Width = 280
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 280
               EditLabel.Caption = 'Cidade:'
               Font.Color = 2977025
@@ -250,10 +250,10 @@ inherited frmParticipante: TfrmParticipante
             end
             object edtUf: TLabeledEdit[17]
               Left = 600
-              Height = 28
-              Top = 288
+              Height = 23
+              Top = 246
               Width = 56
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 56
               EditLabel.Caption = 'UF:'
               Font.Color = 2977025
@@ -267,8 +267,8 @@ inherited frmParticipante: TfrmParticipante
             end
             object mObs: TMemo[18]
               Left = 8
-              Height = 65
-              Top = 352
+              Height = 76
+              Top = 300
               Width = 920
               Lines.Strings = (
                 'mObs'
@@ -277,28 +277,28 @@ inherited frmParticipante: TfrmParticipante
             end
             object lblObs: TLabel[19]
               Left = 8
-              Height = 20
-              Top = 328
-              Width = 254
+              Height = 15
+              Top = 280
+              Width = 203
               Caption = 'Observações / Informações adicionais:'
             end
             object lbPessoaValues: TListBox[20]
               Left = 5
               Height = 8
-              Top = 64
+              Top = 56
               Width = 109
               Items.Strings = (
                 'F'
                 'J'
               )
-              ItemHeight = 20
+              ItemHeight = 15
               TabOrder = 17
               Visible = False
             end
             object lbCidadeNome: TListBox[21]
               Left = 304
               Height = 19
-              Top = 317
+              Top = 269
               Width = 280
               BorderStyle = bsNone
               Color = 12451746
@@ -308,7 +308,7 @@ inherited frmParticipante: TfrmParticipante
                 'subtipo3'
                 'subtipo4'
               )
-              ItemHeight = 20
+              ItemHeight = 15
               TabOrder = 18
               Visible = False
               OnDblClick = lbCidadeNomeDblClick
@@ -318,7 +318,7 @@ inherited frmParticipante: TfrmParticipante
             object lbCidadeId: TListBox[22]
               Left = 592
               Height = 19
-              Top = 317
+              Top = 269
               Width = 144
               Items.Strings = (
                 'key'
@@ -326,7 +326,7 @@ inherited frmParticipante: TfrmParticipante
                 'key'
                 'key'
               )
-              ItemHeight = 20
+              ItemHeight = 15
               TabOrder = 19
               Visible = False
             end

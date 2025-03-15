@@ -37,7 +37,7 @@ var
 begin
   try
 
-    sql := 'select * from forma_pgto order by nome';
+    sql := 'select * from forma_pgto where excluido = false order by nome';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -54,7 +54,7 @@ begin
       item.SubItems.Add(qry.FieldByName('sigla').AsString);
       Qry.Next;
     end;
-
+    //dmConexao1.SQLTransaction.Commit;
   finally
     Qry.Close;
   end;
@@ -71,13 +71,13 @@ begin
     if TryStrToFloat(Busca, valor) then
     begin
       sql := 'select * from forma_pgto ' +
-             'where '+campo+' = :busca '+
+             'where '+campo+' = :busca and excluido = false '+
              'order by nome';
     end
     else
     begin
       sql := 'select * from forma_pgto ' +
-             'where UPPER('+campo+') like :busca '+
+             'where UPPER('+campo+') like :busca and excluido = false '+
              'order by nome';
     end;
 
@@ -110,7 +110,7 @@ begin
   try
 
     sql := 'select * from forma_pgto ' +
-           'where id = :id ' +
+           'where id = :id and excluido = false ' +
            'order by id';
 
     Qry.Close;
@@ -149,8 +149,8 @@ var
 begin
   try
 
-    sql := 'insert into forma_pgto(id, nome, sigla) values ' +
-           '(:id, :nome, :sigla)';
+    sql := 'insert into forma_pgto(id, nome, sigla, excluido) values ' +
+           '(:id, :nome, :sigla, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -158,6 +158,7 @@ begin
     Qry.ParamByName('id').AsInteger   := FormaPagamento.Id;
     Qry.ParamByName('nome').AsString  := FormaPagamento.Nome;
     Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
+    Qry.ParamByName('excluido').AsBoolean := FormaPagamento.Excluido;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -220,8 +221,25 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir forma de pagamento: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+
+        sql := 'update forma_pgto set excluido = true where id = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+        Result := True;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir forma de pagamento: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;

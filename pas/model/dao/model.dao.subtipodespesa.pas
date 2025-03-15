@@ -39,6 +39,7 @@ begin
 
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
            'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
+           'where sd.excluido = false ' +
            'order by sd.nome';
 
     Qry.Close;
@@ -74,14 +75,14 @@ begin
     begin
       sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
            'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-           'where '+campo+' = :busca '+
+           'where '+campo+' = :busca and sd.excluido = false '+
            'order by sd.nome';
     end
     else
     begin
       sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
              'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-             'where UPPER('+campo+') like :busca '+
+             'where UPPER('+campo+') like :busca and sd.excluido = false '+
              'order by sd.nome';
     end;
 
@@ -115,7 +116,7 @@ begin
 
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
              'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-             'where sd.id = :id '+
+             'where sd.id = :id and sd.excluido = false '+
              'order by sd.id';
 
     Qry.Close;
@@ -155,14 +156,15 @@ var
 begin
   try
 
-    sql := 'insert into subtipo_despesa(id, nome, id_tipo_despesa) values ' +
-           '(:id, :nome, :id_tipo_despesa)';
+    sql := 'insert into subtipo_despesa(id, nome, id_tipo_despesa, excluido) values ' +
+           '(:id, :nome, :id_tipo_despesa, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := SubtipoDespesa.Id;
     Qry.ParamByName('nome').AsString := SubtipoDespesa.Nome;
+    Qry.ParamByName('excluido').AsBoolean := SubtipoDespesa.Excluido;
     Qry.ParamByName('id_tipo_despesa').AsInteger := SubtipoDespesa.TipoDespesa.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
@@ -227,8 +229,25 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir Subtipo de Despesa: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+
+        sql := 'update subtipo_despesa set excluido = true where id = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+        Result := True;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir Subtipo de Despesa: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;

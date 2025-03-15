@@ -32,6 +32,7 @@ type
     FConectorPadrao: TSQLConnector;
     function SequenciaToString(Sequencia: TSequencia): String;
     function TabelaToString(Tabela: TTabela): String;
+    function TemCampoExcluido(Tabela: TTabela): Boolean;
   public
     Qry: TSQLQuery;
     procedure Listar(lv: TListView); virtual; abstract;
@@ -123,17 +124,29 @@ begin
   Result := NomeTb;
 end;
 
+function TPadraoDAO.TemCampoExcluido(Tabela: TTabela): Boolean;
+begin
+  Result := (Tabela in [TB_BANCO, TB_BANDEIRA, TB_CARTAO, TB_CONTA_BANCARIA,
+                        TB_FORMA_PGTO, TB_PARTICIPANTE, TB_PIX,
+                        TB_SUBTIPO_DESPESA, TB_TIPO_DESPESA, TB_USUARIO]);
+end;
+
 procedure TPadraoDAO.PesquisaGenerica(Tabela: TTabela; objNome: TObject;
   lbId: TListBox; busca: String; Limitacao: Integer; out QtdRegistro: Integer);
 var
   sql: String;
   NomeTabela: String;
   CmdLimit: String;
+  WhereExcluido: String;
 begin
   try
 
     CmdLimit := '';
+    WhereExcluido := '';
     NomeTabela := TabelaToString(Tabela);
+
+    if TemCampoExcluido(Tabela) then
+      WhereExcluido := 'and excluido = false ';
 
     if FDriver = 'FIREBIRD' then
     begin
@@ -141,7 +154,7 @@ begin
         CmdLimit := 'first '+Limitacao.ToString;
 
       sql := 'select '+CmdLimit+' id, nome from '+NomeTabela+' '+
-             'where UPPER(nome) like :busca '+
+             'where UPPER(nome) like :busca '+WhereExcluido+
              'order by nome';
     end;
 

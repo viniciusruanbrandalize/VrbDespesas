@@ -16,9 +16,12 @@ type
     FId:   Integer;
     FNome: String;
     FSigla: String;
+    FExcluido: Boolean;
+    function GetExcluido: Boolean;
     function GetId: Integer;
     function GetNome: String;
     function GetSigla: String;
+    procedure SetExcluido(AValue: Boolean);
     procedure SetId(AValue: Integer);
     procedure SetNome(AValue: String);
     procedure SetSigla(AValue: String);
@@ -29,6 +32,7 @@ type
     property Id: Integer read GetId write SetId;
     property Nome: String read GetNome write SetNome;
     property Sigla: String read GetSigla write SetSigla;
+    property Excluido: Boolean read GetExcluido write SetExcluido;
   end;
 
 implementation
@@ -40,6 +44,11 @@ begin
   Result := FId;
 end;
 
+function TFormaPagamento.GetExcluido: Boolean;
+begin
+  Result := FExcluido;
+end;
+
 function TFormaPagamento.GetNome: String;
 begin
   Result := FNome;
@@ -48,6 +57,11 @@ end;
 function TFormaPagamento.GetSigla: String;
 begin
   Result := FSigla;
+end;
+
+procedure TFormaPagamento.SetExcluido(AValue: Boolean);
+begin
+  FExcluido := AValue;
 end;
 
 procedure TFormaPagamento.SetId(AValue: Integer);

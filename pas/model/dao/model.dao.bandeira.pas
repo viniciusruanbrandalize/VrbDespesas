@@ -37,7 +37,7 @@ var
 begin
   try
 
-    sql := 'select * from bandeira order by nome';
+    sql := 'select * from bandeira where excluido = false order by nome';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -70,13 +70,13 @@ begin
     if TryStrToFloat(Busca, valor) then
     begin
       sql := 'select * from bandeira ' +
-             'where '+campo+' = :busca '+
+             'where '+campo+' = :busca and excluido = false '+
              'order by nome';
     end
     else
     begin
       sql := 'select * from bandeira ' +
-             'where UPPER('+campo+') like :busca '+
+             'where UPPER('+campo+') like :busca and excluido = false '+
              'order by nome';
     end;
 
@@ -108,7 +108,7 @@ begin
   try
 
     sql := 'select * from bandeira ' +
-           'where id = :id ' +
+           'where id = :id and excluido = false ' +
            'order by id';
 
     Qry.Close;
@@ -146,13 +146,14 @@ var
 begin
   try
 
-    sql := 'insert into bandeira(id, nome) values (:id, :nome)';
+    sql := 'insert into bandeira(id, nome, excluido) values (:id, :nome, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Bandeira.Id;
     Qry.ParamByName('nome').AsString := Bandeira.Nome;
+    Qry.ParamByName('excluido').AsBoolean := Bandeira.Excluido;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -214,8 +215,25 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir Bandeira: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+
+        sql := 'update bandeira set excluido = true where id = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+        Result := True;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir Bandeira: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;

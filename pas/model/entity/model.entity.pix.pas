@@ -21,11 +21,13 @@ type
     FDonoCadastro: TParticipante;
     FTipo: String;
     FUsuarioCadastro: TUsuario;
+    FExcluido: Boolean;
     function GetAlteracao: TDateTime;
     function GetCadastro: TDateTime;
     function GetChave: String;
     function GetContaBancaria: TContaBancaria;
     function GetDonoCadastro: TParticipante;
+    function GetExcluido: Boolean;
     function GetTipo: String;
     function GetUsuarioCadastro: TUsuario;
     procedure SetAlteracao(AValue: TDateTime);
@@ -33,9 +35,9 @@ type
     procedure SetChave(AValue: String);
     procedure SetContaBancaria(AValue: TContaBancaria);
     procedure SetDonoCadastro(AValue: TParticipante);
+    procedure SetExcluido(AValue: Boolean);
     procedure SetTipo(AValue: String);
     procedure SetUsuarioCadastro(AValue: TUsuario);
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -44,6 +46,7 @@ type
     property Tipo: String read GetTipo write SetTipo;
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
+    property Excluido: Boolean read GetExcluido write SetExcluido;
     property ContaBancaria: TContaBancaria read GetContaBancaria write SetContaBancaria;
     property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
@@ -73,6 +76,11 @@ procedure TPix.SetDonoCadastro(AValue: TParticipante);
 begin
   if FDonoCadastro=AValue then Exit;
   FDonoCadastro:=AValue;
+end;
+
+procedure TPix.SetExcluido(AValue: Boolean);
+begin
+  FExcluido := AValue;
 end;
 
 procedure TPix.SetCadastro(AValue: TDateTime);
@@ -110,6 +118,11 @@ end;
 function TPix.GetDonoCadastro: TParticipante;
 begin
   Result := FDonoCadastro;
+end;
+
+function TPix.GetExcluido: Boolean;
+begin
+  Result := FExcluido;
 end;
 
 function TPix.GetTipo: String;

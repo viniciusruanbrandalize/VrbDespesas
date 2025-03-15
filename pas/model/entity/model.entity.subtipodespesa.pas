@@ -15,10 +15,13 @@ type
   private
     FId:   Integer;
     FNome: String;
+    FExcluido: Boolean;
     FTipoDespesa: TTipoDespesa;
+    function GetExcluido: Boolean;
     function GetId: Integer;
     function GetNome: String;
     function GetTipoDespesa: TTipoDespesa;
+    procedure SetExcluido(AValue: Boolean);
     procedure SetId(AValue: Integer);
     procedure SetNome(AValue: String);
     procedure SetTipoDespesa(AValue: TTipoDespesa);
@@ -28,6 +31,7 @@ type
   published
     property Id: Integer read GetId write SetId;
     property Nome: String read GetNome write SetNome;
+    property Excluido: Boolean read GetExcluido write SetExcluido;
     property TipoDespesa: TTipoDespesa read GetTipoDespesa write SetTipoDespesa;
   end;
 
@@ -40,6 +44,11 @@ begin
   Result := FId;
 end;
 
+function TSubtipoDespesa.GetExcluido: Boolean;
+begin
+  Result := FExcluido;
+end;
+
 function TSubtipoDespesa.GetNome: String;
 begin
   Result := FNome;
@@ -48,6 +57,11 @@ end;
 function TSubtipoDespesa.GetTipoDespesa: TTipoDespesa;
 begin
   Result := FTipoDespesa;
+end;
+
+procedure TSubtipoDespesa.SetExcluido(AValue: Boolean);
+begin
+  FExcluido := AValue;
 end;
 
 procedure TSubtipoDespesa.SetId(AValue: Integer);

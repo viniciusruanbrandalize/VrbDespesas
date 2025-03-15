@@ -30,11 +30,11 @@ type
     FObs: String;
     FCadastro: TDateTime;
     FAlteracao: TDateTime;
+    FExcluido: Boolean;
     FEhDonoCadastro: Boolean;
     FCidade: TCidade;
     FUsuarioCadastro: TUsuario;
     FDonoCadastro: TParticipante;
-
     function GetAlteracao: TDateTime;
     function GetBairro: String;
     function GetCadastro: TDateTime;
@@ -46,6 +46,7 @@ type
     function GetDonoCadastro: TParticipante;
     function GetEhDonoCadastro: Boolean;
     function GetEmail: String;
+    function GetExcluido: Boolean;
     function GetFantasia: String;
     function GetId: Integer;
     function GetIE: Integer;
@@ -67,6 +68,7 @@ type
     procedure SetDonoCadastro(AValue: TParticipante);
     procedure SetEhDonoCadastro(AValue: Boolean);
     procedure SetEmail(AValue: String);
+    procedure SetExcluido(AValue: Boolean);
     procedure SetFantasia(AValue: String);
     procedure SetId(AValue: Integer);
     procedure SetIE(AValue: Integer);
@@ -99,6 +101,7 @@ type
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
     property Alteracao: TDateTime read GetAlteracao write SetAlteracao;
     property EhDonoCadastro: Boolean read GetEhDonoCadastro write SetEhDonoCadastro;
+    property Excluido: Boolean read GetExcluido write SetExcluido;
     property Cidade: TCidade read GetCidade write SetCidade;
     property UsuarioCadastro: TUsuario read GetUsuarioCadastro write SetUsuarioCadastro;
     property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
@@ -166,6 +169,11 @@ end;
 function TParticipante.GetEmail: String;
 begin
   Result := FEmail;
+end;
+
+function TParticipante.GetExcluido: Boolean;
+begin
+  Result := FExcluido;
 end;
 
 function TParticipante.GetFantasia: String;
@@ -266,6 +274,11 @@ end;
 procedure TParticipante.SetEmail(AValue: String);
 begin
   FEmail := AValue;
+end;
+
+procedure TParticipante.SetExcluido(AValue: Boolean);
+begin
+  FExcluido := AValue;
 end;
 
 procedure TParticipante.SetFantasia(AValue: String);

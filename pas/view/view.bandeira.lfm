@@ -26,29 +26,22 @@ inherited frmBandeira: TfrmBandeira
                 AnchorSideLeft.Control = nil
                 AnchorSideLeft.Side = asrTop
                 AnchorSideRight.Control = nil
-                Left = 208
-                Width = 688
                 Text = ''
               end
               inherited btnPesquisar: TSpeedButton
                 AnchorSideLeft.Side = asrTop
                 AnchorSideRight.Control = nil
                 AnchorSideRight.Side = asrTop
-                Left = 906
-                Width = 37
-                Margin = -1
-                ShowCaption = False
               end
               inherited cbPesquisa: TComboBox
                 AnchorSideLeft.Control = nil
-                Left = 8
               end
             end
             inherited lbPesquisa: TListBox
               Items.Strings = (
                 'nome'
               )
-              ItemHeight = 20
+              ItemHeight = 15
             end
           end
         end
@@ -56,10 +49,10 @@ inherited frmBandeira: TfrmBandeira
           inherited pnlFundoCadastro: TPanel
             object edtNome: TLabeledEdit[1]
               Left = 8
-              Height = 28
+              Height = 23
               Top = 32
               Width = 452
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 452
               EditLabel.Caption = 'Nome:'
               MaxLength = 60

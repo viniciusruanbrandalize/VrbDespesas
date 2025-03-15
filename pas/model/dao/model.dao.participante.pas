@@ -39,7 +39,7 @@ begin
   try
 
     sql := 'select p.* from participante p ' +
-           'where p.dono_cadastro = :dono_cadastro ' +
+           'where p.dono_cadastro = :dono_cadastro and excluido = false ' +
            'order by p.nome';
 
     Qry.Close;
@@ -78,14 +78,14 @@ begin
     begin
       sql := 'select p.* from participante p ' +
              'where '+campo+' = :busca and ' +
-             'p.dono_cadastro = :dono_cadastro '+
+             'p.dono_cadastro = :dono_cadastro and excluido = false '+
              'order by p.nome';
     end
     else
     begin
       sql := 'select p.* from participante p ' +
              'where UPPER('+campo+') like :busca and '+
-             'p.dono_cadastro = :dono_cadastro '+
+             'p.dono_cadastro = :dono_cadastro and excluido = false '+
              'order by p.nome';
     end;
 
@@ -160,7 +160,7 @@ begin
 
     sql := 'select p.*, c.nome as nome_cidade, c.uf from participante p ' +
            'left join cidade c on c.id = p.id_cidade ' +
-           'where p.id = :id and dono_cadastro = :dono_cadastro ' +
+           'where p.id = :id and dono_cadastro = :dono_cadastro and excluido = false ' +
            'order by p.id';
 
     Qry.Close;
@@ -220,10 +220,10 @@ begin
 
     sql := 'insert into participante(id, pessoa, nome, fantasia, cnpj, ie, telefone, ' +
            'celular, email, cep, rua, numero, complemento, bairro, obs, cadastro, ' +
-           'dono_cadastro, id_cidade, id_usuario_cadastro, id_dono_cadastro) '+
+           'dono_cadastro, id_cidade, id_usuario_cadastro, id_dono_cadastro, excluido) '+
            'values (:id, :pessoa, :nome, :fantasia, :cnpj, :ie, :telefone, ' +
            ':celular, :email, :cep, :rua, :numero, :complemento, :bairro, :obs, :cadastro, ' +
-           ':dono_cadastro, :id_cidade, :id_usuario_cadastro, :id_dono_cadastro)';
+           ':dono_cadastro, :id_cidade, :id_usuario_cadastro, :id_dono_cadastro, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -245,6 +245,7 @@ begin
     Qry.ParamByName('obs').AsString           := Participante.Obs;
     Qry.ParamByName('cadastro').AsDateTime    := Participante.Cadastro;
     Qry.ParamByName('dono_cadastro').AsBoolean := Participante.EhDonoCadastro;
+    Qry.ParamByName('excluido').AsBoolean     := Participante.Excluido;
     Qry.ParamByName('id_cidade').AsInteger     := Participante.Cidade.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Participante.UsuarioCadastro.Id;
     //Qry.ParamByName('id_dono_cadastro').AsInteger := Participante.DonoCadastro.Id;
@@ -328,8 +329,25 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir participante: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+
+        sql := 'update participante set excluido = true where id = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+        Result := True;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir participante: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;

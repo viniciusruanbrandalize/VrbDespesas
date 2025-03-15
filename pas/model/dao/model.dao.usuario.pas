@@ -37,7 +37,9 @@ var
 begin
   try
 
-    sql := 'select * from usuario order by nome';
+    sql := 'select * from usuario ' +
+           'where excluido = false ' +
+           'order by nome';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -71,13 +73,13 @@ begin
     if TryStrToFloat(Busca, valor) then
     begin
       sql := 'select * from usuario ' +
-             'where '+campo+' = :busca '+
+             'where '+campo+' = :busca and excluido = :excluido '+
              'order by nome';
     end
     else
     begin
       sql := 'select * from usuario ' +
-             'where UPPER('+campo+') like :busca '+
+             'where UPPER('+campo+') like :busca and excluido = :excluido '+
              'order by nome';
     end;
 
@@ -110,7 +112,7 @@ begin
   try
 
     sql := 'select * from usuario ' +
-           'where id = :id ' +
+           'where id = :id and excluido = :excluido ' +
            'order by id';
 
     Qry.Close;
@@ -152,8 +154,8 @@ var
 begin
   try
 
-    sql := 'insert into usuario(id, nome, senha, email, cadastro) values ' +
-           '(:id, :nome, :senha, :email, :cadastro)';
+    sql := 'insert into usuario(id, nome, senha, email, cadastro, excluido) values ' +
+           '(:id, :nome, :senha, :email, :cadastro, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -163,6 +165,7 @@ begin
     Qry.ParamByName('senha').AsString      := Usuario.Senha;
     Qry.ParamByName('email').AsString      := Usuario.Email;
     Qry.ParamByName('cadastro').AsDateTime := Usuario.Cadastro;
+    Qry.ParamByName('excluido').AsBoolean  := Usuario.Excluido;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -228,8 +231,25 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir usuário: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+
+        sql := 'update usuario set excluido = true where id = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+        Result := True;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir usuário: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;

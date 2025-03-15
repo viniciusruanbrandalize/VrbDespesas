@@ -28,6 +28,7 @@ type
     actFinanceiro: TAction;
     actBandeira: TAction;
     actContaBancaria: TAction;
+    actRelatorioRecebimento: TAction;
     actRecebimentoGeral: TAction;
     actRelatorioDespesa: TAction;
     actVoltarFinanceiro: TAction;
@@ -56,6 +57,7 @@ type
     btnCopiaSeguranca: TSpeedButton;
     btnLoglogin: TSpeedButton;
     btnRecebimentoSalario: TSpeedButton;
+    btnRelRecebimento: TSpeedButton;
     btnSubtipo: TSpeedButton;
     btnOperacao: TSpeedButton;
     btnAjuda: TSpeedButton;

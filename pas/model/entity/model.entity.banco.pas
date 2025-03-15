@@ -16,9 +16,12 @@ type
     FId:   Integer;
     FNome: String;
     FNumero: Integer;
+    FExcluido: Boolean;
+    function GetExcluido: Boolean;
     function GetId: Integer;
     function GetNome: String;
     function GetNumero: Integer;
+    procedure SetExcluido(AValue: Boolean);
     procedure SetId(AValue: Integer);
     procedure SetNome(AValue: String);
     procedure SetNumero(AValue: Integer);
@@ -29,6 +32,7 @@ type
     property Id: Integer read GetId write SetId;
     property Nome: String read GetNome write SetNome;
     property Numero: Integer read GetNumero write SetNumero;
+    property Excluido: Boolean read GetExcluido write SetExcluido;
   end;
 
 implementation
@@ -40,6 +44,11 @@ begin
   Result := FId;
 end;
 
+function TBanco.GetExcluido: Boolean;
+begin
+  Result := FExcluido;
+end;
+
 function TBanco.GetNome: String;
 begin
   Result := FNome;
@@ -48,6 +57,11 @@ end;
 function TBanco.GetNumero: Integer;
 begin
   Result := FNumero;
+end;
+
+procedure TBanco.SetExcluido(AValue: Boolean);
+begin
+  FExcluido := AValue;
 end;
 
 procedure TBanco.SetId(AValue: Integer);

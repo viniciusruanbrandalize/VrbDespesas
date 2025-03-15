@@ -15,8 +15,11 @@ type
   private
     FId:   Integer;
     FNome: String;
+    FExcluido: Boolean;
+    function GetExcluido: Boolean;
     function GetId: Integer;
     function GetNome: String;
+    procedure SetExcluido(AValue: Boolean);
     procedure SetId(AValue: Integer);
     procedure SetNome(AValue: String);
   public
@@ -25,6 +28,7 @@ type
   published
     property Id: Integer read GetId write SetId;
     property Nome: String read GetNome write SetNome;
+    property Excluido: Boolean read GetExcluido write SetExcluido;
   end;
 
 implementation
@@ -36,9 +40,19 @@ begin
   Result := FId;
 end;
 
+function TTipoDespesa.GetExcluido: Boolean;
+begin
+  Result := FExcluido;
+end;
+
 function TTipoDespesa.GetNome: String;
 begin
   Result := FNome;
+end;
+
+procedure TTipoDespesa.SetExcluido(AValue: Boolean);
+begin
+  FExcluido := AValue;
 end;
 
 procedure TTipoDespesa.SetId(AValue: Integer);

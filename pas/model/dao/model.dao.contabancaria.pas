@@ -57,6 +57,7 @@ begin
 
     sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
            'left join banco b on b.id = cb.id_banco ' +
+           'where cb.excluido = false ' +
            'order by b.nome';
 
     Qry.Close;
@@ -93,14 +94,14 @@ begin
     begin
       sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
              'left join banco b on b.id = cb.id_banco ' +
-             'where '+campo+' = :busca '+
+             'where '+campo+' = :busca and cb.excluido = false '+
              'order by b.nome';
     end
     else
     begin
       sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
              'left join banco b on b.id = cb.id_banco ' +
-             'where UPPER('+campo+') like :busca '+
+             'where UPPER('+campo+') like :busca and cb.excluido = false '+
              'order by b.nome';
     end;
 
@@ -135,7 +136,7 @@ begin
 
     sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
            'left join banco b on b.id = cb.id_banco ' +
-           'where cb.id = :id ' +
+           'where cb.id = :id and cb.excluido = false ' +
            'order by cb.id';
 
     Qry.Close;
@@ -182,9 +183,9 @@ begin
   try
 
     sql := 'insert into conta_bancaria(id, numero, agencia, tipo, cadastro, ' +
-           'id_banco, id_usuario_cadastro, id_dono_cadastro) values ' +
+           'id_banco, id_usuario_cadastro, id_dono_cadastro, excluido) values ' +
            '(:id, :numero, :agencia, :tipo, :cadastro, :id_banco, ' +
-           ':id_usuario_cadastro, :id_dono_cadastro)';
+           ':id_usuario_cadastro, :id_dono_cadastro, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -193,6 +194,7 @@ begin
     Qry.ParamByName('numero').AsString  := ContaBancaria.Numero;
     Qry.ParamByName('agencia').AsString := ContaBancaria.Agencia;
     Qry.ParamByName('tipo').AsString    := ContaBancaria.Tipo;
+    Qry.ParamByName('excluido').AsBoolean  := ContaBancaria.Excluido;
     Qry.ParamByName('cadastro').AsDateTime := ContaBancaria.Cadastro;
     Qry.ParamByName('id_banco').AsInteger  := ContaBancaria.Banco.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger  := ContaBancaria.UsuarioCadastro.Id;
@@ -263,8 +265,25 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir Conta Bancaria: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+
+        sql := 'update conta_bancaria set excluido = true where id = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+        Result := True;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir Conta Bancaria: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;
@@ -277,7 +296,7 @@ begin
   try
 
     sql := 'select * from pix ' +
-           'where id_conta_bancaria = :id_conta_bancaria ' +
+           'where id_conta_bancaria = :id_conta_bancaria and excluido = false ' +
            'order by cadastro desc';
 
     Qry.Close;
@@ -311,7 +330,7 @@ begin
   try
 
     sql := 'select * from pix ' +
-           'where chave = :id ' +
+           'where chave = :id and excluido = false ' +
            'order by chave';
 
     Qry.Close;
@@ -354,9 +373,9 @@ begin
   try
 
     sql := 'insert into pix(chave, tipo, cadastro, id_conta_bancaria, ' +
-           'id_usuario_cadastro, id_dono_cadastro) values ' +
+           'id_usuario_cadastro, id_dono_cadastro, excluido) values ' +
            '(:chave, :tipo, :cadastro, :id_conta_bancaria, ' +
-           ':id_usuario_cadastro, :id_dono_cadastro)';
+           ':id_usuario_cadastro, :id_dono_cadastro, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -364,6 +383,7 @@ begin
     Qry.ParamByName('chave').AsString      := Pix.Chave;
     Qry.ParamByName('tipo').AsString       := Pix.Tipo;
     Qry.ParamByName('cadastro').AsDateTime := Pix.Cadastro;
+    Qry.ParamByName('excluido').AsBoolean  := Pix.Excluido;
     Qry.ParamByName('id_conta_bancaria').AsInteger  := Pix.ContaBancaria.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger  := Pix.UsuarioCadastro.Id;
     //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
@@ -431,8 +451,25 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir Pix: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+
+        sql := 'update pix set excluido = true where chave = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsString  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+        Result := True;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir Pix: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;
@@ -445,7 +482,7 @@ begin
   try
 
     sql := 'select * from cartao ' +
-           'where id_conta_bancaria = :id_conta_bancaria ' +
+           'where id_conta_bancaria = :id_conta_bancaria and excluido = false ' +
            'order by cadastro desc';
 
     Qry.Close;
@@ -490,7 +527,7 @@ begin
 
     sql := 'select card.*, ban.nome as nome_bandeira from cartao card ' +
            'left join bandeira ban on ban.id = card.id_bandeira ' +
-           'where card.id = :id ' +
+           'where card.id = :id and excluido = false ' +
            'order by card.id';
 
     Qry.Close;
@@ -539,9 +576,9 @@ begin
   try
 
     sql := 'insert into cartao(id, numero, tipo, aproximacao, validade, cadastro, ' +
-           'id_bandeira, id_conta_bancaria, id_dono_cadastro, id_usuario_cadastro) ' +
+           'id_bandeira, id_conta_bancaria, id_dono_cadastro, id_usuario_cadastro, excluido) ' +
            'values (:id, :numero, :tipo, :aproximacao, :validade, :cadastro, ' +
-           ':id_bandeira, :id_conta_bancaria, :id_dono_cadastro, :id_usuario_cadastro)';
+           ':id_bandeira, :id_conta_bancaria, :id_dono_cadastro, :id_usuario_cadastro, :excluido)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -555,6 +592,7 @@ begin
     Qry.ParamByName('id_bandeira').AsInteger := Cartao.Bandeira.Id;
     Qry.ParamByName('id_conta_bancaria').AsInteger   := Cartao.ContaBancaria.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Cartao.UsuarioCadastro.Id;
+    Qry.ParamByName('excluido').AsBoolean := Cartao.Excluido;
     //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
@@ -624,8 +662,25 @@ begin
 
   except on E: Exception do
     begin
-      Erro := 'Ocorreu um erro ao excluir Cartão: ' + sLineBreak + E.Message;
-      Result := False;
+      try
+
+        sql := 'update cartao set excluido = true where id = :id';
+
+        Qry.Close;
+        Qry.SQL.Clear;
+        Qry.SQL.Add(sql);
+        Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ExecSQL;
+        dmConexao1.SQLTransaction.Commit;
+
+        Result := True;
+
+      except on E: Exception do
+        begin
+          Erro := 'Ocorreu um erro ao excluir Cartão: ' + sLineBreak + E.Message;
+          Result := False;
+        end;
+      end;
     end;
   end;
 end;
