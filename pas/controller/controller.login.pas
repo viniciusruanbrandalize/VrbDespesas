@@ -52,7 +52,6 @@ end;
 function TLoginController.Inserir(objLogin: TLogin; out Erro: String
   ): Boolean;
 begin
-  objLogin.Id := LoginDAO.GerarId(SEQ_ID_LOGIN);
   Result := LoginDAO.Inserir(objLogin, Erro);
 end;
 

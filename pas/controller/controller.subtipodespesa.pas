@@ -56,7 +56,6 @@ end;
 
 function TSubtipoDespesaController.Inserir(objSubtipoDespesa: TSubtipoDespesa; out Erro: string): Boolean;
 begin
-  objSubtipoDespesa.Id := SubtipoDespesaDAO.GerarId(SEQ_ID_SUBTIPO_DESPESA);
   Result := SubtipoDespesaDAO.Inserir(objSubtipoDespesa, Erro);
 end;
 

@@ -10,6 +10,9 @@ uses
 
 type
 
+  TDriverDB = (DRV_FIREBIRD, DRV_MSSQLSERVER, DRV_MYSQL, DRV_MARIADB, DRV_ODBC,
+               DRV_ORACLE, DRV_POSTGRESQL, DRV_SQLITE3);
+
   TTabela = (TB_BANCO, TB_BANDEIRA, TB_CARTAO, TB_CIDADE, TB_COFRE,
              TB_CONFIGURACAO, TB_CONTA_BANCARIA, TB_DESPESA, TB_DESPESA_FORMA_PGTO,
              TB_ESTADO, TB_FORMA_PGTO, TB_LOG_BACKUP, TB_LOGIN, TB_PAIS,
@@ -28,10 +31,12 @@ type
 
   TPadraoDAO = class
   private
-    FDriver: String;
+    FAutoInc: Boolean;
+    FDriver: TDriverDB;
     FConectorPadrao: TSQLConnector;
     function SequenciaToString(Sequencia: TSequencia): String;
     function TabelaToString(Tabela: TTabela): String;
+    function StrToDriverDB(Driver: String): TDriverDB;
     function TemCampoExcluido(Tabela: TTabela): Boolean;
   public
     Qry: TSQLQuery;
@@ -40,6 +45,7 @@ type
     procedure PesquisaGenerica(Tabela: TTabela; objNome: TObject; lbId: TListBox; busca: String;
                                 Limitacao: Integer; out QtdRegistro: Integer);
     function GerarId(Sequencia: TSequencia; Incremento: Integer=1; Conector: TSQLConnector = nil): Integer;
+    function UltimoIdInserido(): Integer;
     procedure CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);
     procedure Commit(Conexao: Integer = 1);
     procedure Roolback(Conexao: Integer = 1);
@@ -47,7 +53,8 @@ type
     constructor Create; virtual;
     destructor Destroy; override;
 
-    property Driver: String read FDriver write FDriver;
+    property Driver: TDriverDB read FDriver write FDriver;
+    property AutoInc: Boolean read FAutoInc write FAutoInc;
   end;
 
 implementation
@@ -59,7 +66,7 @@ var
   NomeSeq: String;
 begin
   NomeSeq := '';
-  if FDriver = 'FIREBIRD' Then
+  if FDriver = DRV_FIREBIRD Then
   begin
     case Sequencia of
       SEQ_ID_BANCO:                 NomeSeq := 'gen_id_banco';
@@ -84,7 +91,7 @@ begin
     end;
   end
   else
-  if FDriver = 'POSTGRESQL' Then
+  if FDriver = DRV_POSTGRESQL Then
   begin
     case Sequencia of
       SEQ_ID_BANCO:                 NomeSeq := 'seq_id_banco';
@@ -116,37 +123,61 @@ var
   NomeTb: String;
 begin
   NomeTb := '';
-  if (FDriver = 'FIREBIRD') or (FDriver = 'POSTGRESQL') Then
-  begin
-    case Tabela of
-      TB_BANCO:                 NomeTb := 'banco';
-      TB_BANDEIRA:              NomeTb := 'bandeira';
-      TB_CARTAO:                NomeTb := 'cartao';
-      TB_CIDADE:                NomeTb := 'cidade';
-      TB_COFRE:                 NomeTb := 'cofre';
-      TB_CONFIGURACAO:          NomeTb := 'configuracao';
-      TB_CONTA_BANCARIA:        NomeTb := 'conta_bancaria';
-      TB_DESPESA:               NomeTb := 'despesa';
-      TB_DESPESA_FORMA_PGTO:    NomeTb := 'despesa_forma_pgto';
-      TB_ESTADO:                NomeTb := 'estado';
-      TB_FORMA_PGTO:            NomeTb := 'forma_pgto';
-      TB_LOG_BACKUP:            NomeTb := 'log_backup';
-      TB_LOGIN:                 NomeTb := 'login';
-      TB_PAIS:                  NomeTb := 'pais';
-      TB_PARTICIPANTE:          NomeTb := 'participante';
-      TB_PIX:                   NomeTb := 'pix';
-      TB_RECEBIMENTO:           NomeTb := 'recebimento';
-      TB_SUBTIPO_DESPESA:       NomeTb := 'subtipo_despesa';
-      TB_TIPO_DESPESA:          NomeTb := 'tipo_despesa';
-      TB_UC_ACAO:               NomeTb := 'uc_acao';
-      TB_UC_ACESSO:             NomeTb := 'uc_acesso';
-      TB_UC_TELA:               NomeTb := 'uc_tela';
-      TB_USUARIO:               NomeTb := 'usuario';
-      TB_USUARIO_DONO_CADASTRO: NomeTb := 'usuario_dono_cadastro';
-      TB_ARQUIVO:               NomeTb := 'arquivo';
-    end;
+  case Tabela of
+    TB_BANCO:                 NomeTb := 'banco';
+    TB_BANDEIRA:              NomeTb := 'bandeira';
+    TB_CARTAO:                NomeTb := 'cartao';
+    TB_CIDADE:                NomeTb := 'cidade';
+    TB_COFRE:                 NomeTb := 'cofre';
+    TB_CONFIGURACAO:          NomeTb := 'configuracao';
+    TB_CONTA_BANCARIA:        NomeTb := 'conta_bancaria';
+    TB_DESPESA:               NomeTb := 'despesa';
+    TB_DESPESA_FORMA_PGTO:    NomeTb := 'despesa_forma_pgto';
+    TB_ESTADO:                NomeTb := 'estado';
+    TB_FORMA_PGTO:            NomeTb := 'forma_pgto';
+    TB_LOG_BACKUP:            NomeTb := 'log_backup';
+    TB_LOGIN:                 NomeTb := 'login';
+    TB_PAIS:                  NomeTb := 'pais';
+    TB_PARTICIPANTE:          NomeTb := 'participante';
+    TB_PIX:                   NomeTb := 'pix';
+    TB_RECEBIMENTO:           NomeTb := 'recebimento';
+    TB_SUBTIPO_DESPESA:       NomeTb := 'subtipo_despesa';
+    TB_TIPO_DESPESA:          NomeTb := 'tipo_despesa';
+    TB_UC_ACAO:               NomeTb := 'uc_acao';
+    TB_UC_ACESSO:             NomeTb := 'uc_acesso';
+    TB_UC_TELA:               NomeTb := 'uc_tela';
+    TB_USUARIO:               NomeTb := 'usuario';
+    TB_USUARIO_DONO_CADASTRO: NomeTb := 'usuario_dono_cadastro';
+    TB_ARQUIVO:               NomeTb := 'arquivo';
   end;
   Result := NomeTb;
+end;
+
+function TPadraoDAO.StrToDriverDB(Driver: String): TDriverDB;
+begin
+  if Driver = 'FIREBIRD' then
+    Result := DRV_FIREBIRD
+  else
+  if Driver = 'POSTGRESQL' then
+    result := DRV_POSTGRESQL
+  else
+  if Driver = 'MYSQL 5.7' then
+    Result := DRV_MARIADB
+  else
+  if Pos('MYSQL', UpperCase(Driver)) <> 0 then
+    Result := DRV_MYSQL
+  else
+  if Driver = 'MSSQLSERVER' then
+    result := DRV_MSSQLSERVER
+  else
+  if Driver = 'ODBC' then
+    result := DRV_ODBC
+  else
+  if Driver = 'SQLITE3' then
+    result := DRV_SQLITE3
+  else
+  if Driver = 'ORACLE' then
+    result := DRV_ORACLE;
 end;
 
 function TPadraoDAO.TemCampoExcluido(Tabela: TTabela): Boolean;
@@ -173,7 +204,7 @@ begin
     if TemCampoExcluido(Tabela) then
       WhereExcluido := 'and excluido = false ';
 
-    if FDriver = 'FIREBIRD' then
+    if FDriver = DRV_FIREBIRD then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'first '+Limitacao.ToString;
@@ -183,12 +214,12 @@ begin
              'order by nome';
     end
     else
-    if FDriver = 'POSTGRESQL' then
+    if FDriver in [DRV_POSTGRESQL, DRV_MYSQL, DRV_MARIADB] then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'limit '+Limitacao.ToString;
 
-      sql := 'select id, nome from public.'+NomeTabela+' '+
+      sql := 'select id, nome from '+NomeTabela+' '+
              'where UPPER(nome) like :busca '+WhereExcluido+
              'order by nome ' +CmdLimit;
     end;
@@ -248,18 +279,18 @@ begin
   try
     nomeSequencia := SequenciaToString(Sequencia);
 
-    if FDriver = 'FIREBIRD' then
+    if FDriver = DRV_FIREBIRD then
     begin
       sql := 'SELECT GEN_ID('+nomeSequencia+','+IntToStr(Incremento)+') AS ID '+
              'FROM RDB$DATABASE';
     end
     else
-    if FDriver = 'POSTGRESQL' then
+    if FDriver = DRV_POSTGRESQL then
     begin
       sql := 'select nextval('+QuotedStr('public.'+nomeSequencia)+') AS ID ';
     end
     else
-    if FDriver = 'MSSQLSERVER' then
+    if FDriver = DRV_MSSQLSERVER then
     begin
       sql := 'SELECT NEXT VALUE FOR dbo.'+nomeSequencia+' AS ID';
     end;
@@ -278,6 +309,33 @@ begin
   finally
     QryTemp.Close;
     QryTemp.Free;
+  end;
+end;
+
+function TPadraoDAO.UltimoIdInserido(): Integer;
+var
+  id: Integer;
+  sql: String;
+begin
+  id := 0;
+  sql := '';
+  try
+
+    if (FDriver = DRV_MYSQL) or (FDriver = DRV_MARIADB) then
+      sql := 'last_insert_id() as id';
+
+    if sql <> EmptyStr then
+    begin
+      Qry.Close;
+      Qry.SQL.Add(sql);
+      Qry.Open;
+      id := Qry.FieldByName('id').AsInteger;
+    end;
+
+    Result := id;
+
+  finally
+    Qry.Close;
   end;
 end;
 
@@ -306,7 +364,8 @@ end;
 constructor TPadraoDAO.Create;
 begin
   FConectorPadrao := dmConexao1.SQLConnector;
-  FDriver := Trim(UpperCase(dmConexao1.SQLConnector.ConnectorType));
+  FDriver := StrToDriverDB(Trim(UpperCase(dmConexao1.SQLConnector.ConnectorType)));
+  FAutoInc := (FDriver in [DRV_MYSQL, DRV_MARIADB]);
   CriarQuery(Qry, FConectorPadrao);
 end;
 

@@ -207,7 +207,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger               := Recebimento.Id;
+
+    if not AutoInc then
+    begin
+      Recebimento.Id := GerarId(SEQ_ID_Recebimento);
+      Qry.ParamByName('id').AsInteger := Recebimento.Id;
+    end;
+
     Qry.ParamByName('tipo').AsInteger             := Recebimento.Tipo;
     Qry.ParamByName('descricao').AsString         := Recebimento.Descricao;
     Qry.ParamByName('data').AsDate                := Recebimento.Data;
@@ -329,7 +335,7 @@ begin
 
     CmdLimit := '';
 
-    if Driver = 'FIREBIRD' then
+    if Driver = DRV_FIREBIRD then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'first '+Limitacao.ToString;
@@ -337,9 +343,20 @@ begin
       sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(cb.numero) like :busca '+
+             'where UPPER(cb.numero) like :busca and cb.excluido = false '+
              'order by cb.numero';
+    end
+    else
+    if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL] then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'limit '+Limitacao.ToString;
 
+      sql := 'select cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
+             'from conta_bancaria cb ' +
+             'left join banco bnc on bnc.id = cb.id_banco '+
+             'where UPPER(cb.numero) like :busca and cb.excluido = false '+
+             'order by cb.numero '+CmdLimit;
     end;
 
     Qry.Close;

@@ -51,7 +51,6 @@ end;
 
 function TUsuarioController.Inserir(objUsuario: TUsuario; out Erro: string): Boolean;
 begin
-  objUsuario.Id := UsuarioDAO.GerarId(SEQ_ID_USUARIO);
   Result := UsuarioDAO.Inserir(objUsuario, Erro);
 end;
 

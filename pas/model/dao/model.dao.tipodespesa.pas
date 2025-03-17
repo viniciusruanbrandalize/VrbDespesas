@@ -153,7 +153,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger  := TipoDespesa.Id;
+
+    if not AutoInc then
+    begin
+      TipoDespesa.Id := GerarId(SEQ_ID_TIPO_DESPESA);
+      Qry.ParamByName('id').AsInteger  := TipoDespesa.Id;
+    end;
+
     Qry.ParamByName('nome').AsString := TipoDespesa.Nome;
     Qry.ParamByName('excluido').AsBoolean := TipoDespesa.Excluido;
     Qry.ExecSQL;

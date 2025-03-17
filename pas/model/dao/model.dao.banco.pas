@@ -153,7 +153,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger  := Banco.Id;
+
+    if not AutoInc then
+    begin
+      Banco.Id := GerarId(SEQ_ID_BANCO);
+      Qry.ParamByName('id').AsInteger  := Banco.Id;
+    end;
+
     Qry.ParamByName('nome').AsString := Banco.Nome;
     Qry.ParamByName('numero').AsInteger  := Banco.Numero;
     Qry.ParamByName('excluido').AsBoolean := Banco.Excluido;

@@ -155,7 +155,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger   := FormaPagamento.Id;
+
+    if not AutoInc then
+    begin
+      FormaPagamento.Id := GerarId(SEQ_ID_FORMA_PGTO);
+      Qry.ParamByName('id').AsInteger := FormaPagamento.Id;
+    end;
+
     Qry.ParamByName('nome').AsString  := FormaPagamento.Nome;
     Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
     Qry.ParamByName('excluido').AsBoolean := FormaPagamento.Excluido;

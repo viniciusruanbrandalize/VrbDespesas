@@ -160,7 +160,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger        := Usuario.Id;
+
+    if not AutoInc then
+    begin
+      Usuario.Id := GerarId(SEQ_ID_USUARIO);
+      Qry.ParamByName('id').AsInteger := Usuario.Id;
+    end;
+
     Qry.ParamByName('nome').AsString       := Usuario.Nome;
     Qry.ParamByName('senha').AsString      := Usuario.Senha;
     Qry.ParamByName('email').AsString      := Usuario.Email;

@@ -256,7 +256,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger        := Despesa.Id;
+
+    if not AutoInc then
+    begin
+      Despesa.Id := GerarId(SEQ_ID_DESPESA);
+      Qry.ParamByName('id').AsInteger      := Despesa.Id;
+    end;
+
     Qry.ParamByName('data').AsDate         := Despesa.Data;
     Qry.ParamByName('hora').AsTime         := Despesa.Hora;
     Qry.ParamByName('descricao').AsString  := Despesa.Descricao;
@@ -277,17 +283,26 @@ begin
     Qry.ParamByName('nivel_precisao').AsInteger := Despesa.NivelPrecisao;
     Qry.ExecSQL;
 
+    if AutoInc then
+      Despesa.Id := UltimoIdInserido();
+
     sql := 'insert into despesa_forma_pgto (id, valor, id_conta_bancaria, ' +
            'chave_pix, id_cartao, id_despesa, id_forma_pgto) values (:id, :valor, ' +
            ':id_conta_bancaria, :chave_pix, :id_cartao, :id_despesa, :id_forma_pgto)';
 
     for i := 0 to Despesa.DespesaFormaPagamento.Count-1 do
     begin
-      Despesa.DespesaFormaPagamento[i].Id := GerarId(SEQ_ID_DESPESA_FORMA_PGTO);
+
       Qry.Close;
       Qry.SQL.Clear;
       Qry.SQL.Add(sql);
-      Qry.ParamByName('id').AsInteger                := Despesa.DespesaFormaPagamento[i].Id;
+
+      if not AutoInc then
+      begin
+        Despesa.DespesaFormaPagamento[i].Id := GerarId(SEQ_ID_DESPESA_FORMA_PGTO);
+        Qry.ParamByName('id').AsInteger     := Despesa.DespesaFormaPagamento[i].Id;
+      end;
+
       Qry.ParamByName('valor').AsFloat               := Despesa.DespesaFormaPagamento[i].Valor;
 
       if Despesa.DespesaFormaPagamento[i].ContaBancaria.Id > 0 then
@@ -310,11 +325,16 @@ begin
 
     for i := 0 to Despesa.Arquivo.Count-1 do
     begin
-      Despesa.Arquivo[i].Id := GerarId(SEQ_ID_ARQUIVO, 1, dmConexao2.SQLConnector);
       QryArquivo.Close;
       QryArquivo.SQL.Clear;
       QryArquivo.SQL.Add(sql);
-      QryArquivo.ParamByName('id').AsInteger           := Despesa.Arquivo[i].Id;
+
+      if not AutoInc then
+      begin
+        Despesa.Arquivo[i].Id := GerarId(SEQ_ID_ARQUIVO, 1, dmConexao2.SQLConnector);
+        QryArquivo.ParamByName('id').AsInteger := Despesa.Arquivo[i].Id;
+      end;
+
       QryArquivo.ParamByName('nome').AsString          := Despesa.Arquivo[i].Nome;
       QryArquivo.ParamByName('extensao').AsString      := Despesa.Arquivo[i].Extensao;
       QryArquivo.ParamByName('data_hora_upload').AsDateTime := Despesa.Arquivo[i].DataHoraUpload;
@@ -541,7 +561,7 @@ begin
 
     CmdLimit := '';
 
-    if Driver = 'FIREBIRD' then
+    if Driver = DRV_FIREBIRD then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'first '+Limitacao.ToString;
@@ -549,6 +569,16 @@ begin
       sql := 'select '+CmdLimit+' chave from pix '+
              'where UPPER(chave) like :busca '+
              'order by chave';
+    end
+    else
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'limit '+Limitacao.ToString;
+
+      sql := 'select chave from pix '+
+             'where UPPER(chave) like :busca '+
+             'order by chave'+CmdLimit;
     end;
 
     Qry.Close;
@@ -588,7 +618,7 @@ begin
 
     CmdLimit := '';
 
-    if Driver = 'FIREBIRD' then
+    if Driver = DRV_FIREBIRD then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'first '+Limitacao.ToString;
@@ -601,6 +631,21 @@ begin
              'left join banco bnc on bnc.id = cb.id_banco '+
              'where UPPER(c.numero) like :busca '+
              'order by c.numero';
+    end
+    else
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'limit '+Limitacao.ToString;
+
+      sql := 'select c.id, c.numero, bnc.nome as nome_banco, ' +
+             'b.nome as nome_bandeira ' +
+             'from cartao c ' +
+             'left join bandeira b on b.id = c.id_bandeira ' +
+             'left join conta_bancaria cb on cb.id = c.id_conta_bancaria ' +
+             'left join banco bnc on bnc.id = cb.id_banco '+
+             'where UPPER(c.numero) like :busca '+
+             'order by c.numero'+CmdLimit;
     end;
 
     Qry.Close;
@@ -642,7 +687,7 @@ begin
 
     CmdLimit := '';
 
-    if Driver = 'FIREBIRD' then
+    if Driver = DRV_FIREBIRD then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'first '+Limitacao.ToString;
@@ -650,9 +695,20 @@ begin
       sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(cb.numero) like :busca '+
+             'where UPPER(cb.numero) like :busca and cb.excluido = false '+
              'order by cb.numero';
+    end
+    else
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'limit '+Limitacao.ToString;
 
+      sql := 'select cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
+             'from conta_bancaria cb ' +
+             'left join banco bnc on bnc.id = cb.id_banco '+
+             'where UPPER(cb.numero) like :busca and cb.excluido = false '+
+             'order by cb.numero '+CmdLimit;
     end;
 
     Qry.Close;

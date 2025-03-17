@@ -50,7 +50,6 @@ end;
 
 function TFormaPagamentoController.Inserir(objFormaPagamento: TFormaPagamento; out Erro: string): Boolean;
 begin
-  objFormaPagamento.Id := FormaPagamentoDAO.GerarId(SEQ_ID_FORMA_PGTO);
   Result := FormaPagamentoDAO.Inserir(objFormaPagamento, Erro);
 end;
 

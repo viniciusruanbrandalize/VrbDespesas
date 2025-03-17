@@ -90,7 +90,6 @@ function TDespesaController.Inserir(objDespesa: TDespesa; out Erro: string): Boo
 begin
   objDespesa.DonoCadastro.Id    := 77;  //alterar
   objDespesa.UsuarioCadastro.Id := dmConexao1.IdUsuario;
-  objDespesa.Id := DespesaDAO.GerarId(SEQ_ID_DESPESA);
   Result := DespesaDAO.Inserir(objDespesa, Erro);
 end;
 

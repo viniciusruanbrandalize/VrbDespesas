@@ -151,7 +151,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger  := Bandeira.Id;
+
+    if not AutoInc then
+    begin
+      Bandeira.Id := GerarId(SEQ_ID_BANDEIRA);
+      Qry.ParamByName('id').AsInteger  := Bandeira.Id;
+    end;
+
     Qry.ParamByName('nome').AsString := Bandeira.Nome;
     Qry.ParamByName('excluido').AsBoolean := Bandeira.Excluido;
     Qry.ExecSQL;

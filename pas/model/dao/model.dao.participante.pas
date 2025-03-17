@@ -117,12 +117,24 @@ procedure TParticipanteDAO.PesquisarCidade(lbNome, lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 var
   sql: String;
+  limit: String;
 begin
   try
 
-    sql := 'select first 10 id, nome, uf from cidade ' +
-           'where UPPER(nome) like :busca '+
-           'order by nome';
+    if Driver = DRV_FIREBIRD then
+    begin
+      sql := 'select first 10 id, nome, uf from cidade ' +
+             'where UPPER(nome) like :busca '+
+             'order by nome';
+    end
+    else
+    if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL] then
+    begin
+      sql := 'select id, nome, uf from cidade ' +
+             'where UPPER(nome) like :busca '+
+             'order by nome ' +
+             'limit 10';
+    end;
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -228,7 +240,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger           := Participante.Id;
+
+    if not AutoInc then
+    begin
+      Participante.Id := GerarId(SEQ_ID_PARTICIPANTE);
+      Qry.ParamByName('id').AsInteger := Participante.Id;
+    end;
+
     Qry.ParamByName('pessoa').AsString        := Participante.Pessoa;
     Qry.ParamByName('nome').AsString          := Participante.Nome;
     Qry.ParamByName('fantasia').AsString      := Participante.Fantasia;

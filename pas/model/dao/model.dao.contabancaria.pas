@@ -190,7 +190,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger     := ContaBancaria.Id;
+
+    if not AutoInc then
+    begin
+      ContaBancaria.Id := GerarId(SEQ_ID_CONTA_BANCARIA);
+      Qry.ParamByName('id').AsInteger     := ContaBancaria.Id;
+    end;
+
     Qry.ParamByName('numero').AsString  := ContaBancaria.Numero;
     Qry.ParamByName('agencia').AsString := ContaBancaria.Agencia;
     Qry.ParamByName('tipo').AsString    := ContaBancaria.Tipo;
@@ -583,7 +589,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger          := Cartao.Id;
+
+    if not AutoInc then
+    begin
+      Cartao.Id := GerarId(SEQ_ID_CARTAO);
+      Qry.ParamByName('id').AsInteger        := Cartao.Id;
+    end;
+
     Qry.ParamByName('tipo').AsString         := Cartao.Tipo;
     Qry.ParamByName('numero').AsString       := Cartao.Numero;
     Qry.ParamByName('aproximacao').AsBoolean := Cartao.Aproximacao;

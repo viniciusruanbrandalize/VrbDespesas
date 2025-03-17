@@ -49,7 +49,6 @@ end;
 
 function TBandeiraController.Inserir(objBandeira: TBandeira; out Erro: string): Boolean;
 begin
-  objBandeira.Id := BandeiraDAO.GerarId(SEQ_ID_BANDEIRA);
   Result := BandeiraDAO.Inserir(objBandeira, Erro);
 end;
 

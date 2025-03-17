@@ -49,7 +49,6 @@ end;
 
 function TTipoDespesaController.Inserir(objTipoDespesa: TTipoDespesa; out Erro: string): Boolean;
 begin
-  objTipoDespesa.Id := TipoDespesaDAO.GerarId(SEQ_ID_TIPO_DESPESA);
   Result := TipoDespesaDAO.Inserir(objTipoDespesa, Erro);
 end;
 

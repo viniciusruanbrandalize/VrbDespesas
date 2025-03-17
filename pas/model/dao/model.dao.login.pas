@@ -75,7 +75,13 @@ begin
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger         := Login.Id;
+
+    if not AutoInc then
+    begin
+      Login.Id := GerarId(SEQ_ID_LOGIN);
+      Qry.ParamByName('id').AsInteger := Login.Id;
+    end;
+
     Qry.ParamByName('nome_pc').AsString     := Login.NomePC;
     Qry.ParamByName('ip_pc').AsString       := Login.IPPC;
     Qry.ParamByName('data').AsDate          := Login.Data;

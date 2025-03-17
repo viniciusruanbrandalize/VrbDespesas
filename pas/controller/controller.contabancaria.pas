@@ -77,7 +77,6 @@ end;
 
 function TContaBancariaController.Inserir(objContaBancaria: TContaBancaria; out Erro: string): Boolean;
 begin
-  objContaBancaria.Id := ContaBancariaDAO.GerarId(SEQ_ID_CONTA_BANCARIA);
   objContaBancaria.UsuarioCadastro.Id := dmConexao1.IdUsuario;
   Result := ContaBancariaDAO.Inserir(objContaBancaria, Erro);
 end;
