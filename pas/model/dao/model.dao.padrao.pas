@@ -322,11 +322,12 @@ begin
   try
 
     if (FDriver = DRV_MYSQL) or (FDriver = DRV_MARIADB) then
-      sql := 'last_insert_id() as id';
+      sql := 'select last_insert_id() as id';
 
     if sql <> EmptyStr then
     begin
       Qry.Close;
+      Qry.SQL.Clear;
       Qry.SQL.Add(sql);
       Qry.Open;
       id := Qry.FieldByName('id').AsInteger;
