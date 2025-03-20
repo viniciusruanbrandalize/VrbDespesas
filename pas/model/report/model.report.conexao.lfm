@@ -65,25 +65,26 @@ object dmConexaoReport: TdmConexaoReport
     Database = SQLConnector
     Transaction = SQLTransaction
     SQL.Strings = (
-      'select sum(total)/30 as med_diaria, avg(total) as media,'
-      '            sum(total) as total, extract(month from data) as mes,'
-      '            extract(year from data) as ano, count(id) as qtd_despesa,'
-      '            (case when extract(month from data) = ''1'' then ''Janeiro'' else'
-      '            (case when extract(month from data) = ''2'' then ''Fevereiro'' else'
-      '            (case when extract(month from data) = ''3'' then ''Março'' else'
-      '            (case when extract(month from data) = ''4'' then ''Abril'' else'
-      '            (case when extract(month from data) = ''5'' then ''Maio'' else'
-      '            (case when extract(month from data) = ''6'' then ''Junho'' else'
-      '            (case when extract(month from data) = ''7'' then ''Julho'' else'
-      '            (case when extract(month from data) = ''8'' then ''Agosto'' else'
-      '            (case when extract(month from data) = ''9'' then ''Setembro'' else'
-      '            (case when extract(month from data) = ''10'' then ''Outubro'' else'
-      '            (case when extract(month from data) = ''11'' then ''Novembro'' else'
-      '            (case when extract(month from data) = ''12'' then ''Dezembro'''
-      '             end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa'
-      '            group by mes, ano'
+      'select sd.nome as nome_subtipo, avg(d.total) as media,'
+      '              sum(d.total) as total,'
+      '              count(d.id) as qtd_despesa from subtipo_despesa sd'
+      '              left join despesa d on d.id_subtipo = sd.id'
+      '              group by sd.nome'
+      '              having d.data between :data_inicial and :data_final'
+      '              and d.paga = true'
+      '              order by sd.nome'
     )
-    Params = <>
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'data_inicial'
+        ParamType = ptInput
+      end    
+      item
+        DataType = ftUnknown
+        Name = 'data_final'
+        ParamType = ptInput
+      end>
     Macros = <>
     Left = 112
     Top = 80
@@ -120,7 +121,7 @@ object dmConexaoReport: TdmConexaoReport
   object SQLDBLibraryLoader: TSQLDBLibraryLoader
     Enabled = False
     ConnectionType = 'Firebird'
-    LibraryName = 'D:\Projetos\Lazarus\vrbDespesas\exe\fbclient32.dll'
+    LibraryName = 'D:\Projetos\Lazarus\vrbDespesas\exe\fbclient.dll'
     Left = 152
     Top = 152
   end
