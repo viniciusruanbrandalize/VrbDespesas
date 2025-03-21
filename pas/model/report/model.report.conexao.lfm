@@ -24,10 +24,10 @@ object dmConexaoReport: TdmConexaoReport
     MaxIndexesCount = 4
     FieldDefs = <    
       item
-        Name = 'MED_DIARIA'
-        DataType = ftBCD
-        Precision = 16
-        Size = 2
+        Name = 'NOME_SUBTIPO'
+        DataType = ftString
+        Precision = -1
+        Size = 100
       end    
       item
         Name = 'MEDIA'
@@ -42,49 +42,24 @@ object dmConexaoReport: TdmConexaoReport
         Size = 2
       end    
       item
-        Name = 'MES'
-        DataType = ftSmallint
-        Precision = -1
-      end    
-      item
-        Name = 'ANO'
-        DataType = ftSmallint
-        Precision = -1
-      end    
-      item
         Name = 'QTD_DESPESA'
         DataType = ftLargeint
         Precision = -1
-      end    
-      item
-        Name = 'NOME_MES'
-        DataType = ftFixedChar
-        Precision = -1
-        Size = 9
       end>
     Database = SQLConnector
     Transaction = SQLTransaction
     SQL.Strings = (
-      'select sd.nome as nome_subtipo, avg(d.total) as media,'
-      '              sum(d.total) as total,'
-      '              count(d.id) as qtd_despesa from subtipo_despesa sd'
-      '              left join despesa d on d.id_subtipo = sd.id'
-      '              group by sd.nome'
-      '              having d.data between :data_inicial and :data_final'
-      '              and d.paga = true'
-      '              order by sd.nome'
+      'select sd.nome as nome_subtipo,'
+      '       (select coalesce(avg(d.total), 0) from despesa d'
+      '       where d.id_subtipo = sd.id) as media,'
+      '       (select coalesce(sum(d.total), 0) from despesa d'
+      '       where d.id_subtipo = sd.id ) as total,'
+      '       (select coalesce(count(d.id), 0) from despesa d'
+      '       where d.id_subtipo = sd.id) as qtd_despesa'
+      'from subtipo_despesa sd'
+      'order by sd.nome'
     )
-    Params = <    
-      item
-        DataType = ftUnknown
-        Name = 'data_inicial'
-        ParamType = ptInput
-      end    
-      item
-        DataType = ftUnknown
-        Name = 'data_final'
-        ParamType = ptInput
-      end>
+    Params = <>
     Macros = <>
     Left = 112
     Top = 80

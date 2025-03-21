@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-03-21 12:16:02"/>
+    <ReportLastChange Value="2025-03-21 12:25:52"/>
     <ReportVersionBuild Value=""/>
     <ReportVersionMajor Value=""/>
     <ReportVersionMinor Value=""/>
@@ -203,7 +203,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Subtipo de despesa&#xD;&#xA;"/>
+            <Memo Value="Tipo de despesa&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1013,7 +1013,7 @@
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
-            <Memo Value="[qryPadrao.&quot;NOME_SUBTIPO&quot;]&#xD;&#xA;"/>
+            <Memo Value="[qryPadrao.&quot;NOME_TIPO&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>

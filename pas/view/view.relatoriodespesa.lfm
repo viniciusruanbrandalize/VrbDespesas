@@ -5,6 +5,8 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
   OnDestroy = FormDestroy
   inherited pnlFundo: TPanel
     inherited pgc: TPageControl
+      ActivePage = tbsPrincipal
+      TabIndex = 0
       inherited tbsPrincipal: TTabSheet
         inherited pnlFundoTbs1: TPanel
           inherited pnlOpcoes: TPanel
@@ -30,6 +32,16 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                   Control = pnlTotalPorMes
                   WrapAfter = waAuto
                   Index = 3
+                end              
+                item
+                  Control = pnlTotalPorSubtipo
+                  WrapAfter = waAuto
+                  Index = 4
+                end              
+                item
+                  Control = pnlTotalPorSubtipo1
+                  WrapAfter = waAuto
+                  Index = 5
                 end>
               object pnlPeriodo: TPanel[0]
                 Left = 5
@@ -103,6 +115,42 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                 TabOrder = 3
                 OnClick = pnlTotalPorMesClick
               end
+              object pnlTotalPorSubtipo: TPanel[4]
+                Left = 5
+                Height = 50
+                Top = 65
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Total Por Subtipo'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 4
+                OnClick = pnlTotalPorSubtipoClick
+              end
+              object pnlTotalPorSubtipo1: TPanel[5]
+                Left = 185
+                Height = 50
+                Top = 65
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Total Por Tipo'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 5
+                OnClick = pnlTotalPorSubtipo1Click
+              end
             end
           end
         end
@@ -133,6 +181,14 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
       OnExecute = actTotalPorMesExecute
     end
     inherited actImprimir: TAction[11]
+    end
+    object actTotalSubtipo: TAction[12]
+      Caption = 'actTotalSubtipo'
+      OnExecute = actTotalSubtipoExecute
+    end
+    object actTotalTipo: TAction[13]
+      Caption = 'actTotalTipo'
+      OnExecute = actTotalTipoExecute
     end
   end
 end

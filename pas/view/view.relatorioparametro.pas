@@ -19,8 +19,12 @@ type
     cbTipo0: TComboBox;
     cbMes1: TComboBox;
     cbPesquisa0: TComboBox;
+    dtpFinal4: TDateTimePicker;
+    dtpFinal5: TDateTimePicker;
     dtpInicial0: TDateTimePicker;
     dtpFinal0: TDateTimePicker;
+    dtpInicial4: TDateTimePicker;
+    dtpInicial5: TDateTimePicker;
     edtAnoFinal2: TSpinEdit;
     edtAnoInicial2: TSpinEdit;
     edtAno3: TSpinEdit;
@@ -29,6 +33,10 @@ type
     lblAnoFinal2: TLabel;
     lblAnoInicial2: TLabel;
     lblAno3: TLabel;
+    lblDataFinal4: TLabel;
+    lblDataFinal5: TLabel;
+    lblDataInicial4: TLabel;
+    lblDataInicial5: TLabel;
     lblMes1: TLabel;
     lblAnoInicial1: TLabel;
     lblAnoFinal1: TLabel;
@@ -41,6 +49,8 @@ type
     pnlFundo1: TPanel;
     pnlFundo0: TPanel;
     pgc: TPageControl;
+    pnlFundo4: TPanel;
+    pnlFundo5: TPanel;
     pnlTitulo: TPanel;
     pnlBotoes: TPanel;
     pnlFundo: TPanel;
@@ -118,6 +128,20 @@ begin
     3:
     Begin
       edtAno3.Value := YearOf(Now);
+    end;
+    4:
+    begin
+      dtpFinal4.Date   := Now;
+      dtpInicial4.Date := Now;
+      if dtpInicial4.CanFocus then
+        dtpInicial4.SetFocus;
+    end;
+    5:
+    begin
+      dtpFinal4.Date   := Now;
+      dtpInicial4.Date := Now;
+      if dtpInicial4.CanFocus then
+        dtpInicial4.SetFocus;
     end;
   end;
 end;

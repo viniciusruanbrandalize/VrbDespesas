@@ -24,6 +24,10 @@ type
     function ComparativoAnual(var Preview: TfrPreview; anoInicial, anoFinal: Integer;
                           out Erro: String): Boolean;
     function TotalPorMes(var Preview: TfrPreview; ano: Integer; out Erro: String): Boolean;
+    function TotalPorSubtipo(var Preview: TfrPreview; dInicial, dFinal: TDate;
+                          out Erro: String): Boolean;
+    function TotalPorTipo(var Preview: TfrPreview; dInicial, dFinal: TDate;
+                          out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -66,6 +70,20 @@ function TRelatorioDespesaController.TotalPorMes(var Preview: TfrPreview;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
   Result := Relatorio.TotalPorMes(ano, Erro);
+end;
+
+function TRelatorioDespesaController.TotalPorSubtipo(var Preview: TfrPreview;
+  dInicial, dFinal: TDate; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.TotalPorSubtipo(dInicial, dFinal, Erro);
+end;
+
+function TRelatorioDespesaController.TotalPorTipo(var Preview: TfrPreview;
+  dInicial, dFinal: TDate; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.TotalPorTipo(dInicial, dFinal, Erro);
 end;
 
 procedure TRelatorioDespesaController.PesquisarSubtipo(CbNome: TComboBox;
