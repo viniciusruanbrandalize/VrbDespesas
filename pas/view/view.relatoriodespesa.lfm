@@ -42,6 +42,11 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                   Control = pnlTotalPorSubtipo1
                   WrapAfter = waAuto
                   Index = 5
+                end              
+                item
+                  Control = pnlTotalPorFormaPgto
+                  WrapAfter = waAuto
+                  Index = 6
                 end>
               object pnlPeriodo: TPanel[0]
                 Left = 5
@@ -151,6 +156,24 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                 TabOrder = 5
                 OnClick = pnlTotalPorSubtipo1Click
               end
+              object pnlTotalPorFormaPgto: TPanel[6]
+                Left = 365
+                Height = 50
+                Top = 65
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Total Por Forma Pgto.'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 6
+                OnClick = pnlTotalPorFormaPgtoClick
+              end
             end
           end
         end
@@ -183,12 +206,16 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
     inherited actImprimir: TAction[11]
     end
     object actTotalSubtipo: TAction[12]
-      Caption = 'actTotalSubtipo'
+      Caption = 'Total Por Subtipo'
       OnExecute = actTotalSubtipoExecute
     end
     object actTotalTipo: TAction[13]
-      Caption = 'actTotalTipo'
+      Caption = 'Total Por Tipo'
       OnExecute = actTotalTipoExecute
+    end
+    object actTotalFPgto: TAction[14]
+      Caption = 'Total Por Forma Pgto.'
+      OnExecute = actTotalFPgtoExecute
     end
   end
 end

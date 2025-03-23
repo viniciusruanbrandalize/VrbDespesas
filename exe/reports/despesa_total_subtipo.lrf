@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-03-21 12:16:02"/>
+    <ReportLastChange Value="2025-03-21 19:24:23"/>
     <ReportVersionBuild Value=""/>
     <ReportVersionMajor Value=""/>
     <ReportVersionMinor Value=""/>
@@ -1125,7 +1125,7 @@
           <Data>
             <Format Value="16974380"/>
             <FormatStr Value=""/>
-            <Memo Value="[FORMATFLOAT(['#,0.00'], [qryPadrao.&quot;TOTAL&quot;] * 100) / SUM([qryPadrao.&quot;TOTAL&quot;])] %&#xD;&#xA;"/>
+            <Memo Value="[(qryPadrao.&quot;TOTAL&quot; * 100) / SUM(qryPadrao.&quot;TOTAL&quot;)] %&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>

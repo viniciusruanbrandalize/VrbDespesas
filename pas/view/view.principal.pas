@@ -9,7 +9,8 @@ uses
   Menus, StdCtrls, Buttons, controller.principal, view.banco, lib.types,
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
-  view.participante, view.despesa, view.relatoriodespesa, view.recebimento;
+  view.participante, view.despesa, view.relatoriodespesa, view.recebimento,
+  view.relatoriorecebimento;
 
 type
 
@@ -111,6 +112,7 @@ type
     procedure actRecebimentoSalarioExecute(Sender: TObject);
     procedure actRelatorioDespesaExecute(Sender: TObject);
     procedure actRelatorioExecute(Sender: TObject);
+    procedure actRelatorioRecebimentoExecute(Sender: TObject);
     procedure actSubtipoDespesaExecute(Sender: TObject);
     procedure actTipoDespesaExecute(Sender: TObject);
     procedure actUsuarioExecute(Sender: TObject);
@@ -266,6 +268,12 @@ end;
 procedure TfrmPrincipal.actRelatorioExecute(Sender: TObject);
 begin
   mudarMenu(4);
+end;
+
+procedure TfrmPrincipal.actRelatorioRecebimentoExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmRelatorioRecebimento, TfrmRelatorioRecebimento, false, pnlAbreForms, Self);
+  BarraLateralVazia(pnlMenuRelatorio, false);
 end;
 
 procedure TfrmPrincipal.actSubtipoDespesaExecute(Sender: TObject);

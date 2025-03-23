@@ -1,0 +1,51 @@
+inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
+  Caption = 'Relatório de recebimentos'
+  Font.Color = clWhite
+  Font.Style = [fsBold]
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  inherited pnlFundo: TPanel
+    inherited pgc: TPageControl
+      ActivePage = tbsPrincipal
+      TabIndex = 0
+      inherited tbsPrincipal: TTabSheet
+        inherited pnlFundoTbs1: TPanel
+          inherited pnlOpcoes: TPanel
+            inherited fpnlOpcoes: TFlowPanel
+              Height = 168
+              Width = 810
+              ControlList = <              
+                item
+                  Control = pnlDeclaracaoRenda
+                  WrapAfter = waAuto
+                  Index = 0
+                end>
+              object pnlDeclaracaoRenda: TPanel[0]
+                Left = 5
+                Height = 50
+                Top = 5
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Declaração de Renda'
+                Color = 2977025
+                ParentBackground = False
+                ParentColor = False
+                TabOrder = 0
+                OnClick = pnlDeclaracaoRendaClick
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited actList: TActionList
+    object actDeclaracaoRenda: TAction[8]
+      Caption = 'Declaração de Renda'
+      OnExecute = actDeclaracaoRendaExecute
+    end
+  end
+end

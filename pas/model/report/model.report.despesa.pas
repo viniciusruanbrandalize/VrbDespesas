@@ -29,6 +29,7 @@ type
     function TotalPorMes(ano: Integer; out Erro: String): Boolean;
     function TotalPorSubtipo(dInicial, dFinal: TDate; out Erro: String): Boolean;
     function TotalPorTipo(dInicial, dFinal: TDate; out Erro: String): Boolean;
+    function TotalPorFormaPgto(dInicial, dFinal: TDate; out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -369,17 +370,17 @@ function TDespesaReport.TotalPorSubtipo(dInicial, dFinal: TDate; out
 begin
   try
 
-      FSQL := 'select sd.nome as nome_subtipo, '+
-              '(select coalesce(avg(d.total), 0) from despesa d '+
-              'where d.id_subtipo = sd.id and '+
-              'd.data between :data_inicial and :data_final) as media, '+
-              '(select coalesce(sum(d.total), 0) from despesa d '+
-              'where d.id_subtipo = sd.id and '+
-              'd.data between :data_inicial and :data_final) as total, '+
-              '(select coalesce(count(d.id), 0) from despesa d '+
-              'where d.id_subtipo = sd.id and '+
-              'd.data between :data_inicial and :data_final) as qtd_despesa '+
-              'from subtipo_despesa sd '+
+      FSQL := 'select sd.nome as nome_subtipo, ' +
+              '(select coalesce(avg(d.total), 0) from despesa d ' +
+              'where d.id_subtipo = sd.id and d.paga = true and ' +
+              'd.data between :data_inicial and :data_final) as media, ' +
+              '(select coalesce(sum(d.total), 0) from despesa d ' +
+              'where d.id_subtipo = sd.id and d.paga = true and ' +
+              'd.data between :data_inicial and :data_final) as total, ' +
+              '(select coalesce(count(d.id), 0) from despesa d ' +
+              'where d.id_subtipo = sd.id and d.paga = true and ' +
+              'd.data between :data_inicial and :data_final) as qtd_despesa ' +
+              'from subtipo_despesa sd ' +
               'order by sd.nome';
 
     dmRelatorio.qryPadrao.Close;
@@ -414,18 +415,21 @@ function TDespesaReport.TotalPorTipo(dInicial, dFinal: TDate; out Erro: String
 begin
   try
 
-      FSQL := 'select td.nome as nome_tipo, '+
-              '(select coalesce(avg(d.total), 0) from despesa d '+
-              'where d.id_tipo = td.id and '+
-              'd.data between :data_inicial and :data_final) as media, '+
-              '(select coalesce(sum(d.total), 0) from despesa d '+
-              'where d.id_tipo = td.id and '+
-              'd.data between :data_inicial and :data_final) as total, '+
-              '(select coalesce(count(d.id), 0) from despesa d '+
-              'where d.id_tipo = td.id and '+
-              'd.data between :data_inicial and :data_final) as qtd_despesa '+
-              'from tipo_despesa td '+
-              'order by td.nome';
+    FSQL := 'select td.nome as nome_tipo, '+
+            '(select coalesce(avg(d.total), 0) from despesa d ' +
+            'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
+            'where td.id = sd.id_tipo_despesa and d.paga = true and '+
+            'd.data between :data_inicial and :data_final) as media, '+
+            '(select coalesce(sum(d.total), 0) from despesa d ' +
+            'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
+            'where td.id = sd.id_tipo_despesa and d.paga = true and '+
+            'd.data between :data_inicial and :data_final) as total, '+
+            '(select coalesce(count(d.id), 0) from despesa d '+
+            'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
+            'where td.id = sd.id_tipo_despesa and d.paga = true and '+
+            'd.data between :data_inicial and :data_final) as qtd_despesa '+
+            'from tipo_despesa td '+
+            'order by td.nome';
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
@@ -454,6 +458,54 @@ begin
   end;
 end;
 
+function TDespesaReport.TotalPorFormaPgto(dInicial, dFinal: TDate; out
+  Erro: String): Boolean;
+begin
+  try
+
+    FSQL := 'select fp.nome as nome_forma_pagamento, '+
+            '(select coalesce(avg(dfp.valor), 0) from despesa_forma_pgto dfp ' +
+            'left join despesa d on d.id = dfp.id_despesa ' +
+            'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
+            'd.data between :data_inicial and :data_final) as media, '+
+            '(select coalesce(sum(dfp.valor), 0) from despesa_forma_pgto dfp ' +
+            'left join despesa d on d.id = dfp.id_despesa ' +
+            'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
+            'd.data between :data_inicial and :data_final) as total, '+
+            '(select coalesce(count(dfp.id), 0) from despesa_forma_pgto dfp ' +
+            'left join despesa d on d.id = dfp.id_despesa ' +
+            'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
+            'd.data between :data_inicial and :data_final) as qtd_despesa '+
+            'from forma_pgto fp '+
+            'order by fp.nome';
+
+    dmRelatorio.qryPadrao.Close;
+    dmRelatorio.qryPadrao.SQL.Clear;
+    dmRelatorio.qryPadrao.SQL.Add(FSQL);
+    dmRelatorio.qryPadrao.ParamByName('data_inicial').AsDate  := dInicial;
+    dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
+    dmRelatorio.qryPadrao.Open;
+
+    dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+                                         'despesa_total_forma_pgto.lrf');
+
+    dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
+                                                   DateToStr(dInicial)+' à '+DateToStr(dFinal);
+
+    dmRelatorio.CarregarLogo();
+    dmRelatorio.frReport.ShowReport;
+
+    Result := True;
+
+  except
+    on e: Exception do
+    begin
+      Erro := 'Erro ao gerar o relatório: ' + e.Message;
+      Result := False;
+    end;
+  end;
+end;
+
 procedure TDespesaReport.PesquisaGenerica(Tabela: TTabela; objNome: TObject;
   lbId: TListBox; busca: String; Limitacao: Integer; out QtdRegistro: Integer);
 begin
@@ -463,14 +515,13 @@ end;
 constructor TDespesaReport.Create;
 begin
   DAO := TPadraoDAO.Create;
-  dmRelatorio := TdmConexaoReport.Create(nil);
+  dmRelatorio := dmConexaoReport;
   FSQL := '';
 end;
 
 destructor TDespesaReport.Destroy;
 begin
   FreeAndNil(DAO);
-  FreeAndNil(dmRelatorio);
   inherited Destroy;
 end;
 

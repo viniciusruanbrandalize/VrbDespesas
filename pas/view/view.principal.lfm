@@ -938,6 +938,7 @@ object frmPrincipal: TfrmPrincipal
       Category = 'Relatorio'
       Caption = 'Relatório de Recebimento'
       ImageIndex = 25
+      OnExecute = actRelatorioRecebimentoExecute
     end
   end
   object imgList: TImageList

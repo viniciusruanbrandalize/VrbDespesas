@@ -28,6 +28,8 @@ type
                           out Erro: String): Boolean;
     function TotalPorTipo(var Preview: TfrPreview; dInicial, dFinal: TDate;
                           out Erro: String): Boolean;
+    function TotalPorFormaPgto(var Preview: TfrPreview; dInicial, dFinal: TDate;
+                          out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -84,6 +86,13 @@ function TRelatorioDespesaController.TotalPorTipo(var Preview: TfrPreview;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
   Result := Relatorio.TotalPorTipo(dInicial, dFinal, Erro);
+end;
+
+function TRelatorioDespesaController.TotalPorFormaPgto(var Preview: TfrPreview;
+  dInicial, dFinal: TDate; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.TotalPorFormaPgto(dInicial, dFinal, Erro);
 end;
 
 procedure TRelatorioDespesaController.PesquisarSubtipo(CbNome: TComboBox;

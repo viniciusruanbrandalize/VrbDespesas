@@ -16,6 +16,7 @@ type
   TfrmRelatorioDespesa = class(TfrmRelatorioPadrao)
     actComparativoMensal: TAction;
     actComparativoAnual: TAction;
+    actTotalFPgto: TAction;
     actTotalTipo: TAction;
     actTotalSubtipo: TAction;
     actTotalPorMes: TAction;
@@ -26,9 +27,11 @@ type
     pnlComparativoMensal: TPanel;
     pnlTotalPorSubtipo: TPanel;
     pnlTotalPorSubtipo1: TPanel;
+    pnlTotalPorFormaPgto: TPanel;
     procedure actComparativoAnualExecute(Sender: TObject);
     procedure actComparativoMensalExecute(Sender: TObject);
     procedure actPorPeriodoExecute(Sender: TObject);
+    procedure actTotalFPgtoExecute(Sender: TObject);
     procedure actTotalPorMesExecute(Sender: TObject);
     procedure actTotalSubtipoExecute(Sender: TObject);
     procedure actTotalTipoExecute(Sender: TObject);
@@ -38,6 +41,7 @@ type
     procedure pnlComparativoAnualClick(Sender: TObject);
     procedure pnlComparativoMensalClick(Sender: TObject);
     procedure pnlPeriodoClick(Sender: TObject);
+    procedure pnlTotalPorFormaPgtoClick(Sender: TObject);
     procedure pnlTotalPorMesClick(Sender: TObject);
     procedure pnlTotalPorSubtipo1Click(Sender: TObject);
     procedure pnlTotalPorSubtipoClick(Sender: TObject);
@@ -126,6 +130,32 @@ begin
   end;
 end;
 
+procedure TfrmRelatorioDespesa.actTotalFPgtoExecute(Sender: TObject);
+var
+  Inicial, Final: TDate;
+  Erro: String;
+begin
+  frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
+  try
+    frmRelatorioParametro.IndiceTab := 4;
+    if frmRelatorioParametro.ShowModal = mrOK then
+    begin
+      Inicial := frmRelatorioParametro.dtpInicial4.date;
+      Final   := frmRelatorioParametro.dtpFinal4.date;
+
+      if Controller.TotalPorFormaPgto(frPreview, Inicial, Final, Erro) then
+      begin
+        pgc.ActivePage := tbsDesigner;
+        actFechar.ImageIndex := 1;
+      end
+      else
+        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+    end;
+  finally
+    FreeAndNil(frmRelatorioParametro);
+  end;
+end;
+
 procedure TfrmRelatorioDespesa.actTotalPorMesExecute(Sender: TObject);
 var
   Ano: Integer;
@@ -183,11 +213,11 @@ var
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
   try
-    frmRelatorioParametro.IndiceTab := 5;
+    frmRelatorioParametro.IndiceTab := 4;
     if frmRelatorioParametro.ShowModal = mrOK then
     begin
-      Inicial := frmRelatorioParametro.dtpInicial5.date;
-      Final   := frmRelatorioParametro.dtpFinal5.date;
+      Inicial := frmRelatorioParametro.dtpInicial4.date;
+      Final   := frmRelatorioParametro.dtpFinal4.date;
 
       if Controller.TotalPorTipo(frPreview, Inicial, Final, Erro) then
       begin
@@ -257,6 +287,11 @@ end;
 procedure TfrmRelatorioDespesa.pnlPeriodoClick(Sender: TObject);
 begin
   actPorPeriodo.Execute;
+end;
+
+procedure TfrmRelatorioDespesa.pnlTotalPorFormaPgtoClick(Sender: TObject);
+begin
+  actTotalFPgto.Execute;
 end;
 
 procedure TfrmRelatorioDespesa.pnlTotalPorMesClick(Sender: TObject);

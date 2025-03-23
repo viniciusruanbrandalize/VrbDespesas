@@ -503,6 +503,21 @@
         <Filename Value="pas\controller\controller.recebimento.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="pas\model\report\model.report.recebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.relatoriorecebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.relatoriorecebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRelatorioRecebimento"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

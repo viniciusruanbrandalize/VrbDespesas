@@ -34,8 +34,9 @@ uses
   view.loglogin, view.login, view.bandeira, view.contabancaria,
   view.participante, view.despesa, Controls, lib.visual, indylaz,
   view.relatoriopadrao, view.relatoriodespesa, view.relatorioparametro,
-  model.report.despesa, model.report.conexao, controller.relatoriodespesa,
-  controller.recebimento, view.recebimento;
+  model.report.despesa, model.report.conexao, model.report.recebimento,
+  controller.relatoriodespesa, controller.recebimento,
+  controller.relatoriorecebimento, view.recebimento, view.relatoriorecebimento;
 
 {$R *.res}
 
@@ -45,6 +46,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TdmConexao1, dmConexao1);
   Application.CreateForm(TdmConexao2, dmConexao2);
+  Application.CreateForm(TdmConexaoReport, dmConexaoReport);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
 
   {$IFOPT D+}

@@ -24,40 +24,73 @@ object dmConexaoReport: TdmConexaoReport
     MaxIndexesCount = 4
     FieldDefs = <    
       item
-        Name = 'NOME_SUBTIPO'
-        DataType = ftString
-        Precision = -1
-        Size = 100
-      end    
-      item
-        Name = 'MEDIA'
+        Name = 'HRE'
         DataType = ftBCD
         Precision = 18
         Size = 2
       end    
       item
-        Name = 'TOTAL'
+        Name = 'INSS'
         DataType = ftBCD
         Precision = 18
         Size = 2
       end    
       item
-        Name = 'QTD_DESPESA'
-        DataType = ftLargeint
+        Name = 'IR'
+        DataType = ftBCD
+        Precision = 18
+        Size = 2
+      end    
+      item
+        Name = 'LIQUIDO'
+        DataType = ftBCD
+        Precision = 18
+        Size = 2
+      end    
+      item
+        Name = 'BRUTO'
+        DataType = ftBCD
+        Precision = 18
+        Size = 2
+      end    
+      item
+        Name = 'MES'
+        DataType = ftSmallint
         Precision = -1
+      end    
+      item
+        Name = 'ANO'
+        DataType = ftSmallint
+        Precision = -1
+      end    
+      item
+        Name = 'MES_NOME'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
       end>
     Database = SQLConnector
     Transaction = SQLTransaction
     SQL.Strings = (
-      'select sd.nome as nome_subtipo,'
-      '       (select coalesce(avg(d.total), 0) from despesa d'
-      '       where d.id_subtipo = sd.id) as media,'
-      '       (select coalesce(sum(d.total), 0) from despesa d'
-      '       where d.id_subtipo = sd.id ) as total,'
-      '       (select coalesce(count(d.id), 0) from despesa d'
-      '       where d.id_subtipo = sd.id) as qtd_despesa'
-      'from subtipo_despesa sd'
-      'order by sd.nome'
+      'select sum(hora_extra) as hre, sum(inss) AS inss, sum(ir) AS ir , SUM(valor_total) as liquido,'
+      '              sum(valor_base) as bruto, extract(month from data) as mes, extract(year from data) as ano,'
+      '              (case when extract(month from data) = 1 then ''Janeiro'' else'
+      '              (case when extract(month from data) = 2 then ''Fevereiro'' else'
+      '              (case when extract(month from data) = 3 then ''Março'' else'
+      '              (case when extract(month from data) = 4 then ''Abril'' else'
+      '              (case when extract(month from data) = 5 then ''Maio'' else'
+      '              (case when extract(month from data) = 6 then ''Junho'' else'
+      '              (case when extract(month from data) = 7 then ''Julho'' else'
+      '              (case when extract(month from data) = 8 then ''Agosto'' else'
+      '              (case when extract(month from data) = 9 then ''Setembro'' else'
+      '              (case when extract(month from data) = 10 then ''Outubro'' else'
+      '              (case when extract(month from data) = 11 then ''Novembro'' else'
+      '              (case when extract(month from data) = 12 THEN ''Dezembro'''
+      '               end) end) end) end) end) end) end) end) end) end) end) END) as mes_nome'
+      '              from recebimento'
+      '              WHERE extract(year from data) = 2023'
+      '              GROUP BY mes, ano'
+      '              order by mes desc'
     )
     Params = <>
     Macros = <>
