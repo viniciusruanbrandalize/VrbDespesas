@@ -25,7 +25,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="pas\view;..\pas\view;..\pas\lib;..\pas\model\connection;pas\controller"/>
+            <OtherUnitFiles Value="pas\view;..\pas\view;..\pas\lib;pas\controller;..\pas\model\ini"/>
             <UnitOutputDirectory Value="compile\win32"/>
           </SearchPaths>
           <CodeGeneration>
@@ -86,11 +86,11 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\pas\model\connection\model.connection.ini.pas"/>
+        <Filename Value="pas\controller\controller.principal.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\controller\controller.principal.pas"/>
+        <Filename Value="..\pas\model\ini\model.ini.conexao.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
@@ -103,7 +103,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="pas\view;..\pas\view;..\pas\lib;..\pas\model\connection;pas\controller"/>
+      <OtherUnitFiles Value="pas\view;..\pas\view;..\pas\lib;pas\controller;..\pas\model\ini"/>
       <UnitOutputDirectory Value="compile\win32"/>
     </SearchPaths>
     <CodeGeneration>

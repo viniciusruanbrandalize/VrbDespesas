@@ -5,11 +5,11 @@ unit view.principal;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, SQLite3Conn, PQConnection, oracleconnection,
-  odbcconn, mysql40conn, mysql41conn, mysql50conn, mysql51conn, mysql55conn,
-  mysql56conn, mysql57conn, mysql80conn, MSSQLConn, IBConnection, Forms,
-  Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, Buttons, StdCtrls,
-  controller.principal, view.mensagem;
+  Classes, SysUtils, SQLDB, SQLDBLib, SQLite3Conn, PQConnection,
+  oracleconnection, odbcconn, mysql40conn, mysql41conn, mysql50conn,
+  mysql51conn, mysql55conn, mysql56conn, mysql57conn, mysql80conn, MSSQLConn,
+  IBConnection, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, Buttons,
+  StdCtrls, controller.principal, view.mensagem;
 
 type
 
@@ -18,13 +18,16 @@ type
   TfrmPrincipal = class(TForm)
     btnDir: TButton;
     btnDir1: TButton;
+    btnTestarConexao2: TSpeedButton;
     btnVisualizarSenha2: TSpeedButton;
     cbDriver1: TComboBox;
     cbDriver2: TComboBox;
     ckbLogSql1: TCheckBox;
     ckbLogSql2: TCheckBox;
     edtBanco2: TEdit;
+    edtEsquema1: TEdit;
     edtCharset2: TEdit;
+    edtEsquema2: TEdit;
     edtPorta2: TEdit;
     edtCharset1: TEdit;
     edtSenha2: TEdit;
@@ -42,6 +45,8 @@ type
     Label12: TLabel;
     Label13: TLabel;
     Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -60,20 +65,28 @@ type
     btnSalvar: TSpeedButton;
     btnCancelar: TSpeedButton;
     btnVisualizarSenha1: TSpeedButton;
+    btnTestarConexao1: TSpeedButton;
     SQLConnector: TSQLConnector;
+    SQLDBLibraryLoader: TSQLDBLibraryLoader;
     tbsConexao1: TTabSheet;
     tbsConexao2: TTabSheet;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnDir1Click(Sender: TObject);
     procedure btnDirClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
+    procedure btnTestarConexao1Click(Sender: TObject);
+    procedure btnTestarConexao2Click(Sender: TObject);
     procedure btnVisualizarSenha2Click(Sender: TObject);
+    procedure cbDriver1Change(Sender: TObject);
+    procedure cbDriver2Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnVisualizarSenha1Click(Sender: TObject);
   private
     Controller: TPrincipalController;
+    LibTeste1: String;
+    LibTeste2: String;
     procedure iniciarForm;
     procedure Salvar;
     Procedure Cancelar;
@@ -116,12 +129,150 @@ begin
   Salvar;
 end;
 
+procedure TfrmPrincipal.btnTestarConexao1Click(Sender: TObject);
+begin
+  try
+    try
+      SQLDBLibraryLoader.ConnectionType := cbDriver1.Items[cbDriver1.ItemIndex];
+      SQLDBLibraryLoader.LibraryName    := LibTeste1;
+      SQLDBLibraryLoader.Enabled        := True;
+
+      SQLConnector.ConnectorType         := cbDriver1.Items[cbDriver1.ItemIndex];
+      SQLConnector.CharSet               := edtCharset1.Text;
+      SQLConnector.DatabaseName          := edtBanco1.Text;
+      SQLConnector.HostName              := edtServidor1.Text;
+      SQLConnector.UserName              := edtUsuario1.Text;
+      SQLConnector.Password              := edtSenha1.Text;
+      SQLConnector.Params.Values['port'] := edtPorta1.Text;
+      SQLConnector.Connected := True;
+
+      TfrmMessage.Mensagem('Conectado com sucesso!', 'Aviso', 'S', [mbOk]);
+    except on ex: Exception do
+      begin
+        TfrmMessage.Mensagem(ex.Message, 'Erro', 'E', [mbOk]);
+      end;
+    end;
+  finally
+    SQLDBLibraryLoader.Enabled := False;
+    SQLConnector.Connected := False;
+  end;
+end;
+
+procedure TfrmPrincipal.btnTestarConexao2Click(Sender: TObject);
+begin
+  try
+    try
+      SQLDBLibraryLoader.ConnectionType := cbDriver2.Items[cbDriver2.ItemIndex];
+      SQLDBLibraryLoader.LibraryName    := LibTeste2;
+      SQLDBLibraryLoader.Enabled        := True;
+
+      SQLConnector.ConnectorType         := cbDriver2.Items[cbDriver2.ItemIndex];
+      SQLConnector.CharSet               := edtCharset2.Text;
+      SQLConnector.DatabaseName          := edtBanco2.Text;
+      SQLConnector.HostName              := edtServidor2.Text;
+      SQLConnector.UserName              := edtUsuario2.Text;
+      SQLConnector.Password              := edtSenha2.Text;
+      SQLConnector.Params.Values['port'] := edtPorta2.Text;
+      SQLConnector.Connected := True;
+
+      TfrmMessage.Mensagem('Conectado com sucesso!', 'Aviso', 'S', [mbOk]);
+    except on ex: Exception do
+      begin
+        TfrmMessage.Mensagem(ex.Message, 'Erro', 'E', [mbOk]);
+      end;
+    end;
+  finally
+    SQLDBLibraryLoader.Enabled := False;
+    SQLConnector.Connected := False;
+  end;
+end;
+
 procedure TfrmPrincipal.btnVisualizarSenha2Click(Sender: TObject);
 begin
   if edtSenha2.PasswordChar = Char('#') then
     edtSenha2.PasswordChar := Char('')
   else
     edtSenha2.PasswordChar := '#';
+end;
+
+procedure TfrmPrincipal.cbDriver1Change(Sender: TObject);
+var
+  driver: String;
+  SelArquivo: Boolean;
+begin
+
+  driver := UpperCase(cbDriver1.Items[cbDriver1.ItemIndex]);
+  SelArquivo := False;
+  LibTeste1 := ExtractFilePath(ParamStr(0));
+
+  if driver = 'POSTGRESQL' then
+  begin
+    LibTeste1 := LibTeste1 + 'libpq.dll';
+  end
+  else
+  if driver = 'FIREBIRD' then
+  begin
+    LibTeste1 := LibTeste1 + 'fbclient.dll';
+    SelArquivo := True;
+  end
+  else
+  if driver = 'MSSQLSERVER' then
+  begin
+    LibTeste1 := LibTeste1 + 'db.dll';
+  end
+  else
+  if Pos('MYSQL', driver) <> 0 then
+  begin
+    LibTeste1 := LibTeste1 + 'libmysql.dll';
+  end
+  else
+  if driver = 'SQLITE3' then
+  begin
+    LibTeste1 := LibTeste1 + 'SQLite3.dll';
+    SelArquivo := True;
+  end;
+
+  btnDir.Enabled := SelArquivo;
+end;
+
+procedure TfrmPrincipal.cbDriver2Change(Sender: TObject);
+var
+  driver: String;
+  SelArquivo: Boolean;
+begin
+
+  driver := UpperCase(cbDriver2.Items[cbDriver2.ItemIndex]);
+  SelArquivo := False;
+  LibTeste2 := ExtractFilePath(ParamStr(0));
+
+  if driver = 'POSTGRESQL' then
+  begin
+    LibTeste2 := LibTeste2 + 'libpq.dll';
+  end
+  else
+  if driver = 'FIREBIRD' then
+  begin
+    LibTeste2 := LibTeste2 + 'fbclient.dll';
+    SelArquivo := True;
+  end
+  else
+  if driver = 'MSSQLSERVER' then
+  begin
+    LibTeste2 := LibTeste2 + 'db.dll';
+  end
+  else
+  if Pos('MYSQL', driver) <> 0 then
+  begin
+    LibTeste2 := LibTeste2 + 'libmysql.dll';
+  end
+  else
+  if driver = 'SQLITE3' then
+  begin
+    LibTeste2 := LibTeste2 + 'SQLite3.dll';
+    SelArquivo := True;
+  end;
+
+  btnDir1.Enabled := SelArquivo;
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
@@ -166,6 +317,7 @@ begin
   edtSenha1.Text      := Controller.INI.Senha1;
   edtCharset1.Text    := Controller.INI.CharSet1;
   ckbLogSql1.Checked  := Controller.INI.LogSQL1;
+  edtEsquema1.Text    := Controller.INI.Esquema1;
 
   cbDriver2.ItemIndex := cbDriver2.Items.IndexOf(Controller.INI.Driver2);
   edtServidor2.Text   := Controller.INI.Servidor2;
@@ -175,6 +327,10 @@ begin
   edtSenha2.Text      := Controller.INI.Senha2;
   edtCharset2.Text    := Controller.INI.CharSet2;
   ckbLogSql2.Checked  := Controller.INI.LogSQL2;
+  edtEsquema2.Text    := Controller.INI.Esquema2;
+
+  cbDriver1.OnChange(cbDriver1);
+  cbDriver2.OnChange(cbDriver2);
 
 end;
 
@@ -189,6 +345,7 @@ begin
   Controller.INI.Senha1    := edtSenha1.Text;
   Controller.INI.CharSet1  := edtCharset1.Text;
   Controller.INI.LogSQL1   := ckbLogSql1.Checked;
+  Controller.INI.Esquema1  := edtEsquema1.Text;
 
   Controller.INI.Driver2   := cbDriver2.Text;
   Controller.INI.Servidor2 := edtServidor2.Text ;
@@ -198,6 +355,7 @@ begin
   Controller.INI.Senha2    := edtSenha2.Text;
   Controller.INI.CharSet2  := edtCharset2.Text;
   Controller.INI.LogSQL2   := ckbLogSql2.Checked;
+  Controller.INI.Esquema2  := edtEsquema2.Text;
 
   Controller.INI.Escrever;
 

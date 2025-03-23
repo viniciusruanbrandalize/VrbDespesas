@@ -5,7 +5,7 @@ unit controller.principal;
 interface
 
 uses
-  Classes, SysUtils, model.connection.ini;
+  Classes, SysUtils, model.ini.conexao;
 
 type
 

@@ -24,6 +24,7 @@ type
     FNomeDLL1:  String;
     FCharSet1:  String;
     FLogSQL1:   Boolean;
+    FEsquema1:  String;
 
     { CONEXAO_2 }
     FDriver2:   String;
@@ -35,6 +36,7 @@ type
     FNomeDLL2:  String;
     FCharSet2:  String;
     FLogSQL2:   Boolean;
+    FEsquema2:  String;
 
     procedure Ler;
     procedure GravarDefault;
@@ -55,6 +57,7 @@ type
     property NomeDLL1: String read FNomeDLL1 write FNomeDLL1;
     property CharSet1: String read FCharSet1 write FCharSet1;
     property LogSQL1: Boolean read FLogSQL1 write FLogSQL1;
+    property Esquema1: String read FEsquema1 write FEsquema1;
 
     { CONEXAO_2 }
     property Driver2: String read FDriver2 write FDriver2;
@@ -66,6 +69,7 @@ type
     property NomeDLL2: String read FNomeDLL2 write FNomeDLL2;
     property CharSet2: String read FCharSet2 write FCharSet2;
     property LogSQL2: Boolean read FLogSQL2 write FLogSQL2;
+    property Esquema2: String read FEsquema2 write FEsquema2;
 
   end;
 
@@ -85,6 +89,7 @@ begin
   lib.cryptini.LerString('CONEXAO_1', 'BIBLIOTECA', FNomeDLL1);
   lib.cryptini.LerString('CONEXAO_1', 'CHARSET', FCharSet1);
   lib.cryptini.LerBoolean('CONEXAO_1', 'LOG', FLogSQL1);
+  lib.cryptini.LerString('CONEXAO_1', 'ESQUEMA', FEsquema1);
 
   lib.cryptini.LerString('CONEXAO_2', 'DRIVER', FDriver2);
   lib.cryptini.LerString('CONEXAO_2', 'SERVIDOR', FServidor2);
@@ -95,6 +100,7 @@ begin
   lib.cryptini.LerString('CONEXAO_2', 'BIBLIOTECA', FNomeDLL2);
   lib.cryptini.LerString('CONEXAO_2', 'CHARSET', FCharSet2);
   lib.cryptini.LerBoolean('CONEXAO_2', 'LOG', FLogSQL2);
+  lib.cryptini.LerString('CONEXAO_2', 'ESQUEMA', FEsquema2);
 
 end;
 
@@ -106,12 +112,13 @@ begin
     lib.cryptini.EscreverString('CONEXAO_1', 'DRIVER', 'Firebird');
     lib.cryptini.EscreverString('CONEXAO_1', 'SERVIDOR', '127.0.0.1');
     lib.cryptini.EscreverInteger('CONEXAO_1', 'PORTA', 3050);
-    lib.cryptini.EscreverString('CONEXAO_1', 'BANCO', PChar(ExtractFilePath(ParamStr(0))+'Database\COMPRAS.FDB'));
+    lib.cryptini.EscreverString('CONEXAO_1', 'BANCO', PChar(ExtractFilePath(ParamStr(0))+'Database\DESPESAS.FDB'));
     lib.cryptini.EscreverString('CONEXAO_1', 'USUARIO', 'SYSDBA');
     lib.cryptini.EscreverString('CONEXAO_1', 'SENHA', 'masterkey');
-    lib.cryptini.EscreverString('CONEXAO_1', 'BIBLIOTECA', 'fbclient32.dll');
+    lib.cryptini.EscreverString('CONEXAO_1', 'BIBLIOTECA', 'fbclient.dll');
     lib.cryptini.EscreverString('CONEXAO_1', 'CHARSET', 'UTF8');
     lib.cryptini.EscreverBoolean('CONEXAO_1', 'LOG', false);
+    lib.cryptini.EscreverString('CONEXAO_1', 'ESQUEMA', '');
 
     lib.cryptini.EscreverString('CONEXAO_2', 'DRIVER', 'SQLite3');
     lib.cryptini.EscreverString('CONEXAO_2', 'SERVIDOR', '127.0.0.1');
@@ -119,9 +126,10 @@ begin
     lib.cryptini.EscreverString('CONEXAO_2', 'BANCO', 'D:\Projetos\Lazarus\Compras\database\ARQUIVOS.DB');
     lib.cryptini.EscreverString('CONEXAO_2', 'USUARIO', 'root');
     lib.cryptini.EscreverString('CONEXAO_2', 'SENHA', 'senha');
-    lib.cryptini.EscreverString('CONEXAO_2', 'BIBLIOTECA', 'SQLite32.dll');
+    lib.cryptini.EscreverString('CONEXAO_2', 'BIBLIOTECA', 'SQLite.dll');
     lib.cryptini.EscreverString('CONEXAO_2', 'CHARSET', 'UTF8');
     lib.cryptini.EscreverBoolean('CONEXAO_2', 'LOG', false);
+    lib.cryptini.EscreverString('CONEXAO_2', 'ESQUEMA', '');
 
   end;
 end;
@@ -138,6 +146,7 @@ begin
   lib.cryptini.EscreverString('CONEXAO_1', 'BIBLIOTECA',  PChar(FNomeDLL1));
   lib.cryptini.EscreverString('CONEXAO_1', 'CHARSET', PChar(FCharSet1));
   lib.cryptini.EscreverBoolean('CONEXAO_1', 'LOG', FLogSQL1);
+  lib.cryptini.EscreverString('CONEXAO_1', 'ESQUEMA', PChar(FEsquema1));
 
   lib.cryptini.EscreverString('CONEXAO_2', 'DRIVER',  PChar(FDriver2));
   lib.cryptini.EscreverString('CONEXAO_2', 'SERVIDOR',  PChar(FServidor2));
@@ -148,6 +157,7 @@ begin
   lib.cryptini.EscreverString('CONEXAO_2', 'BIBLIOTECA',  PChar(FNomeDLL2));
   lib.cryptini.EscreverString('CONEXAO_2', 'CHARSET', PChar(FCharSet2));
   lib.cryptini.EscreverBoolean('CONEXAO_2', 'LOG', FLogSQL2);
+  lib.cryptini.EscreverString('CONEXAO_2', 'ESQUEMA', PChar(FEsquema2));
 
 end;
 
