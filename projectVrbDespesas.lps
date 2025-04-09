@@ -57,7 +57,7 @@
         <Filename Value="pas\model\entity\model.entity.recebimento.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="212"/>
+        <TopLine Value="73"/>
         <CursorPos X="5" Y="354"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -151,7 +151,7 @@
         <Filename Value="pas\lib\lib.types.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="10" Y="18"/>
+        <CursorPos X="25" Y="14"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -675,7 +675,6 @@
         <ComponentName Value="dmConexaoReport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="7" Y="74"/>
         <UsageCount Value="96"/>
@@ -689,7 +688,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="778"/>
         <CursorPos X="67" Y="795"/>
         <UsageCount Value="96"/>
       </Unit>
@@ -708,6 +706,38 @@
         <TopLine Value="67"/>
         <CursorPos X="32" Y="103"/>
         <UsageCount Value="96"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\report\model.report.recebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="46"/>
+        <CursorPos X="52" Y="72"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.relatoriorecebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="13"/>
+        <CursorPos X="54" Y="40"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.relatoriorecebimento.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRelatorioRecebimento"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="11"/>
+        <CursorPos X="3" Y="51"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\report\model.report.padrao.pas"/>
@@ -1039,37 +1069,6 @@
         <TopLine Value="482"/>
         <CursorPos X="3" Y="496"/>
         <UsageCount Value="7"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\model\report\model.report.recebimento.pas"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="96"/>
-        <CursorPos X="27" Y="132"/>
-        <UsageCount Value="28"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\controller\controller.relatoriorecebimento.pas"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="13"/>
-        <CursorPos X="54" Y="40"/>
-        <UsageCount Value="28"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="pas\view\view.relatoriorecebimento.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmRelatorioRecebimento"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="11"/>
-        <CursorPos X="3" Y="51"/>
-        <UsageCount Value="28"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="23">

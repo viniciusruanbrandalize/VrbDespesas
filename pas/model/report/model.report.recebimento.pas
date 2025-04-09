@@ -61,7 +61,7 @@ begin
               '(case when extract(month from data) = 12 THEN ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) END) as mes_nome '+
               'from recebimento '+
-              'where extract(year from data) = :ano '+
+              'where extract(year from data) = :ano and tipo = 0 '+
               'group by mes, ano '+
               'order by mes desc';
     end
@@ -85,7 +85,7 @@ begin
               '(case when extract(month from data) = 12 THEN ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) END) as mes_nome '+
               'from recebimento '+
-              'where ano = :ano '+
+              'where ano = :ano and tipo = 0 '+
               'group by mes, ano '+
               'order by mes desc';
     end;
