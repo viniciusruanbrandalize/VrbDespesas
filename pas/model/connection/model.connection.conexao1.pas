@@ -25,11 +25,13 @@ type
   private
     FNomeUsuario: String;
     FIdUsuario:   Integer;
+    FIdDonoCadastro: Integer;
     procedure ConectarBaseDeDados();
     function VerificarNomeDLL(Driver: String): String;
   public
     property NomeUsuario: String  read FNomeUsuario write FNomeUsuario;
     property IdUsuario:   Integer read FIdUsuario   write FIdUsuario;
+    property IdDonoCadastro:   Integer read FIdDonoCadastro   write FIdDonoCadastro;
   end;
 
 var

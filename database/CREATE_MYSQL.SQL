@@ -64,6 +64,16 @@ create table configuracao (
 	constraint pk_configuracao primary key (id)
 );
 
+create table configuracao (
+	id integer not null,
+	nome varchar(100) not null,
+	descricao varchar(500) not null,
+	uso varchar(500),
+	valor varchar(100) not null,
+	excluido tinyint(1) not null,
+	constraint pk_configuracao primary key (id)
+);
+
 create table forma_pgto (
 	id integer not null auto_increment,
 	nome varchar(60) not null,

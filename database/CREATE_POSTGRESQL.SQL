@@ -159,6 +159,14 @@ create sequence public.seq_id_uc_acesso
 	start 1
 	cache 1
 	no cycle;
+	
+create sequence public.seq_id_configuracao
+	increment by 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	start 1
+	cache 1
+	no cycle;
 
 create table public.pais (
 	id integer not null,
@@ -220,7 +228,11 @@ create table public.cofre (
 
 create table public.configuracao (
 	id integer not null,
-	aparencia varchar(30) not null,
+	nome varchar(100) not null,
+	descricao varchar(500) not null,
+	uso varchar(500),
+	valor varchar(100) not null,
+	excluido boolean not null,
 	constraint pk_configuracao primary key (id)
 );
 

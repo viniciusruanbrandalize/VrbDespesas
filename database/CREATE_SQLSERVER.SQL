@@ -159,6 +159,14 @@ create sequence dbo.seq_id_uc_acesso
 	start with 1
 	cache 1
 	no cycle;
+	
+create sequence dbo.seq_id_configuracao
+	increment by 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	start with 1
+	cache 1
+	no cycle;
 
 create table dbo.pais (
 	id integer not null,
@@ -220,7 +228,11 @@ create table dbo.cofre (
 
 create table dbo.configuracao (
 	id integer not null,
-	aparencia varchar(30) not null,
+	nome varchar(100) not null,
+	descricao varchar(500) not null,
+	uso varchar(500),
+	valor varchar(100) not null,
+	excluido bit not null,
 	constraint pk_configuracao primary key (id)
 );
 
