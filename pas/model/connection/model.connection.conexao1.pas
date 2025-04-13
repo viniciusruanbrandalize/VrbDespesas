@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, SQLDB, SQLDBLib, SQLite3Conn, PQConnection,
   oracleconnection, odbcconn, mysql40conn, mysql41conn, mysql50conn,
   mysql51conn, mysql55conn, mysql56conn, mysql57conn, mysql80conn, MSSQLConn,
-  IBConnection, model.ini.conexao, forms, view.mensagem, DB;
+  IBConnection, model.ini.conexao, forms, view.mensagem, DB, lib.types;
 
 type
 
@@ -20,18 +20,19 @@ type
     SQLQuery: TSQLQuery;
     SQLTransaction: TSQLTransaction;
     procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
     procedure SQLConnectorLog(Sender: TSQLConnection; EventType: TDBEventType;
       const Msg: String);
   private
     FNomeUsuario: String;
     FIdUsuario:   Integer;
-    FIdDonoCadastro: Integer;
+    FIdDonoCadastro: TStringList;
     procedure ConectarBaseDeDados();
     function VerificarNomeDLL(Driver: String): String;
   public
     property NomeUsuario: String  read FNomeUsuario write FNomeUsuario;
     property IdUsuario:   Integer read FIdUsuario   write FIdUsuario;
-    property IdDonoCadastro:   Integer read FIdDonoCadastro   write FIdDonoCadastro;
+    property IdDonoCadastro: TStringList read FIdDonoCadastro write FIdDonoCadastro;
   end;
 
 var
@@ -45,12 +46,19 @@ implementation
 
 procedure TdmConexao1.DataModuleCreate(Sender: TObject);
 begin
+  FIdDonoCadastro := TStringList.Create;
   ConectarBaseDeDados;
   {$IFOPT D+}
   dmConexao1.IdUsuario   := 1;
   dmConexao1.NomeUsuario := 'ADMIN';
+  dmConexao1.IdDonoCadastro.Add('77');
   {$ELSE}
   {$ENDIF}
+end;
+
+procedure TdmConexao1.DataModuleDestroy(Sender: TObject);
+begin
+  FIdDonoCadastro.Free;
 end;
 
 procedure TdmConexao1.SQLConnectorLog(Sender: TSQLConnection;

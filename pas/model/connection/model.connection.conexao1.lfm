@@ -1,5 +1,6 @@
 object dmConexao1: TdmConexao1
   OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   Height = 276
   HorizontalOffset = 481

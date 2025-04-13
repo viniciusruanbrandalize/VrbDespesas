@@ -10,7 +10,7 @@ uses
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
   view.participante, view.despesa, view.relatoriodespesa, view.recebimento,
-  view.relatoriorecebimento;
+  view.relatoriorecebimento, view.copiaseguranca;
 
 type
 
@@ -96,6 +96,7 @@ type
     btnCadastro: TSpeedButton;
     Timer: TTimer;
     procedure actAjudaExecute(Sender: TObject);
+    procedure actBackupExecute(Sender: TObject);
     procedure actBancoExecute(Sender: TObject);
     procedure actBandeiraExecute(Sender: TObject);
     procedure actCadastroExecute(Sender: TObject);
@@ -222,6 +223,11 @@ end;
 procedure TfrmPrincipal.actAjudaExecute(Sender: TObject);
 begin
   //
+end;
+
+procedure TfrmPrincipal.actBackupExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmCopiaSeguranca, TfrmCopiaSeguranca, True, nil, Self);
 end;
 
 procedure TfrmPrincipal.actBancoExecute(Sender: TObject);

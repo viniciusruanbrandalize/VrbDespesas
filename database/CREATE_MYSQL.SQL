@@ -59,12 +59,6 @@ create table cofre (
 );
 
 create table configuracao (
-	id integer not null auto_increment,
-	aparencia varchar(30) not null,
-	constraint pk_configuracao primary key (id)
-);
-
-create table configuracao (
 	id integer not null,
 	nome varchar(100) not null,
 	descricao varchar(500) not null,

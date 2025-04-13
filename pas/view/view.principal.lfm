@@ -881,6 +881,7 @@ object frmPrincipal: TfrmPrincipal
       Category = 'Utilitario'
       Caption = 'Cópia de Segurança'
       ImageIndex = 18
+      OnExecute = actBackupExecute
     end
     object actVoltar: TAction
       Caption = 'Voltar'

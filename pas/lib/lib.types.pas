@@ -13,6 +13,9 @@ type
 type
   TTelaRecebimento = (telaSalario, telaGeral);
 
+type
+  TIntegerArray = array[0..100] of Integer;
+
 implementation
 
 end.
