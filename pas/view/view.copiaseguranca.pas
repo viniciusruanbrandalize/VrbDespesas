@@ -18,6 +18,7 @@ type
     edtDir: TLabeledEdit;
     Label1: TLabel;
     lblStatus: TLabel;
+    mLog: TMemo;
     pgb: TProgressBar;
     btnIniciarBkp: TSpeedButton;
     btnSelecionar: TSpeedButton;
@@ -26,6 +27,7 @@ type
     procedure btnSelecionarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     Controller: TCopiaSegurancaController;
   public
@@ -57,21 +59,27 @@ begin
   FreeAndNil(Controller);
 end;
 
+procedure TfrmCopiaSeguranca.FormShow(Sender: TObject);
+begin
+  mLog.Lines.Clear;
+end;
+
 procedure TfrmCopiaSeguranca.btnIniciarBkpClick(Sender: TObject);
 begin
   if edtDir.Text <> EmptyStr then
   begin
     try
+      pgb.Style := pbstMarquee;
       lblStatus.Caption := '';
       btnIniciarBkp.Enabled := False;
       lblStatus.Visible := True;
       Application.ProcessMessages;
-      if Controller.IniciarBackup(edtDir.Text, pgb, lblStatus) then
-        TfrmMessage.Mensagem('Backup realizado com sucesso!', 'Aviso', 'S', [mbOk]);
+      Controller.IniciarBackup(edtDir.Text, pgb, lblStatus, mLog);
     finally
       btnIniciarBkp.Enabled := True;
       lblStatus.Visible := false;
       pgb.Position := 0;
+      pgb.Style := pbstNormal;
     end;
   end
   else

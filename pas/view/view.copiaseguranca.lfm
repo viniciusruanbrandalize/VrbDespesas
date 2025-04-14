@@ -1,21 +1,22 @@
 object frmCopiaSeguranca: TfrmCopiaSeguranca
   Left = 349
-  Height = 196
+  Height = 300
   Top = 250
   Width = 450
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Cópia de Segurança'
-  ClientHeight = 196
+  ClientHeight = 300
   ClientWidth = 450
   Color = clWhite
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   Position = poOwnerFormCenter
   object pgb: TProgressBar
     Left = 8
     Height = 20
-    Top = 128
+    Top = 240
     Width = 432
     TabOrder = 0
   end
@@ -1136,7 +1137,7 @@ object frmCopiaSeguranca: TfrmCopiaSeguranca
   object btnIniciarBkp: TSpeedButton
     Left = 320
     Height = 30
-    Top = 160
+    Top = 266
     Width = 120
     Caption = 'Iniciar Backup'
     Images = imgList
@@ -1181,13 +1182,27 @@ object frmCopiaSeguranca: TfrmCopiaSeguranca
   object lblStatus: TLabel
     Left = 8
     Height = 15
-    Top = 112
+    Top = 224
     Width = 432
     Alignment = taRightJustify
     AutoSize = False
     Caption = 'lblStatus'
     ParentFont = False
     Visible = False
+  end
+  object mLog: TMemo
+    Left = 8
+    Height = 104
+    Top = 112
+    Width = 432
+    Font.Height = -12
+    Lines.Strings = (
+      'mLog'
+    )
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 2
   end
   object imgList: TImageList
     Left = 8

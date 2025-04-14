@@ -18,12 +18,10 @@ type
 	FKey:        String;
 	FMd5:        String;
 
-    { CEP }
-    FChaveAcesso: String;
-    FUsuario:     String;
-    FSenha:       String;
-    FWebService:  Integer;
-    FTimeOut:     Integer;
+    { BACKUP }
+    FDirFB: String;
+    FDirPG: String;
+    FDirMySQL: String;
 
     procedure Ler;
     procedure GravarDefault;
@@ -34,12 +32,10 @@ type
     destructor Destroy; override;
   published
 
-    { CEP }
-    property ChaveAcesso: String read FChaveAcesso write FChaveAcesso;
-    property Usuario: String read FUsuario write FUsuario;
-    property Senha: String read FSenha write FSenha;
-    property WebService: Integer read FWebService write FWebService;
-    property TimeOut: Integer read FTimeOut write FTimeOut;
+    { BACKUP }
+    property DirFB: String read FDirFB write FDirFB;
+    property DirPG: String read FDirPG write FDirPG;
+    property DirMySQL: String read FDirMySQL write FDirMySQL;
 
   end;
 
@@ -50,11 +46,9 @@ implementation
 procedure TConfiguracaoINI.Ler;
 begin
 
-  lib.cryptini.LerString('CEP', 'CHAVE', FChaveAcesso);
-  lib.cryptini.LerString('CEP', 'USUARIO', FUsuario);
-  lib.cryptini.LerString('CEP', 'SENHA', FSenha);
-  lib.cryptini.LerInteger('CEP', 'WEBSERVICE', FWebService);
-  lib.cryptini.LerInteger('CEP', 'TIMEOUT', FTimeOut);
+  lib.cryptini.LerString('BACKUP', 'DIRFB', FDirFB);
+  lib.cryptini.LerString('BACKUP', 'DIRPG', FDirPG);
+  lib.cryptini.LerString('BACKUP', 'DIRMYSQL', FDirMySQL);
 
 end;
 
@@ -63,11 +57,9 @@ begin
   if not FileExists(FArquivoINI) then
   begin
 
-    lib.cryptini.EscreverString('CEP', 'CHAVE', '');
-    lib.cryptini.EscreverString('CEP', 'USUARIO', '');
-	lib.cryptini.EscreverString('CEP', 'SENHA', '');
-    lib.cryptini.EscreverInteger('CEP', 'WEBSERVICE', 10);
-	lib.cryptini.EscreverInteger('CEP', 'TIMEOUT', 9000);
+    lib.cryptini.EscreverString('BACKUP', 'DIRFB', 'C:\Program Files (x86)\Firebird\Firebird_5_0');
+    lib.cryptini.EscreverString('BACKUP', 'DIRPG', 'C:\Program Files\PostgreSQL\15\bin');
+    lib.cryptini.EscreverString('BACKUP', 'DIRMYSQL', 'C:\Program Files\MariaDB 11.4\bin');
 
   end;
 end;
@@ -75,11 +67,9 @@ end;
 procedure TConfiguracaoINI.Escrever;
 begin
 
-  lib.cryptini.EscreverString('CEP', 'CHAVE', PChar(FChaveAcesso));
-  lib.cryptini.EscreverString('CEP', 'USUARIO',  PChar(FUsuario));
-  lib.cryptini.EscreverString('CEP', 'SENHA',  PChar(FSenha));
-  lib.cryptini.EscreverInteger('CEP', 'WEBSERVICE',  FWebService);
-  lib.cryptini.EscreverInteger('CEP', 'TIMEOUT',  FTimeOut);
+  lib.cryptini.EscreverString('BACKUP', 'DIRFB', PChar(FDirFB));
+  lib.cryptini.EscreverString('BACKUP', 'DIRPG', PChar(FDirPG));
+  lib.cryptini.EscreverString('BACKUP', 'DIRMYSQL', PChar(FDirMySQL));
 
 end;
 

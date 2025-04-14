@@ -134,11 +134,11 @@ begin
 
   ConfiguracaoINI := TConfiguracaoINI.Create;
   try
-    CEPInicializar(ConfiguracaoINI.WebService,
-                   ConfiguracaoINI.TimeOut,
-                   Pchar(ConfiguracaoINI.ChaveAcesso),
-                   Pchar(ConfiguracaoINI.Usuario),
-                   Pchar(ConfiguracaoINI.Senha));
+    CEPInicializar(0,
+                   0,
+                   Pchar(''),
+                   Pchar(''),
+                   Pchar(''));
   finally
     FreeAndNil(ConfiguracaoINI);
   end;

@@ -5,7 +5,14 @@ unit model.dao.copiaseguranca;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, model.dao.padrao, Forms, dialogs;
+  Classes, SysUtils, ComCtrls, StdCtrls, model.dao.padrao, Forms, dialogs,
+  lib.types, model.ini.configuracao, model.ini.conexao, process,
+  {$IFDEF MSWINDOWS}
+  Windows
+  {$ENDIF}
+  {$IFDEF LINUX}
+  FileUtil
+  {$ENDIF} ;
 
 type
 
@@ -26,8 +33,9 @@ type
     function BuscarTotalRegistros(): LongInt;
     procedure GerarInserts(var pgb: TProgressBar; var lblStatus: TLabel);
     procedure GerarSequencias(var pgb: TProgressBar; var lblStatus: TLabel);
+    function FazerDump(Destino: String; var mLog: TMemo): Boolean;
   public
-    function FazerBackup(Destino: String; var pgb: TProgressBar; var lblStatus: TLabel): Boolean;
+    function FazerBackup(Destino: String; var pgb: TProgressBar; var lblStatus: TLabel; var mLog: TMemo; Tipo: TTipoBackup): Boolean;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -267,20 +275,134 @@ begin
 
 end;
 
+function TCopiaSegurancaDAO.FazerDump(Destino: String; var mLog: TMemo): Boolean;
+  const READ_BYTES = 2048;
+var
+  aProcess: TProcess;
+  MemStream: TMemoryStream;
+  NumBytes: LongInt;
+  BytesRead: LongInt;
+  Lines: TStringList;
+  ConfigINI: TConfiguracaoINI;
+  ConexaoINI: TConexaoINI;
+  UsuarioDB1,
+  SenhaDB1,
+  NomeBanco1,
+  DirExeFB,
+  DirExePG,
+  DirExeMySql,
+  ArqTemp: String;
+begin
+
+  MemStream := TMemoryStream.Create;
+  Lines := TStringList.Create;
+  BytesRead := 0;
+  aProcess := TProcess.Create(nil);
+  try
+
+    ConfigINI := TConfiguracaoINI.Create;
+    try
+      DirExeFB    := ConfigINI.DirFB;
+      DirExePG    := ConfigINI.DirPG;
+      DirExeMySql := ConfigINI.DirMySQL;
+    finally
+      ConfigINI.Free;
+    end;
+
+    ConexaoINI := TConexaoINI.Create;
+    try
+      UsuarioDB1 := ConexaoINI.Usuario1;
+      SenhaDB1   := ConexaoINI.Senha1;
+      NomeBanco1 := ConexaoINI.Banco1;
+    finally
+      ConexaoINI.Free;
+    end;
+
+    if DAO.Driver = DRV_FIREBIRD then
+    begin
+
+      ArqTemp := ExtractFilePath(ParamStr(0))+'TEMP.FDB';
+
+      if FileExists(NomeBanco1) then
+      begin
+        {$IFDEF MSWINDOWS}
+        CopyFile(PChar(NomeBanco1), PChar(ArqTemp), true);
+        {$ENDIF}
+        {$IFDEF LINUX}
+
+        {$ENDIF}
+      end;
+
+      aProcess.Executable := DirExeFB + '\gbak.exe';
+      aProcess.Parameters.Add('-b');
+      aProcess.Parameters.Add('-v');
+      aProcess.Parameters.Add('-user');
+      aProcess.Parameters.Add(UsuarioDB1);
+      aProcess.PArameters.Add('-password');
+      aProcess.Parameters.Add(SenhaDB1);
+      aProcess.Parameters.Add(ArqTemp);
+      aProcess.Parameters.Add(Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.FBK');
+
+    end;
+
+    aprocess.ShowWindow := swoHIDE;
+    AProcess.Options := AProcess.Options + [poUsePipes,poStderrToOutPut];
+    aProcess.Execute;
+
+    while aProcess.Running do
+    begin
+      MemStream.SetSize(BytesRead + READ_BYTES);
+      NumBytes := aProcess.Output.Read((MemStream.Memory + BytesRead)^, READ_BYTES);
+
+      if NumBytes > 0 then
+        Inc(BytesRead, NumBytes)
+      else
+        Break;
+    end;
+
+    MemStream.SetSize(BytesRead);
+    Lines.LoadFromStream(MemStream);
+
+    mLog.Lines := Lines;
+
+    Result := True;
+
+  finally
+
+    {$IFDEF MSWINDOWS}
+    if FileExists(ArqTemp) then
+      DeleteFile(PChar(ArqTemp));
+    {$ENDIF}
+
+    aProcess.Free;
+    Lines.Free;
+    MemStream.Free;
+  end;
+end;
+
 function TCopiaSegurancaDAO.FazerBackup(Destino: String; var pgb: TProgressBar;
-  var lblStatus: TLabel): Boolean;
+  var lblStatus: TLabel; var mLog: TMemo; Tipo: TTipoBackup): Boolean;
 begin
   try
-    FComandos.Clear;
-    FComandos.Add('--  BACKUP DA BASE DE DADOS DO SISTEMA VRB DESPESA  ');
-    FComandos.Add('');
-    FComandos.Add('--  INSERTS');
-    GerarInserts(pgb, lblStatus);
-    FComandos.Add('');
-    FComandos.Add('--  SEQUENCES');
-    GerarSequencias(pgb, lblStatus);
-    FComandos.SaveToFile(Destino+'\vrb_despesa_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.SQL');
-    Result := True;
+    case Tipo of
+      bkpSQL:
+      begin
+        FComandos.Clear;
+        FComandos.Add('--  BACKUP DA BASE DE DADOS DO SISTEMA VRB DESPESA  ');
+        FComandos.Add('');
+        FComandos.Add('--  INSERTS');
+        GerarInserts(pgb, lblStatus);
+        FComandos.Add('');
+        FComandos.Add('--  SEQUENCES');
+        GerarSequencias(pgb, lblStatus);
+        FComandos.SaveToFile(Destino+'\vrb_despesa_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.SQL');
+        Result := True;
+      end;
+      bkpDump:
+      begin
+        Result := FazerDump(Destino, mLog);
+      end;
+    end;
   finally
 
   end;

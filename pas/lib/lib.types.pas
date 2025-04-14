@@ -14,7 +14,7 @@ type
   TTelaRecebimento = (telaSalario, telaGeral);
 
 type
-  TIntegerArray = array[0..100] of Integer;
+  TTipoBackup = (bkpSQL, bkpDump);
 
 implementation
 
