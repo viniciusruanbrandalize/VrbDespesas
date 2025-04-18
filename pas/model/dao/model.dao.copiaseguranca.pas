@@ -283,14 +283,17 @@ var
   NumBytes: LongInt;
   BytesRead: LongInt;
   Lines: TStringList;
+  ArqLnCmd: TStringList;
   ConfigINI: TConfiguracaoINI;
   ConexaoINI: TConexaoINI;
   UsuarioDB1,
   SenhaDB1,
   NomeBanco1,
-  DirExeFB,
-  DirExePG,
-  DirExeMySql,
+  PortaDB1,
+  HostDB1,
+  gbak,
+  pgdump,
+  mysqldump,
   ArqTemp: String;
 begin
 
@@ -302,9 +305,9 @@ begin
 
     ConfigINI := TConfiguracaoINI.Create;
     try
-      DirExeFB    := ConfigINI.DirFB;
-      DirExePG    := ConfigINI.DirPG;
-      DirExeMySql := ConfigINI.DirMySQL;
+      gbak      := ConfigINI.GBak;
+      pgdump    := ConfigINI.PGDump;
+      mysqldump := ConfigINI.MySQLDump;
     finally
       ConfigINI.Free;
     end;
@@ -314,6 +317,8 @@ begin
       UsuarioDB1 := ConexaoINI.Usuario1;
       SenhaDB1   := ConexaoINI.Senha1;
       NomeBanco1 := ConexaoINI.Banco1;
+      HostDB1    := ConexaoINI.Servidor1;
+      PortaDB1   := ConexaoINI.Porta1.ToString;
     finally
       ConexaoINI.Free;
     end;
@@ -333,7 +338,7 @@ begin
         {$ENDIF}
       end;
 
-      aProcess.Executable := DirExeFB + '\gbak.exe';
+      aProcess.Executable := gbak;
       aProcess.Parameters.Add('-b');
       aProcess.Parameters.Add('-v');
       aProcess.Parameters.Add('-user');
@@ -342,6 +347,40 @@ begin
       aProcess.Parameters.Add(SenhaDB1);
       aProcess.Parameters.Add(ArqTemp);
       aProcess.Parameters.Add(Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.FBK');
+
+    end
+    else
+    if (DAO.Driver = DRV_MYSQL) or (DAO.Driver = DRV_MARIADB) then
+    begin
+
+      aProcess.Executable := mysqldump;
+      aProcess.Parameters.Add('--host='+HostDB1);
+      aProcess.Parameters.Add('--databases');
+      aProcess.Parameters.Add(NomeBanco1);
+      aProcess.Parameters.Add('--user='+UsuarioDB1);
+      aProcess.Parameters.Add('--password="'+SenhaDB1+'"');
+      aProcess.Parameters.Add('--port='+PortaDB1);
+      aProcess.Parameters.Add('--skip-ssl');
+
+    end
+    else
+    if DAO.Driver = DRV_POSTGRESQL then
+    begin
+
+      ArqLnCmd := TStringList.Create;
+      try
+        ArqLnCmd.Add('set pgpassword="'+SenhaDB1+'"');
+        ArqLnCmd.Add(
+                     '"' + pgdump + '" --file "' +
+                     Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.backup" ' +
+                     '--host "'+HostDB1+'" --port '+PortaDB1+' --username "'+UsuarioDB1+'" ' +
+                     '--no-password --verbose --format=c --blobs "'+NomeBanco1+'"');
+        ArqLnCmd.SaveToFile(ExtractFilePath(ParamStr(0))+'bkp_pg.bat');
+      finally
+        ArqLnCmd.Free;
+      end;
+
+      aProcess.Executable := ExtractFilePath(ParamStr(0))+'bkp_pg.bat';
 
     end;
 
@@ -358,10 +397,16 @@ begin
         Inc(BytesRead, NumBytes)
       else
         Break;
+
+      Application.ProcessMessages;
+
     end;
 
     MemStream.SetSize(BytesRead);
     Lines.LoadFromStream(MemStream);
+
+    if (DAO.Driver = DRV_MYSQL) or (DAO.Driver = DRV_MARIADB) then
+      MemStream.SaveToFile(Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.SQL');
 
     mLog.Lines := Lines;
 
@@ -372,6 +417,9 @@ begin
     {$IFDEF MSWINDOWS}
     if FileExists(ArqTemp) then
       DeleteFile(PChar(ArqTemp));
+
+    if FileExists(ExtractFilePath(ParamStr(0))+'bkp_pg.bat') then
+      DeleteFile(PChar(ExtractFilePath(ParamStr(0))+'bkp_pg.bat'));
     {$ENDIF}
 
     aProcess.Free;

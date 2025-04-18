@@ -19,9 +19,9 @@ type
 	FMd5:        String;
 
     { BACKUP }
-    FDirFB: String;
-    FDirPG: String;
-    FDirMySQL: String;
+    FGBak: String;
+    FPGDump: String;
+    FMySQLDump: String;
 
     procedure Ler;
     procedure GravarDefault;
@@ -33,9 +33,9 @@ type
   published
 
     { BACKUP }
-    property DirFB: String read FDirFB write FDirFB;
-    property DirPG: String read FDirPG write FDirPG;
-    property DirMySQL: String read FDirMySQL write FDirMySQL;
+    property GBak: String read FGBak write FGBak;
+    property PGDump: String read FPGDump write FPGDump;
+    property MySQLDump: String read FMySQLDump write FMySQLDump;
 
   end;
 
@@ -46,9 +46,9 @@ implementation
 procedure TConfiguracaoINI.Ler;
 begin
 
-  lib.cryptini.LerString('BACKUP', 'DIRFB', FDirFB);
-  lib.cryptini.LerString('BACKUP', 'DIRPG', FDirPG);
-  lib.cryptini.LerString('BACKUP', 'DIRMYSQL', FDirMySQL);
+  lib.cryptini.LerString('BACKUP', 'GBAK', FGBak);
+  lib.cryptini.LerString('BACKUP', 'PGDUMP', FPGDump);
+  lib.cryptini.LerString('BACKUP', 'MYSQLDUMP', FMySQLDump);
 
 end;
 
@@ -57,9 +57,9 @@ begin
   if not FileExists(FArquivoINI) then
   begin
 
-    lib.cryptini.EscreverString('BACKUP', 'DIRFB', 'C:\Program Files (x86)\Firebird\Firebird_5_0');
-    lib.cryptini.EscreverString('BACKUP', 'DIRPG', 'C:\Program Files\PostgreSQL\15\bin');
-    lib.cryptini.EscreverString('BACKUP', 'DIRMYSQL', 'C:\Program Files\MariaDB 11.4\bin');
+    lib.cryptini.EscreverString('BACKUP', 'GBAK', 'C:\Program Files (x86)\Firebird\Firebird_5_0\gbak.exe');
+    lib.cryptini.EscreverString('BACKUP', 'PGDUMP', 'C:\Program Files\PostgreSQL\16\bin\pg_dump.exe');
+    lib.cryptini.EscreverString('BACKUP', 'MYSQLDUMP', 'D:\Projetos\Databases\Utilitarios\MySQL 5.7\bin\mysqldump.exe');
 
   end;
 end;
@@ -67,9 +67,9 @@ end;
 procedure TConfiguracaoINI.Escrever;
 begin
 
-  lib.cryptini.EscreverString('BACKUP', 'DIRFB', PChar(FDirFB));
-  lib.cryptini.EscreverString('BACKUP', 'DIRPG', PChar(FDirPG));
-  lib.cryptini.EscreverString('BACKUP', 'DIRMYSQL', PChar(FDirMySQL));
+  lib.cryptini.EscreverString('BACKUP', 'GBAK', PChar(FGBak));
+  lib.cryptini.EscreverString('BACKUP', 'PGDUMP', PChar(FPGDump));
+  lib.cryptini.EscreverString('BACKUP', 'MYSQLDUMP', PChar(FMySQLDump));
 
 end;
 
