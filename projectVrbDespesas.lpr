@@ -36,8 +36,9 @@ uses
   view.relatoriopadrao, view.relatoriodespesa, view.relatorioparametro,
   model.report.despesa, model.report.conexao, model.report.recebimento,
   controller.relatoriodespesa, controller.recebimento,
-  controller.relatoriorecebimento, controller.copiaseguranca, view.recebimento,
-  view.relatoriorecebimento, view.copiaseguranca;
+  controller.relatoriorecebimento, controller.copiaseguranca,
+  controller.configuracao, view.recebimento, view.relatoriorecebimento,
+  view.copiaseguranca, view.configuracao;
 
 {$R *.res}
 

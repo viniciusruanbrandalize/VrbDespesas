@@ -10,7 +10,7 @@ uses
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
   view.participante, view.despesa, view.relatoriodespesa, view.recebimento,
-  view.relatoriorecebimento, view.copiaseguranca;
+  view.relatoriorecebimento, view.copiaseguranca, view.configuracao;
 
 type
 
@@ -24,7 +24,7 @@ type
     actBanco: TAction;
     actDespesa: TAction;
     actContasPagar: TAction;
-    actConfiguracaoGlobal: TAction;
+    actConfiguracao: TAction;
     actBackup: TAction;
     actFinanceiro: TAction;
     actBandeira: TAction;
@@ -100,6 +100,7 @@ type
     procedure actBancoExecute(Sender: TObject);
     procedure actBandeiraExecute(Sender: TObject);
     procedure actCadastroExecute(Sender: TObject);
+    procedure actConfiguracaoExecute(Sender: TObject);
     procedure actContaBancariaExecute(Sender: TObject);
     procedure actDespesaExecute(Sender: TObject);
     procedure actDevedorExecute(Sender: TObject);
@@ -179,6 +180,11 @@ end;
 procedure TfrmPrincipal.actCadastroExecute(Sender: TObject);
 begin
   mudarMenu(1);
+end;
+
+procedure TfrmPrincipal.actConfiguracaoExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmConfiguracao, TfrmConfiguracao, True, nil, Self);
 end;
 
 procedure TfrmPrincipal.actContaBancariaExecute(Sender: TObject);

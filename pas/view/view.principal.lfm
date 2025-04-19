@@ -518,7 +518,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 32
         Top = 0
         Width = 40
-        Action = actConfiguracaoGlobal
+        Action = actConfiguracao
         Align = alTop
         Flat = True
         Font.Color = clWhite
@@ -872,10 +872,11 @@ object frmPrincipal: TfrmPrincipal
       ImageIndex = 16
       OnExecute = actRecebimentoSalarioExecute
     end
-    object actConfiguracaoGlobal: TAction
+    object actConfiguracao: TAction
       Category = 'Utilitario'
       Caption = 'Configurações'
       ImageIndex = 17
+      OnExecute = actConfiguracaoExecute
     end
     object actBackup: TAction
       Category = 'Utilitario'
