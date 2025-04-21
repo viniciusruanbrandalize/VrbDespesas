@@ -71,7 +71,7 @@ end;
 
 function TRecebimentoController.Inserir(objRecebimento: TRecebimento; out Erro: string): Boolean;
 begin
-  objRecebimento.UsuarioCadastro.Id := dmConexao1.IdUsuario;
+  objRecebimento.UsuarioCadastro.Id := dmConexao1.Usuario.Id;
   Result := RecebimentoDao.Inserir(objRecebimento, Erro);
 end;
 

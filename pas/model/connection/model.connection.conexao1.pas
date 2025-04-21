@@ -8,7 +8,8 @@ uses
   Classes, SysUtils, SQLDB, SQLDBLib, SQLite3Conn, PQConnection,
   oracleconnection, odbcconn, mysql40conn, mysql41conn, mysql50conn,
   mysql51conn, mysql55conn, mysql56conn, mysql57conn, mysql80conn, MSSQLConn,
-  IBConnection, model.ini.conexao, forms, view.mensagem, DB, lib.types;
+  IBConnection, model.ini.conexao, forms, view.mensagem, DB, lib.types,
+  model.entity.usuariodonocadastro, model.entity.usuario, model.entity.participante;
 
 type
 
@@ -24,15 +25,15 @@ type
     procedure SQLConnectorLog(Sender: TSQLConnection; EventType: TDBEventType;
       const Msg: String);
   private
-    FNomeUsuario: String;
-    FIdUsuario:   Integer;
-    FIdDonoCadastro: TStringList;
+    FUsuario: TUsuario;
+    FDonoCadastro: TParticipante;
+    FUsuarioDC: TUsuarioDonoCadastroLista;
     procedure ConectarBaseDeDados();
     function VerificarNomeDLL(Driver: String): String;
   public
-    property NomeUsuario: String  read FNomeUsuario write FNomeUsuario;
-    property IdUsuario:   Integer read FIdUsuario   write FIdUsuario;
-    property IdDonoCadastro: TStringList read FIdDonoCadastro write FIdDonoCadastro;
+    property Usuario:      TUsuario read FUsuario write FUsuario;
+    property DonoCadastro: TParticipante read FDonoCadastro write FDonoCadastro;
+    property UsuarioDC:    TUsuarioDonoCadastroLista read FUsuarioDC write FUsuarioDC;
   end;
 
 var
@@ -46,19 +47,23 @@ implementation
 
 procedure TdmConexao1.DataModuleCreate(Sender: TObject);
 begin
-  FIdDonoCadastro := TStringList.Create;
+  FUsuario      := TUsuario.Create;
+  FDonoCadastro := TParticipante.Create;
+  FUsuarioDC    := TUsuarioDonoCadastroLista.Create;
   ConectarBaseDeDados;
   {$IFOPT D+}
-  dmConexao1.IdUsuario   := 1;
-  dmConexao1.NomeUsuario := 'ADMIN';
-  dmConexao1.IdDonoCadastro.Add('77');
+  FUsuario.Id := 1;
+  FUsuario.Nome := 'ADMIN';
+  FDonoCadastro.Id := 77;
   {$ELSE}
   {$ENDIF}
 end;
 
 procedure TdmConexao1.DataModuleDestroy(Sender: TObject);
 begin
-  FIdDonoCadastro.Free;
+  FUsuario.Free;
+  FDonoCadastro.Free;
+  FUsuarioDC.Free;
 end;
 
 procedure TdmConexao1.SQLConnectorLog(Sender: TSQLConnection;

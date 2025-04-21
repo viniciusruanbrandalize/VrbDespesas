@@ -1,0 +1,116 @@
+object frmSelecionarDonoCadastro: TfrmSelecionarDonoCadastro
+  Left = 349
+  Height = 167
+  Top = 250
+  Width = 408
+  BorderIcons = []
+  BorderStyle = bsSingle
+  Caption = 'Selecione o dono do cadastro'
+  ClientHeight = 167
+  ClientWidth = 408
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  Position = poOwnerFormCenter
+  object pnlFundo: TPanel
+    Left = 0
+    Height = 167
+    Top = 0
+    Width = 408
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 167
+    ClientWidth = 408
+    Color = 15925228
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object cbDonoCadastro: TComboBox
+      Left = 16
+      Height = 23
+      Top = 61
+      Width = 376
+      ItemHeight = 15
+      Style = csDropDownList
+      TabOrder = 0
+    end
+    object lblDonoCadastro: TLabel
+      Left = 16
+      Height = 15
+      Top = 45
+      Width = 99
+      Caption = 'Dono do Cadastro:'
+    end
+    object pnlBotoes: TPanel
+      Left = 5
+      Height = 34
+      Top = 128
+      Width = 398
+      Align = alBottom
+      BorderSpacing.Around = 5
+      BevelOuter = bvNone
+      ClientHeight = 34
+      ClientWidth = 398
+      ParentBackground = False
+      TabOrder = 1
+      object btnAvancar: TSpeedButton
+        Left = 278
+        Height = 34
+        Top = 0
+        Width = 120
+        Align = alRight
+        Caption = 'Avançar'
+        Flat = True
+        Images = imgList
+        ImageIndex = 0
+        ImageWidth = 32
+        Layout = blGlyphRight
+        Margin = 5
+        OnClick = btnAvancarClick
+      end
+    end
+    object lblInfo: TLabel
+      Left = 16
+      Height = 15
+      Top = 16
+      Width = 329
+      Caption = 'Selecione o dono de cadastro que irá utilizar para filtragem.'
+      Font.Color = 2977025
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object ckbNaoPerguntar: TCheckBox
+      Left = 16
+      Height = 19
+      Top = 93
+      Width = 158
+      Caption = 'Não perguntar novamente'
+      TabOrder = 2
+    end
+  end
+  object imgList: TImageList
+    Left = 16
+    Top = 120
+    Bitmap = {
+      4C7A010000001000000010000000930000000000000078DA6360C0006C401C02
+      C4338178171483D8A150397CC017881F01F17F1CF811540D365084471F3A2EC2
+      622FBA9A3F401C04C4895036BABC2F927FB1B9F93D100B42D5446231E3115258
+      E172E7792016C563062C9CF1F9F52A104BE23003164730BE1C0361908AA47E17
+      15F453EA7E4AC38FD2F8C3977E8281388940FAA146FA454EC70FC9CC3F84F26F
+      08B6FC0B0047E6963F
+    }
+    BitmapAdv = {
+      4C69010000004C7A0100000020000000200000003A0100000000000078DACD97
+      BD0E823010804978005699F435742371336E8E3A6262C2E80AAFC043F90CEC9A
+      C82E2C12C5E0915C1342B0B4D756DAE45BC0EB9DC7FD3A8EF4F1810D10013112
+      E133DF317366A827039A11DADF249A6CF18014A804F4F6A950D623EA0E803B41
+      6F9F1CEF923921506BD0CDA8F14E51DD8D2142019F8BFEEF2BC6FC1E2824FC10
+      70622D17BCE701CC3BB24B091BF21F31994AF8F13220DFDA500ACAA703354526
+      C7DEC05AC186AA571F12422C3DF1FB536D883B3219319E5FC08E6843D6F1BD6A
+      6E1F8836B05EA29AD71FE048B081F5B1A17767C0D5D043561C1B580F1D7AE76A
+      EC9F274E0C4EADDFB4FF79B531FA43FC1523F16732FF0A81FC9BBAFED8507FA7
+      EE3F53F75FD9F9A38DAB055177CE998965E6AF1BB0C5D82F1DF5F9CB86F9D386
+      F9DB86FDC386FD4B65FF8C0DEEC25AF7EF2F979A58F0
+    }
+  end
+end

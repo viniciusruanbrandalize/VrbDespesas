@@ -23,6 +23,10 @@ type
     FPGDump: String;
     FMySQLDump: String;
 
+    { DONO_CADASTRO }
+    FDCId: Integer;
+    FDCNaoPerguntar: Boolean;
+
     procedure Ler;
     procedure GravarDefault;
 
@@ -37,6 +41,10 @@ type
     property PGDump: String read FPGDump write FPGDump;
     property MySQLDump: String read FMySQLDump write FMySQLDump;
 
+    { DONO_CADASTRO }
+    property DCId: Integer read FDCId write FDCId;
+    property DCNaoPerguntar: Boolean read FDCNaoPerguntar write FDCNaoPerguntar;
+
   end;
 
 implementation
@@ -50,6 +58,9 @@ begin
   lib.cryptini.LerString('BACKUP', 'PGDUMP', FPGDump);
   lib.cryptini.LerString('BACKUP', 'MYSQLDUMP', FMySQLDump);
 
+  lib.cryptini.LerInteger('DONO_CADASTRO', 'ID', FDCId);
+  lib.cryptini.LerBoolean('DONO_CADASTRO', 'NAOPERGUNTAR', FDCNaoPerguntar);
+
 end;
 
 procedure TConfiguracaoINI.GravarDefault;
@@ -61,6 +72,9 @@ begin
     lib.cryptini.EscreverString('BACKUP', 'PGDUMP', 'C:\Program Files\PostgreSQL\16\bin\pg_dump.exe');
     lib.cryptini.EscreverString('BACKUP', 'MYSQLDUMP', 'D:\Projetos\Databases\Utilitarios\MySQL 5.7\bin\mysqldump.exe');
 
+    lib.cryptini.EscreverInteger('DONO_CADASTRO', 'ID', 1);
+    lib.cryptini.EscreverBoolean('DONO_CADASTRO', 'NAOPERGUNTAR', false);
+
   end;
 end;
 
@@ -70,6 +84,9 @@ begin
   lib.cryptini.EscreverString('BACKUP', 'GBAK', PChar(FGBak));
   lib.cryptini.EscreverString('BACKUP', 'PGDUMP', PChar(FPGDump));
   lib.cryptini.EscreverString('BACKUP', 'MYSQLDUMP', PChar(FMySQLDump));
+
+  lib.cryptini.EscreverInteger('DONO_CADASTRO', 'ID', FDCId);
+  lib.cryptini.EscreverBoolean('DONO_CADASTRO', 'NAOPERGUNTAR', FDCNaoPerguntar);
 
 end;
 

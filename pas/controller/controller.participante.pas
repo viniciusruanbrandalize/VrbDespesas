@@ -89,7 +89,7 @@ end;
 
 function TParticipanteController.Inserir(objParticipante: TParticipante; out Erro: string): Boolean;
 begin
-  objParticipante.UsuarioCadastro.Id := dmConexao1.IdUsuario;
+  objParticipante.UsuarioCadastro.Id := dmConexao1.Usuario.Id;
   Result := ParticipanteDAO.Inserir(objParticipante, Erro);
 end;
 

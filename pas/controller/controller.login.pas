@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, model.dao.padrao, model.dao.login,
   model.entity.login, model.entity.usuario, lib.bcrypt,
-  model.connection.conexao1;
+  model.connection.conexao1, model.entity.usuariodonocadastro;
 
 type
 
@@ -21,6 +21,7 @@ type
     Usuario: TUsuario;
     function FazerLogin(objUsuario: TUsuario; Nome, Senha: String; out Erro: String): Boolean;
     function Inserir(objLogin: TLogin; out Erro: String): Boolean;
+    function ListarDonoCadastro(DonoCadastro: TUsuarioDonoCadastroLista; IdUsuario: Integer; out Erro: String): Boolean;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -42,8 +43,9 @@ begin
       erro := 'Senha incorreta!'
     else
     begin
-      dmConexao1.IdUsuario   := objUsuario.Id;
-      dmConexao1.NomeUsuario := objUsuario.Nome;
+      dmConexao1.Usuario.id   := objUsuario.Id;
+      dmConexao1.Usuario.Nome := objUsuario.Nome;
+      valida := ListarDonoCadastro(dmConexao1.UsuarioDC, objUsuario.Id, Erro);
     end;
   end;
   Result := Valida;
@@ -53,6 +55,13 @@ function TLoginController.Inserir(objLogin: TLogin; out Erro: String
   ): Boolean;
 begin
   Result := LoginDAO.Inserir(objLogin, Erro);
+end;
+
+function TLoginController.ListarDonoCadastro(
+  DonoCadastro: TUsuarioDonoCadastroLista; IdUsuario: Integer; out Erro: String
+  ): Boolean;
+begin
+  Result := LoginDAO.ListarDonoCadastro(DonoCadastro, IdUsuario, Erro);
 end;
 
 constructor TLoginController.Create;

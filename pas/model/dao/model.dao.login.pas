@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, SQLDB, model.entity.login, model.entity.usuario,
-  model.connection.conexao1, model.dao.padrao;
+  model.entity.usuariodonocadastro, model.connection.conexao1, model.dao.padrao;
 
 type
 
@@ -20,6 +20,7 @@ type
     function Inserir(Login : TLogin; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
     function EncontrarUsuario(Usuario: TUsuario; Nome: String; out Erro: String): Boolean;
+    function ListarDonoCadastro(DonoCadastro: TUsuarioDonoCadastroLista; IdUsuario: Integer; out Erro: String): Boolean;
     constructor Create; override;
     destructor Destroy; override;
   end;
@@ -157,6 +158,59 @@ begin
     else
     begin
       Erro := 'Usuário não encontrado!';
+      Result := False;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TLoginDAO.ListarDonoCadastro(DonoCadastro: TUsuarioDonoCadastroLista;
+  IdUsuario: Integer; out Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select udc.*, u.nome as nome_usuario, dc.nome as nome_dono_cadastro ' +
+           'from usuario_dono_cadastro udc ' +
+           'left join usuario u on u.id = udc.id_usuario ' +
+           'left join participante dc on dc.id = udc.id_dono_cadastro ' +
+           'where udc.id_usuario = :busca ' +
+           'order by dc.nome asc';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsInteger := IdUsuario;
+    Qry.Open;
+
+    Qry.First;
+
+    DonoCadastro.Clear;
+
+    if qry.RecordCount > 0 then
+    begin
+      while not Qry.EOF do
+      begin
+        DonoCadastro.Add(TUsuarioDonoCadastro.Create);
+        with DonoCadastro.Items[Pred(DonoCadastro.Count)] do
+        begin
+          Id                := Qry.FieldByName('id').AsInteger;
+          Usuario.Id        := Qry.FieldByName('id_usuario').AsInteger;
+          Usuario.Nome      := Qry.FieldByName('nome_usuario').AsString;
+          DonoCadastro.Id   := Qry.FieldByName('id_dono_cadastro').AsInteger;
+          DonoCadastro.Nome := Qry.FieldByName('nome_dono_cadastro').AsString;
+          Cadastro          := Qry.FieldByName('cadastro').AsDateTime;
+        end;
+        Qry.Next;
+      end;
+      Result := True;
+    end
+    else
+    begin
+      Erro := 'Usuário não tem acesso à nenhum cadastro!';
       Result := False;
     end;
 

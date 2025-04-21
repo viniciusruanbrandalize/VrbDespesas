@@ -231,7 +231,7 @@ begin
     Qry.ParamByName('id_forma_pgto').AsInteger    := Recebimento.FormaPagamento.Id;
     Qry.ParamByName('id_pagador').AsInteger       := Recebimento.Pagador.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Recebimento.UsuarioCadastro.Id;
-    Qry.ParamByName('id_dono_cadastro').AsInteger := 77;  //arrumar
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
 
     if Recebimento.ContaBancaria.Id > 0 then
       Qry.ParamByName('id_conta_bancaria').AsInteger := Recebimento.ContaBancaria.Id;

@@ -77,7 +77,7 @@ end;
 
 function TContaBancariaController.Inserir(objContaBancaria: TContaBancaria; out Erro: string): Boolean;
 begin
-  objContaBancaria.UsuarioCadastro.Id := dmConexao1.IdUsuario;
+  objContaBancaria.UsuarioCadastro.Id := dmConexao1.Usuario.Id;
   Result := ContaBancariaDAO.Inserir(objContaBancaria, Erro);
 end;
 
@@ -105,7 +105,7 @@ end;
 function TContaBancariaController.InserirPix(objPix: TPix; out Erro: string
   ): Boolean;
 begin
-  objPix.UsuarioCadastro.Id := dmConexao1.IdUsuario;
+  objPix.UsuarioCadastro.Id := dmConexao1.Usuario.Id;
   Result := ContaBancariaDAO.InserirPix(objPix, Erro);
 end;
 
@@ -143,7 +143,7 @@ function TContaBancariaController.InserirCartao(objCartao: TCartao; out
   Erro: string): Boolean;
 begin
   objCartao.Id  := ContaBancariaDAO.GerarId(SEQ_ID_CARTAO);
-  objCartao.UsuarioCadastro.Id := dmConexao1.IdUsuario;
+  objCartao.UsuarioCadastro.Id := dmConexao1.Usuario.Id;
   Result := ContaBancariaDAO.InserirCartao(objCartao, erro);
 end;
 

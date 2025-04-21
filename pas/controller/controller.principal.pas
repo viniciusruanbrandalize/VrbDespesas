@@ -70,7 +70,7 @@ end;
 
 function TPrincipalController.RetornarNomeUsuario: String;
 begin
-  Result := dmConexao1.NomeUsuario;
+  Result := dmConexao1.Usuario.Nome;
 end;
 
 constructor TPrincipalController.Create;

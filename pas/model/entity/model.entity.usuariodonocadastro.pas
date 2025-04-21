@@ -5,7 +5,8 @@ unit model.entity.usuariodonocadastro;
 interface
 
 uses
-  Classes, SysUtils, model.entity.usuario, model.entity.participante;
+  Classes, SysUtils, Generics.Collections, model.entity.usuario,
+  model.entity.participante;
 
 type
 
@@ -34,6 +35,9 @@ type
     property DonoCadastro: TParticipante read GetDonoCadastro write SetDonoCadastro;
     property Cadastro: TDateTime read GetCadastro write SetCadastro;
   end;
+
+type
+  TUsuarioDonoCadastroLista = specialize TObjectList<TUsuarioDonoCadastro>;
 
 implementation
 
@@ -90,11 +94,14 @@ end;
 
 constructor TUsuarioDonoCadastro.Create;
 begin
-  //
+  FUsuario      := TUsuario.Create;
+  FDonoCadastro := TParticipante.Create;
 end;
 
 destructor TUsuarioDonoCadastro.Destroy;
 begin
+  FUsuario.Free;
+  FDonoCadastro.Free;
   inherited Destroy;
 end;
 

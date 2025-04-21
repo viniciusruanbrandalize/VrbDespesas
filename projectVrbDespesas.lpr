@@ -37,8 +37,9 @@ uses
   model.report.despesa, model.report.conexao, model.report.recebimento,
   controller.relatoriodespesa, controller.recebimento,
   controller.relatoriorecebimento, controller.copiaseguranca,
-  controller.configuracao, view.recebimento, view.relatoriorecebimento,
-  view.copiaseguranca, view.configuracao;
+  controller.configuracao, controller.selecionardonocadastro, view.recebimento,
+  view.relatoriorecebimento, view.copiaseguranca, view.configuracao,
+  view.selecionardonocadastro;
 
 {$R *.res}
 
@@ -55,8 +56,20 @@ begin
   {$ELSE}
     try
       frmLogin := TfrmLogin.Create(nil);
-    if not (frmLogin.ShowModal = mrOK) then
-      Application.Terminate;
+      if not (frmLogin.ShowModal = mrOK) then
+        Application.Terminate
+      else
+      begin
+        if dmConexao1.UsuarioDC.Count > 1 then
+        begin
+          frmSelecionarDonoCadastro := TfrmSelecionarDonoCadastro.Create(nil);
+          try
+            frmSelecionarDonoCadastro.ShowModal;
+          finally
+            frmSelecionarDonoCadastro.Free;
+          end;
+        end;
+      end;
     finally
       frmLogin.Free;
     end;

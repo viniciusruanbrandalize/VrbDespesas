@@ -537,10 +537,22 @@
         <Filename Value="pas\view\view.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmConfiguracao"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.configuracao.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\view\view.selecionardonocadastro.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSelecionarDonoCadastro"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\controller\controller.selecionardonocadastro.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

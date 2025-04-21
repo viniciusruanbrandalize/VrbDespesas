@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.despesa, model.dao.padrao,
   model.dao.despesa, model.entity.despesaformapagamento, model.entity.arquivo,
-  model.connection.conexao1;
+  model.connection.conexao1, Dialogs;
 
 type
 
@@ -88,8 +88,8 @@ end;
 
 function TDespesaController.Inserir(objDespesa: TDespesa; out Erro: string): Boolean;
 begin
-  objDespesa.DonoCadastro.Id    := 77;  //alterar
-  objDespesa.UsuarioCadastro.Id := dmConexao1.IdUsuario;
+  objDespesa.DonoCadastro.Id    := dmConexao1.DonoCadastro.Id;
+  objDespesa.UsuarioCadastro.Id := dmConexao1.Usuario.Id;
   Result := DespesaDAO.Inserir(objDespesa, Erro);
 end;
 
