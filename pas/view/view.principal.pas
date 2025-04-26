@@ -10,7 +10,7 @@ uses
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
   view.participante, view.despesa, view.relatoriodespesa, view.recebimento,
-  view.relatoriorecebimento, view.copiaseguranca, view.configuracao;
+  view.relatoriorecebimento, view.copiaseguranca, view.configuracao, view.ajuda;
 
 type
 
@@ -165,6 +165,8 @@ begin
   pnlAbreForms.Align := alClient;
   pnlAbreForms.Caption := '';
   lblNomeUsuario.Caption := Controller.RetornarNomeUsuario;
+  self.Caption := 'VrbDespesas by Vinícius Ruan Brandalize v' +
+                   Controller.RetornarVersao;
 end;
 
 procedure TfrmPrincipal.imgMenuClick(Sender: TObject);
@@ -228,7 +230,7 @@ end;
 
 procedure TfrmPrincipal.actAjudaExecute(Sender: TObject);
 begin
-  //
+  Controller.AbrirTela(frmAjuda, TfrmAjuda, True, nil, Self);
 end;
 
 procedure TfrmPrincipal.actBackupExecute(Sender: TObject);

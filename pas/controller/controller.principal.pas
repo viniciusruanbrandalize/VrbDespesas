@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, controls, controller.erro, lib.util, lib.types,
-  model.connection.conexao1, view.participante, view.recebimento;
+  model.connection.conexao1, view.participante, view.recebimento,
+  model.dao.configuracao, model.entity.configuracao;
 
 type
 
@@ -21,6 +22,7 @@ type
     procedure AbrirTelaParticipante(Formulario: TfrmParticipante; AParent: TWinControl; FormularioPai: TForm; DonoCadastro: Boolean);
     procedure AbrirTelaRecebimento(Formulario: TfrmRecebimento; AParent: TWinControl; FormularioPai: TForm; Tipo: TTelaRecebimento);
     function RetornarNomeUsuario: String;
+    function RetornarVersao: String;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -71,6 +73,30 @@ end;
 function TPrincipalController.RetornarNomeUsuario: String;
 begin
   Result := dmConexao1.Usuario.Nome;
+end;
+
+function TPrincipalController.RetornarVersao: String;
+var
+  Erro,
+  Versao: String;
+  Conf: TConfiguracao;
+  ConfDao: TConfiguracaoDAO;
+begin
+  Conf := TConfiguracao.Create;
+  try
+    ConfDAO := TConfiguracaoDAO.Create;
+    try
+      if ConfDAO.BuscarPorNome(Conf, 'NUMERO_VERSAO', Erro) then
+        Versao := Conf.Valor;
+      {if ConfDAO.BuscarPorNome(Conf, 'DATA_VERSAO', Erro) then
+        Versao := Versao +' '+ Conf.Valor;}
+      Result := Versao;
+    finally
+      FreeAndNil(ConfDAO);
+    end;
+  finally
+    FreeAndNil(Conf);
+  end;
 end;
 
 constructor TPrincipalController.Create;

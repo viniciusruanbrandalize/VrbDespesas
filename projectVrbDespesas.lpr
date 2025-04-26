@@ -29,17 +29,17 @@ uses
   model.dao.tipodespesa, model.dao.subtipodespesa, model.dao.usuario,
   model.dao.login, model.dao.bandeira, model.dao.contabancaria,
   model.dao.participante, model.dao.despesa, model.dao.padrao,
-  model.dao.recebimento, model.dao.copiaseguranca, model.ini.configuracao,
-  model.ini.erro, model.ini.conexao, view.subtipodespesa, view.usuario,
-  view.logerro, view.loglogin, view.login, view.bandeira, view.contabancaria,
-  view.participante, view.despesa, Controls, lib.visual, indylaz,
-  view.relatoriopadrao, view.relatoriodespesa, view.relatorioparametro,
-  model.report.despesa, model.report.conexao, model.report.recebimento,
-  controller.relatoriodespesa, controller.recebimento,
+  model.dao.recebimento, model.dao.copiaseguranca, model.dao.configuracao,
+  model.ini.configuracao, model.ini.erro, model.ini.conexao,
+  view.subtipodespesa, view.usuario, view.logerro, view.loglogin, view.login,
+  view.bandeira, view.contabancaria, view.participante, view.despesa, Controls,
+  lib.visual, indylaz, view.relatoriopadrao, view.relatoriodespesa,
+  view.relatorioparametro, model.report.despesa, model.report.conexao,
+  model.report.recebimento, controller.relatoriodespesa, controller.recebimento,
   controller.relatoriorecebimento, controller.copiaseguranca,
-  controller.configuracao, controller.selecionardonocadastro, view.recebimento,
-  view.relatoriorecebimento, view.copiaseguranca, view.configuracao,
-  view.selecionardonocadastro;
+  controller.configuracao, controller.selecionardonocadastro, controller.ajuda,
+  view.recebimento, view.relatoriorecebimento, view.copiaseguranca,
+  view.configuracao, view.selecionardonocadastro, view.ajuda;
 
 {$R *.res}
 

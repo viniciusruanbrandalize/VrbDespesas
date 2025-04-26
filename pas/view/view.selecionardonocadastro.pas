@@ -21,10 +21,12 @@ type
     pnlBotoes: TPanel;
     pnlFundo: TPanel;
     btnAvancar: TSpeedButton;
+    tmrFechar: TTimer;
     procedure btnAvancarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure tmrFecharTimer(Sender: TObject);
   private
     Controller: TSelecionarDonoCadastroController;
   public
@@ -60,9 +62,22 @@ end;
 
 procedure TfrmSelecionarDonoCadastro.FormShow(Sender: TObject);
 begin
-  Controller.BuscarDonoCadastroPermitidos(cbDonoCadastro);
-  if cbDonoCadastro.Items.Count > 0 then
-    cbDonoCadastro.ItemIndex := 0;
+  if Controller.ConfiguracaoINI.DCNaoPerguntar then
+  begin
+    Controller.SelecionarDonoCadastroPadrao();
+    tmrFechar.Enabled := True;
+  end
+  else
+  begin
+    Controller.BuscarDonoCadastroPermitidos(cbDonoCadastro);
+    if cbDonoCadastro.Items.Count > 0 then
+      cbDonoCadastro.ItemIndex := 0;
+  end;
+end;
+
+procedure TfrmSelecionarDonoCadastro.tmrFecharTimer(Sender: TObject);
+begin
+  Close;
 end;
 
 end.

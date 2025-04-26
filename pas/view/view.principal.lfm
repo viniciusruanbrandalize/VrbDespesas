@@ -241,7 +241,7 @@ object frmPrincipal: TfrmPrincipal
         BorderSpacing.Left = 4
         BorderSpacing.Top = 8
         BorderSpacing.Right = 4
-        Caption = 'SISTEMA DE COMPRAS'
+        Caption = 'VRB DESPESAS'
         Font.Color = clWindow
         Font.Height = -14
         Font.Style = [fsBold]

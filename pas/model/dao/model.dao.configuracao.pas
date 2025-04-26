@@ -19,6 +19,7 @@ type
     procedure Listar(lv: TListView); override;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
     function BuscarPorId(Configuracao : TConfiguracao; Id: Integer; out Erro: String): Boolean;
+    function BuscarPorNome(Configuracao : TConfiguracao; Nome: String; out Erro: String): Boolean;
     function Inserir(Configuracao : TConfiguracao; out Erro: string): Boolean;
     function Editar(Configuracao : TConfiguracao; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
@@ -120,6 +121,50 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
     Qry.Open;
+
+    if Qry.RecordCount = 1 then
+    begin
+      Configuracao.Id        := Qry.FieldByName('id').AsInteger;
+      Configuracao.Nome      := Qry.FieldByName('nome').AsString;
+      Configuracao.Descricao := Qry.FieldByName('descricao').AsString;
+      Configuracao.Uso       := Qry.FieldByName('uso').AsString;
+      Configuracao.Valor     := Qry.FieldByName('valor').AsString;
+      Result := True;
+    end
+    else
+    if Qry.RecordCount > 1 then
+    begin
+      Erro := 'Mais de um objeto foi retornado na busca por código!';
+      Result := False;
+    end
+    else
+    begin
+      Erro := 'Nenhum objeto foi encontrado!';
+      Result := False;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TConfiguracaoDAO.BuscarPorNome(Configuracao: TConfiguracao;
+  Nome: String; out Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select * from configuracao ' +
+           'where nome = :nome and excluido = false ' +
+           'order by id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('nome').AsString := Nome;
+    Qry.Open;
+    Qry.First;
 
     if Qry.RecordCount = 1 then
     begin

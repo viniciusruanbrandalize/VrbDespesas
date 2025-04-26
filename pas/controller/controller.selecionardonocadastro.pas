@@ -19,6 +19,7 @@ type
     ConfiguracaoINI: TConfiguracaoINI;
     procedure BuscarDonoCadastroPermitidos(var cb: TComboBox);
     procedure SelecionarDonoCadastro(cb: TComboBox);
+    procedure SelecionarDonoCadastroPadrao();
     constructor Create;
     destructor Destroy; override;
   end;
@@ -47,6 +48,11 @@ begin
     dmConexao1.DonoCadastro.Nome := DonoCadastro.Nome;
   end;
   ConfiguracaoINI.DCId := dmConexao1.DonoCadastro.Id;
+end;
+
+procedure TSelecionarDonoCadastroController.SelecionarDonoCadastroPadrao();
+begin
+  dmConexao1.DonoCadastro.Id := ConfiguracaoINI.DCId;
 end;
 
 constructor TSelecionarDonoCadastroController.Create;

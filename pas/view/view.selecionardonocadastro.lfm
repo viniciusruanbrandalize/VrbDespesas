@@ -113,4 +113,11 @@ object frmSelecionarDonoCadastro: TfrmSelecionarDonoCadastro
       F9DB86FDC386FD4B65FF8C0DEEC25AF7EF2F979A58F0
     }
   end
+  object tmrFechar: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = tmrFecharTimer
+    Left = 72
+    Top = 120
+  end
 end
