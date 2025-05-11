@@ -9,9 +9,11 @@ object frmPrincipal: TfrmPrincipal
   ClientWidth = 1024
   Constraints.MinHeight = 600
   Constraints.MinWidth = 1024
+  KeyPreview = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyPress = FormKeyPress
   OnShow = FormShow
   Position = poScreenCenter
   object pnlFundo: TPanel

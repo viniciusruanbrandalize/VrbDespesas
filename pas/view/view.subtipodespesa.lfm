@@ -41,35 +41,38 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
                 'sd.nome'
                 'td.nome'
               )
-              ItemHeight = 20
+              ItemHeight = 15
             end
           end
         end
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
+            inherited pnlBotaoCad: TPanel
+              TabOrder = 2
+            end
             object edtNome: TLabeledEdit[1]
               Left = 8
-              Height = 28
+              Height = 23
               Top = 32
               Width = 408
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 408
               EditLabel.Caption = 'Nome: *'
-              TabOrder = 1
+              TabOrder = 0
               Text = 'edtNome'
             end
             object edtTipo: TLabeledEdit[2]
               Left = 432
-              Height = 28
+              Height = 23
               Top = 32
               Width = 327
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 327
               EditLabel.Caption = 'Tipo: *'
               Font.Color = 2977025
               Font.Style = [fsBold]
               ParentFont = False
-              TabOrder = 2
+              TabOrder = 1
               Text = 'edtTipo'
               OnExit = edtTipoExit
               OnKeyUp = edtTipoKeyUp
@@ -87,7 +90,7 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
                 'subtipo3'
                 'subtipo4'
               )
-              ItemHeight = 20
+              ItemHeight = 15
               TabOrder = 3
               Visible = False
               OnDblClick = lbTipoNomeDblClick
@@ -105,7 +108,7 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
                 'key'
                 'key'
               )
-              ItemHeight = 20
+              ItemHeight = 15
               TabOrder = 4
               Visible = False
             end

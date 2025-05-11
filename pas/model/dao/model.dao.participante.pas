@@ -20,6 +20,7 @@ type
     procedure Pesquisar(lv: TListView; Campo, Busca: String; DonoCadastro: Boolean = false);
     procedure PesquisarCidade(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(Participante : TParticipante; Id: Integer; out Erro: String; DonoCadastro: Boolean = false): Boolean;
+    function BuscarIdCidadePorIBGE(IBGE: Integer; out Erro: String): Integer;
     function Inserir(Participante : TParticipante; out Erro: string): Boolean;
     function Editar(Participante : TParticipante; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
@@ -224,6 +225,41 @@ begin
     begin
       Erro := 'Nenhum objeto foi encontrado!';
       Result := False;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TParticipanteDAO.BuscarIdCidadePorIBGE(IBGE: Integer; out Erro: String): Integer;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select id from cidade where ibge = :ibge';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('ibge').AsInteger := IBGE;
+    Qry.Open;
+
+    if Qry.RecordCount = 1 then
+    begin
+      Result := Qry.FieldByName('id').AsInteger;
+    end
+    else
+    if Qry.RecordCount > 1 then
+    begin
+      Erro := 'Mais de um objeto foi retornado na busca por código!';
+      Result := 0;
+    end
+    else
+    begin
+      Erro := 'Nenhum objeto foi encontrado!';
+      Result := 0;
     end;
 
   finally

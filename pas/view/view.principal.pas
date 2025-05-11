@@ -125,6 +125,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure imgMenuClick(Sender: TObject);
     procedure pnlMenuRetairClick(Sender: TObject);
@@ -158,6 +159,19 @@ end;
 procedure TfrmPrincipal.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmPrincipal.FormKeyPress(Sender: TObject; var Key: char);
+begin
+  if key = #13 then
+  begin
+    SelectNext(ActiveControl,True,True);
+    key := #0;
+  end;
+  if key = #27 then
+  begin
+    //
+  end;
 end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);

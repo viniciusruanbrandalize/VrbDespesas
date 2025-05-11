@@ -52,6 +52,9 @@ inherited frmParticipante: TfrmParticipante
         end
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
+            inherited pnlBotaoCad: TPanel
+              TabOrder = 16
+            end
             object edtNome: TLabeledEdit[1]
               Left = 8
               Height = 23
@@ -61,7 +64,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 400
               EditLabel.Caption = 'Nome:'
               MaxLength = 100
-              TabOrder = 1
+              TabOrder = 3
               Text = 'edtNome'
             end
             object cbPessoa: TComboBox[2]
@@ -76,7 +79,7 @@ inherited frmParticipante: TfrmParticipante
                 'Jurídica'
               )
               Style = csDropDownList
-              TabOrder = 2
+              TabOrder = 0
               Text = 'Física'
               OnChange = cbPessoaChange
             end
@@ -96,7 +99,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 392
               EditLabel.Caption = 'Fantasia:'
               MaxLength = 100
-              TabOrder = 3
+              TabOrder = 4
               Text = 'edtFantasia'
             end
             object edtCnpj: TLabeledEdit[5]
@@ -108,7 +111,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 160
               EditLabel.Caption = 'CNPJ:'
               MaxLength = 100
-              TabOrder = 4
+              TabOrder = 1
               Text = 'edtCnpj'
             end
             object edtIe: TLabeledEdit[6]
@@ -120,7 +123,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 160
               EditLabel.Caption = 'Inscrição Estadual:'
               MaxLength = 100
-              TabOrder = 5
+              TabOrder = 2
               Text = 'edtIe'
             end
             object edtTelefone: TLabeledEdit[7]
@@ -132,7 +135,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 160
               EditLabel.Caption = 'Telefone:'
               MaxLength = 100
-              TabOrder = 6
+              TabOrder = 5
               Text = 'edtTelefone'
             end
             object edtCelular: TLabeledEdit[8]
@@ -144,7 +147,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 160
               EditLabel.Caption = 'Celular:'
               MaxLength = 100
-              TabOrder = 7
+              TabOrder = 6
               Text = 'edtCelular'
             end
             object edtEmail: TLabeledEdit[9]
@@ -156,7 +159,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 400
               EditLabel.Caption = 'E-mail:'
               MaxLength = 100
-              TabOrder = 8
+              TabOrder = 7
               Text = 'edtEmail'
             end
             object edtCep: TLabeledEdit[10]
@@ -168,7 +171,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 120
               EditLabel.Caption = 'CEP:'
               MaxLength = 9
-              TabOrder = 9
+              TabOrder = 8
               Text = 'edtCep'
             end
             object btnBuscaCep: TSpeedButton[11]
@@ -191,7 +194,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 408
               EditLabel.Caption = 'Rua:'
               MaxLength = 100
-              TabOrder = 10
+              TabOrder = 9
               Text = 'edtRua'
             end
             object edtNumero: TLabeledEdit[13]
@@ -204,7 +207,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Caption = 'Número:'
               MaxLength = 100
               NumbersOnly = True
-              TabOrder = 11
+              TabOrder = 10
               Text = 'edtNumero'
             end
             object edtComplemento: TLabeledEdit[14]
@@ -216,7 +219,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 200
               EditLabel.Caption = 'Complemento:'
               MaxLength = 100
-              TabOrder = 12
+              TabOrder = 11
               Text = 'edtComplemento'
             end
             object edtBairro: TLabeledEdit[15]
@@ -228,7 +231,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 280
               EditLabel.Caption = 'Bairro:'
               MaxLength = 100
-              TabOrder = 13
+              TabOrder = 12
               Text = 'edtBairro'
             end
             object edtCidade: TLabeledEdit[16]
@@ -243,7 +246,7 @@ inherited frmParticipante: TfrmParticipante
               Font.Style = [fsBold]
               MaxLength = 100
               ParentFont = False
-              TabOrder = 14
+              TabOrder = 13
               Text = 'edtCidade'
               OnExit = edtCidadeExit
               OnKeyUp = edtCidadeKeyUp
@@ -261,7 +264,7 @@ inherited frmParticipante: TfrmParticipante
               MaxLength = 100
               ParentFont = False
               ReadOnly = True
-              TabOrder = 15
+              TabOrder = 14
               Text = 'edtUf'
               Visible = False
             end
@@ -273,7 +276,7 @@ inherited frmParticipante: TfrmParticipante
               Lines.Strings = (
                 'mObs'
               )
-              TabOrder = 16
+              TabOrder = 15
             end
             object lblObs: TLabel[19]
               Left = 8

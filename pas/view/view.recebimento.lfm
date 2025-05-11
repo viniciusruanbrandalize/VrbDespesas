@@ -7,8 +7,6 @@ inherited frmRecebimento: TfrmRecebimento
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited pnlPesquisa: TPanel
@@ -25,9 +23,9 @@ inherited frmRecebimento: TfrmRecebimento
               Height = 475
               Top = 0
               Width = 990
-              ActivePage = tbsRecGeral
+              ActivePage = tbsSalario
               Align = alClient
-              TabIndex = 1
+              TabIndex = 0
               TabOrder = 1
               object tbsSalario: TTabSheet
                 Caption = 'tbsSalario'
@@ -403,7 +401,7 @@ inherited frmRecebimento: TfrmRecebimento
                     EditLabel.Height = 15
                     EditLabel.Width = 448
                     EditLabel.Caption = 'Descrição: *'
-                    TabOrder = 0
+                    TabOrder = 1
                     Text = 'edtDescricao'
                   end
                   object dtpData: TDateTimePicker
@@ -414,7 +412,7 @@ inherited frmRecebimento: TfrmRecebimento
                     CenturyFrom = 1941
                     MaxDate = 2958465
                     MinDate = -53780
-                    TabOrder = 1
+                    TabOrder = 0
                     TrailingSeparator = False
                     TextForNullDate = '  /  /    '
                     LeadingZeros = True
@@ -444,7 +442,7 @@ inherited frmRecebimento: TfrmRecebimento
                     EditLabel.Height = 15
                     EditLabel.Width = 128
                     EditLabel.Caption = 'Valor Total R$: *'
-                    TabOrder = 2
+                    TabOrder = 4
                     Text = 'edtValorTotalRec'
                   end
                   object edtPagadorRec: TLabeledEdit
@@ -458,7 +456,7 @@ inherited frmRecebimento: TfrmRecebimento
                     Font.Color = 2977025
                     Font.Style = [fsBold]
                     ParentFont = False
-                    TabOrder = 3
+                    TabOrder = 2
                     Text = 'edtPagadorRec'
                     OnExit = edtPagadorRecExit
                     OnKeyUp = edtPagadorRecKeyUp
@@ -474,7 +472,7 @@ inherited frmRecebimento: TfrmRecebimento
                     Font.Color = 2977025
                     Font.Style = [fsBold]
                     ParentFont = False
-                    TabOrder = 4
+                    TabOrder = 3
                     Text = 'edtFormaPagamentoRec'
                     OnExit = edtFormaPagamentoRecExit
                     OnKeyUp = edtFormaPagamentoRecKeyUp

@@ -41,34 +41,37 @@ inherited frmFormaPagamento: TfrmFormaPagamento
                 'nome'
                 'sigla'
               )
-              ItemHeight = 20
+              ItemHeight = 15
             end
           end
         end
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
+            inherited pnlBotaoCad: TPanel
+              TabOrder = 2
+            end
             object edtNome: TLabeledEdit[1]
               Left = 8
-              Height = 28
+              Height = 23
               Top = 32
               Width = 488
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 488
               EditLabel.Caption = 'Nome:'
               MaxLength = 60
-              TabOrder = 1
+              TabOrder = 0
               Text = 'edtNome'
             end
             object edtSigla: TLabeledEdit[2]
               Left = 512
-              Height = 28
+              Height = 23
               Top = 32
               Width = 112
-              EditLabel.Height = 20
+              EditLabel.Height = 15
               EditLabel.Width = 112
               EditLabel.Caption = 'Sigla:'
               MaxLength = 3
-              TabOrder = 2
+              TabOrder = 1
               Text = 'edt'
             end
           end

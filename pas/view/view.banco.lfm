@@ -52,6 +52,9 @@ inherited frmBanco: TfrmBanco
         end
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
+            inherited pnlBotaoCad: TPanel
+              TabOrder = 2
+            end
             object edtNome: TLabeledEdit[1]
               Left = 104
               Height = 23
@@ -74,7 +77,7 @@ inherited frmBanco: TfrmBanco
               EditLabel.Caption = 'Número:'
               MaxLength = 11
               NumbersOnly = True
-              TabOrder = 2
+              TabOrder = 0
               Text = 'edtNumero'
             end
           end

@@ -62,18 +62,25 @@ function TParticipanteController.BuscarCEP(var objParticipante: TParticipante;
 var
   LibCEP: TLibCep;
   consultou: Boolean;
+  idCidade, CodIBGE: Integer;
 begin
   LibCEP := TLibCep.Create;
   try
     consultou := LibCEP.BuscarPorCep(objParticipante.CEP, Erro);
     if consultou then
     begin
-      objParticipante.CEP              := LibCEP.Endereco[0].CEP;
-      objParticipante.Rua              := LibCEP.Endereco[0].Logradouro;
-      objParticipante.Complemento      := LibCEP.Endereco[0].Complemento;
-      objParticipante.Bairro           := LibCEP.Endereco[0].Bairro;
-      objParticipante.Cidade.Nome      := LibCEP.Endereco[0].Cidade;
-      objParticipante.Cidade.Estado.UF := LibCEP.Endereco[0].UF;
+      CodIBGE := StrToIntDef(LibCEP.Endereco[0].IBGE, 0);
+      idCidade := ParticipanteDAO.BuscarIdCidadePorIBGE(CodIBGE, Erro);
+      if idCidade <> 0 then
+      begin
+        objParticipante.CEP              := LibCEP.Endereco[0].CEP;
+        objParticipante.Rua              := LibCEP.Endereco[0].Logradouro;
+        objParticipante.Complemento      := LibCEP.Endereco[0].Complemento;
+        objParticipante.Bairro           := LibCEP.Endereco[0].Bairro;
+        objParticipante.Cidade.Nome      := LibCEP.Endereco[0].Cidade;
+        objParticipante.Cidade.Estado.UF := LibCEP.Endereco[0].UF;
+        objParticipante.Cidade.Id        := idCidade;
+      end;
     end;
   finally
     Result := consultou;

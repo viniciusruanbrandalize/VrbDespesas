@@ -79,6 +79,9 @@ inherited frmContaBancaria: TfrmContaBancaria
         end
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
+            inherited pnlBotaoCad: TPanel
+              TabOrder = 6
+            end
             object edtAgencia: TLabeledEdit[1]
               Left = 232
               Height = 23
@@ -101,7 +104,7 @@ inherited frmContaBancaria: TfrmContaBancaria
               EditLabel.Caption = 'Número: *'
               MaxLength = 11
               NumbersOnly = True
-              TabOrder = 2
+              TabOrder = 0
               Text = 'edtNumero'
             end
             object cbTipo: TComboBox[3]
@@ -118,7 +121,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                 'Poupança/Salário'
               )
               Style = csDropDownList
-              TabOrder = 3
+              TabOrder = 2
             end
             object lblTipoConta: TLabel[4]
               Left = 440
@@ -138,7 +141,7 @@ inherited frmContaBancaria: TfrmContaBancaria
               Font.Color = 2977025
               Font.Style = [fsBold]
               ParentFont = False
-              TabOrder = 4
+              TabOrder = 3
               Text = 'edtBanco'
               OnExit = edtBancoExit
               OnKeyUp = edtBancoKeyUp
@@ -157,7 +160,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                 'subtipo4'
               )
               ItemHeight = 15
-              TabOrder = 5
+              TabOrder = 4
               Visible = False
               OnDblClick = lbBancoNomeDblClick
               OnKeyPress = lbBancoNomeKeyPress
@@ -175,7 +178,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                 'key'
               )
               ItemHeight = 15
-              TabOrder = 6
+              TabOrder = 5
               Visible = False
             end
           end
@@ -331,7 +334,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     ClientHeight = 60
                     ClientWidth = 972
                     ParentBackground = False
-                    TabOrder = 0
+                    TabOrder = 5
                     object ToolBarCadastroCartao: TToolBar
                       Left = 0
                       Height = 60
@@ -368,7 +371,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     EditLabel.Width = 184
                     EditLabel.Caption = 'Número: *'
                     NumbersOnly = True
-                    TabOrder = 1
+                    TabOrder = 0
                     Text = 'edtNumeroCartao'
                   end
                   object cbTipoCartao: TComboBox
@@ -383,7 +386,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                       'Ambos'
                     )
                     Style = csDropDownList
-                    TabOrder = 2
+                    TabOrder = 1
                   end
                   object edtBandeira: TLabeledEdit
                     Left = 352
@@ -396,7 +399,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     Font.Color = 2977025
                     Font.Style = [fsBold]
                     ParentFont = False
-                    TabOrder = 3
+                    TabOrder = 2
                     Text = 'edtBandeira'
                     OnExit = edtBandeiraExit
                     OnKeyUp = edtBandeiraKeyUp
@@ -416,7 +419,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     CenturyFrom = 1941
                     MaxDate = 2958465
                     MinDate = -53780
-                    TabOrder = 4
+                    TabOrder = 3
                     TrailingSeparator = False
                     TextForNullDate = '  /  /    '
                     LeadingZeros = True
@@ -436,7 +439,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     Top = 81
                     Width = 88
                     Caption = 'Aproximação'
-                    TabOrder = 5
+                    TabOrder = 4
                   end
                   object lblValidade: TLabel
                     Left = 8
