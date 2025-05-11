@@ -200,6 +200,7 @@ begin
   FBandeira        := TBandeira.Create;
   FContaBancaria   := TContaBancaria.Create;
   FUsuarioCadastro := TUsuario.Create;
+  FDonoCadastro    := TParticipante.Create;
 end;
 
 destructor TCartao.Destroy;
@@ -207,6 +208,7 @@ begin
   FBandeira.Free;
   FContaBancaria.Free;
   FUsuarioCadastro.Free;
+  FDonoCadastro.Free;
   inherited Destroy;
 end;
 

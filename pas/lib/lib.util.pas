@@ -6,12 +6,12 @@ interface
 
 uses
   {$IFDEF MSWINDOWS}
-  System.NetEncoding, IdStackWindows, Windows,
+  System.NetEncoding, Windows,
   {$ENDIF}
   {$IFDEF LINUX}
   IdStackUnix,
   {$ENDIF}
-  Classes, SysUtils, md5, Sha1, TypInfo, IdIPWatch, Forms, controls,
+  Classes, SysUtils, md5, Sha1, TypInfo, Forms, controls,
   ExtCtrls;
 
   {$IFDEF MSWINDOWS}
@@ -31,27 +31,28 @@ uses
 implementation
 
 function retornarIP: String;
-var
-  IP: TIdIPWatch;
+{var
+  IP: TIdIPWatch; }
 begin
-  IP := TIdIPWatch.Create;
+  {IP := TIdIPWatch.Create;
   try
     Result := IP.LocalIP;
   finally
     IP.Free;
-  end;
+  end;}
+  Result := '127.0.0.1';
 end;
 
 function retornarPc: String;
-var
+{var
   {$IFDEF MSWINDOWS}
   IdStack : TIdStackWindows;
   {$ENDIF}
   {$IFDEF LINUX}
   IdStack : TIdStackUnix;
-  {$ENDIF}
+  {$ENDIF}}
 begin
-  {$IFDEF MSWINDOWS}
+  {{$IFDEF MSWINDOWS}
   IdStack := TIdStackWindows.Create;
   {$ENDIF}
   {$IFDEF LINUX}
@@ -61,7 +62,8 @@ begin
     Result := IdStack.HostName;
   finally
     IdStack.Free;
-  end;
+  end;}
+  result := 'LOCALHOST';
 end;
 
 {$IFDEF MSWINDOWS}

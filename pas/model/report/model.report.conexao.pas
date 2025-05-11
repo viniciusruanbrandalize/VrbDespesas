@@ -34,10 +34,12 @@ type
     procedure DataModuleCreate(Sender: TObject);
   private
     FDir: String;
+    FIDDonoCadastro: Integer;
     procedure ConfiguraComponentes();
   public
     procedure CarregarLogo();
     property DiretorioRelatorios: String read FDir write FDir;
+    property IDDonoCadastro: Integer read FIDDonoCadastro write FIDDonoCadastro;
   end;
 
 var
@@ -57,6 +59,7 @@ end;
 procedure TdmConexaoReport.ConfiguraComponentes();
 begin
   FDir := ExtractFilePath(ParamStr(0))+'reports\';
+  FIDDonoCadastro := dmConexao1.DonoCadastro.Id;
   if qryPadrao.Active then
     qryPadrao.Active := False;
   qryPadrao.SQL.Clear;

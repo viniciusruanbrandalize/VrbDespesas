@@ -348,7 +348,6 @@ destructor TParticipante.Destroy;
 begin
   FreeAndNil(FCidade);
   FreeAndNil(FUsuarioCadastro);
-  FreeAndNil(FDonoCadastro);
   inherited Destroy;
 end;
 

@@ -185,7 +185,7 @@ end;
 constructor TContaBancaria.Create;
 begin
   FBanco := TBanco.Create;
-  //FDonoCadastro := TDonoCadastro.Create;
+  FDonoCadastro := TParticipante.Create;
   FUsuarioCadastro := TUsuario.Create;
 end;
 
@@ -193,7 +193,7 @@ destructor TContaBancaria.Destroy;
 begin
   FBanco.Free;
   FUsuarioCadastro.Free;
-  //FreeAndNil(FDonoCadastro);
+  FDonoCadastro.Free;
   inherited Destroy;
 end;
 

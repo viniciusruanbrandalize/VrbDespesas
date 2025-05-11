@@ -60,24 +60,24 @@ end;
 function TParticipanteController.BuscarCEP(var objParticipante: TParticipante;
   out Erro: String): Boolean;
 var
-  CEP: TLibVrbConsultaCep;
+  LibCEP: TLibCep;
   consultou: Boolean;
 begin
-  CEP := TLibVrbConsultaCep.Create;
+  LibCEP := TLibCep.Create;
   try
-    consultou := CEP.BuscarPorCep(objParticipante.CEP, Erro);
+    consultou := LibCEP.BuscarPorCep(objParticipante.CEP, Erro);
     if consultou then
     begin
-      objParticipante.CEP              := CEP.CEP;
-      objParticipante.Rua              := CEP.Logradouro;
-      objParticipante.Complemento      := CEP.Complemento;
-      objParticipante.Bairro           := CEP.Bairro;
-      objParticipante.Cidade.Nome      := CEP.Cidade;
-      objParticipante.Cidade.Estado.UF := CEP.UF;
+      objParticipante.CEP              := LibCEP.Endereco[0].CEP;
+      objParticipante.Rua              := LibCEP.Endereco[0].Logradouro;
+      objParticipante.Complemento      := LibCEP.Endereco[0].Complemento;
+      objParticipante.Bairro           := LibCEP.Endereco[0].Bairro;
+      objParticipante.Cidade.Nome      := LibCEP.Endereco[0].Cidade;
+      objParticipante.Cidade.Estado.UF := LibCEP.Endereco[0].UF;
     end;
   finally
     Result := consultou;
-    FreeAndNil(CEP);
+    FreeAndNil(LibCEP);
   end;
 end;
 

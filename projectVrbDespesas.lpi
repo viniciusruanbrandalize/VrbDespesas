@@ -87,13 +87,13 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="vrb_lib_cep"/>
+      </Item>
+      <Item>
         <PackageName Value="lazreportpdfexport"/>
       </Item>
       <Item>
         <PackageName Value="lazreport"/>
-      </Item>
-      <Item>
-        <PackageName Value="indylaz"/>
       </Item>
       <Item>
         <PackageName Value="DateTimeCtrlsDsgn"/>

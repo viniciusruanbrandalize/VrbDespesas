@@ -5,152 +5,59 @@ unit lib.cep;
 interface
 
 uses
-  Classes, SysUtils, dynlibs, view.mensagem, model.ini.configuracao;
-
-type
-  TLibCEPBuscarPorCep = function(CEP: PChar): Boolean; stdcall;
-  TLibCEPInicializar  = procedure(WS, TimeOut: Integer; ChaveAcesso, Usuario, Senha: PChar); stdcall;
-  TLibCEPFinalizar    = procedure(); stdcall;
-  TLibCEPGet          = function(): PChar; stdcall; {Todos os Gets da Lib}
+  Classes, SysUtils, view.mensagem, vrbViaCep;
 
 type
 
-  { TLibVrbConsultaCep }
+  { TLibCep }
 
-  TLibVrbConsultaCep = class
+  TLibCep = class
   private
-    FNomeDLL:     String;
-    FLogradouro:  String;
-    FComplemento: String;
-    FBairro:      String;
-    FCidade:      String;
-    FUf:          String;
-    FLatitude:    String;
-    FLongitude:   String;
-    FCep:         String;
-    FHandle:              THandle;
-    CEPBuscarPorCep:      TLibCEPBuscarPorCep;
-    CEPInicializar:       TLibCEPInicializar;
-    CEPFinalizar:         TLibCEPFinalizar;
-    CEPGetCEP:            TLibCEPGet;
-    CEPGetLogradouro:     TLibCEPGet;
-    CEPGetTipoLogradouro: TLibCEPGet;
-    CEPGetComplemento:    TLibCEPGet;
-    CEPGetBairro:         TLibCEPGet;
-    CEPGetCidade:         TLibCEPGet;
-    CEPGetUF:             TLibCEPGet;
-    CEPGetLatitude:       TLibCEPGet;
-    CEPGETLongitude:      TLibCEPGet;
-    procedure AtribuirFuncoesDLL;
+    FVrbViaCep: TVrbViaCep;
+    function GetEndereco: TListaVrbEndereco;
   public
-    function BuscarPorCep(bCEP: String; out Erro: String): Boolean;
+    function BuscarPorCep(CEP: String; out Erro: String): Boolean;
+    function BuscarPorLogradouro(Logradouro, Cidade, UF: String; out Erro: String): Boolean;
     constructor Create;
     destructor Destroy; override;
-  published
-    property Logradouro:  String read FLogradouro;
-    property Complemento: String read FComplemento;
-    property Bairro:      String read FBairro;
-    property Cidade:      String read FCidade;
-    property UF:          String read FUf;
-    property CEP:         String read FCep;
-    property Latitude:    String read FLatitude;
-    property Longitude:   String read FLongitude;
+    property Endereco: TListaVrbEndereco read GetEndereco;
   end;
 
 implementation
 
-{ TLibVrbConsultaCep }
+{ TLibCep }
 
-procedure TLibVrbConsultaCep.AtribuirFuncoesDLL;
+function TLibCep.GetEndereco: TListaVrbEndereco;
 begin
-  if FHandle <> 0 then
-  begin
-    Pointer(CEPInicializar)  := GetProcAddress(FHandle, PWideChar('inicializar'));
-    Pointer(CEPFinalizar)    := GetProcAddress(FHandle, PWideChar('finalizar'));
-    Pointer(CEPBuscarPorCep) := GetProcAddress(FHandle, PWideChar('BuscarPorCEP'));
-    Pointer(CEPGetCEP)       := GetProcAddress(FHandle, PWideChar('getCep'));
-    Pointer(CEPGetLogradouro):= GetProcAddress(FHandle, PWideChar('getLogradouro'));
-    Pointer(CEPGetTipoLogradouro):= GetProcAddress(FHandle, PWideChar('getTipoLogradouro'));
-    Pointer(CEPGetComplemento):= GetProcAddress(FHandle, PWideChar('getComplemento'));
-    Pointer(CEPGetBairro)    := GetProcAddress(FHandle, PWideChar('getBairro'));
-    Pointer(CEPGetCidade)    := GetProcAddress(FHandle, PWideChar('getCidade'));
-    Pointer(CEPGetUF)        := GetProcAddress(FHandle, PWideChar('getUF'));
-    Pointer(CEPGetLatitude)  := GetProcAddress(FHandle, PWideChar('getLatitude'));
-    Pointer(CEPGETLongitude) := GetProcAddress(FHandle, PWideChar('getLongitude'));
-  end
-  else
-  begin
-    TfrmMessage.Mensagem('libvrbconsultacep32.dll não encontrada!', 'Erro', 'E', [mbOk], mbOk, 12);
-    Abort;
-    Destroy;
-  end;
+  Result := FVrbViaCep.Endereco;
 end;
 
-function TLibVrbConsultaCep.BuscarPorCep(bCEP: String; out Erro: String): Boolean;
-var
-  consultou: Boolean;
+function TLibCep.BuscarPorCep(CEP: String; out Erro: String): Boolean;
 begin
-
-  consultou := CEPBuscarPorCep(PChar(bCEP));
-
-  if not consultou then
-    Erro := 'Erro ao consultar CEP!'
-  else
-  begin
-    Erro := '';
-    FBairro      := AnsiString( CEPGetBairro );
-    FLogradouro  := AnsiString( CEPGetLogradouro );
-    FComplemento := AnsiString( CEPGetComplemento );
-    FCep         := AnsiString( CEPGetCEP );
-    FCidade      := AnsiString( CEPGetCidade );
-    FUf          := AnsiString( CEPGetUF );
-    FLatitude    := AnsiString( CEPGetLatitude );
-    FLongitude   := AnsiString( CEPGETLongitude );
-  end;
-
-  result := consultou;
+  FVrbViaCep.TipoBusca := bCep;
+  FVrbViaCep.CEP := CEP;
+  Result := FVrbViaCep.Buscar;
+  Erro := FVrbViaCep.Erro;
 end;
 
-constructor TLibVrbConsultaCep.Create;
-var
-  ConfiguracaoINI: TConfiguracaoINI;
+function TLibCep.BuscarPorLogradouro(Logradouro, Cidade, UF: String; out Erro: String): Boolean;
 begin
-
-  {$IFDEF WIN32}
-  FNomeDLL := 'libvrbconsultacep32.dll';
-  {$ENDIF}
-  {$IFDEF WIN64}
-  FNomeDLL := 'libvrbconsultacep64.dll';
-  {$ENDIF}
-  {$IFDEF LINUX32}
-  FNomeDLL := 'libvrbconsultacep32.so';
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  FNomeDLL := 'libvrbconsultacep64.so';
-  {$ENDIF}
-
-  FHandle := LoadLibrary(FNomeDLL);
-  AtribuirFuncoesDLL;
-
-  ConfiguracaoINI := TConfiguracaoINI.Create;
-  try
-    CEPInicializar(0,
-                   0,
-                   Pchar(''),
-                   Pchar(''),
-                   Pchar(''));
-  finally
-    FreeAndNil(ConfiguracaoINI);
-  end;
+  FVrbViaCep.TipoBusca := bLogradouro;
+  FVrbViaCep.Logradouro := Logradouro;
+  FVrbViaCep.Cidade     := Cidade;
+  FVrbViaCep.UF         := UF;
+  Result := FVrbViaCep.Buscar;
+  Erro := FVrbViaCep.Erro;
 end;
 
-destructor TLibVrbConsultaCep.Destroy;
+constructor TLibCep.Create;
 begin
-  if FHandle <> 0 then
-  begin
-    CEPFinalizar;
-    FreeLibrary(FHandle);
-  end;
+  FVrbViaCep := TVrbViaCep.Create(nil);
+end;
+
+destructor TLibCep.Destroy;
+begin
+  FreeAndNil(FVrbViaCep);
   Inherited Destroy;
 end;
 

@@ -57,12 +57,13 @@ begin
 
     sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
            'left join banco b on b.id = cb.id_banco ' +
-           'where cb.excluido = false ' +
+           'where cb.excluido = false and id_dono_cadastro = :id_dono_cadastro ' +
            'order by b.nome';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     Qry.First;
@@ -94,14 +95,16 @@ begin
     begin
       sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
              'left join banco b on b.id = cb.id_banco ' +
-             'where '+campo+' = :busca and cb.excluido = false '+
+             'where '+campo+' = :busca and cb.excluido = false and ' +
+             'cb.id_dono_cadastro = :id_dono_cadastro '+
              'order by b.nome';
     end
     else
     begin
       sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
              'left join banco b on b.id = cb.id_banco ' +
-             'where UPPER('+campo+') like :busca and cb.excluido = false '+
+             'where UPPER('+campo+') like :busca and cb.excluido = false and ' +
+             'cb.id_dono_cadastro = :id_dono_cadastro '+
              'order by b.nome';
     end;
 
@@ -109,6 +112,7 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     Qry.First;
@@ -136,13 +140,15 @@ begin
 
     sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
            'left join banco b on b.id = cb.id_banco ' +
-           'where cb.id = :id and cb.excluido = false ' +
+           'where cb.id = :id and cb.excluido = false and ' +
+           'cb.id_dono_cadastro = :id_dono_cadastro ' +
            'order by cb.id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -155,7 +161,6 @@ begin
       ContaBancaria.Alteracao := Qry.FieldByName('alteracao').AsDateTime;
       ContaBancaria.Banco.Id  := Qry.FieldByName('id_banco').AsInteger;
       ContaBancaria.Banco.Nome := Qry.FieldByName('nome_banco').AsString;
-      //ContaBancaria.DonoCadastro.
       ContaBancaria.UsuarioCadastro.Id := Qry.FieldByName('id_usuario_cadastro').AsInteger;
       Result := True;
     end
@@ -204,7 +209,7 @@ begin
     Qry.ParamByName('cadastro').AsDateTime := ContaBancaria.Cadastro;
     Qry.ParamByName('id_banco').AsInteger  := ContaBancaria.Banco.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger  := ContaBancaria.UsuarioCadastro.Id;
-    //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
+    Qry.ParamByName('id_dono_cadastro').AsInteger := ContaBancaria.DonoCadastro.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -302,13 +307,15 @@ begin
   try
 
     sql := 'select * from pix ' +
-           'where id_conta_bancaria = :id_conta_bancaria and excluido = false ' +
+           'where id_conta_bancaria = :id_conta_bancaria and excluido = false and ' +
+           'id_dono_cadastro = :id_dono_cadastro ' +
            'order by cadastro desc';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id_conta_bancaria').AsInteger := IdConta;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     Qry.First;
@@ -336,13 +343,15 @@ begin
   try
 
     sql := 'select * from pix ' +
-           'where chave = :id and excluido = false ' +
+           'where chave = :id and excluido = false and ' +
+           'id_dono_cadastro = :id_dono_cadastro ' +
            'order by chave';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsString := id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -390,9 +399,9 @@ begin
     Qry.ParamByName('tipo').AsString       := Pix.Tipo;
     Qry.ParamByName('cadastro').AsDateTime := Pix.Cadastro;
     Qry.ParamByName('excluido').AsBoolean  := Pix.Excluido;
-    Qry.ParamByName('id_conta_bancaria').AsInteger  := Pix.ContaBancaria.Id;
-    Qry.ParamByName('id_usuario_cadastro').AsInteger  := Pix.UsuarioCadastro.Id;
-    //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
+    Qry.ParamByName('id_conta_bancaria').AsInteger   := Pix.ContaBancaria.Id;
+    Qry.ParamByName('id_usuario_cadastro').AsInteger := Pix.UsuarioCadastro.Id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger    := Pix.DonoCadastro.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
@@ -488,13 +497,15 @@ begin
   try
 
     sql := 'select * from cartao ' +
-           'where id_conta_bancaria = :id_conta_bancaria and excluido = false ' +
+           'where id_conta_bancaria = :id_conta_bancaria and excluido = false and ' +
+           'id_dono_cadastro = :id_dono_cadastro ' +
            'order by cadastro desc';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id_conta_bancaria').AsInteger := IdConta;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     Qry.First;
@@ -533,13 +544,15 @@ begin
 
     sql := 'select card.*, ban.nome as nome_bandeira from cartao card ' +
            'left join bandeira ban on ban.id = card.id_bandeira ' +
-           'where card.id = :id and excluido = false ' +
+           'where card.id = :id and card.excluido = false and ' +
+           'card.id_dono_cadastro = :id_dono_cadastro ' +
            'order by card.id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -605,7 +618,7 @@ begin
     Qry.ParamByName('id_conta_bancaria').AsInteger   := Cartao.ContaBancaria.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Cartao.UsuarioCadastro.Id;
     Qry.ParamByName('excluido').AsBoolean := Cartao.Excluido;
-    //Qry.ParamByName('id_dono_cadastro').AsInteger := 1; //ContaBancaria.DonoCadastro.
+    Qry.ParamByName('id_dono_cadastro').AsInteger := Cartao.DonoCadastro.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 

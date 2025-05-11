@@ -39,13 +39,15 @@ begin
   try
 
     sql := 'select p.* from participante p ' +
-           'where p.dono_cadastro = :dono_cadastro and excluido = false ' +
+           'where p.dono_cadastro = :dono_cadastro and excluido = false and ' +
+           'p.id_dono_cadastro = :id_dono_cadastro ' +
            'order by p.nome';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('dono_cadastro').AsBoolean := DonoCadastro;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     Qry.First;
@@ -78,14 +80,16 @@ begin
     begin
       sql := 'select p.* from participante p ' +
              'where '+campo+' = :busca and ' +
-             'p.dono_cadastro = :dono_cadastro and excluido = false '+
+             'p.dono_cadastro = :dono_cadastro and excluido = false and ' +
+             'p.id_dono_cadastro = :id_dono_cadastro '+
              'order by p.nome';
     end
     else
     begin
       sql := 'select p.* from participante p ' +
              'where UPPER('+campo+') like :busca and '+
-             'p.dono_cadastro = :dono_cadastro and excluido = false '+
+             'p.dono_cadastro = :dono_cadastro and excluido = false and ' +
+             'p.id_dono_cadastro = :id_dono_cadastro '+
              'order by p.nome';
     end;
 
@@ -94,6 +98,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
     Qry.ParamByName('dono_cadastro').AsBoolean := DonoCadastro;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     Qry.First;
@@ -172,7 +177,8 @@ begin
 
     sql := 'select p.*, c.nome as nome_cidade, c.uf from participante p ' +
            'left join cidade c on c.id = p.id_cidade ' +
-           'where p.id = :id and dono_cadastro = :dono_cadastro and excluido = false ' +
+           'where p.id = :id and p.dono_cadastro = :dono_cadastro and ' +
+           'p.excluido = false and p.id_dono_cadastro = id_dono_cadastro ' +
            'order by p.id';
 
     Qry.Close;
@@ -180,6 +186,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
     Qry.ParamByName('dono_cadastro').AsBoolean := DonoCadastro;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -266,7 +273,7 @@ begin
     Qry.ParamByName('excluido').AsBoolean     := Participante.Excluido;
     Qry.ParamByName('id_cidade').AsInteger     := Participante.Cidade.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Participante.UsuarioCadastro.Id;
-    //Qry.ParamByName('id_dono_cadastro').AsInteger := Participante.DonoCadastro.Id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 

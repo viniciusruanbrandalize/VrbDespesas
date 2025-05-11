@@ -63,7 +63,8 @@ begin
             'left join banco bco on bco.id = cb.id_banco ' +
             'left join subtipo_despesa sd on sd.id = d.id_subtipo ' +
             'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-            'where d.paga = true and d.data between :inicial and :final ';
+            'where d.paga = true and d.data between :inicial and :final and ' +
+            'd.id_dono_cadastro = :id_dono_cadastro ';
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
@@ -127,6 +128,7 @@ begin
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
     dmRelatorio.qryPadrao.ParamByName('inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('final').AsDate    := dFinal;
+    dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
 
     if BuscaId > 0 then
       dmRelatorio.qryPadrao.ParamByName('busca').AsInteger := BuscaId
@@ -180,7 +182,7 @@ begin
               'group by mes, ano, paga '+
               'having extract(year from data) between :ano_inicial and :ano_final ' +
               'and extract(month from data) = :mes_informado and ' +
-              'paga = true '+
+              'paga = true and id_dono_cadastro = :id_dono_cadastro '+
               'order by ano desc, mes desc';
     end
     else
@@ -205,7 +207,7 @@ begin
               'group by mes, ano, paga '+
               'having ano between :ano_inicial and :ano_final ' +
               'and mes = :mes_informado and ' +
-              'paga = true '+
+              'paga = true and id_dono_cadastro = :id_dono_cadastro '+
               'order by ano desc, mes desc';
     end;
 
@@ -215,6 +217,7 @@ begin
     dmRelatorio.qryPadrao.ParamByName('ano_inicial').AsInteger  := anoInicial;
     dmRelatorio.qryPadrao.ParamByName('ano_final').AsInteger    := anoFinal;
     dmRelatorio.qryPadrao.ParamByName('mes_informado').AsString := FormatFloat('00', mes);
+    dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
 
     dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
@@ -248,7 +251,7 @@ begin
               'count(id) as qtd_despesa from despesa '+
               'group by ano, paga '+
               'having extract(year from data) between :ano_inicial and :ano_final ' +
-              'and paga = true ' +
+              'and paga = true and id_dono_cadastro = :id_dono_cadastro ' +
               'order by ano desc';
     end
     else
@@ -259,7 +262,7 @@ begin
               'count(id) as qtd_despesa from despesa '+
               'group by ano, paga '+
               'having ano between :ano_inicial and :ano_final ' +
-              'and paga = true ' +
+              'and paga = true and id_dono_cadastro = :id_dono_cadastro ' +
               'order by ano desc';
     end;
 
@@ -268,6 +271,7 @@ begin
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
     dmRelatorio.qryPadrao.ParamByName('ano_inicial').AsInteger  := anoInicial;
     dmRelatorio.qryPadrao.ParamByName('ano_final').AsInteger    := anoFinal;
+    dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
 
     dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
@@ -313,7 +317,7 @@ begin
               ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
               'group by mes, ano, paga '+
               'having extract(year from data) = :ano_informado and ' +
-              'paga = true ' +
+              'paga = true and id_dono_cadastro = :id_dono_cadastro ' +
               'order by mes asc';
     end
     else
@@ -337,7 +341,7 @@ begin
               ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
               'group by mes, ano, paga '+
               'having ano = :ano_informado and ' +
-              'paga = true ' +
+              'paga = true and id_dono_cadastro = :id_dono_cadastro ' +
               'order by mes asc';
     end;
 
@@ -345,6 +349,7 @@ begin
     dmRelatorio.qryPadrao.SQL.Clear;
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
     dmRelatorio.qryPadrao.ParamByName('ano_informado').AsInteger  := ano;
+    dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
 
     dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
@@ -373,13 +378,16 @@ begin
       FSQL := 'select sd.nome as nome_subtipo, ' +
               '(select coalesce(avg(d.total), 0) from despesa d ' +
               'where d.id_subtipo = sd.id and d.paga = true and ' +
-              'd.data between :data_inicial and :data_final) as media, ' +
+              'd.data between :data_inicial and :data_final and ' +
+              'd.id_dono_cadastro = :id_dono_cadastro) as media, ' +
               '(select coalesce(sum(d.total), 0) from despesa d ' +
               'where d.id_subtipo = sd.id and d.paga = true and ' +
-              'd.data between :data_inicial and :data_final) as total, ' +
+              'd.data between :data_inicial and :data_final and ' +
+              'd.id_dono_cadastro = :id_dono_cadastro) as total, ' +
               '(select coalesce(count(d.id), 0) from despesa d ' +
               'where d.id_subtipo = sd.id and d.paga = true and ' +
-              'd.data between :data_inicial and :data_final) as qtd_despesa ' +
+              'd.data between :data_inicial and :data_final and ' +
+              'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa ' +
               'from subtipo_despesa sd ' +
               'order by sd.nome';
 
@@ -388,6 +396,7 @@ begin
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
     dmRelatorio.qryPadrao.ParamByName('data_inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
+    dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
 
     dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
@@ -419,15 +428,18 @@ begin
             '(select coalesce(avg(d.total), 0) from despesa d ' +
             'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
             'where td.id = sd.id_tipo_despesa and d.paga = true and '+
-            'd.data between :data_inicial and :data_final) as media, '+
+            'd.data between :data_inicial and :data_final and ' +
+            'd.id_dono_cadastro = :id_dono_cadastro) as media, '+
             '(select coalesce(sum(d.total), 0) from despesa d ' +
             'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
             'where td.id = sd.id_tipo_despesa and d.paga = true and '+
-            'd.data between :data_inicial and :data_final) as total, '+
+            'd.data between :data_inicial and :data_final and ' +
+            'd.id_dono_cadastro = :id_dono_cadastro) as total, '+
             '(select coalesce(count(d.id), 0) from despesa d '+
             'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
             'where td.id = sd.id_tipo_despesa and d.paga = true and '+
-            'd.data between :data_inicial and :data_final) as qtd_despesa '+
+            'd.data between :data_inicial and :data_final and ' +
+            'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa '+
             'from tipo_despesa td '+
             'order by td.nome';
 
@@ -436,6 +448,7 @@ begin
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
     dmRelatorio.qryPadrao.ParamByName('data_inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
+    dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
 
     dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
@@ -467,15 +480,18 @@ begin
             '(select coalesce(avg(dfp.valor), 0) from despesa_forma_pgto dfp ' +
             'left join despesa d on d.id = dfp.id_despesa ' +
             'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
-            'd.data between :data_inicial and :data_final) as media, '+
+            'd.data between :data_inicial and :data_final and ' +
+            'd.id_dono_cadastro = :id_dono_cadastro) as media, '+
             '(select coalesce(sum(dfp.valor), 0) from despesa_forma_pgto dfp ' +
             'left join despesa d on d.id = dfp.id_despesa ' +
             'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
-            'd.data between :data_inicial and :data_final) as total, '+
+            'd.data between :data_inicial and :data_final and ' +
+            'd.id_dono_cadastro = :id_dono_cadastro) as total, '+
             '(select coalesce(count(dfp.id), 0) from despesa_forma_pgto dfp ' +
             'left join despesa d on d.id = dfp.id_despesa ' +
             'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
-            'd.data between :data_inicial and :data_final) as qtd_despesa '+
+            'd.data between :data_inicial and :data_final and ' +
+            'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa '+
             'from forma_pgto fp '+
             'order by fp.nome';
 
@@ -484,6 +500,7 @@ begin
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
     dmRelatorio.qryPadrao.ParamByName('data_inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
+    dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
 
     dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +

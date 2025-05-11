@@ -61,7 +61,8 @@ begin
               '(case when extract(month from data) = 12 THEN ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) END) as mes_nome '+
               'from recebimento '+
-              'where extract(year from data) = :ano and tipo = 0 '+
+              'where extract(year from data) = :ano and tipo = 0 and ' +
+              'id_dono_cadastro = :id_dono_cadastro '+
               'group by mes, ano '+
               'order by mes desc';
     end
@@ -85,7 +86,8 @@ begin
               '(case when extract(month from data) = 12 THEN ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) END) as mes_nome '+
               'from recebimento '+
-              'where ano = :ano and tipo = 0 '+
+              'where ano = :ano and tipo = 0 and '+
+              'id_dono_cadastro = :id_dono_cadastro '+
               'group by mes, ano '+
               'order by mes desc';
     end;
@@ -94,6 +96,7 @@ begin
     dmConexaoReport.qryPadrao.SQL.Clear;
     dmConexaoReport.qryPadrao.SQL.Add(FSQL);
     dmConexaoReport.qryPadrao.ParamByName('ano').AsInteger  := ano;
+    dmConexaoReport.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmConexaoReport.IDDonoCadastro;
     dmConexaoReport.qryPadrao.Open;
 
     dmConexaoReport.frReport.LoadFromFile(dmConexaoReport.DiretorioRelatorios +
