@@ -1,0 +1,89 @@
+id,nome,titulo,nome_uc_tela
+1,actCadastro,"Cadastros",frmPrincipal
+2,actOperacao,"Operações",frmPrincipal
+3,actUtilitario,"Utilitários",frmPrincipal
+4,actRelatorio,"Relatórios",frmPrincipal
+5,actBanco,"Bancos",frmPrincipal
+6,actDevedor,"Devedores",frmPrincipal
+7,actFormaPagamento,"Formas de pagamento",frmPrincipal
+8,actParticipante,"Participantes",frmPrincipal
+9,actSubtipoDespesa,"Subtipo de despesas",frmPrincipal
+10,actTipoDespesa,"Tipo de despesas",frmPrincipal
+11,actUsuario,"Usuários",frmPrincipal
+12,actDespesa,"Despesas",frmPrincipal
+13,actContasPagar,"Contas a pagar",frmPrincipal
+14,actRecebimentoSalario,"Salários",frmPrincipal
+15,actConfiguracao,"Configurações",frmPrincipal
+16,actBackup,"Cópia de Segurança",frmPrincipal
+17,actLogErro,"Subtipo de despesas",frmPrincipal
+18,actLogLogin,"Histórico de Logins",frmPrincipal
+19,actFinanceiro,"Financeiro",frmPrincipal
+20,actBandeira,"Bandeiras",frmPrincipal
+21,actContaBancaria,"Contas",frmPrincipal
+22,actRelatorioDespesa,"Relatório de despesas",frmPrincipal
+23,actRecebimentoGeral,"Recebimentos",frmPrincipal
+24,actRelatorioRecebimento,"Relatório de recebimentos",frmPrincipal
+25,actIncluir,"Novo",frmBanco
+26,actEditar,"Alterar",frmBanco
+27,actExcluir,"Excluir",frmBanco
+28,actVisualizar,"Visualizar",frmBanco
+29,actIncluir,"Novo",frmBandeira
+30,actEditar,"Alterar",frmBandeira
+31,actExcluir,"Excluir",frmBandeira
+32,actVisualizar,"Visualizar",frmBandeira
+33,actIncluir,"Novo",frmContaBancaria
+34,actEditar,"Alterar",frmContaBancaria
+35,actExcluir,"Excluir",frmContaBancaria
+36,actVisualizar,"Visualizar",frmContaBancaria
+37,actIncluirPix,"Novo Pix",frmContaBancaria
+38,actEditarPix,"Alterar Pix",frmContaBancaria
+39,actExcluirPix,"Excluir Pix",frmContaBancaria
+40,actVisualizarPix,"Visualizar Pix",frmContaBancaria
+41,actIncluirCartao,"Novo Cartão",frmContaBancaria
+42,actEditarCartao,"Alterar Cartão",frmContaBancaria
+43,actExcluirCartao,"Excluir Cartão",frmContaBancaria
+44,actVisualizarCartao,"Visualizar Cartão",frmContaBancaria
+45,actCartao,"Cartões",frmContaBancaria
+46,actPix,"Chaves Pix",frmContaBancaria
+47,actIncluir,"Novo",frmDespesa
+48,actEditar,"Alterar",frmDespesa
+49,actExcluir,"Excluir",frmDespesa
+50,actVisualizar,"Visualizar",frmDespesa
+51,actIncluirFpgto,"Nova Forma de Pagamento",frmDespesa
+52,actExcluirFpgto,"Excluir Forma de Pagamento",frmDespesa
+53,actIncluirArquivo,"Novo Arquivo",frmDespesa
+54,actExcluirArquivo,"Excluir Arquivo",frmDespesa
+55,actExportarArquivo,"Exportar Arquivo",frmDespesa
+56,actIncluir,"Novo",frmFormaPagamento
+57,actEditar,"Alterar",frmFormaPagamento
+58,actExcluir,"Excluir",frmFormaPagamento
+59,actVisualizar,"Visualizar",frmFormaPagamento
+60,actIncluir,"Novo",frmParticipante
+61,actEditar,"Alterar",frmParticipante
+62,actExcluir,"Excluir",frmParticipante
+63,actVisualizar,"Visualizar",frmParticipante
+64,actIncluir,"Novo",frmRecebimento
+65,actEditar,"Alterar",frmRecebimento
+66,actExcluir,"Excluir",frmRecebimento
+67,actVisualizar,"Visualizar",frmRecebimento
+68,actPorPeriodo,"Por Período",frmRelatorioDespesa
+69,actComparativoMensal,"Comparativo Mensal",frmRelatorioDespesa
+70,actComparativoAnual,"Comparativo Anual",frmRelatorioDespesa
+71,actTotalPorMes,"Total Anual Por Mês",frmRelatorioDespesa
+72,actTotalSubtipo,"Total Por Subtipo",frmRelatorioDespesa
+73,actTotalTipo,"Total Por Tipo",frmRelatorioDespesa
+74,actTotalFPgto,"Total Por Forma de Pagamento",frmRelatorioDespesa
+75,actDeclaracaoRenda,"Declaração de Renda",frmRelatorioRecebimento
+76,actIncluir,"Novo",frmSubtipoDespesa
+77,actEditar,"Alterar",frmSubtipoDespesa
+78,actExcluir,"Excluir",frmSubtipoDespesa
+79,actVisualizar,"Visualizar",frmSubtipoDespesa
+80,actIncluir,"Novo",frmTipoDespesa
+81,actEditar,"Alterar",frmTipoDespesa
+82,actExcluir,"Excluir",frmTipoDespesa
+83,actVisualizar,"Visualizar",frmTipoDespesa
+84,actIncluir,"Novo",frmUsuario
+85,actEditar,"Alterar",frmUsuario
+86,actExcluir,"Excluir",frmUsuario
+87,actVisualizar,"Visualizar",frmUsuario
+88,actAcesso,"Gerenciar Acessos",frmUsuario

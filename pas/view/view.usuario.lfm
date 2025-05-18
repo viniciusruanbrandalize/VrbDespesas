@@ -6,8 +6,8 @@ inherited frmUsuario: TfrmUsuario
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
+        ActivePage = tbsAcesso
+        TabIndex = 2
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView

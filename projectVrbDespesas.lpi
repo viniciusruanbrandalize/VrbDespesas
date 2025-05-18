@@ -563,6 +563,7 @@
         <Filename Value="pas\view\view.ajuda.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmAjuda"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
