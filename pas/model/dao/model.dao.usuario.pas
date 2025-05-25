@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, SQLDB, model.entity.usuario,
-  model.dao.padrao, model.connection.conexao1;
+  model.dao.padrao, model.connection.conexao1, CheckLst, StdCtrls,
+  model.entity.uctela, model.entity.ucacao;
 
 type
 
@@ -22,6 +23,11 @@ type
     function Inserir(Usuario : TUsuario; out Erro: string): Boolean;
     function Editar(Usuario : TUsuario; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+    procedure ListarTelas(var lbNome: TListBox; var lbTitulo: TCheckListBox);
+    procedure ListarAcoes(var lbNome: TListBox; var lbTitulo: TCheckListBox; Tela: String);
+    function InserirTela(Tela: TUcTela; out Erro: string): Boolean;
+    function BuscarTelaPorNome(Tela: TUcTela; Nome: String; out Erro: String): Boolean;
+    function InserirAcao(Acao: TUcAcao; out Erro: string): Boolean;
     constructor Create; override;
     destructor Destroy; override;
   end;
@@ -119,6 +125,7 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -256,6 +263,174 @@ begin
           Result := False;
         end;
       end;
+    end;
+  end;
+end;
+
+procedure TUsuarioDAO.ListarTelas(var lbNome: TListBox;
+  var lbTitulo: TCheckListBox);
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select * from uc_tela ' +
+           'order by titulo';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.Open;
+
+    Qry.First;
+
+    lbNome.Items.Clear;
+    lbTitulo.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbNome.Items.Add(qry.FieldByName('nome').AsString);
+      lbTitulo.Items.Add(qry.FieldByName('titulo').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+procedure TUsuarioDAO.ListarAcoes(var lbNome: TListBox;
+  var lbTitulo: TCheckListBox; Tela: String);
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select * from uc_acao ' +
+           'where nome_uc_tela = :nome_uc_tela ' +
+           'order by nome_uc_tela, titulo';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('nome_uc_tela').AsString := Tela;
+    Qry.Open;
+
+    Qry.First;
+
+    lbNome.Items.Clear;
+    lbTitulo.Items.Clear;
+
+    while not Qry.EOF do
+    begin
+      lbNome.Items.Add(qry.FieldByName('nome').AsString);
+      lbTitulo.Items.Add(qry.FieldByName('titulo').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TUsuarioDAO.InserirTela(Tela: TUcTela; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'insert into uc_tela(nome, titulo) values (:nome, :titulo)';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+
+    Qry.ParamByName('nome').AsString   := Tela.Nome;
+    Qry.ParamByName('titulo').AsString := Tela.Titulo;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao inserir tela: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TUsuarioDAO.BuscarTelaPorNome(Tela: TUcTela; Nome: String; out
+  Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select * from uc_tela ' +
+           'where nome = :nome ' +
+           'order by titulo';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('nome').AsString := Nome;
+    Qry.Open;
+
+    if Qry.RecordCount = 1 then
+    begin
+      Tela.Nome    := Qry.FieldByName('nome').AsString;
+      Tela.Titulo  := Qry.FieldByName('titulo').AsString;
+      Result := True;
+    end
+    else
+    if Qry.RecordCount > 1 then
+    begin
+      Erro := 'Mais de um objeto foi retornado na busca por Nome!';
+      Result := False;
+    end
+    else
+    begin
+      Erro := 'Nenhum objeto foi encontrado!';
+      Result := False;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+function TUsuarioDAO.InserirAcao(Acao: TUcAcao; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'insert into uc_acao(id, nome, titulo, nome_uc_tela) values ' +
+           '(:id, :nome, :titulo, :nome_uc_tela)';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+
+    if not AutoInc then
+    begin
+      Acao.Id := GerarId(SEQ_ID_UC_ACAO);
+      Qry.ParamByName('id').AsInteger := Acao.Id;
+    end;
+
+    Qry.ParamByName('nome').AsString         := Acao.Nome;
+    Qry.ParamByName('titulo').AsString       := Acao.Titulo;
+    Qry.ParamByName('nome_uc_tela').AsString := Acao.UcTela.Nome;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao inserir ação: ' + sLineBreak + E.Message;
+      Result := False;
     end;
   end;
 end;

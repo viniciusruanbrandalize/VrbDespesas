@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   ActnList, Menus, ComCtrls, CheckLst, view.cadastropadrao, view.mensagem,
-  lib.types, controller.usuario;
+  lib.types, controller.usuario, DB;
 
 type
 
@@ -20,6 +20,7 @@ type
     btnCancelar1: TToolButton;
     btnSalvar1: TToolButton;
     cklbTituloAcesso: TCheckListBox;
+    cklbTituloTela: TCheckListBox;
     Label1: TLabel;
     lbl1: TLabel;
     lblCadastroAlteracao: TLabel;
@@ -27,8 +28,7 @@ type
     edtEmail: TLabeledEdit;
     edtSenha1: TLabeledEdit;
     edtSenha2: TLabeledEdit;
-    lbTelaNome: TListBox;
-    lbTelaTitulo: TListBox;
+    lbNomeTela: TListBox;
     lbNomeAcesso: TListBox;
     MenuItem4: TMenuItem;
     pnlAcessoAcesso: TPanel;
@@ -92,9 +92,13 @@ begin
   id := StrToInt(lvPadrao.Selected.Caption);
   if Controller.BuscarPorId(controller.Usuario, id, erro) then
   begin
-    pgcPadrao.ActivePage := tbsAcesso;
-    pnlTituloAcesso.Caption := 'Gerenciar acessos do usuário '+
-                                Controller.Usuario.Nome;
+    if Controller.CarregarArquivosDeAcoes(erro) then
+    begin
+      pgcPadrao.ActivePage := tbsAcesso;
+      pnlTituloAcesso.Caption := 'Gerenciar acessos do usuário '+
+                                  Controller.Usuario.Nome;
+      Controller.ListarTelas(lbNomeTela, cklbTituloTela);
+    end;
   end;
 end;
 

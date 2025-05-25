@@ -175,8 +175,8 @@ inherited frmUsuario: TfrmUsuario
               ParentFont = False
               TabOrder = 1
             end
-            object lbTelaNome: TListBox
-              Left = 752
+            object lbNomeTela: TListBox
+              Left = 648
               Height = 48
               Top = 48
               Width = 88
@@ -200,23 +200,6 @@ inherited frmUsuario: TfrmUsuario
               ClientWidth = 300
               ParentBackground = False
               TabOrder = 3
-              object lbTelaTitulo: TListBox
-                Cursor = crHandPoint
-                Left = 0
-                Height = 401
-                Top = 20
-                Width = 300
-                Align = alClient
-                BorderStyle = bsNone
-                Color = clWhite
-                Columns = 1
-                Items.Strings = (
-                  'Cadastro de Usuarios 1'
-                  'Cadastro de Bancos'
-                )
-                ItemHeight = 15
-                TabOrder = 0
-              end
               object Label1: TLabel
                 Left = 0
                 Height = 20
@@ -233,9 +216,27 @@ inherited frmUsuario: TfrmUsuario
                 ParentFont = False
                 Transparent = False
               end
+              object cklbTituloTela: TCheckListBox
+                Cursor = crHandPoint
+                Left = 0
+                Height = 401
+                Top = 20
+                Width = 300
+                Align = alClient
+                BorderStyle = bsNone
+                Items.Strings = (
+                  'Cadastro de Bancos'
+                  'Cadastro de Bandeiras'
+                )
+                ItemHeight = 21
+                TabOrder = 0
+                Data = {
+                  020000000000
+                }
+              end
             end
             object lbNomeAcesso: TListBox
-              Left = 848
+              Left = 744
               Height = 48
               Top = 48
               Width = 88

@@ -87,6 +87,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+      <Item>
         <PackageName Value="vrb_lib_cep"/>
       </Item>
       <Item>
@@ -568,6 +571,14 @@
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.ajuda.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.uctela.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="pas\model\entity\model.entity.ucacao.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
