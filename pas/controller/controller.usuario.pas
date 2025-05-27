@@ -6,8 +6,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, model.entity.usuario, lib.bcrypt, lib.types,
-  model.dao.padrao, model.dao.usuario, csvdataset, CheckLst, StdCtrls,
-  model.entity.uctela, model.entity.ucacao;
+  model.dao.padrao, model.dao.usuario, controller.usuarioacesso;
 
 type
 
@@ -18,6 +17,7 @@ type
     UsuarioDAO: TUsuarioDAO;
   public
     Usuario: TUsuario;
+    ControleAcesso: TUsuarioAcessoController;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
     function BuscarPorId(objUsuario : TUsuario; Id: Integer; out Erro: String): Boolean;
@@ -26,9 +26,6 @@ type
     function Excluir(Id: Integer; out Erro: string): Boolean;
     function ValidarSenha(Senha1, Senha2 : String; Operacao: TOperacaoCRUD; out Erro: String): Boolean;
     function CriptografarSenha(Senha: String): String;
-    procedure ListarTelas(var lbNome: TListBox; var lbTitulo: TCheckListBox);
-    procedure ListarAcoes(var lbNome: TListBox; var lbTitulo: TCheckListBox; Tela: String);
-    function CarregarArquivosDeAcoes(out Erro: String): Boolean;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -118,70 +115,18 @@ begin
   Result := SenhaCriptografada;
 end;
 
-procedure TUsuarioController.ListarTelas(var lbNome: TListBox;
-  var lbTitulo: TCheckListBox);
-begin
-  UsuarioDAO.ListarTelas(lbNome, lbTitulo);
-end;
-
-procedure TUsuarioController.ListarAcoes(var lbNome: TListBox;
-  var lbTitulo: TCheckListBox; Tela: String);
-begin
-  UsuarioDAO.ListarAcoes(lbNome, lbTitulo, Tela);
-end;
-
-function TUsuarioController.CarregarArquivosDeAcoes(out Erro: String): Boolean;
-var
-  CSV: TCSVDataset;
-  DirTela, DirAcao: String;
-  UCTela: TUcTela;
-  UCAcao: TUcAcao;
-begin
-  CSV := TCSVDataset.Create(nil);
-  try
-    CSV.CSVOptions.Delimiter := ',';
-    CSV.CSVOptions.FirstLineAsFieldNames := True;
-    DirTela := ExtractFilePath(ParamStr(0))+'permission\UC_TELA.DB';
-    DirAcao := ExtractFilePath(ParamStr(0))+'permission\UC_ACAO.DB';
-
-    CSV.LoadFromCSVFile(DirTela);
-
-    CSV.First;
-
-    UCTela := TUcTela.Create;
-    try
-      while not CSV.EOF do
-      begin
-
-        UCTela.Nome   := CSV.FieldByName('nome').AsString;
-        UCTela.Titulo := CSV.FieldByName('titulo').AsString;
-
-        if not UsuarioDAO.BuscarTelaPorNome(UCTela, UCTela.Nome, Erro) then
-          UsuarioDAO.InserirTela(UCTela, Erro);
-
-        CSV.Next;
-      end;
-    finally
-      FreeAndNil(UCTela);
-    end;
-
-    Result := True;
-
-  finally
-    FreeAndNil(CSV);
-  end;
-end;
-
 constructor TUsuarioController.Create;
 begin
   Usuario    := TUsuario.Create;
   UsuarioDAO := TUsuarioDAO.Create;
+  ControleAcesso := TUsuarioAcessoController.Create;
 end;
 
 destructor TUsuarioController.Destroy;
 begin
   Usuario.Free;
   UsuarioDAO.Free;
+  ControleAcesso.Free;
   inherited Destroy;
 end;
 

@@ -92,12 +92,12 @@ begin
   id := StrToInt(lvPadrao.Selected.Caption);
   if Controller.BuscarPorId(controller.Usuario, id, erro) then
   begin
-    if Controller.CarregarArquivosDeAcoes(erro) then
+    if Controller.ControleAcesso.CarregarArquivosDeAcoes(erro) then
     begin
       pgcPadrao.ActivePage := tbsAcesso;
       pnlTituloAcesso.Caption := 'Gerenciar acessos do usuário '+
                                   Controller.Usuario.Nome;
-      Controller.ListarTelas(lbNomeTela, cklbTituloTela);
+      Controller.ControleAcesso.ListarTelas(lbNomeTela, cklbTituloTela);
     end;
   end;
 end;
