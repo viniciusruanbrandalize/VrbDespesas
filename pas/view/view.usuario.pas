@@ -15,10 +15,8 @@ type
 
   TfrmUsuario = class(TfrmCadastroPadrao)
     actAcesso: TAction;
-    actSalvarAcesso: TAction;
-    actCancelarAcesso: TAction;
-    btnCancelar1: TToolButton;
-    btnSalvar1: TToolButton;
+    actVoltarAcesso: TAction;
+    btnVoltarAcesso: TToolButton;
     cklbTituloAcesso: TCheckListBox;
     cklbTituloTela: TCheckListBox;
     Label1: TLabel;
@@ -44,6 +42,9 @@ type
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarAcessoExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
+    procedure actVoltarAcessoExecute(Sender: TObject);
+    procedure cklbTituloAcessoClickCheck(Sender: TObject);
+    procedure cklbTituloTelaSelectionChange(Sender: TObject; User: boolean);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -161,6 +162,32 @@ begin
   begin
     TfrmMessage.Mensagem(erro, 'Aviso', 'C', [mbOk])
   end;
+end;
+
+procedure TfrmUsuario.actVoltarAcessoExecute(Sender: TObject);
+begin
+  pgcPadrao.ActivePage := tbsLista;
+end;
+
+procedure TfrmUsuario.cklbTituloAcessoClickCheck(Sender: TObject);
+var
+  Erro: String;
+  idAcao: integer;
+begin
+  idAcao := StrToIntDef(lbNomeAcesso.Items[cklbTituloAcesso.ItemIndex], 0);
+  if not Controller.ControleAcesso.RemoverOuInserirAcesso(Controller.Usuario.Id, idAcao,
+                                                   cklbTituloAcesso.Checked[cklbTituloAcesso.ItemIndex],
+                                                   Erro) then
+  begin
+    TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+  end;
+end;
+
+procedure TfrmUsuario.cklbTituloTelaSelectionChange(Sender: TObject;
+  User: boolean);
+begin
+  Controller.ControleAcesso.ListarAcoes(lbNomeAcesso, cklbTituloAcesso,
+                                        lbNomeTela.Items[cklbTituloTela.ItemIndex]);
 end;
 
 procedure TfrmUsuario.FormClose(Sender: TObject; var CloseAction: TCloseAction);

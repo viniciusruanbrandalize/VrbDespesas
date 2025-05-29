@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, model.entity.usuario, model.entity.ucacao,
   model.entity.uctela, model.dao.usuarioacesso, model.dao.padrao,
-  CheckLst, StdCtrls, csvdataset;
+  CheckLst, StdCtrls, csvdataset, model.entity.ucacesso;
 
 type
 
@@ -21,6 +21,7 @@ type
     procedure ListarTelas(var lbNome: TListBox; var lbTitulo: TCheckListBox);
     procedure ListarAcoes(var lbNome: TListBox; var lbTitulo: TCheckListBox; Tela: String);
     function CarregarArquivosDeAcoes(out Erro: String): Boolean;
+    function RemoverOuInserirAcesso(IdUsuario: Integer; idAcao: Integer; Marcado: Boolean; out Erro: String): Boolean;
 
     constructor Create;
     destructor Destroy; override;
@@ -77,10 +78,54 @@ begin
       FreeAndNil(UCTela);
     end;
 
+    CSV.Close;
+    CSV.Clear;
+    CSV.LoadFromCSVFile(DirAcao);
+
+    CSV.First;
+
+    UCAcao := TUcAcao.Create;
+    try
+      while not CSV.EOF do
+      begin
+
+        UCAcao.Nome        := CSV.FieldByName('nome').AsString;
+        UCAcao.Titulo      := CSV.FieldByName('titulo').AsString;
+        UCAcao.UcTela.Nome := CSV.FieldByName('nome_uc_tela').AsString;
+
+        if not UsuarioAcessoDAO.BuscarAcaoPorNome(UCAcao, Erro) then
+          UsuarioAcessoDAO.InserirAcao(UCAcao, Erro);
+
+        CSV.Next;
+      end;
+    finally
+      FreeAndNil(UCAcao);
+    end;
+
     Result := True;
 
   finally
     FreeAndNil(CSV);
+  end;
+end;
+
+function TUsuarioAcessoController.RemoverOuInserirAcesso(IdUsuario: Integer;
+  idAcao: Integer; Marcado: Boolean; out Erro: String): Boolean;
+var
+  Acesso: TUcAcesso;
+begin
+  Acesso := TUcAcesso.Create;
+  try
+    Acesso.UcAcao.Id  := idAcao;
+    Acesso.Usuario.Id := idUsuario;
+
+    if Marcado and (not UsuarioAcessoDAO.BuscarAcessoPorId(Acesso, Erro)) then
+      Result := UsuarioAcessoDAO.InserirAcesso(Acesso, Erro)
+    else
+      Result := UsuarioAcessoDAO.RemoverAcesso(Acesso.Id, Erro);
+
+  finally
+    FreeAndNil(Acesso);
   end;
 end;
 

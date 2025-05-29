@@ -147,15 +147,10 @@ inherited frmUsuario: TfrmUsuario
               ImagesWidth = 32
               ShowCaptions = True
               TabOrder = 0
-              object btnSalvar1: TToolButton
+              object btnVoltarAcesso: TToolButton
                 Left = 1
                 Top = 0
-                Action = actSalvarAcesso
-              end
-              object btnCancelar1: TToolButton
-                Left = 101
-                Top = 0
-                Action = actCancelarAcesso
+                Action = actVoltarAcesso
               end
             end
             object pnlTituloAcesso: TPanel
@@ -230,6 +225,7 @@ inherited frmUsuario: TfrmUsuario
                 )
                 ItemHeight = 21
                 TabOrder = 0
+                OnSelectionChange = cklbTituloTelaSelectionChange
                 Data = {
                   020000000000
                 }
@@ -275,6 +271,7 @@ inherited frmUsuario: TfrmUsuario
                 )
                 ItemHeight = 21
                 TabOrder = 0
+                OnClickCheck = cklbTituloAcessoClickCheck
                 Data = {
                   020000000000
                 }
@@ -319,15 +316,10 @@ inherited frmUsuario: TfrmUsuario
       ImageIndex = 8
       OnExecute = actAcessoExecute
     end
-    object actSalvarAcesso: TAction[9]
-      Caption = 'Salvar'
-      ImageIndex = 6
-      OnExecute = actSalvarAcessoExecute
-    end
-    object actCancelarAcesso: TAction[10]
-      Caption = 'Cancelar'
-      ImageIndex = 7
-      OnExecute = actCancelarAcessoExecute
+    object actVoltarAcesso: TAction[9]
+      Caption = 'Voltar'
+      ImageIndex = 11
+      OnExecute = actVoltarAcessoExecute
     end
   end
   inherited pMenuPadrao: TPopupMenu

@@ -25,7 +25,8 @@ type
                 SEQ_ID_DESPESA_FORMA_PGTO, SEQ_ID_FORMA_PGTO, SEQ_ID_LOG_BACKUP,
                 SEQ_ID_LOGIN, SEQ_ID_PAIS, SEQ_ID_PARTICIPANTE, SEQ_ID_RECEBIMENTO,
                 SEQ_ID_SUBTIPO_DESPESA, SEQ_ID_TIPO_DESPESA, SEQ_ID_USUARIO,
-                SEQ_ID_USUARIO_DONO_CADASTRO, SEQ_ID_ARQUIVO, SEQ_ID_UC_ACAO);
+                SEQ_ID_USUARIO_DONO_CADASTRO, SEQ_ID_ARQUIVO, SEQ_ID_UC_ACAO,
+                SEQ_ID_UC_ACESSO);
 
   { TPadraoDAO }
 
@@ -88,6 +89,8 @@ begin
       SEQ_ID_USUARIO:               NomeSeq := 'gen_id_usuario';
       SEQ_ID_USUARIO_DONO_CADASTRO: NomeSeq := 'gen_id_usuario_dono_cadastro';
       SEQ_ID_ARQUIVO:               NomeSeq := 'gen_id_arquivo';
+      SEQ_ID_UC_ACAO:               NomeSeq := 'gen_id_uc_acao';
+      SEQ_ID_UC_ACESSO:             NomeSeq := 'gen_id_uc_acesso';
     end;
   end
   else
@@ -113,6 +116,8 @@ begin
       SEQ_ID_USUARIO:               NomeSeq := 'seq_id_usuario';
       SEQ_ID_USUARIO_DONO_CADASTRO: NomeSeq := 'seq_id_usuario_dono_cadastro';
       SEQ_ID_ARQUIVO:               NomeSeq := 'seq_id_arquivo';
+      SEQ_ID_UC_ACAO:               NomeSeq := 'seq_id_uc_acao';
+      SEQ_ID_UC_ACESSO:             NomeSeq := 'seq_id_uc_acesso';
     end;
   end;
   Result := NomeSeq;
