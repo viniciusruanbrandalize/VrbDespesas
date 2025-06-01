@@ -224,6 +224,7 @@ inherited frmUsuario: TfrmUsuario
                   'Cadastro de Bandeiras'
                 )
                 ItemHeight = 21
+                Style = lbOwnerDrawFixed
                 TabOrder = 0
                 OnSelectionChange = cklbTituloTelaSelectionChange
                 Data = {

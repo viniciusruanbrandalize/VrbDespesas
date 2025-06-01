@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, model.entity.usuario, model.entity.ucacao,
   model.entity.uctela, model.dao.usuarioacesso, model.dao.padrao,
-  CheckLst, StdCtrls, csvdataset, model.entity.ucacesso;
+  CheckLst, StdCtrls, csvdataset, model.entity.ucacesso, ActnList;
 
 type
 
@@ -19,10 +19,10 @@ type
   public
 
     procedure ListarTelas(var lbNome: TListBox; var lbTitulo: TCheckListBox);
-    procedure ListarAcoes(var lbNome: TListBox; var lbTitulo: TCheckListBox; Tela: String);
+    procedure ListarAcoes(var lbNome: TListBox; var lbTitulo: TCheckListBox; Tela: String; IdUsuario: Integer);
     function CarregarArquivosDeAcoes(out Erro: String): Boolean;
     function RemoverOuInserirAcesso(IdUsuario: Integer; idAcao: Integer; Marcado: Boolean; out Erro: String): Boolean;
-
+    procedure LiberarBloquearAcessos(var ActList: TActionList; Tela: String);
     constructor Create;
     destructor Destroy; override;
   end;
@@ -38,9 +38,9 @@ begin
 end;
 
 procedure TUsuarioAcessoController.ListarAcoes(var lbNome: TListBox;
-  var lbTitulo: TCheckListBox; Tela: String);
+  var lbTitulo: TCheckListBox; Tela: String; IdUsuario: Integer);
 begin
-  UsuarioAcessoDAO.ListarAcoes(lbNome, lbTitulo, Tela);
+  UsuarioAcessoDAO.ListarAcoes(lbNome, lbTitulo, Tela, IdUsuario);
 end;
 
 function TUsuarioAcessoController.CarregarArquivosDeAcoes(out Erro: String): Boolean;
@@ -119,13 +119,35 @@ begin
     Acesso.UcAcao.Id  := idAcao;
     Acesso.Usuario.Id := idUsuario;
 
-    if Marcado and (not UsuarioAcessoDAO.BuscarAcessoPorId(Acesso, Erro)) then
+    UsuarioAcessoDAO.BuscarAcessoPorId(Acesso, Erro);
+
+    if Marcado then
       Result := UsuarioAcessoDAO.InserirAcesso(Acesso, Erro)
     else
       Result := UsuarioAcessoDAO.RemoverAcesso(Acesso.Id, Erro);
 
   finally
     FreeAndNil(Acesso);
+  end;
+end;
+
+procedure TUsuarioAcessoController.LiberarBloquearAcessos(
+  var ActList: TActionList; Tela: String);
+var
+  i, Tag: Integer;
+  NomeAcao: String;
+  liberado: Boolean;
+  Erro: String;
+begin
+  for i := 0 to Pred(ActList.ActionCount) do
+  begin
+    NomeAcao := ActList.Actions[i].Name;
+    Tag      := ActList.Actions[i].Tag;
+    if Tag = 1 then
+    begin
+      liberado := UsuarioAcessoDAO.BuscarAcessoPorNomeEUsuarioLogado(NomeAcao, Tela, Erro);
+      TAction(ActList.Actions[i]).Enabled := liberado;
+    end;
   end;
 end;
 

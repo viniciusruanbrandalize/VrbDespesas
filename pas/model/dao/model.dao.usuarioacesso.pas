@@ -20,7 +20,7 @@ type
     procedure Listar(lv: TListView); override;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
     procedure ListarTelas(var lbNome: TListBox; var lbTitulo: TCheckListBox);
-    procedure ListarAcoes(var lbNome: TListBox; var lbTitulo: TCheckListBox; Tela: String);
+    procedure ListarAcoes(var lbNome: TListBox; var lbTitulo: TCheckListBox; Tela: String; IdUsuario: Integer);
     function InserirTela(Tela: TUcTela; out Erro: string): Boolean;
     function BuscarTelaPorNome(Tela: TUcTela; Nome: String; out Erro: String): Boolean;
     function InserirAcao(Acao: TUcAcao; out Erro: string): Boolean;
@@ -28,7 +28,8 @@ type
     function InserirAcesso(Acesso: TUcAcesso; out Erro: string): Boolean;
     function RemoverAcesso(Id: Integer; out Erro: string): Boolean;
     function BuscarAcessoPorId(Acesso: TUcAcesso; out Erro: String): Boolean;
-    function Excluir(Id: Integer; out Erro: string): Boolean;
+    function MarcarAcessos(var lbTitulo: TCheckListBox; IdAcao, IdUsuario: Integer; out Erro: String): Boolean;
+    function BuscarAcessoPorNomeEUsuarioLogado(Nome, Tela: String; out Erro: String): Boolean;
     constructor Create; override;
     destructor Destroy; override;
   end;
@@ -80,9 +81,9 @@ begin
 end;
 
 procedure TUsuarioAcessoDAO.ListarAcoes(var lbNome: TListBox;
-  var lbTitulo: TCheckListBox; Tela: String);
+  var lbTitulo: TCheckListBox; Tela: String; IdUsuario: Integer);
 var
-  sql: String;
+  sql, Erro: String;
 begin
   try
 
@@ -105,6 +106,7 @@ begin
     begin
       lbNome.Items.Add(qry.FieldByName('id').AsString);
       lbTitulo.Items.Add(qry.FieldByName('titulo').AsString);
+      MarcarAcessos(lbTitulo, Qry.FieldByName('id').AsInteger, IdUsuario, Erro);
       Qry.Next;
     end;
 
@@ -361,43 +363,72 @@ begin
   end;
 end;
 
-function TUsuarioAcessoDAO.Excluir(Id: Integer; out Erro: string): Boolean;
+function TUsuarioAcessoDAO.MarcarAcessos(var lbTitulo: TCheckListBox; IdAcao,
+  IdUsuario: Integer; out Erro: String): Boolean;
+var
+  qryTemp: TSQLQuery;
+  sql: String;
+begin
+
+  sql := 'select * from uc_acesso ' +
+         'where id_acao = :id_acao and id_usuario = :id_usuario ' +
+         'order by id';
+
+  CriarQuery(qryTemp, dmConexao1.SQLConnector);
+  try
+    try
+      qryTemp.Close;
+      qryTemp.SQL.Clear;
+      qryTemp.SQL.Add(sql);
+      qryTemp.ParamByName('id_acao').AsInteger    := IdAcao;
+      qryTemp.ParamByName('id_usuario').AsInteger := IdUsuario;
+      qryTemp.Open;
+
+      if qryTemp.RecordCount > 0 Then
+      begin
+        lbTitulo.Checked[Pred(lbTitulo.Items.Count)] := True;
+      end
+      else
+      begin
+        Erro := 'Nenhum objeto foi encontrado!';
+        Result := False;
+      end;
+
+    except on E: Exception do
+      begin
+        Erro := 'Ocorreu um erro ao marcar acesso: ' + sLineBreak + E.Message;
+        Result := False;
+      end;
+    end;
+  finally
+    FreeAndNil(qryTemp);
+  end;
+end;
+
+function TUsuarioAcessoDAO.BuscarAcessoPorNomeEUsuarioLogado(Nome, Tela: String; out
+  Erro: String): Boolean;
 var
   sql: String;
 begin
   try
 
-    sql := 'delete from banco where id = :id';
+    sql := 'select acesso.id as id_acesso from uc_acesso acesso ' +
+           'left join uc_acao acao on acao.id = acesso.id_acao ' +
+           'where acao.nome = :nome_acao and acesso.id_usuario = :id_usuario ' +
+           'and acao.nome_uc_tela = :nome_uc_tela';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
-    Qry.ParamByName('id').AsInteger  := Id;
-    Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Qry.ParamByName('nome_acao').AsString    := Nome;
+    Qry.ParamByName('nome_uc_tela').AsString := Tela;
+    Qry.ParamByName('id_usuario').AsInteger  := dmConexao1.Usuario.Id;
+    Qry.Open;
 
-    Result := True;
+    Result := Qry.RecordCount > 0;
 
-  except on E: Exception do
-    begin
-      try
-        sql := 'update banco set excluido = true ' +
-               'where id = :id';
-
-        Qry.Close;
-        Qry.SQL.Clear;
-        Qry.SQL.Add(sql);
-        Qry.ParamByName('id').AsInteger  := Id;
-        Qry.ExecSQL;
-        dmConexao1.SQLTransaction.Commit;
-
-      except on E: Exception do
-        begin
-          Erro := 'Ocorreu um erro ao excluir banco: ' + sLineBreak + E.Message;
-          Result := False;
-        end;
-      end;
-    end;
+  finally
+    Qry.Close;
   end;
 end;
 

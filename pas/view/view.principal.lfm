@@ -786,24 +786,28 @@ object frmPrincipal: TfrmPrincipal
     Left = 26
     Top = 77
     object actCadastro: TAction
+      Tag = 1
       Category = 'Menu'
       Caption = 'Cadastros'
       ImageIndex = 0
       OnExecute = actCadastroExecute
     end
     object actOperacao: TAction
+      Tag = 1
       Category = 'Menu'
       Caption = 'Operações'
       ImageIndex = 3
       OnExecute = actOperacaoExecute
     end
     object actUtilitario: TAction
+      Tag = 1
       Category = 'Menu'
       Caption = 'Utilitários'
       ImageIndex = 7
       OnExecute = actUtilitarioExecute
     end
     object actRelatorio: TAction
+      Tag = 1
       Category = 'Menu'
       Caption = 'Relatórios'
       ImageIndex = 4
@@ -816,71 +820,83 @@ object frmPrincipal: TfrmPrincipal
       OnExecute = actAjudaExecute
     end
     object actBanco: TAction
+      Tag = 1
       Category = 'Financeiro'
       Caption = 'Bancos'
       ImageIndex = 13
       OnExecute = actBancoExecute
     end
     object actDevedor: TAction
+      Tag = 1
       Category = 'Cadastro'
       Caption = 'Devedores'
       ImageIndex = 11
       OnExecute = actDevedorExecute
     end
     object actFormaPagamento: TAction
+      Tag = 1
       Category = 'Cadastro'
       Caption = 'Formas de Pagamento'
       ImageIndex = 10
       OnExecute = actFormaPagamentoExecute
     end
     object actParticipante: TAction
+      Tag = 1
       Category = 'Cadastro'
       Caption = 'Participantes'
       ImageIndex = 12
       OnExecute = actParticipanteExecute
     end
     object actSubtipoDespesa: TAction
+      Tag = 1
       Category = 'Cadastro'
       Caption = 'Subtipo de despesas'
       ImageIndex = 15
       OnExecute = actSubtipoDespesaExecute
     end
     object actTipoDespesa: TAction
+      Tag = 1
       Category = 'Cadastro'
       Caption = 'Tipo de despesas'
       ImageIndex = 14
       OnExecute = actTipoDespesaExecute
     end
     object actUsuario: TAction
+      Tag = 1
       Category = 'Cadastro'
       Caption = 'Usuários'
       ImageIndex = 6
       OnExecute = actUsuarioExecute
     end
     object actDespesa: TAction
+      Tag = 1
       Category = 'Operacao'
       Caption = 'Despesas'
       ImageIndex = 9
       OnExecute = actDespesaExecute
     end
     object actContasPagar: TAction
+      Tag = 1
       Category = 'Operacao'
       Caption = 'Contas a pagar'
       ImageIndex = 8
     end
     object actRecebimentoSalario: TAction
+      Tag = 1
       Category = 'Operacao'
       Caption = 'Salários'
       ImageIndex = 16
       OnExecute = actRecebimentoSalarioExecute
     end
     object actConfiguracao: TAction
+      Tag = 1
       Category = 'Utilitario'
       Caption = 'Configurações'
       ImageIndex = 17
       OnExecute = actConfiguracaoExecute
     end
     object actBackup: TAction
+      Tag = 1
       Category = 'Utilitario'
       Caption = 'Cópia de Segurança'
       ImageIndex = 18
@@ -892,24 +908,28 @@ object frmPrincipal: TfrmPrincipal
       OnExecute = actVoltarExecute
     end
     object actLogErro: TAction
+      Tag = 1
       Category = 'Utilitario'
       Caption = 'Log de erros'
       ImageIndex = 19
       OnExecute = actLogErroExecute
     end
     object actLogLogin: TAction
+      Tag = 1
       Category = 'Utilitario'
       Caption = 'Histórico de Logins'
       ImageIndex = 20
       OnExecute = actLogLoginExecute
     end
     object actFinanceiro: TAction
+      Tag = 1
       Category = 'Cadastro'
       Caption = 'Financeiro'
       ImageIndex = 21
       OnExecute = actFinanceiroExecute
     end
     object actBandeira: TAction
+      Tag = 1
       Category = 'Financeiro'
       Caption = 'Bandeiras'
       ImageIndex = 22
@@ -921,24 +941,28 @@ object frmPrincipal: TfrmPrincipal
       OnExecute = actVoltarFinanceiroExecute
     end
     object actContaBancaria: TAction
+      Tag = 1
       Category = 'Financeiro'
       Caption = 'Contas'
       ImageIndex = 23
       OnExecute = actContaBancariaExecute
     end
     object actRelatorioDespesa: TAction
+      Tag = 1
       Category = 'Relatorio'
       Caption = 'Relatório de Despesas'
       ImageIndex = 25
       OnExecute = actRelatorioDespesaExecute
     end
     object actRecebimentoGeral: TAction
+      Tag = 1
       Category = 'Operacao'
       Caption = 'Recebimentos'
       ImageIndex = 16
       OnExecute = actRecebimentoGeralExecute
     end
     object actRelatorioRecebimento: TAction
+      Tag = 1
       Category = 'Relatorio'
       Caption = 'Relatório de Recebimento'
       ImageIndex = 25

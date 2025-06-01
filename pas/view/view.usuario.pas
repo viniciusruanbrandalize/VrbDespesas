@@ -96,6 +96,7 @@ begin
     if Controller.ControleAcesso.CarregarArquivosDeAcoes(erro) then
     begin
       pgcPadrao.ActivePage := tbsAcesso;
+      cklbTituloAcesso.Items.Clear;
       pnlTituloAcesso.Caption := 'Gerenciar acessos do usuário '+
                                   Controller.Usuario.Nome;
       Controller.ControleAcesso.ListarTelas(lbNomeTela, cklbTituloTela);
@@ -187,7 +188,7 @@ procedure TfrmUsuario.cklbTituloTelaSelectionChange(Sender: TObject;
   User: boolean);
 begin
   Controller.ControleAcesso.ListarAcoes(lbNomeAcesso, cklbTituloAcesso,
-                                        lbNomeTela.Items[cklbTituloTela.ItemIndex]);
+                                        lbNomeTela.Items[cklbTituloTela.ItemIndex], Controller.Usuario.Id);
 end;
 
 procedure TfrmUsuario.FormClose(Sender: TObject; var CloseAction: TCloseAction);

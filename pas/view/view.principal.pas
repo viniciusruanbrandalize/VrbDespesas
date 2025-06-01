@@ -135,6 +135,7 @@ type
     MenuEstaRetraido: Boolean;
     procedure retairMenu;
     procedure mudarMenu(Index: Integer);
+    procedure LiberarBloquearAcessos();
   public
     procedure BarraLateralVazia(pnlAtivo: TPanel; Ativo: Boolean);
   end;
@@ -143,6 +144,9 @@ var
   frmPrincipal: TfrmPrincipal;
 
 implementation
+
+uses
+  controller.usuarioacesso;
 
 {$R *.lfm}
 
@@ -176,6 +180,7 @@ end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
+  LiberarBloquearAcessos();
   pnlAbreForms.Align := alClient;
   pnlAbreForms.Caption := '';
   lblNomeUsuario.Caption := Controller.RetornarNomeUsuario;
@@ -401,6 +406,18 @@ begin
   pnlMenuUtilitario.Visible := Index = 3;
   pnlMenuRelatorio.Visible  := Index = 4;
   pnlMenuFinanceiro.Visible := Index = 20;
+end;
+
+procedure TfrmPrincipal.LiberarBloquearAcessos();
+var
+  ControleAcesso: TUsuarioAcessoController;
+begin
+  ControleAcesso := TUsuarioAcessoController.Create;
+  try
+    //ControleAcesso.LiberarBloquearAcessos(actMenu, Self.Name);
+  finally
+    FreeAndNil(ControleAcesso);
+  end;
 end;
 
 procedure TfrmPrincipal.BarraLateralVazia(pnlAtivo: TPanel; Ativo: Boolean);

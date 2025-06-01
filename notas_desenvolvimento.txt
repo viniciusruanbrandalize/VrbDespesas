@@ -1,0 +1,3 @@
+Tag nas actions para verificar acessos no controle do usuário:
+Tag = 0 -> ignora os acessos.
+Tag = 1 -> entra no controle de usuários.

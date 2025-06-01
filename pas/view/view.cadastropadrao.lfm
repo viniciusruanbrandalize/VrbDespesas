@@ -788,21 +788,25 @@ object frmCadastroPadrao: TfrmCadastroPadrao
       OnExecute = actFecharExecute
     end
     object actIncluir: TAction
+      Tag = 1
       Caption = 'Novo'
       ImageIndex = 1
       OnExecute = actIncluirExecute
     end
     object actEditar: TAction
+      Tag = 1
       Caption = 'Alterar'
       ImageIndex = 2
       OnExecute = actEditarExecute
     end
     object actExcluir: TAction
+      Tag = 1
       Caption = 'Excluir'
       ImageIndex = 3
       OnExecute = actExcluirExecute
     end
     object actVisualizar: TAction
+      Tag = 1
       Caption = 'Visualizar'
       ImageIndex = 4
       OnExecute = actVisualizarExecute

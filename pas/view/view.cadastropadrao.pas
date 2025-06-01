@@ -72,12 +72,16 @@ type
     procedure NumericoExit(Sender: TObject);
     procedure NumericoEnter(Sender: TObject);
     procedure NumericoKeyPress(Sender: TObject; var Key: char);
+    procedure LiberarBloquearAcessos(var ListaDeAcoes: TActionList; Tela: String);
   end;
 
 var
   frmCadastroPadrao: TfrmCadastroPadrao;
 
 implementation
+
+uses
+  controller.usuarioacesso;
 
 {$R *.lfm}
 
@@ -212,6 +216,19 @@ end;
 procedure TfrmCadastroPadrao.NumericoKeyPress(Sender: TObject; var Key: char);
 begin
   CampoNumericoKeyPress(Sender, Key);
+end;
+
+procedure TfrmCadastroPadrao.LiberarBloquearAcessos(var ListaDeAcoes: TActionList;
+  Tela: String);
+var
+  ControleAcesso: TUsuarioAcessoController;
+begin
+  ControleAcesso := TUsuarioAcessoController.Create;
+  try
+    ControleAcesso.LiberarBloquearAcessos(ListaDeAcoes, Tela);
+  finally
+    FreeAndNil(ControleAcesso);
+  end;
 end;
 
 end.

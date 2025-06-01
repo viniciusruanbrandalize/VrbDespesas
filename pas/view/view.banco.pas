@@ -21,6 +21,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     Controller: TBancoController;
   public
@@ -50,6 +51,12 @@ end;
 procedure TfrmBanco.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmBanco.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmBanco.actSalvarExecute(Sender: TObject);
@@ -82,6 +89,7 @@ end;
 procedure TfrmBanco.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuFinanceiro, True);
+  //FreeAndNil(self)
 end;
 
 procedure TfrmBanco.actExcluirExecute(Sender: TObject);
