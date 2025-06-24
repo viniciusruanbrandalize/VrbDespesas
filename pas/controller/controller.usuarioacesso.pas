@@ -70,7 +70,9 @@ begin
         UCTela.Titulo := CSV.FieldByName('titulo').AsString;
 
         if not UsuarioAcessoDAO.BuscarTelaPorNome(UCTela, UCTela.Nome, Erro) then
-          UsuarioAcessoDAO.InserirTela(UCTela, Erro);
+          UsuarioAcessoDAO.InserirTela(UCTela, Erro)
+        else
+          UsuarioAcessoDAO.EditarTela(UCTela, Erro);
 
         CSV.Next;
       end;
@@ -94,7 +96,9 @@ begin
         UCAcao.UcTela.Nome := CSV.FieldByName('nome_uc_tela').AsString;
 
         if not UsuarioAcessoDAO.BuscarAcaoPorNome(UCAcao, Erro) then
-          UsuarioAcessoDAO.InserirAcao(UCAcao, Erro);
+          UsuarioAcessoDAO.InserirAcao(UCAcao, Erro)
+        else
+          UsuarioAcessoDAO.EditarAcao(UCAcao, Erro);
 
         CSV.Next;
       end;
@@ -139,6 +143,9 @@ var
   liberado: Boolean;
   Erro: String;
 begin
+  { SO TESTA A LIBERACAO QUANDO ESTA EM RELEASE }
+  //{$IFOPT D+}
+  //{$ELSE}
   for i := 0 to Pred(ActList.ActionCount) do
   begin
     NomeAcao := ActList.Actions[i].Name;
@@ -149,6 +156,7 @@ begin
       TAction(ActList.Actions[i]).Enabled := liberado;
     end;
   end;
+  //{$ENDIF}
 end;
 
 constructor TUsuarioAcessoController.Create;

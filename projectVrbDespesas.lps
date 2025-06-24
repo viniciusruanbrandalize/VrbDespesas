@@ -19,7 +19,8 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <CursorPos X="39" Y="151"/>
+        <TopLine Value="390"/>
+        <CursorPos X="44" Y="408"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -136,7 +137,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="33" Y="8"/>
+        <TopLine Value="37"/>
+        <CursorPos X="12" Y="59"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -163,10 +165,12 @@
         <ComponentName Value="frmCadastroPadrao"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="195"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="194"/>
         <CursorPos X="43" Y="207"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.banco.pas"/>
@@ -397,10 +401,12 @@
         <ComponentName Value="frmUsuario"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="203"/>
-        <CursorPos X="54" Y="214"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="77"/>
+        <CursorPos X="9" Y="104"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.logerro.pas"/>
@@ -714,7 +720,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="99"/>
         <CursorPos X="34" Y="130"/>
-        <UsageCount Value="134"/>
+        <UsageCount Value="137"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.relatoriorecebimento.pas"/>
@@ -722,7 +728,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="13"/>
         <CursorPos X="54" Y="39"/>
-        <UsageCount Value="134"/>
+        <UsageCount Value="137"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.relatoriorecebimento.pas"/>
@@ -733,7 +739,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="58"/>
         <CursorPos X="51" Y="72"/>
-        <UsageCount Value="134"/>
+        <UsageCount Value="137"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.copiaseguranca.pas"/>
@@ -744,7 +750,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
         <CursorPos X="62" Y="64"/>
-        <UsageCount Value="123"/>
+        <UsageCount Value="126"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.copiaseguranca.pas"/>
@@ -752,7 +758,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="3"/>
         <CursorPos X="60" Y="30"/>
-        <UsageCount Value="119"/>
+        <UsageCount Value="122"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.copiaseguranca.pas"/>
@@ -760,7 +766,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="394"/>
         <CursorPos X="21" Y="477"/>
-        <UsageCount Value="119"/>
+        <UsageCount Value="122"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.configuracao.pas"/>
@@ -770,7 +776,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="53" Y="23"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.configuracao.pas"/>
@@ -778,7 +784,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="3"/>
         <CursorPos X="34" Y="32"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="89"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.selecionardonocadastro.pas"/>
@@ -789,21 +795,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="44"/>
         <CursorPos X="9" Y="83"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="76"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.selecionardonocadastro.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="45" Y="69"/>
-        <UsageCount Value="72"/>
+        <UsageCount Value="75"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="40" Y="15"/>
-        <UsageCount Value="64"/>
+        <UsageCount Value="67"/>
       </Unit>
       <Unit>
         <Filename Value="pas\view\view.ajuda.pas"/>
@@ -814,7 +820,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="22"/>
         <CursorPos X="61" Y="63"/>
-        <UsageCount Value="63"/>
+        <UsageCount Value="66"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.ajuda.pas"/>
@@ -822,7 +828,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="44"/>
         <CursorPos X="38" Y="52"/>
-        <UsageCount Value="62"/>
+        <UsageCount Value="65"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.uctela.pas"/>
@@ -830,7 +836,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="30"/>
         <CursorPos X="41" Y="21"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="45"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\entity\model.entity.ucacao.pas"/>
@@ -838,25 +844,25 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="65"/>
         <CursorPos X="5" Y="105"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="45"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="405"/>
-        <CursorPos X="34" Y="421"/>
-        <UsageCount Value="37"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="147"/>
+        <CursorPos X="26" Y="175"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="pas\controller\controller.usuarioacesso.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="125"/>
-        <CursorPos X="22" Y="139"/>
-        <UsageCount Value="37"/>
+        <TopLine Value="56"/>
+        <CursorPos X="26" Y="76"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -865,7 +871,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="50"/>
         <CursorPos X="12" Y="80"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="38"/>
       </Unit>
       <Unit>
         <Filename Value="pas\model\report\model.report.padrao.pas"/>
@@ -1236,7 +1242,128 @@
         <UsageCount Value="8"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="162" Column="34" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="160" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\model\dao\model.dao.usuarioacesso.pas"/>
+        <Caret Line="159" TopLine="147"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\controller\controller.usuarioacesso.pas"/>
+        <Caret Line="73" TopLine="49"/>
+      </Position>
+      <Position>
+        <Filename Value="pas\controller\controller.usuarioacesso.pas"/>
+        <Caret Line="76" Column="26" TopLine="56"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>

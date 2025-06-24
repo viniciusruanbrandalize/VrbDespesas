@@ -414,7 +414,7 @@ var
 begin
   ControleAcesso := TUsuarioAcessoController.Create;
   try
-    //ControleAcesso.LiberarBloquearAcessos(actMenu, Self.Name);
+    ControleAcesso.LiberarBloquearAcessos(actMenu, Self.Name);
   finally
     FreeAndNil(ControleAcesso);
   end;

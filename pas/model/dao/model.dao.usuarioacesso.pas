@@ -22,8 +22,10 @@ type
     procedure ListarTelas(var lbNome: TListBox; var lbTitulo: TCheckListBox);
     procedure ListarAcoes(var lbNome: TListBox; var lbTitulo: TCheckListBox; Tela: String; IdUsuario: Integer);
     function InserirTela(Tela: TUcTela; out Erro: string): Boolean;
+    function EditarTela(Tela: TUcTela; out Erro: string): Boolean;
     function BuscarTelaPorNome(Tela: TUcTela; Nome: String; out Erro: String): Boolean;
     function InserirAcao(Acao: TUcAcao; out Erro: string): Boolean;
+    function EditarAcao(Acao: TUcAcao; out Erro: string): Boolean;
     function BuscarAcaoPorNome(Acao: TUcAcao; out Erro: String): Boolean;
     function InserirAcesso(Acesso: TUcAcesso; out Erro: string): Boolean;
     function RemoverAcesso(Id: Integer; out Erro: string): Boolean;
@@ -142,6 +144,33 @@ begin
   end;
 end;
 
+function TUsuarioAcessoDAO.EditarTela(Tela: TUcTela; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'update uc_tela set titulo = :titulo where nome = :nome';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+
+    Qry.ParamByName('nome').AsString   := Tela.Nome;
+    Qry.ParamByName('titulo').AsString := Tela.Titulo;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao alterar tela: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
 function TUsuarioAcessoDAO.BuscarTelaPorNome(Tela: TUcTela; Nome: String; out
   Erro: String): Boolean;
 var
@@ -212,6 +241,35 @@ begin
   except on E: Exception do
     begin
       Erro := 'Ocorreu um erro ao inserir ação: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TUsuarioAcessoDAO.EditarAcao(Acao: TUcAcao; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'update uc_acao set titulo = :titulo ' +
+           'where nome_uc_tela = :nome_uc_tela and nome = :nome ';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+
+    Qry.ParamByName('nome').AsString         := Acao.Nome;
+    Qry.ParamByName('titulo').AsString       := Acao.Titulo;
+    Qry.ParamByName('nome_uc_tela').AsString := Acao.UcTela.Nome;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao alterar ação: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
