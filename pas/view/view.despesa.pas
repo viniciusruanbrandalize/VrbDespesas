@@ -100,6 +100,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure lbFormaPagamentoNomeDblClick(Sender: TObject);
     procedure lbFormaPagamentoNomeKeyPress(Sender: TObject; var Key: char);
     procedure lbFormaPagamentoNomeSelectionChange(Sender: TObject; User: boolean);
@@ -468,11 +469,18 @@ end;
 procedure TfrmDespesa.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuOperacao, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmDespesa.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmDespesa.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmDespesa.lbFormaPagamentoNomeDblClick(Sender: TObject);

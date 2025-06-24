@@ -20,6 +20,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     Controller: TBandeiraController;
   public
@@ -51,6 +52,12 @@ begin
   FreeAndNil(Controller);
 end;
 
+procedure TfrmBandeira.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
+end;
+
 procedure TfrmBandeira.actSalvarExecute(Sender: TObject);
 var
   erro: String;
@@ -76,6 +83,7 @@ end;
 procedure TfrmBandeira.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuFinanceiro, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmBandeira.actExcluirExecute(Sender: TObject);

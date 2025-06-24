@@ -20,6 +20,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     Controller: TTipoDespesaController;
   public
@@ -94,11 +95,18 @@ procedure TfrmTipoDespesa.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuCadastro, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmTipoDespesa.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmTipoDespesa.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmTipoDespesa.CarregarDados;

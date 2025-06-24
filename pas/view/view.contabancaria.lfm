@@ -3,6 +3,7 @@ inherited frmContaBancaria: TfrmContaBancaria
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pnlTitulo: TPanel
@@ -754,11 +755,13 @@ inherited frmContaBancaria: TfrmContaBancaria
       OnExecute = actSalvarExecute
     end
     object actCartao: TAction[8]
+      Tag = 1
       Caption = 'Cartões'
       ImageIndex = 9
       OnExecute = actCartaoExecute
     end
     object actPix: TAction[9]
+      Tag = 1
       Caption = 'Chaves Pix'
       ImageIndex = 10
       OnExecute = actPixExecute
@@ -784,40 +787,48 @@ inherited frmContaBancaria: TfrmContaBancaria
       OnExecute = actCancelarCartaoExecute
     end
     object actIncluirPix: TAction[14]
+      Tag = 1
       Caption = 'Incluir'
       ImageIndex = 1
       OnExecute = actIncluirPixExecute
     end
     object actEditarPix: TAction[15]
+      Tag = 1
       Caption = 'Editar'
       ImageIndex = 2
       OnExecute = actEditarPixExecute
     end
     object actExcluirPix: TAction[16]
+      Tag = 1
       Caption = 'Excluir'
       ImageIndex = 3
       OnExecute = actExcluirPixExecute
     end
     object actVisualizarPix: TAction[17]
+      Tag = 1
       Caption = 'Visualizar'
       ImageIndex = 4
     end
     object actIncluirCartao: TAction[18]
+      Tag = 1
       Caption = 'Incluir'
       ImageIndex = 1
       OnExecute = actIncluirCartaoExecute
     end
     object actEditarCartao: TAction[19]
+      Tag = 1
       Caption = 'Editar'
       ImageIndex = 2
       OnExecute = actEditarCartaoExecute
     end
     object actExcluirCartao: TAction[20]
+      Tag = 1
       Caption = 'Excluir'
       ImageIndex = 3
       OnExecute = actExcluirCartaoExecute
     end
     object actVisualizarCartao: TAction[21]
+      Tag = 1
       Caption = 'Visualizar'
       ImageIndex = 4
     end

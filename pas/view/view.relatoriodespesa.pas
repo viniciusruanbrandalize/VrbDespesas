@@ -38,6 +38,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure pnlComparativoAnualClick(Sender: TObject);
     procedure pnlComparativoMensalClick(Sender: TObject);
     procedure pnlPeriodoClick(Sender: TObject);
@@ -67,6 +68,7 @@ procedure TfrmRelatorioDespesa.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuRelatorio, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmRelatorioDespesa.FormCreate(Sender: TObject);
@@ -78,6 +80,12 @@ end;
 procedure TfrmRelatorioDespesa.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmRelatorioDespesa.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmRelatorioDespesa.pnlComparativoAnualClick(Sender: TObject);

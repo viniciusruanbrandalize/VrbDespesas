@@ -48,6 +48,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure lbCidadeNomeDblClick(Sender: TObject);
     procedure lbCidadeNomeKeyPress(Sender: TObject; var Key: char);
     procedure lbCidadeNomeSelectionChange(Sender: TObject; User: boolean);
@@ -211,11 +212,18 @@ procedure TfrmParticipante.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuCadastro, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmParticipante.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmParticipante.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmParticipante.lbCidadeNomeDblClick(Sender: TObject);

@@ -26,6 +26,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure lbTipoNomeDblClick(Sender: TObject);
     procedure lbTipoNomeKeyPress(Sender: TObject; var Key: char);
     procedure lbTipoNomeSelectionChange(Sender: TObject; User: boolean);
@@ -112,6 +113,7 @@ procedure TfrmSubtipoDespesa.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuCadastro, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmSubtipoDespesa.actExcluirExecute(Sender: TObject);
@@ -140,6 +142,12 @@ end;
 procedure TfrmSubtipoDespesa.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmSubtipoDespesa.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmSubtipoDespesa.lbTipoNomeDblClick(Sender: TObject);

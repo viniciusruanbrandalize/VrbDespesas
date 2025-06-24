@@ -122,6 +122,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure lbBancoNomeDblClick(Sender: TObject);
     procedure lbBancoNomeKeyPress(Sender: TObject; var Key: char);
     procedure lbBancoNomeSelectionChange(Sender: TObject; User: boolean);
@@ -174,6 +175,12 @@ end;
 procedure TfrmContaBancaria.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmContaBancaria.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmContaBancaria.lbBancoNomeDblClick(Sender: TObject);
@@ -440,6 +447,7 @@ end;
 procedure TfrmContaBancaria.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuFinanceiro, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmContaBancaria.actExcluirExecute(Sender: TObject);

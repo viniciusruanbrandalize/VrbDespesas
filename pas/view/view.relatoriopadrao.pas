@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
-  ComCtrls, Buttons, LR_View, lib.visual;
+  ComCtrls, Buttons, LR_View, lib.visual, controller.usuarioacesso;
 
 type
 
@@ -55,7 +55,7 @@ type
     procedure PnlBotaoVerdeMouseEnter(Sender: TObject);
     procedure PnlBotaoVerdeMouseLeave(Sender: TObject);
   public
-
+    procedure LiberarBloquearAcessos(var ListaDeAcoes: TActionList; Tela: String);
   end;
 
 var
@@ -159,6 +159,19 @@ end;
 procedure TfrmRelatorioPadrao.PnlBotaoVerdeMouseLeave(Sender: TObject);
 begin
   BotaoVerdeMouseLeave(Sender);
+end;
+
+procedure TfrmRelatorioPadrao.LiberarBloquearAcessos(
+  var ListaDeAcoes: TActionList; Tela: String);
+var
+  ControleAcesso: TUsuarioAcessoController;
+begin
+  ControleAcesso := TUsuarioAcessoController.Create;
+  try
+    ControleAcesso.LiberarBloquearAcessos(ListaDeAcoes, Tela);
+  finally
+    FreeAndNil(ControleAcesso);
+  end;
 end;
 
 end.

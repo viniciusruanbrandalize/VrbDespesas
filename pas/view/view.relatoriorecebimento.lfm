@@ -5,6 +5,7 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   inherited pnlFundo: TPanel
     inherited pgc: TPageControl
       ActivePage = tbsPrincipal
@@ -44,6 +45,7 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
   end
   inherited actList: TActionList
     object actDeclaracaoRenda: TAction[8]
+      Tag = 1
       Caption = 'Declaração de Renda'
       OnExecute = actDeclaracaoRendaExecute
     end

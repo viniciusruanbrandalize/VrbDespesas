@@ -21,6 +21,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     Controller: TFormaPagamentoController;
   public
@@ -96,11 +97,18 @@ procedure TfrmFormaPagamento.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuCadastro, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmFormaPagamento.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmFormaPagamento.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmFormaPagamento.CarregarDados;

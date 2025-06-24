@@ -20,6 +20,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure pnlDeclaracaoRendaClick(Sender: TObject);
   private
 
@@ -43,6 +44,7 @@ procedure TfrmRelatorioRecebimento.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuRelatorio, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmRelatorioRecebimento.actDeclaracaoRendaExecute(Sender: TObject);
@@ -79,6 +81,12 @@ end;
 procedure TfrmRelatorioRecebimento.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmRelatorioRecebimento.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmRelatorioRecebimento.pnlDeclaracaoRendaClick(Sender: TObject);

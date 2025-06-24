@@ -89,7 +89,7 @@ end;
 procedure TfrmBanco.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuFinanceiro, True);
-  //FreeAndNil(self)
+  CloseAction := caFree;
 end;
 
 procedure TfrmBanco.actExcluirExecute(Sender: TObject);

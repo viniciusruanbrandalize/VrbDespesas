@@ -3,6 +3,7 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   inherited pnlFundo: TPanel
     inherited pgc: TPageControl
       ActivePage = tbsPrincipal
@@ -188,32 +189,39 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
       ImageIndex = 7
     end
     object actPorPeriodo: TAction[7]
+      Tag = 1
       Caption = 'Por Período'
       OnExecute = actPorPeriodoExecute
     end
     object actComparativoMensal: TAction[8]
+      Tag = 1
       Caption = 'Comparativo Mensal'
       OnExecute = actComparativoMensalExecute
     end
     object actComparativoAnual: TAction[9]
+      Tag = 1
       Caption = 'Comparativo Anual'
       OnExecute = actComparativoAnualExecute
     end
     object actTotalPorMes: TAction[10]
+      Tag = 1
       Caption = 'Total Anual Por Mês'
       OnExecute = actTotalPorMesExecute
     end
     inherited actImprimir: TAction[11]
     end
     object actTotalSubtipo: TAction[12]
+      Tag = 1
       Caption = 'Total Por Subtipo'
       OnExecute = actTotalSubtipoExecute
     end
     object actTotalTipo: TAction[13]
+      Tag = 1
       Caption = 'Total Por Tipo'
       OnExecute = actTotalTipoExecute
     end
     object actTotalFPgto: TAction[14]
+      Tag = 1
       Caption = 'Total Por Forma Pgto.'
       OnExecute = actTotalFPgtoExecute
     end

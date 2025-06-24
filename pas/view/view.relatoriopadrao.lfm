@@ -11,6 +11,7 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
+  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 600

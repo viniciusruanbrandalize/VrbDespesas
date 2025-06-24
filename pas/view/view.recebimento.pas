@@ -438,6 +438,7 @@ procedure TfrmRecebimento.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuOperacao, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmRecebimento.FormCreate(Sender: TObject);
@@ -483,6 +484,7 @@ end;
 
 procedure TfrmRecebimento.FormShow(Sender: TObject);
 begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
   AjustarListView();
   inherited;
 end;

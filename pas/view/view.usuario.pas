@@ -48,6 +48,7 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     Controller: TUsuarioController;
   public
@@ -194,6 +195,7 @@ end;
 procedure TfrmUsuario.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuCadastro, True);
+  CloseAction := caFree;
 end;
 
 procedure TfrmUsuario.FormCreate(Sender: TObject);
@@ -205,6 +207,12 @@ end;
 procedure TfrmUsuario.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(Controller);
+end;
+
+procedure TfrmUsuario.FormShow(Sender: TObject);
+begin
+  LiberarBloquearAcessos(Self.actList, Self.Name);
+  inherited;
 end;
 
 procedure TfrmUsuario.CarregarDados;
