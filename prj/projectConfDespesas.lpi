@@ -21,12 +21,12 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="exe\Configurador32"/>
+            <Filename Value="..\exe\Configurador32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="pas\view;..\pas\view;..\pas\lib;pas\controller;..\pas\model\ini"/>
-            <UnitOutputDirectory Value="compile\win32"/>
+            <OtherUnitFiles Value="..\configurador\src\view;..\src\view;..\src\lib;..\configurador\src\controller;..\src\model\ini"/>
+            <UnitOutputDirectory Value="..\configurador\compile\win32"/>
           </SearchPaths>
           <CodeGeneration>
             <TargetCPU Value="i386"/>
@@ -68,29 +68,29 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\view\view.principal.pas"/>
+        <Filename Value="..\configurador\src\view\view.principal.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="..\pas\view\view.mensagem.pas"/>
+        <Filename Value="..\configurador\src\controller\controller.principal.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\view\view.mensagem.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmMessage"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="..\pas\lib\lib.cryptini.pas"/>
+        <Filename Value="..\src\lib\lib.cryptini.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="pas\controller\controller.principal.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\pas\model\ini\model.ini.conexao.pas"/>
+        <Filename Value="..\src\model\ini\model.ini.conexao.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
@@ -99,12 +99,12 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="exe\Configurador32"/>
+      <Filename Value="..\exe\Configurador32"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="pas\view;..\pas\view;..\pas\lib;pas\controller;..\pas\model\ini"/>
-      <UnitOutputDirectory Value="compile\win32"/>
+      <OtherUnitFiles Value="..\configurador\src\view;..\src\view;..\src\lib;..\configurador\src\controller;..\src\model\ini"/>
+      <UnitOutputDirectory Value="..\configurador\compile\win32"/>
     </SearchPaths>
     <CodeGeneration>
       <TargetCPU Value="i386"/>

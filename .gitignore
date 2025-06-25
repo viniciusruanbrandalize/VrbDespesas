@@ -47,6 +47,7 @@ backup/
 configurador/backup/
 configurador/compile/
 database/conversao/
+prj/backup/
 *.dbg
 *.err
 *.log

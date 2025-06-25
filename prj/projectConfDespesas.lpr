@@ -10,8 +10,8 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, view.principal, view.mensagem, lib.cryptini, model.ini.conexao,
-  controller.principal
+  Forms, view.principal,
+  controller.principal, model.ini.conexao, lib.cryptini, view.mensagem
   { you can add units after this };
 
 {$R *.res}

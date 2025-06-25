@@ -54,8 +54,8 @@ begin
   try
     CSV.CSVOptions.Delimiter := ',';
     CSV.CSVOptions.FirstLineAsFieldNames := True;
-    DirTela := ExtractFilePath(ParamStr(0))+'permission\UC_TELA.DB';
-    DirAcao := ExtractFilePath(ParamStr(0))+'permission\UC_ACAO.DB';
+    DirTela := ExtractFilePath(ParamStr(0))+'resources\UC_TELA.DB';
+    DirAcao := ExtractFilePath(ParamStr(0))+'resources\UC_ACAO.DB';
 
     CSV.LoadFromCSVFile(DirTela);
 
