@@ -179,7 +179,7 @@ begin
               '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
               '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-              'group by mes, ano, paga '+
+              'group by mes, ano, paga, id_dono_cadastro '+
               'having extract(year from data) between :ano_inicial and :ano_final ' +
               'and extract(month from data) = :mes_informado and ' +
               'paga = true and id_dono_cadastro = :id_dono_cadastro '+
@@ -204,7 +204,7 @@ begin
               '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
               '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-              'group by mes, ano, paga '+
+              'group by mes, ano, paga, id_dono_cadastro '+
               'having ano between :ano_inicial and :ano_final ' +
               'and mes = :mes_informado and ' +
               'paga = true and id_dono_cadastro = :id_dono_cadastro '+
@@ -249,7 +249,7 @@ begin
       FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
               'sum(total) as total, extract(year from data) as ano, ' +
               'count(id) as qtd_despesa from despesa '+
-              'group by ano, paga '+
+              'group by ano, paga, id_dono_cadastro '+
               'having extract(year from data) between :ano_inicial and :ano_final ' +
               'and paga = true and id_dono_cadastro = :id_dono_cadastro ' +
               'order by ano desc';
@@ -260,7 +260,7 @@ begin
       FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
               'sum(total) as total, extract(year from data) as ano, ' +
               'count(id) as qtd_despesa from despesa '+
-              'group by ano, paga '+
+              'group by ano, paga, id_dono_cadastro '+
               'having ano between :ano_inicial and :ano_final ' +
               'and paga = true and id_dono_cadastro = :id_dono_cadastro ' +
               'order by ano desc';
@@ -315,7 +315,7 @@ begin
               '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
               '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-              'group by mes, ano, paga '+
+              'group by mes, ano, paga, id_dono_cadastro '+
               'having extract(year from data) = :ano_informado and ' +
               'paga = true and id_dono_cadastro = :id_dono_cadastro ' +
               'order by mes asc';
@@ -339,7 +339,7 @@ begin
               '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
               '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-              'group by mes, ano, paga '+
+              'group by mes, ano, paga, id_dono_cadastro '+
               'having ano = :ano_informado and ' +
               'paga = true and id_dono_cadastro = :id_dono_cadastro ' +
               'order by mes asc';

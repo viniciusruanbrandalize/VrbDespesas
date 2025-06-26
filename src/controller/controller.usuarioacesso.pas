@@ -144,8 +144,8 @@ var
   Erro: String;
 begin
   { SO TESTA A LIBERACAO QUANDO ESTA EM RELEASE }
-  //{$IFOPT D+}
-  //{$ELSE}
+  {$IFOPT D+}
+  {$ELSE}
   for i := 0 to Pred(ActList.ActionCount) do
   begin
     NomeAcao := ActList.Actions[i].Name;
@@ -156,7 +156,7 @@ begin
       TAction(ActList.Actions[i]).Enabled := liberado;
     end;
   end;
-  //{$ENDIF}
+  {$ENDIF}
 end;
 
 constructor TUsuarioAcessoController.Create;
