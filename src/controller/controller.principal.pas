@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, controls, controller.erro, lib.util, lib.types,
   model.connection.conexao1, view.participante, view.recebimento,
-  model.dao.configuracao, model.entity.configuracao;
+  model.dao.configuracao, model.entity.configuracao, lib.version;
 
 type
 
@@ -86,10 +86,11 @@ begin
   try
     ConfDAO := TConfiguracaoDAO.Create;
     try
-      if ConfDAO.BuscarPorNome(Conf, 'NUMERO_VERSAO', Erro) then
+      {if ConfDAO.BuscarPorNome(Conf, 'NUMERO_VERSAO', Erro) then
         Versao := Conf.Valor;
-      {if ConfDAO.BuscarPorNome(Conf, 'DATA_VERSAO', Erro) then
+      if ConfDAO.BuscarPorNome(Conf, 'DATA_VERSAO', Erro) then
         Versao := Versao +' '+ Conf.Valor;}
+      Versao := NUMERO_VERSAO;
       Result := Versao;
     finally
       FreeAndNil(ConfDAO);

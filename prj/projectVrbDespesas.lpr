@@ -41,7 +41,7 @@ uses
   controller.copiaseguranca, controller.configuracao,
   controller.selecionardonocadastro, controller.ajuda, controller.usuarioacesso,
   view.recebimento, view.relatoriorecebimento, view.copiaseguranca,
-  view.configuracao, view.selecionardonocadastro, view.ajuda;
+  view.configuracao, view.selecionardonocadastro, view.ajuda, lib.version;
 
 {$R *.res}
 

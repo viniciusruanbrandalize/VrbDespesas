@@ -322,13 +322,11 @@ create table uc_acesso (
 
 --db arquivo mysql / mariaDB
 
-create generator gen_id_arquivo;
-
 create table arquivo (
 	id integer not null auto_increment, 
 	nome varchar(250) not null, 
 	extensao varchar(50) not null, 
-	binario blob sub_type 0 not null, 
+	binario longblob not null, 
 	data_hora_upload timestamp not null, 
 	id_despesa integer not null,
 	constraint pk_arquivo primary key (id)

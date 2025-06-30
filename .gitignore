@@ -42,6 +42,7 @@ __recovery/
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
 
+img/
 compile/
 backup/
 configurador/backup/

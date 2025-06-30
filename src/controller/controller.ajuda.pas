@@ -5,8 +5,8 @@ unit controller.ajuda;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, model.dao.configuracao,
-  model.entity.configuracao;
+  Classes, SysUtils, ComCtrls, model.dao.configuracao,
+  model.entity.configuracao, lib.version;
 
 type
 
@@ -36,8 +36,9 @@ begin
   try
     ConfDAO := TConfiguracaoDAO.Create;
     try
-      if ConfDAO.BuscarPorNome(Conf, 'NUMERO_VERSAO', Erro) then
-        Result := Conf.Valor;
+      //if ConfDAO.BuscarPorNome(Conf, 'NUMERO_VERSAO', Erro) then
+      //  Result := Conf.Valor;
+      Result := NUMERO_VERSAO;
     finally
       FreeAndNil(ConfDao);
     end;
@@ -58,8 +59,9 @@ begin
   try
     ConfDAO := TConfiguracaoDAO.Create;
     try
-      if ConfDAO.BuscarPorNome(Conf, 'DATA_VERSAO', Erro) then
-        StrData := Conf.Valor;
+      //if ConfDAO.BuscarPorNome(Conf, 'DATA_VERSAO', Erro) then
+      //  StrData := Conf.Valor;
+      StrData := DATA_VERSA0;
       if TryStrToDate(StrData, Data) then
         Result := FormatDateTime('dddddd', Data)
       else

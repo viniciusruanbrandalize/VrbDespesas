@@ -36,9 +36,20 @@ var
 begin
   try
 
-    sql := 'select first 20 l.*, u.nome as nome_usuario from login l ' +
-           'left join usuario u on l.id_usuario = u.id ' +
-           'order by data desc, hora desc';
+    if Driver = DRV_FIREBIRD then
+    begin
+      sql := 'select first 20 l.*, u.nome as nome_usuario from login l ' +
+             'left join usuario u on l.id_usuario = u.id ' +
+             'order by data desc, hora desc';
+    end
+    else
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    begin
+      sql := 'select l.*, u.nome as nome_usuario from login l ' +
+             'left join usuario u on l.id_usuario = u.id ' +
+             'order by data desc, hora desc ' +
+             'limit 20 ';
+    end;
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -85,8 +96,8 @@ begin
 
     Qry.ParamByName('nome_pc').AsString     := Login.NomePC;
     Qry.ParamByName('ip_pc').AsString       := Login.IPPC;
-    Qry.ParamByName('data').AsDate          := Login.Data;
-    Qry.ParamByName('hora').AsTime          := Login.Hora;
+    Qry.ParamByName('data').AsDateTime      := Login.Data;
+    Qry.ParamByName('hora').AsDateTime      := Login.Hora;
     Qry.ParamByName('id_usuario').AsInteger := Login.Usuario.Id;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
