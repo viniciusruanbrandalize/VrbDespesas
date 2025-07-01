@@ -6,10 +6,7 @@ interface
 
 uses
   {$IFDEF MSWINDOWS}
-  System.NetEncoding, Windows,
-  {$ENDIF}
-  {$IFDEF LINUX}
-  IdStackUnix,
+  System.NetEncoding, Windows, WinSock,
   {$ENDIF}
   Classes, SysUtils, md5, Sha1, TypInfo, Forms, controls,
   ExtCtrls;
@@ -30,41 +27,50 @@ uses
 
 implementation
 
+{$IFDEF MSWINDOWS}
 function retornarIP: String;
-{var
-  IP: TIdIPWatch; }
+var
+  wsaData : TWSAData;
 begin
-  {IP := TIdIPWatch.Create;
-  try
-    Result := IP.LocalIP;
-  finally
-    IP.Free;
-  end;}
+  WSAStartup(257, wsaData);
+  Result := Trim(inet_ntoa(PInAddr(GetHostByName(nil)^.h_addr_list^)^));
+end;
+{$ENDIF}
+
+{$IFDEF LINUX}
+function retornaIP: String;
+begin
+  //A implementar...
   Result := '127.0.0.1';
 end;
+{$ENDIF}
 
+{$IFDEF MSWINDOWS}
 function retornarPc: String;
-{var
-  {$IFDEF MSWINDOWS}
-  IdStack : TIdStackWindows;
-  {$ENDIF}
-  {$IFDEF LINUX}
-  IdStack : TIdStackUnix;
-  {$ENDIF}}
-begin
-  {{$IFDEF MSWINDOWS}
-  IdStack := TIdStackWindows.Create;
-  {$ENDIF}
-  {$IFDEF LINUX}
-  IdStack := TIdStackUnix.Create;
-  {$ENDIF}
+var
+  lpBuffer : PChar;
+  nSize : DWord;
+const Buff_Size = MAX_COMPUTERNAME_LENGTH + 1;
+  begin
   try
-    Result := IdStack.HostName;
-  finally
-    IdStack.Free;
-  end;}
-  result := 'LOCALHOST';
+    nSize := Buff_Size;
+    lpBuffer := StrAlloc(Buff_Size);
+    GetComputerName(lpBuffer,nSize);
+    Result := String(lpBuffer);
+    StrDispose(lpBuffer);
+  except
+    Result := '';
+  end;
 end;
+{$ENDIF}
+
+{$IFDEF LINUX}
+function retornarPc: String;
+begin
+  //A implementar...
+  Result := 'LOCALHOST';
+end;
+{$ENDIF}
 
 {$IFDEF MSWINDOWS}
 function retornarInfoSistemaWindows: String;
