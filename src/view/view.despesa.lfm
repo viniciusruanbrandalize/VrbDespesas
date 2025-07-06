@@ -68,6 +68,7 @@ inherited frmDespesa: TfrmDespesa
                 TrailingSeparator = False
                 TextForNullDate = '  /  /  '
                 LeadingZeros = True
+                Visible = False
                 Kind = dtkDate
                 TimeFormat = tf24
                 TimeDisplay = tdHMS
@@ -90,6 +91,7 @@ inherited frmDespesa: TfrmDespesa
                 TrailingSeparator = False
                 TextForNullDate = '  /  /  '
                 LeadingZeros = True
+                Visible = False
                 Kind = dtkDate
                 TimeFormat = tf24
                 TimeDisplay = tdHMS
@@ -107,6 +109,7 @@ inherited frmDespesa: TfrmDespesa
                 Width = 16
                 AutoSize = False
                 Caption = ' à '
+                Visible = False
               end
             end
             inherited lbPesquisa: TListBox

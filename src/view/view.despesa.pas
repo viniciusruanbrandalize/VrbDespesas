@@ -753,6 +753,7 @@ begin
   mObs.Lines.Clear;
   edtFormaPagamento.Clear;
   edtValorFpgto.Text := FormatFloat(',#0.00', 0);
+  trbNivelPrecisao.Position := 0;
 end;
 
 procedure TfrmDespesa.CarregarSelecionado;

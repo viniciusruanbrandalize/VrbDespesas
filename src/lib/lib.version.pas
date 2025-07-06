@@ -8,9 +8,9 @@ uses
   Classes, SysUtils;
 
 const
-  NUMERO_VERSAO = '0.1.2-alpha';
+  NUMERO_VERSAO = '0.1.3-alpha';
 const
-  DATA_VERSA0   = '01/07/2025';
+  DATA_VERSA0   = '06/07/2025';
 
 implementation
 
