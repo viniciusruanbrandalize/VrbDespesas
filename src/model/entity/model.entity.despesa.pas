@@ -261,12 +261,18 @@ end;
 
 procedure TDespesa.SetDonoCadastro(AValue: TParticipante);
 begin
-  FDonoCadastro:=AValue;
+  if AValue = nil then
+    raise Exception.Create('O campo "Dono do Cadastro" precisa ser preenchido!')
+  else
+    FDonoCadastro := AValue;
 end;
 
 procedure TDespesa.SetFornecedor(AValue: TParticipante);
 begin
-  FFornecedor:=AValue;
+  if AValue = nil then
+    raise Exception.Create('O campo "Fornecedor" precisa ser preenchido!')
+  else
+    FFornecedor:=AValue;
 end;
 
 procedure TDespesa.SetFrete(AValue: Double);
@@ -281,12 +287,18 @@ end;
 
 procedure TDespesa.SetId(AValue: Integer);
 begin
-  FId := AValue;
+  if AValue = 0 then
+    raise Exception.Create('O campo "Id" precisa ser preenchido!')
+  else
+    FId := AValue;
 end;
 
 procedure TDespesa.SetDescricao(AValue: String);
 begin
-  FDescricao := AValue;
+  if AValue = EmptyStr then
+    raise Exception.Create('O campo "Descrição" precisa ser preenchido!')
+  else
+    FDescricao := AValue;
 end;
 
 procedure TDespesa.SetNivelPrecisao(AValue: Integer);
@@ -316,12 +328,18 @@ end;
 
 procedure TDespesa.SetSubTipo(AValue: TSubtipoDespesa);
 begin
-  FSubTipo := AValue;
+  if AValue = nil then
+    raise Exception.Create('O campo "Subtipo" precisa ser preenchido!')
+  else
+    FSubTipo := AValue;
 end;
 
 procedure TDespesa.SetTotal(AValue: Double);
 begin
-  FTotal := AValue;
+  if AValue <= 0 then
+    raise Exception.Create('O campo "Total" precisa ser preenchido!')
+  else
+    FTotal := AValue;
 end;
 
 procedure TDespesa.SetUsuarioCadastro(AValue: TUsuario);
@@ -331,7 +349,10 @@ end;
 
 procedure TDespesa.SetValor(AValue: Double);
 begin
-  FValor := AValue;
+  if AValue <= 0 then
+    raise Exception.Create('O campo "Valor" precisa ser preenchido!')
+  else
+    FValor := AValue;
 end;
 
 constructor TDespesa.Create;

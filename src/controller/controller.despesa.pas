@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.despesa, model.dao.padrao,
   model.dao.despesa, model.entity.despesaformapagamento, model.entity.arquivo,
-  model.connection.conexao1, Dialogs;
+  model.connection.conexao1, Dialogs, model.dao.configuracao,
+  model.entity.configuracao;
 
 type
 
@@ -27,6 +28,7 @@ type
     function Inserir(objDespesa : TDespesa; out Erro: string): Boolean;
     function Editar(objDespesa : TDespesa; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+    function BuscarConfiguracaoPorNome(Nome: String; out Erro: String): String;
 
     procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
     function BuscarPagamentoPorId(objPagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
@@ -101,6 +103,27 @@ end;
 function TDespesaController.Excluir(Id: Integer; out Erro: string): Boolean;
 begin
   Result := DespesaDAO.Excluir(Id, Erro);
+end;
+
+function TDespesaController.BuscarConfiguracaoPorNome(Nome: String; out Erro: String): String;
+var
+  ConfigDAO: TConfiguracaoDAO;
+  Configuracao: TConfiguracao;
+begin
+  Configuracao := TConfiguracao.Create;
+  try
+    ConfigDAO := TConfiguracaoDAO.Create;
+    try
+      if ConfigDAO.BuscarPorNome(Configuracao, Nome, Erro) then
+        Result := Configuracao.Valor
+      else
+        Result := '';
+    finally
+      ConfigDAO.Free;
+    end;
+  finally
+    Configuracao.Free;
+  end;
 end;
 
 procedure TDespesaController.ListarPagamento(lv: TListView; IdDespesa: Integer);

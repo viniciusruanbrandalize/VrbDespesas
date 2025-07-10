@@ -1,5 +1,6 @@
 INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES (1, 'NUMERO_VERSAO','Número da versão do sistema','Número da versão do sistema','1.0.0.0',false);
 INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES (2, 'DATA_VERSAO','Data da versão do sistema','Data da versão do sistema','26/04/2025',false);
+INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES (3,'USAR_CARTAO_VALE','Usar o cartão quando for informado pagamento como Vale','Pede as informações do cartão na forma de pagamento Vale','1',false);
 
 SET GENERATOR gen_id_configuracao TO 2;
 
@@ -29,9 +30,8 @@ INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (4,'Pix','PIX',false);
 INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (5,'Transferencia Bancaria','TRA',false);
 INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (6,'Boleto','BOL',false);
 INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (7,'Deposito','DEP',false);
-INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (8,'Vale Alimentação','ALI',false);
-INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (9,'Vale Combustível','COM',false);
-INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (10,'Vale Refeição','REF',false);
+INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (8,'Vale','VAL',false);
+INSERT INTO FORMA_PGTO (ID,NOME,SIGLA,EXCLUIDO) VALUES (9,'Cheque','CHE',false);
 
 SET GENERATOR gen_id_forma_pgto TO 10;
 

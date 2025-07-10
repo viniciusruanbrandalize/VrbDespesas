@@ -195,8 +195,16 @@ begin
     if Operacao = opInserir then
     begin
       Controller.Despesa.Cadastro := Now;
-      if not Controller.Inserir(Controller.Despesa, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
+      if Controller.Despesa.DespesaFormaPagamento.Count > 0 then
+      begin
+        if not Controller.Inserir(Controller.Despesa, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
+      end
+      else
+      begin
+        TfrmMessage.Mensagem('Nenhuma forma de pagamento informada!', 'Aviso', 'C', [mbOK]);
+        Exit;
+      end;
     end;
     if Operacao = opEditar then
     begin
@@ -645,6 +653,7 @@ procedure TfrmDespesa.PrepararPesquisaGenerica(i: Integer);
 var
   idFpgto,
   qtdReg: Integer;
+  Erro, Valor : String;
 begin
 
   {
@@ -659,8 +668,8 @@ begin
    9  - CHEQUE
   }
 
+  Valor := '0';
   idFpgto := Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
-
   Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '-1';
 
   case idFpgto of
@@ -688,10 +697,28 @@ begin
       if qtdReg = 0 then
         TfrmMessage.Mensagem('Nenhuma conta bancária cadastrada!', 'Aviso', 'C', [mbOK]);
     end;
+    8:
+    begin
+      Valor := Controller.BuscarConfiguracaoPorNome('USAR_CARTAO_VALE', Erro);
+      if Trim(Valor) = '1' then
+      begin
+        lblPesquisaGenerica.Caption := 'Cartão: *';
+        Controller.PesquisarCartao(cbPesquisaGenerica, lbPesquisaGenericaId, qtdReg);
+        cbPesquisaGenerica.OnChange := @edtCartaoChange;
+        if qtdReg = 0 then
+          TfrmMessage.Mensagem('Nenhum cartão cadastrado!', 'Aviso', 'C', [mbOK]);
+      end
+      else
+      if Trim(Valor) = '' then
+      begin
+        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOK]);
+        Valor := '0';
+      end;
+    end;
   end;
 
-  cbPesquisaGenerica.Visible  := ( idFpgto in  [2, 3, 4, 5, 6] );
-  lblPesquisaGenerica.Visible := ( idFpgto in  [2, 3, 4, 5, 6] );
+  cbPesquisaGenerica.Visible  :=  (idFpgto in  [2, 3, 4, 5, 6]) or (Trim(Valor) = '1');
+  lblPesquisaGenerica.Visible :=  (idFpgto in  [2, 3, 4, 5, 6]) or (Trim(Valor) = '1');
 
 end;
 
