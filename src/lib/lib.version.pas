@@ -22,7 +22,7 @@ uses
   Classes, SysUtils;
 
 const
-  NUMERO_VERSAO = '0.2.3-alpha';
+  NUMERO_VERSAO = '0.2.1-alpha';
 const
   DATA_VERSA0   = '10/07/2025';
 

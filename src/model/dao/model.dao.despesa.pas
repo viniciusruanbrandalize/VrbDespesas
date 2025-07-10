@@ -676,7 +676,7 @@ begin
              'left join banco bnc on bnc.id = cb.id_banco '+
              'where UPPER(c.numero) like :busca ' +
              'c.id_dono_cadastro = :id_dono_cadastro '+
-             'order by c.numero'+CmdLimit;
+             'order by c.numero '+CmdLimit;
     end;
 
     Qry.Close;
