@@ -674,7 +674,7 @@ begin
              'left join bandeira b on b.id = c.id_bandeira ' +
              'left join conta_bancaria cb on cb.id = c.id_conta_bancaria ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(c.numero) like :busca ' +
+             'where UPPER(c.numero) like :busca and ' +
              'c.id_dono_cadastro = :id_dono_cadastro '+
              'order by c.numero '+CmdLimit;
     end;
