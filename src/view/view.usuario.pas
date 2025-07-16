@@ -45,6 +45,8 @@ type
     procedure actVoltarAcessoExecute(Sender: TObject);
     procedure cklbTituloAcessoClickCheck(Sender: TObject);
     procedure cklbTituloTelaSelectionChange(Sender: TObject; User: boolean);
+    procedure edtNomeChange(Sender: TObject);
+    procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -55,6 +57,7 @@ type
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
+    function CamposEstaoPreenchidos: Boolean; override;
   end;
 
 var
@@ -116,8 +119,8 @@ end;
 procedure TfrmUsuario.actIncluirExecute(Sender: TObject);
 begin
   inherited;
-  edtSenha1.EditLabel.Caption := 'Senha:';
-  edtSenha2.EditLabel.Caption := 'Confirmação de Senha:';
+  edtSenha1.EditLabel.Caption := 'Senha: *';
+  edtSenha2.EditLabel.Caption := 'Confirmação de Senha: *';
 end;
 
 procedure TfrmUsuario.actPesquisarExecute(Sender: TObject);
@@ -192,6 +195,16 @@ begin
                                         lbNomeTela.Items[cklbTituloTela.ItemIndex], Controller.Usuario.Id);
 end;
 
+procedure TfrmUsuario.edtNomeChange(Sender: TObject);
+begin
+  ValidarObrigatorioChange(Sender);
+end;
+
+procedure TfrmUsuario.edtNomeExit(Sender: TObject);
+begin
+  ValidarObrigatorioExit(Sender);
+end;
+
 procedure TfrmUsuario.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   TfrmPrincipal(Owner).BarraLateralVazia(TfrmPrincipal(Owner).pnlMenuCadastro, True);
@@ -240,8 +253,8 @@ begin
   begin
     edtNome.Text  := Controller.Usuario.Nome;
     edtEmail.Text := Controller.Usuario.Email;
-    edtSenha1.EditLabel.Caption := 'Senha Atual:';
-    edtSenha2.EditLabel.Caption := 'Nova Senha:';
+    edtSenha1.EditLabel.Caption := 'Senha Atual: *';
+    edtSenha2.EditLabel.Caption := 'Nova Senha: *';
 
     if Controller.Usuario.Alteracao <> 0 then
     begin
@@ -265,6 +278,24 @@ begin
     TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Abort;
   end;
+end;
+
+function TfrmUsuario.CamposEstaoPreenchidos: Boolean;
+begin
+  Result := False;
+  if Trim(edtNome.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtNome)
+  else
+  if Trim(edtEmail.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtEmail)
+  else
+  if Trim(edtSenha1.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtSenha1)
+  else
+  if Trim(edtSenha2.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtSenha2)
+  else
+    Result := True;
 end;
 
 end.

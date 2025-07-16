@@ -9,6 +9,7 @@ object frmCadastroPadrao: TfrmCadastroPadrao
   ClientWidth = 1000
   OnCreate = FormCreate
   OnShow = FormShow
+  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 600
@@ -285,6 +286,17 @@ object frmCadastroPadrao: TfrmCadastroPadrao
                   Action = actCancelar
                 end
               end
+            end
+            object lblObrigatorio: TLabel
+              Left = 600
+              Height = 15
+              Top = 0
+              Width = 115
+              Caption = '* Campo obrigatório!'
+              Font.Color = clRed
+              Font.Style = [fsBold]
+              ParentFont = False
+              Visible = False
             end
           end
         end

@@ -51,7 +51,7 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
             inherited pnlBotaoCad: TPanel
               TabOrder = 2
             end
-            object edtNome: TLabeledEdit[1]
+            object edtNome: TLabeledEdit[2]
               Left = 8
               Height = 23
               Top = 32
@@ -61,8 +61,10 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               EditLabel.Caption = 'Nome: *'
               TabOrder = 0
               Text = 'edtNome'
+              OnChange = edtNomeChange
+              OnExit = edtNomeExit
             end
-            object edtTipo: TLabeledEdit[2]
+            object edtTipo: TLabeledEdit[3]
               Left = 432
               Height = 23
               Top = 32
@@ -75,10 +77,11 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               ParentFont = False
               TabOrder = 1
               Text = 'edtTipo'
+              OnChange = edtNomeChange
               OnExit = edtTipoExit
               OnKeyUp = edtTipoKeyUp
             end
-            object lbTipoNome: TListBox[3]
+            object lbTipoNome: TListBox[4]
               Left = 432
               Height = 19
               Top = 61
@@ -98,7 +101,7 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               OnKeyPress = lbTipoNomeKeyPress
               OnSelectionChange = lbTipoNomeSelectionChange
             end
-            object lbTipoId: TListBox[4]
+            object lbTipoId: TListBox[5]
               Left = 768
               Height = 19
               Top = 61

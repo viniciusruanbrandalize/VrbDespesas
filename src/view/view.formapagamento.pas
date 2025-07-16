@@ -18,6 +18,8 @@ type
     procedure actExcluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
+    procedure edtNomeChange(Sender: TObject);
+    procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -28,6 +30,7 @@ type
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
+    function CamposEstaoPreenchidos: Boolean; override;
   end;
 
 var
@@ -93,6 +96,16 @@ begin
   end;
 end;
 
+procedure TfrmFormaPagamento.edtNomeChange(Sender: TObject);
+begin
+  ValidarObrigatorioChange(Sender);
+end;
+
+procedure TfrmFormaPagamento.edtNomeExit(Sender: TObject);
+begin
+  ValidarObrigatorioExit(Sender);
+end;
+
 procedure TfrmFormaPagamento.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
@@ -139,6 +152,15 @@ begin
     TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Abort;
   end;
+end;
+
+function TfrmFormaPagamento.CamposEstaoPreenchidos: Boolean;
+begin
+  Result := False;
+  if Trim(edtNome.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtNome)
+  else
+    Result := True;
 end;
 
 end.

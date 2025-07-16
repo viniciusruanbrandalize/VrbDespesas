@@ -6,8 +6,9 @@ interface
 
 uses
   Classes, SysUtils, Forms, controls, controller.erro, lib.util, lib.types,
-  model.connection.conexao1, view.participante, view.recebimento,
-  model.dao.configuracao, model.entity.configuracao, lib.version;
+  model.connection.conexao1, model.connection.conexao2, view.participante,
+  view.recebimento, model.dao.configuracao, model.entity.configuracao,
+  lib.version;
 
 type
 
@@ -23,6 +24,7 @@ type
     procedure AbrirTelaRecebimento(Formulario: TfrmRecebimento; AParent: TWinControl; FormularioPai: TForm; Tipo: TTelaRecebimento);
     function RetornarNomeUsuario: String;
     function RetornarVersao: String;
+    function TestarConexao: Boolean;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -98,6 +100,13 @@ begin
   finally
     FreeAndNil(Conf);
   end;
+end;
+
+function TPrincipalController.TestarConexao: Boolean;
+begin
+  dmConexao1.TestarConexao;
+  dmConexao2.TestarConexao;
+  Result := True;
 end;
 
 constructor TPrincipalController.Create;

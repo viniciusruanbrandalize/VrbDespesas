@@ -424,11 +424,16 @@ begin
            'id_despesa) values (:id, :nome, :extensao, :binario, :data_hora_upload, ' +
            ':id_despesa)';
 
-        Despesa.Arquivo[i].Id := GerarId(SEQ_ID_ARQUIVO, 1, dmConexao2.SQLConnector);
         QryArquivo.Close;
         QryArquivo.SQL.Clear;
         QryArquivo.SQL.Add(sql);
-        QryArquivo.ParamByName('id').AsInteger           := Despesa.Arquivo[i].Id;
+
+        if not AutoInc then
+        begin
+          Despesa.Arquivo[i].Id := GerarId(SEQ_ID_ARQUIVO, 1, dmConexao2.SQLConnector);
+          QryArquivo.ParamByName('id').AsInteger         := Despesa.Arquivo[i].Id;
+        end;
+
         QryArquivo.ParamByName('nome').AsString          := Despesa.Arquivo[i].Nome;
         QryArquivo.ParamByName('extensao').AsString      := Despesa.Arquivo[i].Extensao;
         QryArquivo.ParamByName('data_hora_upload').AsDateTime := Despesa.Arquivo[i].DataHoraUpload;

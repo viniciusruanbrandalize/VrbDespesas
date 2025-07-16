@@ -119,6 +119,8 @@ type
     procedure edtBandeiraExit(Sender: TObject);
     procedure edtBandeiraKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtNumeroChange(Sender: TObject);
+    procedure edtNumeroExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -138,10 +140,13 @@ type
     procedure LimparCamposCartao;
     procedure CarregarSelecionadoCartao;
     procedure ExibirInformacoesConta;
+    function CamposEstaoPreenchidosCartao: Boolean;
+    function CamposEstaoPreenchidosPix: Boolean;
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
+    function CamposEstaoPreenchidos: Boolean; override;
   end;
 
 var
@@ -251,7 +256,7 @@ end;
 procedure TfrmContaBancaria.LimparCamposPix;
 begin
   edtChave.Text := '';
-  cbTipoChave.ItemIndex := -1;
+  cbTipoChave.ItemIndex := 0;
 end;
 
 procedure TfrmContaBancaria.CarregarSelecionadoPix;
@@ -277,7 +282,7 @@ end;
 procedure TfrmContaBancaria.LimparCamposCartao;
 begin
   edtNumeroCartao.Clear;
-  cbTipoCartao.ItemIndex := -1;
+  cbTipoCartao.ItemIndex := 0;
   edtBandeira.Clear;
   dtpValidade.Date := Now;
   ckbAproximacao.Checked := False;
@@ -313,6 +318,27 @@ begin
            Controller.ContaBancaria.Banco.Nome;
   pnlInfoContaCartao.Caption := texto;
   pnlInfoContaPix.Caption    := texto;
+end;
+
+function TfrmContaBancaria.CamposEstaoPreenchidosCartao: Boolean;
+begin
+  Result := False;
+  if Trim(edtNumeroCartao.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtNumeroCartao)
+  else
+  if Trim(edtBandeira.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtBandeira)
+  else
+    Result := True;
+end;
+
+function TfrmContaBancaria.CamposEstaoPreenchidosPix: Boolean;
+begin
+  Result := False;
+  if Trim(edtChave.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtChave)
+  else
+    Result := True;
 end;
 
 procedure TfrmContaBancaria.actSalvarExecute(Sender: TObject);
@@ -387,6 +413,7 @@ begin
     if lbBancoNome.Visible then
       lbBancoNome.Visible := false;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmContaBancaria.edtBancoKeyUp(Sender: TObject; var Key: Word;
@@ -419,6 +446,7 @@ begin
     if lbBandeiraNome.Visible then
       lbBandeiraNome.Visible := false;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmContaBancaria.edtBandeiraKeyUp(Sender: TObject; var Key: Word;
@@ -442,6 +470,16 @@ begin
     lbBandeiraNome.Items.Clear;
     lbBandeiraNome.Visible := False;
   end;
+end;
+
+procedure TfrmContaBancaria.edtNumeroChange(Sender: TObject);
+begin
+  ValidarObrigatorioChange(Sender);
+end;
+
+procedure TfrmContaBancaria.edtNumeroExit(Sender: TObject);
+begin
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmContaBancaria.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -622,7 +660,7 @@ begin
   edtAgencia.Clear;
   edtNumero.Clear;
   edtBanco.Clear;
-  cbTipo.ItemIndex := -1;
+  cbTipo.ItemIndex := 0;
 end;
 
 procedure TfrmContaBancaria.CarregarSelecionado;
@@ -643,6 +681,21 @@ begin
     TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Abort;
   end;
+end;
+
+function TfrmContaBancaria.CamposEstaoPreenchidos: Boolean;
+begin
+  Result := False;
+  if Trim(edtNumero.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtNumero)
+  else
+  if Trim(edtAgencia.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtAgencia)
+  else
+  if Trim(edtBanco.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtBanco)
+  else
+    Result := True;
 end;
 
 end.

@@ -56,30 +56,34 @@ inherited frmBanco: TfrmBanco
             inherited pnlBotaoCad: TPanel
               TabOrder = 2
             end
-            object edtNome: TLabeledEdit[1]
+            object edtNome: TLabeledEdit[2]
               Left = 104
               Height = 23
               Top = 32
               Width = 452
               EditLabel.Height = 15
               EditLabel.Width = 452
-              EditLabel.Caption = 'Nome:'
+              EditLabel.Caption = 'Nome: *'
               MaxLength = 60
               TabOrder = 1
               Text = 'edtNome'
+              OnChange = edtNumeroChange
+              OnExit = edtNumeroExit
             end
-            object edtNumero: TLabeledEdit[2]
+            object edtNumero: TLabeledEdit[3]
               Left = 5
               Height = 23
               Top = 32
               Width = 84
               EditLabel.Height = 15
               EditLabel.Width = 84
-              EditLabel.Caption = 'Número:'
+              EditLabel.Caption = 'Número: *'
               MaxLength = 11
               NumbersOnly = True
               TabOrder = 0
               Text = 'edtNumero'
+              OnChange = edtNumeroChange
+              OnExit = edtNumeroExit
             end
           end
         end

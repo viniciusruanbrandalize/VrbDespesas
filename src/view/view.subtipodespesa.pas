@@ -21,6 +21,8 @@ type
     procedure actExcluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
+    procedure edtNomeChange(Sender: TObject);
+    procedure edtNomeExit(Sender: TObject);
     procedure edtTipoExit(Sender: TObject);
     procedure edtTipoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -36,6 +38,7 @@ type
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
+    function CamposEstaoPreenchidos: Boolean; override;
   end;
 
 var
@@ -77,6 +80,16 @@ begin
   end;
 end;
 
+procedure TfrmSubtipoDespesa.edtNomeChange(Sender: TObject);
+begin
+  ValidarObrigatorioChange(Self);
+end;
+
+procedure TfrmSubtipoDespesa.edtNomeExit(Sender: TObject);
+begin
+  ValidarObrigatorioExit(Sender);
+end;
+
 procedure TfrmSubtipoDespesa.edtTipoExit(Sender: TObject);
 begin
   if not lbTipoNome.Focused then
@@ -84,6 +97,7 @@ begin
     if lbTipoNome.Visible then
       lbTipoNome.Visible := false;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmSubtipoDespesa.edtTipoKeyUp(Sender: TObject; var Key: Word;
@@ -209,6 +223,18 @@ begin
     TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Abort;
   end;
+end;
+
+function TfrmSubtipoDespesa.CamposEstaoPreenchidos: Boolean;
+begin
+  Result := False;
+  if Trim(edtNome.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtNome)
+  else
+  if Trim(edtTipo.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtTipo)
+  else
+    Result := True;
 end;
 
 end.

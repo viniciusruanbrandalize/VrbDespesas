@@ -7,8 +7,8 @@ inherited frmUsuario: TfrmUsuario
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsAcesso
-        TabIndex = 2
+        ActivePage = tbsCadastro
+        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -51,31 +51,35 @@ inherited frmUsuario: TfrmUsuario
             inherited pnlBotaoCad: TPanel
               TabOrder = 4
             end
-            object edtNome: TLabeledEdit[1]
+            object edtNome: TLabeledEdit[2]
               Left = 8
               Height = 23
               Top = 32
               Width = 392
               EditLabel.Height = 15
               EditLabel.Width = 392
-              EditLabel.Caption = 'Nome:'
+              EditLabel.Caption = 'Nome: *'
               MaxLength = 20
               TabOrder = 0
               Text = 'edtNome'
+              OnChange = edtNomeChange
+              OnExit = edtNomeExit
             end
-            object edtEmail: TLabeledEdit[2]
+            object edtEmail: TLabeledEdit[3]
               Left = 416
               Height = 23
               Top = 32
               Width = 392
               EditLabel.Height = 15
               EditLabel.Width = 392
-              EditLabel.Caption = 'E-mail:'
+              EditLabel.Caption = 'E-mail: *'
               MaxLength = 300
               TabOrder = 1
               Text = 'edtEmail'
+              OnChange = edtNomeChange
+              OnExit = edtNomeExit
             end
-            object edtSenha1: TLabeledEdit[3]
+            object edtSenha1: TLabeledEdit[4]
               Left = 8
               Height = 23
               Top = 96
@@ -83,13 +87,15 @@ inherited frmUsuario: TfrmUsuario
               EchoMode = emPassword
               EditLabel.Height = 15
               EditLabel.Width = 392
-              EditLabel.Caption = 'Senha:'
+              EditLabel.Caption = 'Senha: *'
               MaxLength = 20
               PasswordChar = '#'
               TabOrder = 2
               Text = 'edtSenha1'
+              OnChange = edtNomeChange
+              OnExit = edtNomeExit
             end
-            object edtSenha2: TLabeledEdit[4]
+            object edtSenha2: TLabeledEdit[5]
               Left = 8
               Height = 23
               Top = 160
@@ -97,13 +103,15 @@ inherited frmUsuario: TfrmUsuario
               EchoMode = emPassword
               EditLabel.Height = 15
               EditLabel.Width = 392
-              EditLabel.Caption = 'Senha:'
+              EditLabel.Caption = 'Senha: *'
               MaxLength = 20
               PasswordChar = '#'
               TabOrder = 3
               Text = 'edtSenha2'
+              OnChange = edtNomeChange
+              OnExit = edtNomeExit
             end
-            object lblCadastroAlteracao: TLabel[5]
+            object lblCadastroAlteracao: TLabel[6]
               Left = 5
               Height = 23
               Top = 451

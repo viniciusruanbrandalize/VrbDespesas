@@ -31,6 +31,7 @@ type
     procedure ConectarBaseDeDados();
     function VerificarNomeDLL(Driver: String): String;
   public
+    function TestarConexao: Boolean;
     property Usuario:      TUsuario read FUsuario write FUsuario;
     property DonoCadastro: TParticipante read FDonoCadastro write FDonoCadastro;
     property UsuarioDC:    TUsuarioDonoCadastroLista read FUsuarioDC write FUsuarioDC;
@@ -54,7 +55,7 @@ begin
   {$IFOPT D+}
   FUsuario.Id := 1;
   FUsuario.Nome := 'ADMIN';
-  FDonoCadastro.Id := 77;
+  FDonoCadastro.Id := 91;
   {$ELSE}
   {$ENDIF}
 end;
@@ -246,6 +247,26 @@ begin
     {$ENDIF}
   end;
   Result := Lib;
+end;
+
+function TdmConexao1.TestarConexao: Boolean;
+var
+  qryTemp: TSQLQuery;
+begin
+  qryTemp := TSQLQuery.Create(nil);
+  try
+    try
+      qryTemp.SQLConnection := SQLConnector;
+      qryTemp.SQL.Add('select id from usuario where id = :id');
+      qryTemp.ParamByName('id').AsInteger := 0;
+      qryTemp.Open;
+      Result := True;
+    except
+      Result := False;
+    end;
+  finally
+    qryTemp.Free;
+  end;
 end;
 
 end.

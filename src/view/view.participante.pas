@@ -45,6 +45,8 @@ type
     procedure edtCidadeExit(Sender: TObject);
     procedure edtCidadeKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState
       );
+    procedure edtNomeChange(Sender: TObject);
+    procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -60,6 +62,7 @@ type
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
+    function CamposEstaoPreenchidos: Boolean; override;
     property EhDonoCadastro: Boolean read FEhDonoCadastro write SetEhDonoCadastro;
   end;
 
@@ -161,6 +164,16 @@ begin
     lbCidadeNome.Items.Clear;
     lbCidadeNome.Visible := False;
   end;
+end;
+
+procedure TfrmParticipante.edtNomeChange(Sender: TObject);
+begin
+  ValidarObrigatorioChange(Sender);
+end;
+
+procedure TfrmParticipante.edtNomeExit(Sender: TObject);
+begin
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmParticipante.actExcluirExecute(Sender: TObject);
@@ -319,6 +332,15 @@ begin
     TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Abort;
   end;
+end;
+
+function TfrmParticipante.CamposEstaoPreenchidos: Boolean;
+begin
+  Result := False;
+  if Trim(edtNome.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtNome)
+  else
+    Result := True;
 end;
 
 end.

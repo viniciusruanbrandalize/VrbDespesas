@@ -64,6 +64,8 @@ type
     procedure actSalvarExecute(Sender: TObject);
     procedure cbContaBancariaRecChange(Sender: TObject);
     procedure cbContaBancariaSalChange(Sender: TObject);
+    procedure edtDescricaoChange(Sender: TObject);
+    procedure edtDescricaoExit(Sender: TObject);
     procedure edtFormaPagamentoRecExit(Sender: TObject);
     procedure edtFormaPagamentoRecKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -109,6 +111,7 @@ type
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
+    function CamposEstaoPreenchidos: Boolean; override;
     property Tipo: TTelaRecebimento read FTipo write FTipo;
   end;
 
@@ -228,6 +231,16 @@ begin
     Controller.Recebimento.ContaBancaria.Id := id;
 end;
 
+procedure TfrmRecebimento.edtDescricaoChange(Sender: TObject);
+begin
+  ValidarObrigatorioChange(Sender);
+end;
+
+procedure TfrmRecebimento.edtDescricaoExit(Sender: TObject);
+begin
+  ValidarObrigatorioExit(Sender);
+end;
+
 procedure TfrmRecebimento.edtFormaPagamentoRecExit(Sender: TObject);
 begin
   if not lbFormaPagamentoNomeRec.Focused then
@@ -235,6 +248,7 @@ begin
     if lbFormaPagamentoNomeRec.Visible then
       lbFormaPagamentoNomeRec.Visible := False;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmRecebimento.edtFormaPagamentoRecKeyUp(Sender: TObject;
@@ -268,6 +282,7 @@ begin
     if lbFormaPagamentoNomeSal.Visible then
       lbFormaPagamentoNomeSal.Visible := False;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmRecebimento.edtFormaPagamentoSalKeyUp(Sender: TObject;
@@ -321,6 +336,7 @@ begin
     if lbPagadorNomeRec.Visible then
       lbPagadorNomeRec.Visible := False;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmRecebimento.edtPagadorRecKeyUp(Sender: TObject; var Key: Word;
@@ -354,6 +370,7 @@ begin
     if lbPagadorNomeSal.Visible then
       lbPagadorNomeSal.Visible := False;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmRecebimento.edtPagadorSalKeyUp(Sender: TObject; var Key: Word;
@@ -812,6 +829,36 @@ begin
   begin
     TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Abort;
+  end;
+end;
+
+function TfrmRecebimento.CamposEstaoPreenchidos: Boolean;
+begin
+  Result := False;
+  case FTipo of
+    telaSalario:
+    begin
+      if Trim(edtPagadorSal.Text) = EmptyStr then
+        ValidarObrigatorioExit(edtPagadorSal)
+      else
+      if Trim(edtFormaPagamentoSal.Text) = EmptyStr then
+        ValidarObrigatorioExit(edtFormaPagamentoSal)
+      else
+        Result := True;
+    end;
+    telaGeral:
+    begin
+      if Trim(edtDescricao.Text) = EmptyStr then
+        ValidarObrigatorioExit(edtDescricao)
+      else
+      if Trim(edtPagadorRec.Text) = EmptyStr then
+        ValidarObrigatorioExit(edtPagadorRec)
+      else
+      if Trim(edtFormaPagamentoRec.Text) = EmptyStr then
+        ValidarObrigatorioExit(edtFormaPagamentoRec)
+      else
+        Result := True;
+    end;
   end;
 end;
 

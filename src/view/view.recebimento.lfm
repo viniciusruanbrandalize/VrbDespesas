@@ -7,6 +7,8 @@ inherited frmRecebimento: TfrmRecebimento
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
+        ActivePage = tbsCadastro
+        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited pnlPesquisa: TPanel
@@ -18,7 +20,7 @@ inherited frmRecebimento: TfrmRecebimento
         end
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
-            object pgcCadastro: TPageControl[1]
+            object pgcCadastro: TPageControl[2]
               Left = 0
               Height = 475
               Top = 0
@@ -263,6 +265,7 @@ inherited frmRecebimento: TfrmRecebimento
                     ParentFont = False
                     TabOrder = 7
                     Text = 'edtPagadorSal'
+                    OnChange = edtDescricaoChange
                     OnExit = edtPagadorSalExit
                     OnKeyUp = edtPagadorSalKeyUp
                   end
@@ -279,6 +282,7 @@ inherited frmRecebimento: TfrmRecebimento
                     ParentFont = False
                     TabOrder = 8
                     Text = 'edtFormaPagamentoSal'
+                    OnChange = edtDescricaoChange
                     OnExit = edtFormaPagamentoSalExit
                     OnKeyUp = edtFormaPagamentoSalKeyUp
                   end
@@ -403,6 +407,8 @@ inherited frmRecebimento: TfrmRecebimento
                     EditLabel.Caption = 'Descrição: *'
                     TabOrder = 1
                     Text = 'edtDescricao'
+                    OnChange = edtDescricaoChange
+                    OnExit = edtDescricaoExit
                   end
                   object dtpData: TDateTimePicker
                     Left = 8
@@ -458,6 +464,7 @@ inherited frmRecebimento: TfrmRecebimento
                     ParentFont = False
                     TabOrder = 2
                     Text = 'edtPagadorRec'
+                    OnChange = edtDescricaoChange
                     OnExit = edtPagadorRecExit
                     OnKeyUp = edtPagadorRecKeyUp
                   end
@@ -474,6 +481,7 @@ inherited frmRecebimento: TfrmRecebimento
                     ParentFont = False
                     TabOrder = 3
                     Text = 'edtFormaPagamentoRec'
+                    OnChange = edtDescricaoChange
                     OnExit = edtFormaPagamentoRecExit
                     OnKeyUp = edtFormaPagamentoRecKeyUp
                   end

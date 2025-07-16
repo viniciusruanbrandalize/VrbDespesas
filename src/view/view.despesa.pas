@@ -88,6 +88,8 @@ type
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure actSalvarFpgtoExecute(Sender: TObject);
+    procedure edtDescricaoChange(Sender: TObject);
+    procedure edtDescricaoExit(Sender: TObject);
     procedure edtFormaPagamentoExit(Sender: TObject);
     procedure edtFormaPagamentoKeyUp(Sender: TObject; var Key: word;
       Shift: TShiftState);
@@ -121,10 +123,12 @@ type
     procedure edtPixChange(Sender: TObject);
     procedure edtCartaoChange(Sender: TObject);
     procedure edtContaBancariaChange(Sender: TObject);
+    function CamposEstaoPreenchidosPagamento: Boolean;
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
+    function CamposEstaoPreenchidos: Boolean; override;
   end;
 
 var
@@ -226,6 +230,16 @@ begin
   IncluirPagamento();
 end;
 
+procedure TfrmDespesa.edtDescricaoChange(Sender: TObject);
+begin
+  ValidarObrigatorioChange(Sender);
+end;
+
+procedure TfrmDespesa.edtDescricaoExit(Sender: TObject);
+begin
+  ValidarObrigatorioExit(Sender);
+end;
+
 procedure TfrmDespesa.edtFormaPagamentoExit(Sender: TObject);
 begin
   if not lbFormaPagamentoNome.Focused then
@@ -266,6 +280,7 @@ begin
     if lbFornecedorNome.Visible then
       lbFornecedorNome.Visible := False;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmDespesa.edtFornecedorKeyUp(Sender: TObject; var Key: word;
@@ -299,6 +314,7 @@ begin
     if lbSubtipoNome.Visible then
       lbSubtipoNome.Visible := False;
   end;
+  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmDespesa.edtSubtipoKeyUp(Sender: TObject; var Key: word;
@@ -757,6 +773,15 @@ begin
   Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '-1';
 end;
 
+function TfrmDespesa.CamposEstaoPreenchidosPagamento: Boolean;
+begin
+  Result := False;
+  if Trim(edtFormaPagamento.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtFormaPagamento)
+  else
+    Result := True;
+end;
+
 procedure TfrmDespesa.CarregarDados;
 begin
   lvPadrao.Items.Clear;
@@ -817,6 +842,21 @@ begin
       Abort;
     end;
   end;
+end;
+
+function TfrmDespesa.CamposEstaoPreenchidos: Boolean;
+begin
+  Result := False;
+  if Trim(edtDescricao.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtDescricao)
+  else
+  if Trim(edtFornecedor.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtFornecedor)
+  else
+  if Trim(edtSubtipo.Text) = EmptyStr then
+    ValidarObrigatorioExit(edtSubtipo)
+  else
+    Result := True;
 end;
 
 end.

@@ -95,6 +95,7 @@ type
     pnlFundo: TPanel;
     btnCadastro: TSpeedButton;
     Timer: TTimer;
+    tmrConexao: TTimer;
     procedure actAjudaExecute(Sender: TObject);
     procedure actBackupExecute(Sender: TObject);
     procedure actBancoExecute(Sender: TObject);
@@ -130,6 +131,7 @@ type
     procedure imgMenuClick(Sender: TObject);
     procedure pnlMenuRetairClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
+    procedure tmrConexaoTimer(Sender: TObject);
   private
     Controller: TPrincipalController;
     MenuEstaRetraido: Boolean;
@@ -357,6 +359,11 @@ end;
 procedure TfrmPrincipal.TimerTimer(Sender: TObject);
 begin
   lblHora.Caption := FormatDateTime('dddddd', Now)+#13+FormatDateTime('tt', Now);
+end;
+
+procedure TfrmPrincipal.tmrConexaoTimer(Sender: TObject);
+begin
+  Controller.TestarConexao;
 end;
 
 procedure TfrmPrincipal.retairMenu;

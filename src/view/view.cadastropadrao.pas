@@ -26,6 +26,7 @@ type
     cbPesquisa: TComboBox;
     edtPesquisa: TEdit;
     img: TImageList;
+    lblObrigatorio: TLabel;
     lbPesquisa: TListBox;
     lvPadrao: TListView;
     MenuItem1: TMenuItem;
@@ -69,9 +70,12 @@ type
     procedure CarregarDados; virtual; abstract;
     procedure CarregarSelecionado; virtual; abstract;
     procedure LimparCampos; virtual; abstract;
+    function CamposEstaoPreenchidos: Boolean; virtual; abstract;
     procedure NumericoExit(Sender: TObject);
     procedure NumericoEnter(Sender: TObject);
     procedure NumericoKeyPress(Sender: TObject; var Key: char);
+    procedure ValidarObrigatorioExit(Sender: TObject);
+    procedure ValidarObrigatorioChange(Sender: TObject);
     procedure LiberarBloquearAcessos(var ListaDeAcoes: TActionList; Tela: String);
   end;
 
@@ -216,6 +220,24 @@ end;
 procedure TfrmCadastroPadrao.NumericoKeyPress(Sender: TObject; var Key: char);
 begin
   CampoNumericoKeyPress(Sender, Key);
+end;
+
+procedure TfrmCadastroPadrao.ValidarObrigatorioExit(Sender: TObject);
+begin
+  if Trim((Sender as TLabeledEdit).Text) = EmptyStr then
+  begin
+    if (Sender as TLabeledEdit).CanFocus then
+      (Sender as TLabeledEdit).SetFocus;
+    lblObrigatorio.Left := (Sender as TLabeledEdit).Left;
+    lblObrigatorio.Top  := (Sender as TLabeledEdit).Top + (Sender as TLabeledEdit).Height;
+    lblObrigatorio.Parent := (Sender as TLabeledEdit).Parent;
+    lblObrigatorio.Visible := True;
+  end;
+end;
+
+procedure TfrmCadastroPadrao.ValidarObrigatorioChange(Sender: TObject);
+begin
+  lblObrigatorio.Visible := False;
 end;
 
 procedure TfrmCadastroPadrao.LiberarBloquearAcessos(var ListaDeAcoes: TActionList;

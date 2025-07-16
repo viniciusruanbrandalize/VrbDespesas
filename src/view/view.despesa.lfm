@@ -126,7 +126,7 @@ inherited frmDespesa: TfrmDespesa
             inherited pnlBotaoCad: TPanel
               TabOrder = 15
             end
-            object edtDescricao: TLabeledEdit[1]
+            object edtDescricao: TLabeledEdit[2]
               Left = 176
               Height = 23
               Top = 18
@@ -137,8 +137,10 @@ inherited frmDespesa: TfrmDespesa
               MaxLength = 100
               TabOrder = 2
               Text = 'edtDescricao'
+              OnChange = edtDescricaoChange
+              OnExit = edtDescricaoExit
             end
-            object dtpData: TDateTimePicker[2]
+            object dtpData: TDateTimePicker[3]
               Left = 8
               Height = 23
               Top = 18
@@ -160,7 +162,7 @@ inherited frmDespesa: TfrmDespesa
               HideDateTimeParts = []
               MonthNames = 'Long'
             end
-            object dtpHora: TDateTimePicker[3]
+            object dtpHora: TDateTimePicker[4]
               Left = 96
               Height = 23
               Top = 18
@@ -182,14 +184,14 @@ inherited frmDespesa: TfrmDespesa
               HideDateTimeParts = []
               MonthNames = 'Long'
             end
-            object lblData: TLabel[4]
+            object lblData: TLabel[5]
               Left = 8
               Height = 15
               Top = 1
               Width = 35
               Caption = 'Data: *'
             end
-            object edtFornecedor: TLabeledEdit[5]
+            object edtFornecedor: TLabeledEdit[6]
               Left = 544
               Height = 23
               Top = 18
@@ -203,10 +205,11 @@ inherited frmDespesa: TfrmDespesa
               ParentFont = False
               TabOrder = 3
               Text = 'edtFornecedor'
+              OnChange = edtDescricaoChange
               OnExit = edtFornecedorExit
               OnKeyUp = edtFornecedorKeyUp
             end
-            object edtSubtipo: TLabeledEdit[6]
+            object edtSubtipo: TLabeledEdit[7]
               Left = 8
               Height = 23
               Top = 72
@@ -220,10 +223,11 @@ inherited frmDespesa: TfrmDespesa
               ParentFont = False
               TabOrder = 5
               Text = 'edtSubtipo'
+              OnChange = edtDescricaoChange
               OnExit = edtSubtipoExit
               OnKeyUp = edtSubtipoKeyUp
             end
-            object edtValor: TLabeledEdit[7]
+            object edtValor: TLabeledEdit[8]
               Left = 264
               Height = 23
               Top = 72
@@ -236,7 +240,7 @@ inherited frmDespesa: TfrmDespesa
               Text = 'edtValor'
               OnChange = edtValorChange
             end
-            object edtDesconto: TLabeledEdit[8]
+            object edtDesconto: TLabeledEdit[9]
               Left = 392
               Height = 23
               Top = 72
@@ -249,7 +253,7 @@ inherited frmDespesa: TfrmDespesa
               Text = 'edtDesconto'
               OnChange = edtValorChange
             end
-            object edtFrete: TLabeledEdit[9]
+            object edtFrete: TLabeledEdit[10]
               Left = 520
               Height = 23
               Top = 72
@@ -262,7 +266,7 @@ inherited frmDespesa: TfrmDespesa
               Text = 'edtFrete'
               OnChange = edtValorChange
             end
-            object edtOutros: TLabeledEdit[10]
+            object edtOutros: TLabeledEdit[11]
               Left = 648
               Height = 23
               Top = 72
@@ -275,7 +279,7 @@ inherited frmDespesa: TfrmDespesa
               Text = 'edtOutros'
               OnChange = edtValorChange
             end
-            object edtTotal: TLabeledEdit[11]
+            object edtTotal: TLabeledEdit[12]
               Left = 776
               Height = 23
               Top = 72
@@ -287,7 +291,7 @@ inherited frmDespesa: TfrmDespesa
               TabOrder = 11
               Text = 'edtTotal'
             end
-            object edtChaveNfe: TLabeledEdit[12]
+            object edtChaveNfe: TLabeledEdit[13]
               Left = 8
               Height = 23
               Top = 128
@@ -300,7 +304,7 @@ inherited frmDespesa: TfrmDespesa
               TabOrder = 12
               Text = 'edtChaveNfe'
             end
-            object mObs: TMemo[13]
+            object mObs: TMemo[14]
               Left = 8
               Height = 160
               Top = 179
@@ -310,14 +314,14 @@ inherited frmDespesa: TfrmDespesa
               )
               TabOrder = 13
             end
-            object lblObs: TLabel[14]
+            object lblObs: TLabel[15]
               Left = 8
               Height = 15
               Top = 160
               Width = 203
               Caption = 'Observações / Informações adicionais:'
             end
-            object pgcMaisOpcoes: TPageControl[15]
+            object pgcMaisOpcoes: TPageControl[16]
               Cursor = crHandPoint
               Left = 408
               Height = 280
@@ -591,7 +595,7 @@ inherited frmDespesa: TfrmDespesa
                 end
               end
             end
-            object lbSubtipoNome: TListBox[16]
+            object lbSubtipoNome: TListBox[17]
               Left = 8
               Height = 19
               Top = 96
@@ -611,7 +615,7 @@ inherited frmDespesa: TfrmDespesa
               OnKeyPress = lbSubtipoNomeKeyPress
               OnSelectionChange = lbSubtipoNomeSelectionChange
             end
-            object lbSubtipoId: TListBox[17]
+            object lbSubtipoId: TListBox[18]
               Left = 264
               Height = 19
               Top = 96
@@ -626,7 +630,7 @@ inherited frmDespesa: TfrmDespesa
               TabOrder = 16
               Visible = False
             end
-            object lbFornecedorNome: TListBox[18]
+            object lbFornecedorNome: TListBox[19]
               Left = 544
               Height = 19
               Top = 42
@@ -644,7 +648,7 @@ inherited frmDespesa: TfrmDespesa
               OnKeyPress = lbFornecedorNomeKeyPress
               OnSelectionChange = lbFornecedorNomeSelectionChange
             end
-            object lbFornecedorId: TListBox[19]
+            object lbFornecedorId: TListBox[20]
               Left = 816
               Height = 19
               Top = 42
@@ -659,7 +663,7 @@ inherited frmDespesa: TfrmDespesa
               TabOrder = 17
               Visible = False
             end
-            object trbNivelPrecisao: TTrackBar[20]
+            object trbNivelPrecisao: TTrackBar[21]
               Cursor = crHandPoint
               Left = 8
               Height = 24
@@ -670,14 +674,14 @@ inherited frmDespesa: TfrmDespesa
               ShowSelRange = False
               TabOrder = 18
             end
-            object lblNivelPrecisao: TLabel[21]
+            object lblNivelPrecisao: TLabel[22]
               Left = 8
               Height = 15
               Top = 352
               Width = 141
               Caption = 'Nível de Precisão: * (0 - 10)'
             end
-            object lblInfoPrecisao: TLabel[22]
+            object lblInfoPrecisao: TLabel[23]
               Left = 48
               Height = 13
               Top = 392
