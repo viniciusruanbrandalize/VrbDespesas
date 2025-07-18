@@ -358,10 +358,12 @@
         <ComponentName Value="frmSubtipoDespesa"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="201"/>
-        <CursorPos X="8" Y="241"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="93"/>
+        <CursorPos X="37" Y="101"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.subtipodespesa.pas"/>
@@ -694,8 +696,8 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="826"/>
-        <CursorPos X="22" Y="843"/>
+        <TopLine Value="825"/>
+        <CursorPos X="64" Y="844"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -1249,7 +1251,7 @@
         <UsageCount Value="8"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="18">
+    <JumpHistory HistoryIndex="22">
       <Position>
         <Filename Value="..\src\view\view.recebimento.pas"/>
         <Caret Line="112" Column="26" TopLine="92"/>
@@ -1325,6 +1327,22 @@
       <Position>
         <Filename Value="..\src\view\view.recebimento.pas"/>
         <Caret Line="372" Column="34" TopLine="341"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.subtipodespesa.pas"/>
+        <Caret Line="216" Column="61" TopLine="200"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.subtipodespesa.pas"/>
+        <Caret Line="98" TopLine="93"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.subtipodespesa.pas"/>
+        <Caret Line="96" TopLine="87"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.subtipodespesa.pas"/>
+        <Caret Line="100" Column="37" TopLine="92"/>
       </Position>
     </JumpHistory>
     <RunParams>
