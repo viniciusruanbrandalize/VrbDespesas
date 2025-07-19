@@ -22,7 +22,7 @@ type
     Cartao: TCartao;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
-    procedure PesquisarBanco(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarBanco(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(objContaBancaria : TContaBancaria; Id: Integer; out Erro: String): Boolean;
     function Inserir(objContaBancaria : TContaBancaria; out Erro: string): Boolean;
     function Editar(objContaBancaria : TContaBancaria; out Erro: string): Boolean;
@@ -38,7 +38,7 @@ type
 
     {$Region 'CARTAO'}
     procedure ListarCartao(lv: TListView; IdConta: Integer);
-    procedure PesquisarBandeira(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarBandeira(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarCartaoPorId(objCartao : TCartao; Id: Integer; out Erro: String): Boolean;
     function InserirCartao(objCartao : TCartao; out Erro: string): Boolean;
     function EditarCartao(objCartao : TCartao; out Erro: string): Boolean;
@@ -63,7 +63,7 @@ begin
   ContaBancariaDAO.Pesquisar(lv, Campo, Busca);
 end;
 
-procedure TContaBancariaController.PesquisarBanco(lbNome, lbId: TListBox;
+procedure TContaBancariaController.PesquisarBanco(lbNome: TComboBox; lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
   ContaBancariaDAO.PesquisaGenerica(TB_BANCO, lbNome, lbId, busca, 10, QtdRegistro);
@@ -129,7 +129,7 @@ begin
   ContaBancariaDAO.ListarCartao(lv, IdConta);
 end;
 
-procedure TContaBancariaController.PesquisarBandeira(lbNome, lbId: TListBox;
+procedure TContaBancariaController.PesquisarBandeira(lbNome: TComboBox; lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
   ContaBancariaDAO.PesquisaGenerica(TB_BANDEIRA, lbNome, lbId, busca, 10, QtdRegistro);

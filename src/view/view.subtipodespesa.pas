@@ -7,31 +7,30 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   view.cadastropadrao, controller.subtipodespesa, view.mensagem, lib.types,
-  LCLType, ComCtrls, Grids;
+  LCLType, ComCtrls;
 
 type
 
   { TfrmSubtipoDespesa }
 
   TfrmSubtipoDespesa = class(TfrmCadastroPadrao)
+    cbTipo: TComboBox;
     edtNome: TLabeledEdit;
-    edtTipo: TLabeledEdit;
-    lbTipoNome: TListBox;
+    lblTipo: TLabel;
     lbTipoId: TListBox;
     procedure actExcluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
+    procedure cbTipoChange(Sender: TObject);
+    procedure cbTipoExit(Sender: TObject);
+    procedure cbTipoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cbTipoSelect(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
     procedure edtNomeExit(Sender: TObject);
-    procedure edtTipoExit(Sender: TObject);
-    procedure edtTipoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure lbTipoNomeDblClick(Sender: TObject);
-    procedure lbTipoNomeKeyPress(Sender: TObject; var Key: char);
-    procedure lbTipoNomeSelectionChange(Sender: TObject; User: boolean);
   private
     Controller: TSubtipoDespesaController;
   public
@@ -80,6 +79,42 @@ begin
   end;
 end;
 
+procedure TfrmSubtipoDespesa.cbTipoChange(Sender: TObject);
+begin
+  ValidarObrigatorioChange(Sender);
+end;
+
+procedure TfrmSubtipoDespesa.cbTipoExit(Sender: TObject);
+begin
+  ValidarObrigatorioExit(Sender);
+end;
+
+procedure TfrmSubtipoDespesa.cbTipoKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
+  begin
+    if (Length((Sender as TComboBox).Text) >= 3) then
+    begin
+      controller.PesquisarTipoDespesa((Sender as TComboBox), lbTipoId, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
+    end;
+  end;
+end;
+
+procedure TfrmSubtipoDespesa.cbTipoSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.SubtipoDespesa.TipoDespesa.Id := StrToInt(lbTipoId.Items[(Sender as TComboBox).ItemIndex]);
+end;
+
 procedure TfrmSubtipoDespesa.edtNomeChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Self);
@@ -88,39 +123,6 @@ end;
 procedure TfrmSubtipoDespesa.edtNomeExit(Sender: TObject);
 begin
   ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmSubtipoDespesa.edtTipoExit(Sender: TObject);
-begin
-  if not lbTipoNome.Focused then
-  begin
-    if lbTipoNome.Visible then
-      lbTipoNome.Visible := false;
-  end;
-  ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmSubtipoDespesa.edtTipoKeyUp(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-var
-  qtdReg: Integer;
-begin
-  qtdReg := 0;
-  if (Length(edtTipo.Text) > 3) then
-  begin
-    controller.PesquisarTipoDespesa(lbTipoNome, lbTipoId, edtTipo.Text, qtdReg);
-    lbTipoNome.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
-    begin
-      if lbTipoNome.CanFocus then
-        lbTipoNome.SetFocus;
-    end;
-  end
-  else
-  begin
-    lbTipoNome.Items.Clear;
-    lbTipoNome.Visible := False;
-  end;
 end;
 
 procedure TfrmSubtipoDespesa.FormClose(Sender: TObject;
@@ -164,35 +166,6 @@ begin
   inherited;
 end;
 
-procedure TfrmSubtipoDespesa.lbTipoNomeDblClick(Sender: TObject);
-begin
-  if lbTipoNome.ItemIndex <> -1 then
-  begin
-    edtTipo.Text := lbTipoNome.Items[lbTipoNome.ItemIndex];
-    controller.SubtipoDespesa.TipoDespesa.Id := StrToInt(lbTipoId.Items[lbTipoNome.ItemIndex]);
-    lbTipoNome.Visible := False;
-  end
-  else
-  begin
-    edtTipo.Text := '';
-    controller.SubtipoDespesa.TipoDespesa.Id := 0;
-  end;
-end;
-
-procedure TfrmSubtipoDespesa.lbTipoNomeKeyPress(Sender: TObject; var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbTipoNome.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmSubtipoDespesa.lbTipoNomeSelectionChange(Sender: TObject;
-  User: boolean);
-begin
-  edtTipo.Text := lbTipoNome.Items[lbTipoNome.ItemIndex];
-end;
-
 procedure TfrmSubtipoDespesa.CarregarDados;
 begin
   lvPadrao.Items.Clear;
@@ -202,8 +175,8 @@ end;
 procedure TfrmSubtipoDespesa.LimparCampos;
 begin
   edtNome.Clear;
-  edtTipo.Clear;
-  lbTipoNome.Items.Clear;
+  cbTipo.Clear;
+  cbTipo.Items.Clear;
   lbTipoId.Items.Clear;
 end;
 
@@ -216,7 +189,7 @@ begin
   if Controller.BuscarPorId(controller.SubtipoDespesa, id, erro) then
   begin
     edtNome.Text  := Controller.SubtipoDespesa.Nome;
-    edtTipo.Text   := Controller.SubtipoDespesa.TipoDespesa.Nome;
+    cbTipo.Text   := Controller.SubtipoDespesa.TipoDespesa.Nome;
   end
   else
   begin
@@ -231,8 +204,8 @@ begin
   if Trim(edtNome.Text) = EmptyStr then
     ValidarObrigatorioExit(edtNome)
   else
-  if Trim(edtTipo.Text) = EmptyStr then
-    ValidarObrigatorioExit(edtTipo)
+  if cbTipo.ItemIndex = -1 then
+    ValidarObrigatorioExit(cbTipo)
   else
     Result := True;
 end;

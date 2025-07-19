@@ -28,34 +28,34 @@ type
     btnIncluirFormaPgto: TSpeedButton;
     btnIncluirArquivo: TSpeedButton;
     btnSalvarFormaPgto: TSpeedButton;
+    cbFormaPagamento: TComboBox;
+    cbSubtipo: TComboBox;
     cbPesquisaGenerica: TComboBox;
+    cbFornecedor: TComboBox;
     dtpData: TDateTimePicker;
     dtpHora: TDateTimePicker;
     dtpInicial: TDateTimePicker;
     dtpFinal: TDateTimePicker;
     edtDescricao: TLabeledEdit;
     edtChaveNfe: TLabeledEdit;
-    edtFormaPagamento: TLabeledEdit;
-    edtFornecedor: TLabeledEdit;
     edtTotal: TLabeledEdit;
-    edtSubtipo: TLabeledEdit;
     edtValor: TLabeledEdit;
     edtDesconto: TLabeledEdit;
     edtFrete: TLabeledEdit;
     edtOutros: TLabeledEdit;
     edtValorFpgto: TLabeledEdit;
+    lblFormaPagamento: TLabel;
+    lblSubtipo: TLabel;
     lblInfoPrecisao: TLabel;
     lblNivelPrecisao: TLabel;
     lblPesquisaGenerica: TLabel;
-    lbFormaPagamentoNome: TListBox;
     lblObs: TLabel;
     lblData: TLabel;
     lblPeriodoFiltro: TLabel;
+    lblFornecedor: TLabel;
     lbSubtipoId: TListBox;
     lbFornecedorId: TListBox;
     lbFormaPagamentoId: TListBox;
-    lbSubtipoNome: TListBox;
-    lbFornecedorNome: TListBox;
     lbPesquisaGenericaId: TListBox;
     lvPagamento: TListView;
     lvArquivo: TListView;
@@ -88,30 +88,21 @@ type
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure actSalvarFpgtoExecute(Sender: TObject);
+    procedure cbFormaPagamentoKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cbFormaPagamentoSelect(Sender: TObject);
+    procedure cbFornecedorKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cbFornecedorSelect(Sender: TObject);
+    procedure cbSubtipoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cbSubtipoSelect(Sender: TObject);
     procedure edtDescricaoChange(Sender: TObject);
     procedure edtDescricaoExit(Sender: TObject);
-    procedure edtFormaPagamentoExit(Sender: TObject);
-    procedure edtFormaPagamentoKeyUp(Sender: TObject; var Key: word;
-      Shift: TShiftState);
-    procedure edtFornecedorExit(Sender: TObject);
-    procedure edtFornecedorKeyUp(Sender: TObject; var Key: word;
-      Shift: TShiftState);
-    procedure edtSubtipoExit(Sender: TObject);
-    procedure edtSubtipoKeyUp(Sender: TObject; var Key: word; Shift: TShiftState);
     procedure edtValorChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure lbFormaPagamentoNomeDblClick(Sender: TObject);
-    procedure lbFormaPagamentoNomeKeyPress(Sender: TObject; var Key: char);
-    procedure lbFormaPagamentoNomeSelectionChange(Sender: TObject; User: boolean);
-    procedure lbFornecedorNomeDblClick(Sender: TObject);
-    procedure lbFornecedorNomeKeyPress(Sender: TObject; var Key: char);
-    procedure lbFornecedorNomeSelectionChange(Sender: TObject; User: boolean);
-    procedure lbSubtipoNomeDblClick(Sender: TObject);
-    procedure lbSubtipoNomeKeyPress(Sender: TObject; var Key: char);
-    procedure lbSubtipoNomeSelectionChange(Sender: TObject; User: boolean);
   private
     Controller: TDespesaController;
     procedure AjustarTelaPagamento(Inserindo: boolean);
@@ -230,6 +221,90 @@ begin
   IncluirPagamento();
 end;
 
+procedure TfrmDespesa.cbFormaPagamentoKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
+  begin
+    if (Length((Sender as TComboBox).Text) >= 3) then
+    begin
+      controller.PesquisarFormaPagamento((Sender as TComboBox), lbFormaPagamentoId, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
+    end;
+  end;
+end;
+
+procedure TfrmDespesa.cbFormaPagamentoSelect(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := Pred(Controller.Despesa.DespesaFormaPagamento.Count);
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id :=
+      StrToInt(lbFormaPagamentoId.Items[(Sender as TComboBox).ItemIndex]);
+end;
+
+procedure TfrmDespesa.cbFornecedorKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
+  begin
+    if (Length((Sender as TComboBox).Text) >= 3) then
+    begin
+      controller.PesquisarFornecedor((Sender as TComboBox), lbFornecedorId, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
+    end;
+  end;
+end;
+
+procedure TfrmDespesa.cbFornecedorSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.Despesa.Fornecedor.Id :=
+      StrToInt(lbFornecedorId.Items[(Sender as TComboBox).ItemIndex]);
+end;
+
+procedure TfrmDespesa.cbSubtipoKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
+  begin
+    if (Length((Sender as TComboBox).Text) >= 3) then
+    begin
+      controller.PesquisarSubtipo((Sender as TComboBox), lbSubtipoId, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
+    end;
+  end;
+end;
+
+procedure TfrmDespesa.cbSubtipoSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.Despesa.SubTipo.Id :=
+      StrToInt(lbSubtipoId.Items[(Sender as TComboBox).ItemIndex]);
+end;
+
 procedure TfrmDespesa.edtDescricaoChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
@@ -238,106 +313,6 @@ end;
 procedure TfrmDespesa.edtDescricaoExit(Sender: TObject);
 begin
   ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmDespesa.edtFormaPagamentoExit(Sender: TObject);
-begin
-  if not lbFormaPagamentoNome.Focused then
-  begin
-    if lbFormaPagamentoNome.Visible then
-      lbFormaPagamentoNome.Visible := False;
-  end;
-end;
-
-procedure TfrmDespesa.edtFormaPagamentoKeyUp(Sender: TObject;
-  var Key: word; Shift: TShiftState);
-var
-  qtdReg: integer;
-begin
-  qtdReg := 0;
-  if (Length(edtFormaPagamento.Text) > 2) then
-  begin
-    controller.PesquisarFormaPagamento(lbFormaPagamentoNome,
-      lbFormaPagamentoId, edtFormaPagamento.Text, qtdReg);
-    lbFormaPagamentoNome.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
-    begin
-      if lbFormaPagamentoNome.CanFocus then
-        lbFormaPagamentoNome.SetFocus;
-    end;
-  end
-  else
-  begin
-    lbFormaPagamentoNome.Items.Clear;
-    lbFormaPagamentoNome.Visible := False;
-  end;
-end;
-
-procedure TfrmDespesa.edtFornecedorExit(Sender: TObject);
-begin
-  if not lbFornecedorNome.Focused then
-  begin
-    if lbFornecedorNome.Visible then
-      lbFornecedorNome.Visible := False;
-  end;
-  ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmDespesa.edtFornecedorKeyUp(Sender: TObject; var Key: word;
-  Shift: TShiftState);
-var
-  qtdReg: integer;
-begin
-  qtdReg := 0;
-  if (Length(edtFornecedor.Text) > 3) then
-  begin
-    controller.PesquisarFornecedor(lbFornecedorNome, lbFornecedorId,
-      edtFornecedor.Text, qtdReg);
-    lbFornecedorNome.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
-    begin
-      if lbFornecedorNome.CanFocus then
-        lbFornecedorNome.SetFocus;
-    end;
-  end
-  else
-  begin
-    lbFornecedorNome.Items.Clear;
-    lbFornecedorNome.Visible := False;
-  end;
-end;
-
-procedure TfrmDespesa.edtSubtipoExit(Sender: TObject);
-begin
-  if not lbSubtipoNome.Focused then
-  begin
-    if lbSubtipoNome.Visible then
-      lbSubtipoNome.Visible := False;
-  end;
-  ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmDespesa.edtSubtipoKeyUp(Sender: TObject; var Key: word;
-  Shift: TShiftState);
-var
-  qtdReg: integer;
-begin
-  qtdReg := 0;
-  if (Length(edtSubtipo.Text) > 3) then
-  begin
-    controller.PesquisarSubtipo(lbSubtipoNome, lbSubtipoId, edtSubtipo.Text, qtdReg);
-    lbSubtipoNome.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
-    begin
-      if lbSubtipoNome.CanFocus then
-        lbSubtipoNome.SetFocus;
-    end;
-  end
-  else
-  begin
-    lbSubtipoNome.Items.Clear;
-    lbSubtipoNome.Visible := False;
-  end;
 end;
 
 procedure TfrmDespesa.edtValorChange(Sender: TObject);
@@ -507,100 +482,6 @@ begin
   inherited;
 end;
 
-procedure TfrmDespesa.lbFormaPagamentoNomeDblClick(Sender: TObject);
-var
-  i: integer;
-begin
-  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
-  if lbFormaPagamentoNome.ItemIndex <> -1 then
-  begin
-    edtFormaPagamento.Text := lbFormaPagamentoNome.Items[lbFormaPagamentoNome.ItemIndex];
-    Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id :=
-      StrToInt(lbFormaPagamentoId.Items[lbFormaPagamentoNome.ItemIndex]);
-    Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Nome :=
-      edtFormaPagamento.Text;
-    PrepararPesquisaGenerica(i);
-    lbFormaPagamentoNome.Visible := False;
-  end
-  else
-  begin
-    edtFormaPagamento.Text := '';
-    Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id := 0;
-  end;
-end;
-
-procedure TfrmDespesa.lbFormaPagamentoNomeKeyPress(Sender: TObject; var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbFormaPagamentoNome.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmDespesa.lbFormaPagamentoNomeSelectionChange(Sender: TObject;
-  User: boolean);
-begin
-  edtFormaPagamento.Text := lbFormaPagamentoNome.Items[lbFormaPagamentoNome.ItemIndex];
-end;
-
-procedure TfrmDespesa.lbFornecedorNomeDblClick(Sender: TObject);
-begin
-  if lbFornecedorNome.ItemIndex <> -1 then
-  begin
-    edtFornecedor.Text := lbFornecedorNome.Items[lbFornecedorNome.ItemIndex];
-    controller.Despesa.Fornecedor.Id :=
-      StrToInt(lbFornecedorId.Items[lbFornecedorNome.ItemIndex]);
-    lbFornecedorNome.Visible := False;
-  end
-  else
-  begin
-    edtFornecedor.Text := '';
-    controller.Despesa.Fornecedor.Id := 0;
-  end;
-end;
-
-procedure TfrmDespesa.lbFornecedorNomeKeyPress(Sender: TObject; var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbFornecedorNome.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmDespesa.lbFornecedorNomeSelectionChange(Sender: TObject; User: boolean);
-begin
-  edtFornecedor.Text := lbFornecedorNome.Items[lbFornecedorNome.ItemIndex];
-end;
-
-procedure TfrmDespesa.lbSubtipoNomeDblClick(Sender: TObject);
-begin
-  if lbSubtipoNome.ItemIndex <> -1 then
-  begin
-    edtSubtipo.Text := lbSubtipoNome.Items[lbSubtipoNome.ItemIndex];
-    controller.Despesa.SubTipo.Id :=
-      StrToInt(lbSubtipoId.Items[lbSubtipoNome.ItemIndex]);
-    lbSubtipoNome.Visible := False;
-  end
-  else
-  begin
-    edtSubtipo.Text := '';
-    controller.Despesa.SubTipo.Id := 0;
-  end;
-end;
-
-procedure TfrmDespesa.lbSubtipoNomeKeyPress(Sender: TObject; var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbSubtipoNome.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmDespesa.lbSubtipoNomeSelectionChange(Sender: TObject; User: boolean);
-begin
-  edtSubtipo.Text := lbSubtipoNome.Items[lbSubtipoNome.ItemIndex];
-end;
-
 procedure TfrmDespesa.AjustarTelaPagamento(Inserindo: boolean);
 begin
   pnlIncluiPagamento.Visible := inserindo;
@@ -648,7 +529,8 @@ end;
 procedure TfrmDespesa.LimparCamposPagamento();
 begin
   edtValorFpgto.Text := '0,00';
-  edtFormaPagamento.Clear;
+  cbFormaPagamento.Clear;
+  cbFormaPagamento.Items.Clear;
   cbPesquisaGenerica.Items.Clear;
   lbPesquisaGenericaId.Items.Clear;
   cbPesquisaGenerica.Visible  := False;
@@ -776,8 +658,8 @@ end;
 function TfrmDespesa.CamposEstaoPreenchidosPagamento: Boolean;
 begin
   Result := False;
-  if Trim(edtFormaPagamento.Text) = EmptyStr then
-    ValidarObrigatorioExit(edtFormaPagamento)
+  if cbFormaPagamento.ItemIndex = -1 then
+    ValidarObrigatorioExit(cbFormaPagamento)
   else
     Result := True;
 end;
@@ -794,8 +676,10 @@ begin
   edtDescricao.Clear;
   dtpData.Date := Now;
   dtpHora.Time := Now;
-  edtFornecedor.Clear;
-  edtSubtipo.Clear;
+  cbFornecedor.Clear;
+  cbFornecedor.Items.Clear;
+  cbSubtipo.Clear;
+  cbSubtipo.Items.Clear;
   edtValor.Text := FormatFloat(',#0.00', 0);
   edtDesconto.Text := FormatFloat(',#0.00', 0);
   edtFrete.Text := FormatFloat(',#0.00', 0);
@@ -803,7 +687,8 @@ begin
   edtTotal.Text := FormatFloat(',#0.00', 0);
   edtChaveNfe.Clear;
   mObs.Lines.Clear;
-  edtFormaPagamento.Clear;
+  cbFormaPagamento.Clear;
+  cbFormaPagamento.Items.Clear;
   edtValorFpgto.Text := FormatFloat(',#0.00', 0);
   trbNivelPrecisao.Position := 0;
 end;
@@ -821,8 +706,8 @@ begin
       dtpData.Date := Controller.Despesa.Data;
       dtpHora.Time := Controller.Despesa.Hora;
       edtDescricao.Text := Controller.Despesa.Descricao;
-      edtFornecedor.Text := Controller.Despesa.Fornecedor.Nome;
-      edtSubtipo.Text := Controller.Despesa.SubTipo.Nome;
+      cbFornecedor.Text := Controller.Despesa.Fornecedor.Nome;
+      cbSubtipo.Text := Controller.Despesa.SubTipo.Nome;
       edtValor.Text := FormatFloat(',#0.00', Controller.Despesa.Valor);
       edtDesconto.Text := FormatFloat(',#0.00', Controller.Despesa.Desconto);
       edtFrete.Text := FormatFloat(',#0.00', Controller.Despesa.Frete);
@@ -850,11 +735,11 @@ begin
   if Trim(edtDescricao.Text) = EmptyStr then
     ValidarObrigatorioExit(edtDescricao)
   else
-  if Trim(edtFornecedor.Text) = EmptyStr then
-    ValidarObrigatorioExit(edtFornecedor)
+  if cbFornecedor.ItemIndex = -1 then
+    ValidarObrigatorioExit(cbFornecedor)
   else
-  if Trim(edtSubtipo.Text) = EmptyStr then
-    ValidarObrigatorioExit(edtSubtipo)
+  if cbSubtipo.ItemIndex = -1 then
+    ValidarObrigatorioExit(cbSubtipo)
   else
     Result := True;
 end;

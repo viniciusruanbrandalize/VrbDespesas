@@ -21,9 +21,9 @@ type
     Despesa: TDespesa;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
-    procedure PesquisarSubtipo(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
-    procedure PesquisarFornecedor(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
-    procedure PesquisarFormaPagamento(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarSubtipo(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarFornecedor(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarFormaPagamento(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(objDespesa : TDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(objDespesa : TDespesa; out Erro: string): Boolean;
     function Editar(objDespesa : TDespesa; out Erro: string): Boolean;
@@ -64,19 +64,19 @@ begin
   DespesaDAO.Pesquisar(lv, Campo, Busca);
 end;
 
-procedure TDespesaController.PesquisarSubtipo(lbNome, lbId: TListBox;
+procedure TDespesaController.PesquisarSubtipo(lbNome: TComboBox; lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
   DespesaDAO.PesquisaGenerica(TB_SUBTIPO_DESPESA, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
-procedure TDespesaController.PesquisarFornecedor(lbNome, lbId: TListBox;
+procedure TDespesaController.PesquisarFornecedor(lbNome: TComboBox; lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
   DespesaDAO.PesquisaGenerica(TB_PARTICIPANTE, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
-procedure TDespesaController.PesquisarFormaPagamento(lbNome, lbId: TListBox;
+procedure TDespesaController.PesquisarFormaPagamento(lbNome: TComboBox; lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
   DespesaDAO.PesquisaGenerica(TB_FORMA_PGTO, lbNome, lbId, busca, 10, QtdRegistro);

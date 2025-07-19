@@ -19,7 +19,7 @@ type
     SubtipoDespesa: TSubtipoDespesa;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
-    procedure PesquisarTipoDespesa(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarTipoDespesa(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     function BuscarPorId(objSubtipoDespesa : TSubtipoDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(objSubtipoDespesa : TSubtipoDespesa; out Erro: string): Boolean;
     function Editar(objSubtipoDespesa : TSubtipoDespesa; out Erro: string): Boolean;
@@ -42,7 +42,7 @@ begin
   SubtipoDespesaDAO.Pesquisar(lv, Campo, Busca);
 end;
 
-procedure TSubtipoDespesaController.PesquisarTipoDespesa(lbNome, lbId: TListBox; busca: String;
+procedure TSubtipoDespesaController.PesquisarTipoDespesa(lbNome: TComboBox; lbId: TListBox; busca: String;
   out QtdRegistro: Integer);
 begin
   SubtipoDespesaDAO.PesquisaGenerica(TB_TIPO_DESPESA, lbNome, lbId, busca, 10, QtdRegistro);

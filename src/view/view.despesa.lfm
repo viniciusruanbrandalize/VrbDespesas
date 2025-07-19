@@ -124,7 +124,7 @@ inherited frmDespesa: TfrmDespesa
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
             inherited pnlBotaoCad: TPanel
-              TabOrder = 15
+              TabOrder = 13
             end
             object edtDescricao: TLabeledEdit[2]
               Left = 176
@@ -191,43 +191,7 @@ inherited frmDespesa: TfrmDespesa
               Width = 35
               Caption = 'Data: *'
             end
-            object edtFornecedor: TLabeledEdit[6]
-              Left = 544
-              Height = 23
-              Top = 18
-              Width = 264
-              EditLabel.Height = 15
-              EditLabel.Width = 264
-              EditLabel.Caption = 'Fornecedor: *'
-              Font.Color = 2977025
-              Font.Style = [fsBold]
-              MaxLength = 100
-              ParentFont = False
-              TabOrder = 3
-              Text = 'edtFornecedor'
-              OnChange = edtDescricaoChange
-              OnExit = edtFornecedorExit
-              OnKeyUp = edtFornecedorKeyUp
-            end
-            object edtSubtipo: TLabeledEdit[7]
-              Left = 8
-              Height = 23
-              Top = 72
-              Width = 248
-              EditLabel.Height = 15
-              EditLabel.Width = 248
-              EditLabel.Caption = 'Subtipo: *'
-              Font.Color = 2977025
-              Font.Style = [fsBold]
-              MaxLength = 100
-              ParentFont = False
-              TabOrder = 5
-              Text = 'edtSubtipo'
-              OnChange = edtDescricaoChange
-              OnExit = edtSubtipoExit
-              OnKeyUp = edtSubtipoKeyUp
-            end
-            object edtValor: TLabeledEdit[8]
+            object edtValor: TLabeledEdit[6]
               Left = 264
               Height = 23
               Top = 72
@@ -236,11 +200,11 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Valor R$: *'
               MaxLength = 100
-              TabOrder = 7
+              TabOrder = 5
               Text = 'edtValor'
               OnChange = edtValorChange
             end
-            object edtDesconto: TLabeledEdit[9]
+            object edtDesconto: TLabeledEdit[7]
               Left = 392
               Height = 23
               Top = 72
@@ -249,11 +213,11 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Desconto R$: *'
               MaxLength = 100
-              TabOrder = 8
+              TabOrder = 6
               Text = 'edtDesconto'
               OnChange = edtValorChange
             end
-            object edtFrete: TLabeledEdit[10]
+            object edtFrete: TLabeledEdit[8]
               Left = 520
               Height = 23
               Top = 72
@@ -262,11 +226,11 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Frete R$: *'
               MaxLength = 100
-              TabOrder = 9
+              TabOrder = 7
               Text = 'edtFrete'
               OnChange = edtValorChange
             end
-            object edtOutros: TLabeledEdit[11]
+            object edtOutros: TLabeledEdit[9]
               Left = 648
               Height = 23
               Top = 72
@@ -275,11 +239,11 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Outros R$: *'
               MaxLength = 100
-              TabOrder = 10
+              TabOrder = 8
               Text = 'edtOutros'
               OnChange = edtValorChange
             end
-            object edtTotal: TLabeledEdit[12]
+            object edtTotal: TLabeledEdit[10]
               Left = 776
               Height = 23
               Top = 72
@@ -288,10 +252,10 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Width = 120
               EditLabel.Caption = 'Total R$: *'
               MaxLength = 100
-              TabOrder = 11
+              TabOrder = 9
               Text = 'edtTotal'
             end
-            object edtChaveNfe: TLabeledEdit[13]
+            object edtChaveNfe: TLabeledEdit[11]
               Left = 8
               Height = 23
               Top = 128
@@ -301,10 +265,10 @@ inherited frmDespesa: TfrmDespesa
               EditLabel.Caption = 'Chave NF-e:'
               MaxLength = 44
               NumbersOnly = True
-              TabOrder = 12
+              TabOrder = 10
               Text = 'edtChaveNfe'
             end
-            object mObs: TMemo[14]
+            object mObs: TMemo[12]
               Left = 8
               Height = 160
               Top = 179
@@ -312,16 +276,16 @@ inherited frmDespesa: TfrmDespesa
               Lines.Strings = (
                 'mObs'
               )
-              TabOrder = 13
+              TabOrder = 11
             end
-            object lblObs: TLabel[15]
+            object lblObs: TLabel[13]
               Left = 8
               Height = 15
               Top = 160
               Width = 203
               Caption = 'Observações / Informações adicionais:'
             end
-            object pgcMaisOpcoes: TPageControl[16]
+            object pgcMaisOpcoes: TPageControl[14]
               Cursor = crHandPoint
               Left = 408
               Height = 280
@@ -330,7 +294,7 @@ inherited frmDespesa: TfrmDespesa
               ActivePage = tbsPagamento
               Images = img
               TabIndex = 0
-              TabOrder = 14
+              TabOrder = 12
               object tbsPagamento: TTabSheet
                 Caption = 'Pagamento'
                 ClientHeight = 252
@@ -373,23 +337,6 @@ inherited frmDespesa: TfrmDespesa
                   ParentBackground = False
                   TabOrder = 1
                   Visible = False
-                  object edtFormaPagamento: TLabeledEdit
-                    Left = 8
-                    Height = 23
-                    Top = 32
-                    Width = 344
-                    EditLabel.Height = 15
-                    EditLabel.Width = 344
-                    EditLabel.Caption = 'Forma de Pagamento: *'
-                    Font.Color = 2977025
-                    Font.Style = [fsBold]
-                    MaxLength = 100
-                    ParentFont = False
-                    TabOrder = 0
-                    Text = 'edtFormaPagamento'
-                    OnExit = edtFormaPagamentoExit
-                    OnKeyUp = edtFormaPagamentoKeyUp
-                  end
                   object edtValorFpgto: TLabeledEdit
                     Left = 368
                     Height = 23
@@ -402,25 +349,11 @@ inherited frmDespesa: TfrmDespesa
                     TabOrder = 1
                     Text = 'edtValorFpgto'
                   end
-                  object lbFormaPagamentoNome: TListBox
-                    Left = 10
-                    Height = 19
-                    Top = 63
-                    Width = 344
-                    BorderStyle = bsNone
-                    Color = 12451746
-                    ItemHeight = 0
-                    TabOrder = 2
-                    Visible = False
-                    OnDblClick = lbFormaPagamentoNomeDblClick
-                    OnKeyPress = lbFormaPagamentoNomeKeyPress
-                    OnSelectionChange = lbFormaPagamentoNomeSelectionChange
-                  end
                   object lbFormaPagamentoId: TListBox
-                    Left = 360
-                    Height = 19
-                    Top = 61
-                    Width = 64
+                    Left = 8
+                    Height = 11
+                    Top = 56
+                    Width = 344
                     Items.Strings = (
                       'key'
                       'key'
@@ -438,13 +371,13 @@ inherited frmDespesa: TfrmDespesa
                     Width = 344
                     ItemHeight = 15
                     Style = csDropDownList
-                    TabOrder = 4
+                    TabOrder = 2
                     Visible = False
                   end
                   object lblPesquisaGenerica: TLabel
                     Left = 8
                     Height = 15
-                    Top = 67
+                    Top = 71
                     Width = 49
                     Caption = 'Cartão : *'
                     Visible = False
@@ -455,8 +388,32 @@ inherited frmDespesa: TfrmDespesa
                     Top = 88
                     Width = 125
                     ItemHeight = 0
-                    TabOrder = 5
+                    TabOrder = 4
                     Visible = False
+                  end
+                  object lblFormaPagamento: TLabel
+                    Left = 8
+                    Height = 15
+                    Top = 15
+                    Width = 125
+                    Caption = 'Forma de Pagamento: *'
+                  end
+                  object cbFormaPagamento: TComboBox
+                    Left = 8
+                    Height = 23
+                    Top = 32
+                    Width = 344
+                    AutoComplete = True
+                    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+                    AutoSelect = False
+                    Font.Color = 2977025
+                    Font.Style = [fsBold]
+                    ItemHeight = 15
+                    ParentFont = False
+                    TabOrder = 0
+                    Text = 'cbFormaPagamento'
+                    OnKeyUp = cbFormaPagamentoKeyUp
+                    OnSelect = cbFormaPagamentoSelect
                   end
                 end
                 object pnlBotoesPagamento: TPanel
@@ -595,31 +552,11 @@ inherited frmDespesa: TfrmDespesa
                 end
               end
             end
-            object lbSubtipoNome: TListBox[17]
+            object lbSubtipoId: TListBox[15]
               Left = 8
-              Height = 19
+              Height = 11
               Top = 96
               Width = 248
-              BorderStyle = bsNone
-              Color = 12451746
-              Items.Strings = (
-                'subtipo1'
-                'subtipo2'
-                'subtipo3'
-                'subtipo4'
-              )
-              ItemHeight = 15
-              TabOrder = 6
-              Visible = False
-              OnDblClick = lbSubtipoNomeDblClick
-              OnKeyPress = lbSubtipoNomeKeyPress
-              OnSelectionChange = lbSubtipoNomeSelectionChange
-            end
-            object lbSubtipoId: TListBox[18]
-              Left = 264
-              Height = 19
-              Top = 96
-              Width = 144
               Items.Strings = (
                 'key'
                 'key'
@@ -627,32 +564,14 @@ inherited frmDespesa: TfrmDespesa
                 'key'
               )
               ItemHeight = 15
-              TabOrder = 16
+              TabOrder = 14
               Visible = False
             end
-            object lbFornecedorNome: TListBox[19]
-              Left = 544
-              Height = 19
-              Top = 42
-              Width = 264
-              BorderStyle = bsNone
-              Color = 12451746
-              Items.Strings = (
-                'fornecedor'
-                'fornecedor'
-              )
-              ItemHeight = 15
-              TabOrder = 4
-              Visible = False
-              OnDblClick = lbFornecedorNomeDblClick
-              OnKeyPress = lbFornecedorNomeKeyPress
-              OnSelectionChange = lbFornecedorNomeSelectionChange
-            end
-            object lbFornecedorId: TListBox[20]
-              Left = 816
-              Height = 19
-              Top = 42
-              Width = 144
+            object lbFornecedorId: TListBox[16]
+              Left = 824
+              Height = 23
+              Top = 18
+              Width = 92
               Items.Strings = (
                 'key'
                 'key'
@@ -660,10 +579,10 @@ inherited frmDespesa: TfrmDespesa
                 'key'
               )
               ItemHeight = 15
-              TabOrder = 17
+              TabOrder = 15
               Visible = False
             end
-            object trbNivelPrecisao: TTrackBar[21]
+            object trbNivelPrecisao: TTrackBar[17]
               Cursor = crHandPoint
               Left = 8
               Height = 24
@@ -672,16 +591,16 @@ inherited frmDespesa: TfrmDespesa
               PageSize = 1
               Position = 0
               ShowSelRange = False
-              TabOrder = 18
+              TabOrder = 16
             end
-            object lblNivelPrecisao: TLabel[22]
+            object lblNivelPrecisao: TLabel[18]
               Left = 8
               Height = 15
               Top = 352
               Width = 141
               Caption = 'Nível de Precisão: * (0 - 10)'
             end
-            object lblInfoPrecisao: TLabel[23]
+            object lblInfoPrecisao: TLabel[19]
               Left = 48
               Height = 13
               Top = 392
@@ -689,6 +608,54 @@ inherited frmDespesa: TfrmDespesa
               Caption = 'em que 0 - Gasto desnecessário / 10 - Gasto necessário'
               Font.Height = -11
               ParentFont = False
+            end
+            object cbFornecedor: TComboBox[20]
+              Left = 548
+              Height = 23
+              Top = 18
+              Width = 264
+              AutoComplete = True
+              AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+              AutoSelect = False
+              Font.Color = 2977025
+              Font.Style = [fsBold]
+              ItemHeight = 15
+              ParentFont = False
+              TabOrder = 3
+              Text = 'cbFornecedor'
+              OnKeyUp = cbFornecedorKeyUp
+              OnSelect = cbFornecedorSelect
+            end
+            object lblFornecedor: TLabel[21]
+              Left = 548
+              Height = 15
+              Top = 1
+              Width = 71
+              Caption = 'Fornecedor: *'
+            end
+            object lblSubtipo: TLabel[22]
+              Left = 8
+              Height = 15
+              Top = 54
+              Width = 52
+              Caption = 'Subtipo: *'
+            end
+            object cbSubtipo: TComboBox[23]
+              Left = 8
+              Height = 23
+              Top = 72
+              Width = 248
+              AutoComplete = True
+              AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+              AutoSelect = False
+              Font.Color = 2977025
+              Font.Style = [fsBold]
+              ItemHeight = 15
+              ParentFont = False
+              TabOrder = 4
+              Text = 'cbSubtipo'
+              OnKeyUp = cbSubtipoKeyUp
+              OnSelect = cbSubtipoSelect
             end
           end
         end

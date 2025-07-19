@@ -42,7 +42,9 @@ type
     btnSalvarCartao: TToolButton;
     btnVisualizarPix: TToolButton;
     btnVisualizarCartao: TToolButton;
+    cbBandeira: TComboBox;
     cbTipo: TComboBox;
+    cbBanco: TComboBox;
     cbTipoChave: TComboBox;
     ckbAproximacao: TCheckBox;
     cbTipoCartao: TComboBox;
@@ -50,18 +52,16 @@ type
     edtAgencia: TLabeledEdit;
     edtChave: TLabeledEdit;
     edtNumero: TLabeledEdit;
-    edtBanco: TLabeledEdit;
+    lblBanco: TLabel;
+    lblBandeira: TLabel;
     lbTipoCartaoValues: TListBox;
     lblTipoCartao: TLabel;
     lblValidade: TLabel;
     edtNumeroCartao: TLabeledEdit;
-    edtBandeira: TLabeledEdit;
     lblTipoChavePix: TLabel;
     lblTipoConta: TLabel;
     lbBancoId: TListBox;
-    lbBancoNome: TListBox;
     lbBandeiraId: TListBox;
-    lbBandeiraNome: TListBox;
     lvPix: TListView;
     lvCartao: TListView;
     MenuItem10: TMenuItem;
@@ -114,23 +114,17 @@ type
     procedure actSalvarExecute(Sender: TObject);
     procedure actSalvarPixExecute(Sender: TObject);
     procedure actVoltarExecute(Sender: TObject);
-    procedure edtBancoExit(Sender: TObject);
-    procedure edtBancoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure edtBandeiraExit(Sender: TObject);
-    procedure edtBandeiraKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure cbBancoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cbBancoSelect(Sender: TObject);
+    procedure cbBandeiraKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState
+      );
+    procedure cbBandeiraSelect(Sender: TObject);
     procedure edtNumeroChange(Sender: TObject);
     procedure edtNumeroExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure lbBancoNomeDblClick(Sender: TObject);
-    procedure lbBancoNomeKeyPress(Sender: TObject; var Key: char);
-    procedure lbBancoNomeSelectionChange(Sender: TObject; User: boolean);
-    procedure lbBandeiraNomeDblClick(Sender: TObject);
-    procedure lbBandeiraNomeKeyPress(Sender: TObject; var Key: char);
-    procedure lbBandeiraNomeSelectionChange(Sender: TObject; User: boolean);
   private
     Controller: TContaBancariaController;
     procedure CarregarDadosPix;
@@ -188,65 +182,6 @@ begin
   inherited;
 end;
 
-procedure TfrmContaBancaria.lbBancoNomeDblClick(Sender: TObject);
-begin
-  if lbBancoNome.ItemIndex <> -1 then
-  begin
-    edtBanco.Text := lbBancoNome.Items[lbBancoNome.ItemIndex];
-    controller.ContaBancaria.Banco.Id := StrToInt(lbBancoId.Items[lbBancoNome.ItemIndex]);
-    lbBancoNome.Visible := False;
-  end
-  else
-  begin
-    edtBanco.Text := '';
-    controller.ContaBancaria.Banco.Id := 0;
-  end;
-end;
-
-procedure TfrmContaBancaria.lbBancoNomeKeyPress(Sender: TObject; var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbBancoNome.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmContaBancaria.lbBancoNomeSelectionChange(Sender: TObject;
-  User: boolean);
-begin
-  edtBanco.Text := lbBancoNome.Items[lbBancoNome.ItemIndex];
-end;
-
-procedure TfrmContaBancaria.lbBandeiraNomeDblClick(Sender: TObject);
-begin
-  if lbBandeiraNome.ItemIndex <> -1 then
-  begin
-    edtBandeira.Text := lbBandeiraNome.Items[lbBandeiraNome.ItemIndex];
-    controller.Cartao.Bandeira.Id := StrToInt(lbBandeiraId.Items[lbBandeiraNome.ItemIndex]);
-    lbBandeiraNome.Visible := False;
-  end
-  else
-  begin
-    edtBandeira.Text := '';
-    controller.Cartao.Bandeira.Id := 0;
-  end;
-end;
-
-procedure TfrmContaBancaria.lbBandeiraNomeKeyPress(Sender: TObject;
-  var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbBandeiraNome.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmContaBancaria.lbBandeiraNomeSelectionChange(Sender: TObject;
-  User: boolean);
-begin
-  edtBandeira.Text := lbBandeiraNome.Items[lbBandeiraNome.ItemIndex];
-end;
-
 procedure TfrmContaBancaria.CarregarDadosPix;
 begin
   lvPix.Items.Clear;
@@ -283,7 +218,8 @@ procedure TfrmContaBancaria.LimparCamposCartao;
 begin
   edtNumeroCartao.Clear;
   cbTipoCartao.ItemIndex := 0;
-  edtBandeira.Clear;
+  cbBandeira.Clear;
+  cbBandeira.Items.Clear;
   dtpValidade.Date := Now;
   ckbAproximacao.Checked := False;
 end;
@@ -300,7 +236,7 @@ begin
     dtpValidade.Date       := Controller.Cartao.Validade;
     ckbAproximacao.Checked := Controller.Cartao.Aproximacao;
     cbTipoCartao.ItemIndex := lbTipoCartaoValues.Items.IndexOf(Controller.Cartao.Tipo);
-    edtBandeira.Text       := Controller.Cartao.Bandeira.Nome;
+    cbBandeira.Text       := Controller.Cartao.Bandeira.Nome;
   end
   else
   begin
@@ -326,8 +262,8 @@ begin
   if Trim(edtNumeroCartao.Text) = EmptyStr then
     ValidarObrigatorioExit(edtNumeroCartao)
   else
-  if Trim(edtBandeira.Text) = EmptyStr then
-    ValidarObrigatorioExit(edtBandeira)
+  if cbBandeira.ItemIndex = -1 then
+    ValidarObrigatorioExit(cbBandeira)
   else
     Result := True;
 end;
@@ -406,70 +342,56 @@ begin
   end;
 end;
 
-procedure TfrmContaBancaria.edtBancoExit(Sender: TObject);
-begin
-  if not lbBancoNome.Focused then
-  begin
-    if lbBancoNome.Visible then
-      lbBancoNome.Visible := false;
-  end;
-  ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmContaBancaria.edtBancoKeyUp(Sender: TObject; var Key: Word;
+procedure TfrmContaBancaria.cbBancoKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   qtdReg: Integer;
 begin
   qtdReg := 0;
-  if (Length(edtBanco.Text) > 3) then
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
   begin
-    controller.PesquisarBanco(lbBancoNome, lbBancoId, edtBanco.Text, qtdReg);
-    lbBancoNome.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
+    if (Length((Sender as TComboBox).Text) >= 3) then
     begin
-      if lbBancoNome.CanFocus then
-        lbBancoNome.SetFocus;
+      controller.PesquisarBanco((Sender as TComboBox), lbBancoId, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
     end;
-  end
-  else
-  begin
-    lbBancoNome.Items.Clear;
-    lbBancoNome.Visible := False;
   end;
 end;
 
-procedure TfrmContaBancaria.edtBandeiraExit(Sender: TObject);
+procedure TfrmContaBancaria.cbBancoSelect(Sender: TObject);
 begin
-  if not lbBandeiraNome.Focused then
-  begin
-    if lbBandeiraNome.Visible then
-      lbBandeiraNome.Visible := false;
-  end;
-  ValidarObrigatorioExit(Sender);
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.ContaBancaria.Banco.Id := StrToInt(lbBancoId.Items[(Sender as TComboBox).ItemIndex]);
 end;
 
-procedure TfrmContaBancaria.edtBandeiraKeyUp(Sender: TObject; var Key: Word;
+procedure TfrmContaBancaria.cbBandeiraKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   qtdReg: Integer;
 begin
   qtdReg := 0;
-  if (Length(edtBandeira.Text) > 3) then
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
   begin
-    controller.PesquisarBandeira(lbBandeiraNome, lbBandeiraId, edtBandeira.Text, qtdReg);
-    lbBandeiraNome.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
+    if (Length((Sender as TComboBox).Text) >= 3) then
     begin
-      if lbBandeiraNome.CanFocus then
-        lbBandeiraNome.SetFocus;
+      controller.PesquisarBandeira((Sender as TComboBox), lbBandeiraId, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
     end;
-  end
-  else
-  begin
-    lbBandeiraNome.Items.Clear;
-    lbBandeiraNome.Visible := False;
   end;
+end;
+
+procedure TfrmContaBancaria.cbBandeiraSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.Cartao.Bandeira.Id := StrToInt(lbBandeiraId.Items[(Sender as TComboBox).ItemIndex]);
 end;
 
 procedure TfrmContaBancaria.edtNumeroChange(Sender: TObject);
@@ -659,7 +581,8 @@ procedure TfrmContaBancaria.LimparCampos;
 begin
   edtAgencia.Clear;
   edtNumero.Clear;
-  edtBanco.Clear;
+  cbBanco.Clear;
+  cbBanco.Items.Clear;
   cbTipo.ItemIndex := 0;
 end;
 
@@ -673,7 +596,7 @@ begin
   begin
     edtAgencia.Text   := Controller.ContaBancaria.Agencia;
     edtNumero.Text    := Controller.ContaBancaria.Numero;
-    edtBanco.Text     := Controller.ContaBancaria.Banco.Nome;
+    cbBanco.Text      := Controller.ContaBancaria.Banco.Nome;
     cbTipo.ItemIndex  := cbTipo.Items.IndexOf(Controller.ContaBancaria.Tipo);
   end
   else
@@ -692,8 +615,8 @@ begin
   if Trim(edtAgencia.Text) = EmptyStr then
     ValidarObrigatorioExit(edtAgencia)
   else
-  if Trim(edtBanco.Text) = EmptyStr then
-    ValidarObrigatorioExit(edtBanco)
+  if cbBanco.ItemIndex = -1 then
+    ValidarObrigatorioExit(cbBanco)
   else
     Result := True;
 end;

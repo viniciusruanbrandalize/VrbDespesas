@@ -224,13 +224,23 @@ end;
 
 procedure TfrmCadastroPadrao.ValidarObrigatorioExit(Sender: TObject);
 begin
-  if Trim((Sender as TLabeledEdit).Text) = EmptyStr then
+  if (Sender is TLabeledEdit) and (Trim((Sender as TLabeledEdit).Text) = EmptyStr) then
   begin
     if (Sender as TLabeledEdit).CanFocus then
       (Sender as TLabeledEdit).SetFocus;
     lblObrigatorio.Left := (Sender as TLabeledEdit).Left;
     lblObrigatorio.Top  := (Sender as TLabeledEdit).Top + (Sender as TLabeledEdit).Height;
     lblObrigatorio.Parent := (Sender as TLabeledEdit).Parent;
+    lblObrigatorio.Visible := True;
+  end
+  else
+  if (Sender is TComboBox) and (Trim((Sender as TComboBox).Text) = EmptyStr) then
+  begin
+    if (Sender as TComboBox).CanFocus then
+      (Sender as TComboBox).SetFocus;
+    lblObrigatorio.Left := (Sender as TComboBox).Left;
+    lblObrigatorio.Top  := (Sender as TComboBox).Top + (Sender as TComboBox).Height;
+    lblObrigatorio.Parent := (Sender as TComboBox).Parent;
     lblObrigatorio.Visible := True;
   end;
 end;
