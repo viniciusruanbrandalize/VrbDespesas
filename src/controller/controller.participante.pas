@@ -19,7 +19,7 @@ type
     Participante: TParticipante;
     procedure Listar(lv: TListView; DonoCadastro: Boolean);
     procedure Pesquisar(lv: TListView; Campo, Busca: String; DonoCadastro: Boolean);
-    procedure PesquisarCidade(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarCidade(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     procedure PesquisarDonoCadastro(var objParticipante: TParticipante; out Erro: string);
     function BuscarCEP(var objParticipante: TParticipante; out Erro: String): Boolean;
     function BuscarPorId(objParticipante : TParticipante; Id: Integer; out Erro: String): Boolean;
@@ -45,7 +45,7 @@ begin
   ParticipanteDAO.Pesquisar(lv, Campo, Busca, DonoCadastro);
 end;
 
-procedure TParticipanteController.PesquisarCidade(lbNome, lbId: TListBox;
+procedure TParticipanteController.PesquisarCidade(lbNome: TComboBox; lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
   ParticipanteDAO.PesquisarCidade(lbNome, lbId, busca, QtdRegistro);

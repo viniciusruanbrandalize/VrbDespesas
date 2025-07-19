@@ -16,8 +16,8 @@ type
   TfrmParticipante = class(TfrmCadastroPadrao)
     actBuscarCep: TAction;
     cbPessoa: TComboBox;
+    cbCidade: TComboBox;
     edtUf: TLabeledEdit;
-    edtCidade: TLabeledEdit;
     edtIe: TLabeledEdit;
     edtTelefone: TLabeledEdit;
     edtNome: TLabeledEdit;
@@ -33,27 +33,22 @@ type
     lblObs: TLabel;
     lblPessoa: TLabel;
     btnBuscaCep: TSpeedButton;
+    lblCidade: TLabel;
     lbPessoaValues: TListBox;
     lbCidadeId: TListBox;
-    lbCidadeNome: TListBox;
     mObs: TMemo;
     procedure actBuscarCepExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
-    procedure cbPessoaChange(Sender: TObject);
-    procedure edtCidadeExit(Sender: TObject);
-    procedure edtCidadeKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState
-      );
+    procedure cbCidadeKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cbCidadeSelect(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
     procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure lbCidadeNomeDblClick(Sender: TObject);
-    procedure lbCidadeNomeKeyPress(Sender: TObject; var Key: char);
-    procedure lbCidadeNomeSelectionChange(Sender: TObject; User: boolean);
   private
     FEhDonoCadastro: Boolean;  {Abrir form de devedor/participantes}
     Controller: TParticipanteController;
@@ -129,41 +124,30 @@ begin
   end;
 end;
 
-procedure TfrmParticipante.cbPessoaChange(Sender: TObject);
-begin
-  //
-end;
-
-procedure TfrmParticipante.edtCidadeExit(Sender: TObject);
-begin
-  if not lbCidadeNome.Focused then
-  begin
-    if lbCidadeNome.Visible then
-      lbCidadeNome.Visible := false;
-  end;
-end;
-
-procedure TfrmParticipante.edtCidadeKeyUp(Sender: TObject; var Key: Word;
+procedure TfrmParticipante.cbCidadeKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   qtdReg: Integer;
 begin
   qtdReg := 0;
-  if (Length(edtCidade.Text) > 3) then
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
   begin
-    controller.PesquisarCidade(lbCidadeNome, lbCidadeId, edtCidade.Text, qtdReg);
-    lbCidadeNome.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
+    if (Length((Sender as TComboBox).Text) >= 3) then
     begin
-      if lbCidadeNome.CanFocus then
-        lbCidadeNome.SetFocus;
+      controller.PesquisarCidade((Sender as TComboBox), lbCidadeId, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
     end;
-  end
-  else
-  begin
-    lbCidadeNome.Items.Clear;
-    lbCidadeNome.Visible := False;
   end;
+end;
+
+procedure TfrmParticipante.cbCidadeSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.Participante.Cidade.Id := StrToInt(lbCidadeId.Items[(Sender as TComboBox).ItemIndex]);
 end;
 
 procedure TfrmParticipante.edtNomeChange(Sender: TObject);
@@ -206,7 +190,7 @@ begin
       edtBairro.Text      := Controller.Participante.Bairro;
       edtRua.Text         := Controller.Participante.Rua;
       edtComplemento.Text := Controller.Participante.Complemento;
-      edtCidade.Text      := Controller.Participante.Cidade.Nome;
+      cbCidade.Text       := Controller.Participante.Cidade.Nome;
       edtUf.Text          := Controller.Participante.Cidade.Estado.UF;
     end
     else
@@ -239,36 +223,6 @@ begin
   inherited;
 end;
 
-procedure TfrmParticipante.lbCidadeNomeDblClick(Sender: TObject);
-begin
-  if lbCidadeNome.ItemIndex <> -1 then
-  begin
-    edtCidade.Text := lbCidadeNome.Items[lbCidadeNome.ItemIndex];
-    controller.Participante.Cidade.Id := StrToInt(lbCidadeId.Items[lbCidadeNome.ItemIndex]);
-    lbCidadeNome.Visible := False;
-  end
-  else
-  begin
-    edtCidade.Text := '';
-    controller.Participante.Cidade.Id := 0;
-  end;
-end;
-
-procedure TfrmParticipante.lbCidadeNomeKeyPress(Sender: TObject; var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbCidadeNome.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmParticipante.lbCidadeNomeSelectionChange(Sender: TObject;
-  User: boolean);
-begin
-  edtCidade.Text := lbcidadeNome.Items[lbCidadeNome.ItemIndex];
-  //edtUf.Text     := Copy(edtCidade.Text, Pos(edtCidade.Text, '-'), Length(edtCidade.Text));
-end;
-
 procedure TfrmParticipante.SetEhDonoCadastro(AValue: Boolean);
 begin
   if FEhDonoCadastro = AValue then
@@ -297,7 +251,8 @@ begin
   edtNumero.Clear;
   edtComplemento.Clear;
   edtBairro.Clear;
-  edtCidade.Clear;
+  cbCidade.Clear;
+  cbCidade.Items.Clear;
   edtUf.Clear;
   mObs.Lines.Clear;
 end;
@@ -323,7 +278,7 @@ begin
     edtNumero.Text     := Controller.Participante.Numero.ToString;
     edtComplemento.Text := Controller.Participante.Complemento;
     edtBairro.Text     := Controller.Participante.Bairro;
-    edtCidade.Text     := Controller.Participante.Cidade.Nome;
+    cbCidade.Text      := Controller.Participante.Cidade.Nome;
     edtUf.Text         := Controller.Participante.Cidade.Estado.UF;
     mObs.Lines.Text    := Controller.Participante.Obs;
   end

@@ -252,40 +252,6 @@ inherited frmRecebimento: TfrmRecebimento
                       Text = 'edtValorTotalSal'
                     end
                   end
-                  object edtPagadorSal: TLabeledEdit
-                    Left = 8
-                    Height = 23
-                    Top = 224
-                    Width = 224
-                    EditLabel.Height = 15
-                    EditLabel.Width = 224
-                    EditLabel.Caption = 'Pagador: *'
-                    Font.Color = 2977025
-                    Font.Style = [fsBold]
-                    ParentFont = False
-                    TabOrder = 7
-                    Text = 'edtPagadorSal'
-                    OnChange = edtDescricaoChange
-                    OnExit = edtPagadorSalExit
-                    OnKeyUp = edtPagadorSalKeyUp
-                  end
-                  object edtFormaPagamentoSal: TLabeledEdit
-                    Left = 248
-                    Height = 23
-                    Top = 224
-                    Width = 216
-                    EditLabel.Height = 15
-                    EditLabel.Width = 216
-                    EditLabel.Caption = 'Forma de Pagamento: *'
-                    Font.Color = 2977025
-                    Font.Style = [fsBold]
-                    ParentFont = False
-                    TabOrder = 8
-                    Text = 'edtFormaPagamentoSal'
-                    OnChange = edtDescricaoChange
-                    OnExit = edtFormaPagamentoSalExit
-                    OnKeyUp = edtFormaPagamentoSalKeyUp
-                  end
                   object lblContaBancariaSal: TLabel
                     Left = 480
                     Height = 15
@@ -305,29 +271,26 @@ inherited frmRecebimento: TfrmRecebimento
                     Visible = False
                     OnChange = cbContaBancariaSalChange
                   end
-                  object lbPagadorNomeSal: TListBox
+                  object lbPagadorIdSal: TListBox
                     Left = 8
                     Height = 19
                     Top = 248
-                    Width = 225
-                    BorderStyle = bsNone
-                    Color = 12451746
+                    Width = 224
                     Items.Strings = (
-                      'fornecedor'
-                      'fornecedor'
+                      'key'
+                      'key'
+                      'key'
+                      'key'
                     )
                     ItemHeight = 15
                     TabOrder = 10
                     Visible = False
-                    OnDblClick = lbPagadorNomeSalDblClick
-                    OnKeyPress = lbPagadorNomeSalKeyPress
-                    OnSelectionChange = lbPagadorNomeSalSelectionChange
                   end
-                  object lbPagadorIdSal: TListBox
-                    Left = 16
+                  object lbFormaPagamentoIdSal: TListBox
+                    Left = 248
                     Height = 19
-                    Top = 272
-                    Width = 144
+                    Top = 248
+                    Width = 216
                     Items.Strings = (
                       'key'
                       'key'
@@ -338,47 +301,62 @@ inherited frmRecebimento: TfrmRecebimento
                     TabOrder = 11
                     Visible = False
                   end
-                  object lbFormaPagamentoNomeSal: TListBox
-                    Left = 248
-                    Height = 19
-                    Top = 248
-                    Width = 216
-                    BorderStyle = bsNone
-                    Color = 12451746
-                    Items.Strings = (
-                      'fornecedor'
-                      'fornecedor'
-                    )
-                    ItemHeight = 15
-                    TabOrder = 12
-                    Visible = False
-                    OnDblClick = lbFormaPagamentoNomeSalDblClick
-                    OnKeyPress = lbFormaPagamentoNomeSalKeyPress
-                    OnSelectionChange = lbFormaPagamentoNomeSalSelectionChange
-                  end
-                  object lbFormaPagamentoIdSal: TListBox
-                    Left = 256
-                    Height = 19
-                    Top = 272
-                    Width = 144
-                    Items.Strings = (
-                      'key'
-                      'key'
-                      'key'
-                      'key'
-                    )
-                    ItemHeight = 15
-                    TabOrder = 13
-                    Visible = False
-                  end
                   object lbContaBancariaSalId: TListBox
                     Left = 480
                     Height = 19
                     Top = 248
                     Width = 224
                     ItemHeight = 0
-                    TabOrder = 14
+                    TabOrder = 12
                     Visible = False
+                  end
+                  object lblPagadorSal: TLabel
+                    Left = 8
+                    Height = 15
+                    Top = 206
+                    Width = 55
+                    Caption = 'Pagador: *'
+                  end
+                  object cbPagadorSal: TComboBox
+                    Left = 8
+                    Height = 23
+                    Top = 224
+                    Width = 224
+                    AutoComplete = True
+                    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+                    AutoSelect = False
+                    Font.Color = 2977025
+                    Font.Style = [fsBold]
+                    ItemHeight = 15
+                    ParentFont = False
+                    TabOrder = 7
+                    Text = 'cbPagadorSal'
+                    OnKeyUp = cbPagadorSalKeyUp
+                    OnSelect = cbPagadorSalSelect
+                  end
+                  object lblFormaPagamentoSal: TLabel
+                    Left = 248
+                    Height = 15
+                    Top = 206
+                    Width = 125
+                    Caption = 'Forma de Pagamento: *'
+                  end
+                  object cbFormaPagamentoSal: TComboBox
+                    Left = 248
+                    Height = 23
+                    Top = 224
+                    Width = 216
+                    AutoComplete = True
+                    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+                    AutoSelect = False
+                    Font.Color = 2977025
+                    Font.Style = [fsBold]
+                    ItemHeight = 15
+                    ParentFont = False
+                    TabOrder = 8
+                    Text = 'cbFormaPagamentoSal'
+                    OnKeyUp = cbFormaPagamentoSalKeyUp
+                    OnSelect = cbFormaPagamentoSalSelect
                   end
                 end
               end
@@ -451,40 +429,6 @@ inherited frmRecebimento: TfrmRecebimento
                     TabOrder = 4
                     Text = 'edtValorTotalRec'
                   end
-                  object edtPagadorRec: TLabeledEdit
-                    Left = 568
-                    Height = 23
-                    Top = 24
-                    Width = 232
-                    EditLabel.Height = 15
-                    EditLabel.Width = 232
-                    EditLabel.Caption = 'Pagador: *'
-                    Font.Color = 2977025
-                    Font.Style = [fsBold]
-                    ParentFont = False
-                    TabOrder = 2
-                    Text = 'edtPagadorRec'
-                    OnChange = edtDescricaoChange
-                    OnExit = edtPagadorRecExit
-                    OnKeyUp = edtPagadorRecKeyUp
-                  end
-                  object edtFormaPagamentoRec: TLabeledEdit
-                    Left = 8
-                    Height = 23
-                    Top = 72
-                    Width = 200
-                    EditLabel.Height = 15
-                    EditLabel.Width = 200
-                    EditLabel.Caption = 'Forma de Pagamento: *'
-                    Font.Color = 2977025
-                    Font.Style = [fsBold]
-                    ParentFont = False
-                    TabOrder = 3
-                    Text = 'edtFormaPagamentoRec'
-                    OnChange = edtDescricaoChange
-                    OnExit = edtFormaPagamentoRecExit
-                    OnKeyUp = edtFormaPagamentoRecKeyUp
-                  end
                   object lblContaBancariaRec: TLabel
                     Left = 368
                     Height = 15
@@ -504,29 +448,26 @@ inherited frmRecebimento: TfrmRecebimento
                     Visible = False
                     OnChange = cbContaBancariaRecChange
                   end
-                  object lbPagadorNomeRec: TListBox
+                  object lbPagadorIdRec: TListBox
                     Left = 568
                     Height = 19
                     Top = 48
-                    Width = 232
-                    BorderStyle = bsNone
-                    Color = 12451746
+                    Width = 224
                     Items.Strings = (
-                      'fornecedor'
-                      'fornecedor'
+                      'key'
+                      'key'
+                      'key'
+                      'key'
                     )
                     ItemHeight = 15
                     TabOrder = 6
                     Visible = False
-                    OnDblClick = lbPagadorNomeRecDblClick
-                    OnKeyPress = lbPagadorNomeRecKeyPress
-                    OnSelectionChange = lbPagadorNomeRecSelectionChange
                   end
-                  object lbPagadorIdRec: TListBox
-                    Left = 576
+                  object lbFormaPagamentoIdRec: TListBox
+                    Left = 8
                     Height = 19
-                    Top = 72
-                    Width = 144
+                    Top = 97
+                    Width = 200
                     Items.Strings = (
                       'key'
                       'key'
@@ -537,47 +478,62 @@ inherited frmRecebimento: TfrmRecebimento
                     TabOrder = 7
                     Visible = False
                   end
-                  object lbFormaPagamentoNomeRec: TListBox
-                    Left = 8
-                    Height = 19
-                    Top = 96
-                    Width = 200
-                    BorderStyle = bsNone
-                    Color = 12451746
-                    Items.Strings = (
-                      'fornecedor'
-                      'fornecedor'
-                    )
-                    ItemHeight = 15
-                    TabOrder = 8
-                    Visible = False
-                    OnDblClick = lbFormaPagamentoNomeRecDblClick
-                    OnKeyPress = lbFormaPagamentoNomeRecKeyPress
-                    OnSelectionChange = lbFormaPagamentoNomeRecSelectionChange
-                  end
-                  object lbFormaPagamentoIdRec: TListBox
-                    Left = 16
-                    Height = 19
-                    Top = 120
-                    Width = 144
-                    Items.Strings = (
-                      'key'
-                      'key'
-                      'key'
-                      'key'
-                    )
-                    ItemHeight = 15
-                    TabOrder = 9
-                    Visible = False
-                  end
                   object lbContaBancariaRecId: TListBox
                     Left = 368
                     Height = 16
                     Top = 97
                     Width = 224
                     ItemHeight = 0
-                    TabOrder = 10
+                    TabOrder = 8
                     Visible = False
+                  end
+                  object lblPagadorRec: TLabel
+                    Left = 568
+                    Height = 15
+                    Top = 6
+                    Width = 55
+                    Caption = 'Pagador: *'
+                  end
+                  object cbPagadorRec: TComboBox
+                    Left = 568
+                    Height = 23
+                    Top = 24
+                    Width = 224
+                    AutoComplete = True
+                    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+                    AutoSelect = False
+                    Font.Color = 2977025
+                    Font.Style = [fsBold]
+                    ItemHeight = 15
+                    ParentFont = False
+                    TabOrder = 2
+                    Text = 'cbPagadorRec'
+                    OnKeyUp = cbPagadorRecKeyUp
+                    OnSelect = cbPagadorRecSelect
+                  end
+                  object lblFormaPagamentoRec: TLabel
+                    Left = 8
+                    Height = 15
+                    Top = 54
+                    Width = 125
+                    Caption = 'Forma de Pagamento: *'
+                  end
+                  object cbFormaPagamentoRec: TComboBox
+                    Left = 8
+                    Height = 23
+                    Top = 72
+                    Width = 200
+                    AutoComplete = True
+                    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+                    AutoSelect = False
+                    Font.Color = 2977025
+                    Font.Style = [fsBold]
+                    ItemHeight = 15
+                    ParentFont = False
+                    TabOrder = 3
+                    Text = 'cbFormaPagamentoRec'
+                    OnKeyUp = cbFormaPagamentoRecKeyUp
+                    OnSelect = cbFormaPagamentoRecSelect
                   end
                 end
               end

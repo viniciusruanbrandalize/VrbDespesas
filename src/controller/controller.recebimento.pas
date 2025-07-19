@@ -19,8 +19,8 @@ type
     Recebimento: TRecebimento;
     procedure Listar(lv: TListView; Tipo: Integer);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
-    procedure PesquisarPagador(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
-    procedure PesquisarFormaPagamento(lbNome, lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarPagador(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
+    procedure PesquisarFormaPagamento(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     procedure PesquisarContaBancaria(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
     function BuscarPorId(objRecebimento : TRecebimento; Id: Integer; out Erro: String): Boolean;
     function Inserir(objRecebimento: TRecebimento; out Erro: string): Boolean;
@@ -45,13 +45,13 @@ begin
   RecebimentoDao.Pesquisar(lv, campo, busca);
 end;
 
-procedure TRecebimentoController.PesquisarPagador(lbNome, lbId: TListBox;
+procedure TRecebimentoController.PesquisarPagador(lbNome: TComboBox; lbId: TListBox;
   busca: String; out QtdRegistro: Integer);
 begin
   RecebimentoDao.PesquisaGenerica(TB_PARTICIPANTE, lbNome, lbId, busca, 10, QtdRegistro);
 end;
 
-procedure TRecebimentoController.PesquisarFormaPagamento(lbNome,
+procedure TRecebimentoController.PesquisarFormaPagamento(lbNome: TComboBox;
   lbId: TListBox; busca: String; out QtdRegistro: Integer);
 begin
   RecebimentoDao.PesquisaGenerica(TB_FORMA_PGTO, lbNome, lbId, busca, 10, QtdRegistro);

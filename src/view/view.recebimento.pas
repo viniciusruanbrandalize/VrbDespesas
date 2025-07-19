@@ -17,6 +17,10 @@ type
     calData: TCalendar;
     cbContaBancariaSal: TComboBox;
     cbContaBancariaRec: TComboBox;
+    cbFormaPagamentoRec: TComboBox;
+    cbPagadorSal: TComboBox;
+    cbFormaPagamentoSal: TComboBox;
+    cbPagadorRec: TComboBox;
     dtpData: TDateTimePicker;
     edtHE: TLabeledEdit;
     edt13: TLabeledEdit;
@@ -32,22 +36,18 @@ type
     gbExtra: TGroupBox;
     edtDescricao: TLabeledEdit;
     edtValorTotalRec: TLabeledEdit;
-    edtPagadorRec: TLabeledEdit;
-    edtFormaPagamentoRec: TLabeledEdit;
-    edtPagadorSal: TLabeledEdit;
-    edtFormaPagamentoSal: TLabeledEdit;
+    lblFormaPagamentoRec: TLabel;
+    lblPagadorSal: TLabel;
+    lblPagadorRec: TLabel;
+    lblFormaPagamentoSal: TLabel;
     lbPagadorIdSal: TListBox;
     lbFormaPagamentoIdSal: TListBox;
     lbPagadorIdRec: TListBox;
     lbFormaPagamentoIdRec: TListBox;
-    lbPagadorNomeSal: TListBox;
     lblContaBancariaSal: TLabel;
     lblContaBancariaRec: TLabel;
     lblDataRec: TLabel;
     lblData: TLabel;
-    lbFormaPagamentoNomeSal: TListBox;
-    lbPagadorNomeRec: TListBox;
-    lbFormaPagamentoNomeRec: TListBox;
     lbContaBancariaSalId: TListBox;
     lbContaBancariaRecId: TListBox;
     pnlFundoRecGeral: TPanel;
@@ -64,43 +64,29 @@ type
     procedure actSalvarExecute(Sender: TObject);
     procedure cbContaBancariaRecChange(Sender: TObject);
     procedure cbContaBancariaSalChange(Sender: TObject);
+    procedure cbFormaPagamentoRecKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cbFormaPagamentoRecSelect(Sender: TObject);
+    procedure cbFormaPagamentoSalKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cbFormaPagamentoSalSelect(Sender: TObject);
+    procedure cbPagadorRecKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cbPagadorRecSelect(Sender: TObject);
+    procedure cbPagadorSalKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cbPagadorSalSelect(Sender: TObject);
     procedure edtDescricaoChange(Sender: TObject);
     procedure edtDescricaoExit(Sender: TObject);
-    procedure edtFormaPagamentoRecExit(Sender: TObject);
-    procedure edtFormaPagamentoRecKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure edtFormaPagamentoSalExit(Sender: TObject);
-    procedure edtFormaPagamentoSalKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
     procedure edtHEChange(Sender: TObject);
     procedure edtINSSChange(Sender: TObject);
     procedure edtIRChange(Sender: TObject);
     procedure edtOutrosChange(Sender: TObject);
-    procedure edtPagadorRecExit(Sender: TObject);
-    procedure edtPagadorRecKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure edtPagadorSalExit(Sender: TObject);
-    procedure edtPagadorSalKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
     procedure edtValorBaseSalChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure lbFormaPagamentoNomeRecDblClick(Sender: TObject);
-    procedure lbFormaPagamentoNomeRecKeyPress(Sender: TObject; var Key: char);
-    procedure lbFormaPagamentoNomeRecSelectionChange(Sender: TObject;
-      User: boolean);
-    procedure lbFormaPagamentoNomeSalDblClick(Sender: TObject);
-    procedure lbFormaPagamentoNomeSalKeyPress(Sender: TObject; var Key: char);
-    procedure lbFormaPagamentoNomeSalSelectionChange(Sender: TObject;
-      User: boolean);
-    procedure lbPagadorNomeRecDblClick(Sender: TObject);
-    procedure lbPagadorNomeRecKeyPress(Sender: TObject; var Key: char);
-    procedure lbPagadorNomeRecSelectionChange(Sender: TObject; User: boolean);
-    procedure lbPagadorNomeSalDblClick(Sender: TObject);
-    procedure lbPagadorNomeSalKeyPress(Sender: TObject; var Key: char);
-    procedure lbPagadorNomeSalSelectionChange(Sender: TObject; User: boolean);
   private
     Controller: TRecebimentoController;
     FTipo: TTelaRecebimento;
@@ -231,6 +217,114 @@ begin
     Controller.Recebimento.ContaBancaria.Id := id;
 end;
 
+procedure TfrmRecebimento.cbFormaPagamentoRecKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
+  begin
+    if (Length((Sender as TComboBox).Text) >= 3) then
+    begin
+      controller.PesquisarFormaPagamento((Sender as TComboBox), lbFormaPagamentoIdRec, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
+    end;
+  end;
+end;
+
+procedure TfrmRecebimento.cbFormaPagamentoRecSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.Recebimento.FormaPagamento.Id :=
+      StrToInt(lbFormaPagamentoIdRec.Items[(Sender as TComboBox).ItemIndex]);
+end;
+
+procedure TfrmRecebimento.cbFormaPagamentoSalKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
+  begin
+    if (Length((Sender as TComboBox).Text) >= 3) then
+    begin
+      controller.PesquisarFormaPagamento((Sender as TComboBox), lbFormaPagamentoIdSal, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
+    end;
+  end;
+end;
+
+procedure TfrmRecebimento.cbFormaPagamentoSalSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.Recebimento.FormaPagamento.Id :=
+      StrToInt(lbFormaPagamentoIdSal.Items[(Sender as TComboBox).ItemIndex]);
+end;
+
+procedure TfrmRecebimento.cbPagadorRecKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
+  begin
+    if (Length((Sender as TComboBox).Text) >= 3) then
+    begin
+      controller.PesquisarPagador((Sender as TComboBox), lbPagadorIdRec, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
+    end;
+  end;
+end;
+
+procedure TfrmRecebimento.cbPagadorRecSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.Recebimento.Pagador.Id :=
+      StrToInt(lbPagadorIdRec.Items[(Sender as TComboBox).ItemIndex]);
+end;
+
+procedure TfrmRecebimento.cbPagadorSalKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  qtdReg: Integer;
+begin
+  qtdReg := 0;
+  if not (key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT]) then
+  begin
+    if (Length((Sender as TComboBox).Text) >= 3) then
+    begin
+      controller.PesquisarPagador((Sender as TComboBox), lbPagadorIdSal, (Sender as TComboBox).Text, qtdReg);
+      (Sender as TComboBox).DroppedDown := qtdReg > 1;
+    end
+    else
+    begin
+      (Sender as TComboBox).Items.Clear;
+    end;
+  end;
+end;
+
+procedure TfrmRecebimento.cbPagadorSalSelect(Sender: TObject);
+begin
+  if (Sender as TComboBox).ItemIndex <> -1 then
+    controller.Recebimento.Pagador.Id :=
+      StrToInt(lbPagadorIdSal.Items[(Sender as TComboBox).ItemIndex]);
+end;
+
 procedure TfrmRecebimento.edtDescricaoChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
@@ -239,74 +333,6 @@ end;
 procedure TfrmRecebimento.edtDescricaoExit(Sender: TObject);
 begin
   ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmRecebimento.edtFormaPagamentoRecExit(Sender: TObject);
-begin
-  if not lbFormaPagamentoNomeRec.Focused then
-  begin
-    if lbFormaPagamentoNomeRec.Visible then
-      lbFormaPagamentoNomeRec.Visible := False;
-  end;
-  ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmRecebimento.edtFormaPagamentoRecKeyUp(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
-var
-  qtdReg: integer;
-begin
-  qtdReg := 0;
-  if (Length(edtFormaPagamentoRec.Text) > 2) then
-  begin
-    controller.PesquisarFormaPagamento(lbFormaPagamentoNomeRec, lbFormaPagamentoIdRec,
-      edtFormaPagamentoRec.Text, qtdReg);
-    lbFormaPagamentoNomeRec.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
-    begin
-      if lbFormaPagamentoNomeRec.CanFocus then
-        lbFormaPagamentoNomeRec.SetFocus;
-    end;
-  end
-  else
-  begin
-    lbFormaPagamentoNomeRec.Items.Clear;
-    lbFormaPagamentoNomeRec.Visible := False;
-  end;
-end;
-
-procedure TfrmRecebimento.edtFormaPagamentoSalExit(Sender: TObject);
-begin
-  if not lbFormaPagamentoNomeSal.Focused then
-  begin
-    if lbFormaPagamentoNomeSal.Visible then
-      lbFormaPagamentoNomeSal.Visible := False;
-  end;
-  ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmRecebimento.edtFormaPagamentoSalKeyUp(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
-var
-  qtdReg: integer;
-begin
-  qtdReg := 0;
-  if (Length(edtFormaPagamentoSal.Text) > 2) then
-  begin
-    controller.PesquisarFormaPagamento(lbFormaPagamentoNomeSal, lbFormaPagamentoIdSal,
-      edtFormaPagamentoSal.Text, qtdReg);
-    lbFormaPagamentoNomeSal.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
-    begin
-      if lbFormaPagamentoNomeSal.CanFocus then
-        lbFormaPagamentoNomeSal.SetFocus;
-    end;
-  end
-  else
-  begin
-    lbFormaPagamentoNomeSal.Items.Clear;
-    lbFormaPagamentoNomeSal.Visible := False;
-  end;
 end;
 
 procedure TfrmRecebimento.edtHEChange(Sender: TObject);
@@ -327,74 +353,6 @@ end;
 procedure TfrmRecebimento.edtOutrosChange(Sender: TObject);
 begin
   CalcularTotal();
-end;
-
-procedure TfrmRecebimento.edtPagadorRecExit(Sender: TObject);
-begin
-  if not lbPagadorNomeRec.Focused then
-  begin
-    if lbPagadorNomeRec.Visible then
-      lbPagadorNomeRec.Visible := False;
-  end;
-  ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmRecebimento.edtPagadorRecKeyUp(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-var
-  qtdReg: integer;
-begin
-  qtdReg := 0;
-  if (Length(edtPagadorRec.Text) > 3) then
-  begin
-    controller.PesquisarPagador(lbPagadorNomeRec, lbPagadorIdRec,
-      edtPagadorRec.Text, qtdReg);
-    lbPagadorNomeRec.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
-    begin
-      if lbPagadorNomeRec.CanFocus then
-        lbPagadorNomeRec.SetFocus;
-    end;
-  end
-  else
-  begin
-    lbPagadorNomeRec.Items.Clear;
-    lbPagadorNomeRec.Visible := False;
-  end;
-end;
-
-procedure TfrmRecebimento.edtPagadorSalExit(Sender: TObject);
-begin
-  if not lbPagadorNomeSal.Focused then
-  begin
-    if lbPagadorNomeSal.Visible then
-      lbPagadorNomeSal.Visible := False;
-  end;
-  ValidarObrigatorioExit(Sender);
-end;
-
-procedure TfrmRecebimento.edtPagadorSalKeyUp(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-var
-  qtdReg: integer;
-begin
-  qtdReg := 0;
-  if (Length(edtPagadorSal.Text) > 3) then
-  begin
-    controller.PesquisarPagador(lbPagadorNomeSal, lbPagadorIdSal,
-      edtPagadorSal.Text, qtdReg);
-    lbPagadorNomeSal.Visible := qtdReg > 0;
-    if Key = VK_DOWN then
-    begin
-      if lbPagadorNomeSal.CanFocus then
-        lbPagadorNomeSal.SetFocus;
-    end;
-  end
-  else
-  begin
-    lbPagadorNomeSal.Items.Clear;
-    lbPagadorNomeSal.Visible := False;
-  end;
 end;
 
 procedure TfrmRecebimento.edtValorBaseSalChange(Sender: TObject);
@@ -504,140 +462,6 @@ begin
   LiberarBloquearAcessos(Self.actList, Self.Name);
   AjustarListView();
   inherited;
-end;
-
-procedure TfrmRecebimento.lbFormaPagamentoNomeRecDblClick(Sender: TObject);
-begin
-  if lbFormaPagamentoNomeRec.ItemIndex <> -1 then
-  begin
-    edtFormaPagamentoRec.Text := lbFormaPagamentoNomeRec.Items[lbFormaPagamentoNomeRec.ItemIndex];
-    controller.Recebimento.FormaPagamento.Id :=
-      StrToInt(lbFormaPagamentoIdRec.Items[lbFormaPagamentoNomeRec.ItemIndex]);
-    lbFormaPagamentoNomeRec.Visible := False;
-    cbContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
-    lblContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
-    if not cbContaBancariaRec.Visible then
-      Controller.Recebimento.ContaBancaria.Id := -1;
-  end
-  else
-  begin
-    edtFormaPagamentoRec.Text := '';
-    controller.Recebimento.FormaPagamento.Id := 0;
-    Controller.Recebimento.ContaBancaria.Id := -1;
-  end;
-end;
-
-procedure TfrmRecebimento.lbFormaPagamentoNomeRecKeyPress(Sender: TObject;
-  var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbFormaPagamentoNomeRec.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmRecebimento.lbFormaPagamentoNomeRecSelectionChange(
-  Sender: TObject; User: boolean);
-begin
-  edtFormaPagamentoRec.Text := lbFormaPagamentoNomeRec.Items[lbFormaPagamentoNomeRec.ItemIndex];
-end;
-
-procedure TfrmRecebimento.lbFormaPagamentoNomeSalDblClick(Sender: TObject);
-begin
-  if lbFormaPagamentoNomeSal.ItemIndex <> -1 then
-  begin
-    edtFormaPagamentoSal.Text := lbFormaPagamentoNomeSal.Items[lbFormaPagamentoNomeSal.ItemIndex];
-    controller.Recebimento.FormaPagamento.Id :=
-      StrToInt(lbFormaPagamentoIdSal.Items[lbFormaPagamentoNomeSal.ItemIndex]);
-    lbFormaPagamentoNomeSal.Visible := False;
-    cbContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
-    lblContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
-    if not cbContaBancariaSal.Visible then
-      Controller.Recebimento.ContaBancaria.Id := -1;
-  end
-  else
-  begin
-    edtFormaPagamentoSal.Text := '';
-    controller.Recebimento.FormaPagamento.Id := 0;
-    Controller.Recebimento.ContaBancaria.Id := -1;
-  end;
-end;
-
-procedure TfrmRecebimento.lbFormaPagamentoNomeSalKeyPress(Sender: TObject;
-  var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbFormaPagamentoNomeSal.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmRecebimento.lbFormaPagamentoNomeSalSelectionChange(
-  Sender: TObject; User: boolean);
-begin
-  edtFormaPagamentoSal.Text := lbFormaPagamentoNomeSal.Items[lbFormaPagamentoNomeSal.ItemIndex];
-end;
-
-procedure TfrmRecebimento.lbPagadorNomeRecDblClick(Sender: TObject);
-begin
-  if lbPagadorNomeRec.ItemIndex <> -1 then
-  begin
-    edtPagadorRec.Text := lbPagadorNomeRec.Items[lbPagadorNomeRec.ItemIndex];
-    controller.Recebimento.Pagador.Id :=
-      StrToInt(lbPagadorIdRec.Items[lbPagadorNomeRec.ItemIndex]);
-    lbPagadorNomeRec.Visible := False;
-  end
-  else
-  begin
-    edtPagadorRec.Text := '';
-    controller.Recebimento.Pagador.Id := 0;
-  end;
-end;
-
-procedure TfrmRecebimento.lbPagadorNomeRecKeyPress(Sender: TObject;
-  var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbPagadorNomeRec.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmRecebimento.lbPagadorNomeRecSelectionChange(Sender: TObject;
-  User: boolean);
-begin
-  edtPagadorRec.Text := lbPagadorNomeRec.Items[lbPagadorNomeRec.ItemIndex];
-end;
-
-procedure TfrmRecebimento.lbPagadorNomeSalDblClick(Sender: TObject);
-begin
-  if lbPagadorNomeSal.ItemIndex <> -1 then
-  begin
-    edtPagadorSal.Text := lbPagadorNomeSal.Items[lbPagadorNomeSal.ItemIndex];
-    controller.Recebimento.Pagador.Id :=
-      StrToInt(lbPagadorIdSal.Items[lbPagadorNomeSal.ItemIndex]);
-    lbPagadorNomeSal.Visible := False;
-  end
-  else
-  begin
-    edtPagadorSal.Text := '';
-    controller.Recebimento.Pagador.Id := 0;
-  end;
-end;
-
-procedure TfrmRecebimento.lbPagadorNomeSalKeyPress(Sender: TObject;
-  var Key: char);
-begin
-  if key = #13 then
-  begin
-    lbPagadorNomeSal.OnDblClick(nil);
-  end;
-end;
-
-procedure TfrmRecebimento.lbPagadorNomeSalSelectionChange(Sender: TObject;
-  User: boolean);
-begin
-  edtPagadorSal.Text := lbPagadorNomeSal.Items[lbPagadorNomeSal.ItemIndex];
 end;
 
 procedure TfrmRecebimento.AjustarListView();
@@ -758,13 +582,17 @@ begin
   edtFerias.Text        := '0,00';
   edtValorBaseSal.Text  := '0,00';
   edtValorTotalSal.Text := '0,00';
-  edtPagadorSal.Clear;
-  edtFormaPagamentoSal.Clear;
+  cbPagadorSal.Clear;
+  cbPagadorSal.Items.Clear;
+  cbFormaPagamentoSal.Clear;
+  cbFormaPagamentoSal.Items.Clear;
   cbContaBancariaSal.Items.Clear;
   dtpData.Date          := now;
   edtDescricao.Clear;
-  edtPagadorRec.Clear;
-  edtFormaPagamentoRec.Clear;
+  cbPagadorRec.Clear;
+  cbPagadorRec.Items.Clear;
+  cbFormaPagamentoRec.Clear;
+  cbFormaPagamentoRec.Items.Clear;
   edtValorTotalRec.Text := '0,00';
   cbContaBancariaRec.Items.Clear;
 end;
@@ -796,8 +624,8 @@ begin
       edtFerias.Text := FormatFloat(',#0.00', Controller.Recebimento.ValorFerias);
       edtValorBaseSal.Text  := FormatFloat(',#0.00', Controller.Recebimento.ValorBase);
       edtValorTotalSal.Text := FormatFloat(',#0.00', Controller.Recebimento.ValorTotal);
-      edtPagadorSal.Text := Controller.Recebimento.Pagador.Nome;
-      edtFormaPagamentoSal.Text := Controller.Recebimento.FormaPagamento.Nome;
+      cbPagadorSal.Text := Controller.Recebimento.Pagador.Nome;
+      cbFormaPagamentoSal.Text := Controller.Recebimento.FormaPagamento.Nome;
       cbContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
       lblContaBancariaSal.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
       if cbContaBancariaSal.Visible then
@@ -812,8 +640,8 @@ begin
     begin
       dtpData.Date       := Controller.Recebimento.Data;
       edtDescricao.Text  := Controller.Recebimento.Descricao;
-      edtPagadorRec.Text := Controller.Recebimento.Pagador.Nome;
-      edtFormaPagamentoRec.Text := Controller.Recebimento.FormaPagamento.Nome;
+      cbPagadorRec.Text  := Controller.Recebimento.Pagador.Nome;
+      cbFormaPagamentoRec.Text := Controller.Recebimento.FormaPagamento.Nome;
       edtValorTotalRec.Text     := FormatFloat(',#0.00', Controller.Recebimento.ValorTotal);
       cbContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
       lblContaBancariaRec.Visible := Controller.Recebimento.FormaPagamento.Id in [4, 5, 6, 7];
@@ -838,11 +666,11 @@ begin
   case FTipo of
     telaSalario:
     begin
-      if Trim(edtPagadorSal.Text) = EmptyStr then
-        ValidarObrigatorioExit(edtPagadorSal)
+      if cbPagadorSal.ItemIndex = -1 then
+        ValidarObrigatorioExit(cbPagadorSal)
       else
-      if Trim(edtFormaPagamentoSal.Text) = EmptyStr then
-        ValidarObrigatorioExit(edtFormaPagamentoSal)
+      if cbFormaPagamentoSal.ItemIndex = -1 then
+        ValidarObrigatorioExit(cbFormaPagamentoSal)
       else
         Result := True;
     end;
@@ -851,11 +679,11 @@ begin
       if Trim(edtDescricao.Text) = EmptyStr then
         ValidarObrigatorioExit(edtDescricao)
       else
-      if Trim(edtPagadorRec.Text) = EmptyStr then
-        ValidarObrigatorioExit(edtPagadorRec)
+      if cbPagadorRec.ItemIndex = -1 then
+        ValidarObrigatorioExit(cbPagadorRec)
       else
-      if Trim(edtFormaPagamentoRec.Text) = EmptyStr then
-        ValidarObrigatorioExit(edtFormaPagamentoRec)
+      if cbFormaPagamentoRec.ItemIndex = -1 then
+        ValidarObrigatorioExit(cbFormaPagamentoRec)
       else
         Result := True;
     end;
