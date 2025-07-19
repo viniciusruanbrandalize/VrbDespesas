@@ -12,11 +12,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'inicializar';
 
@@ -28,11 +30,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'finalizar';
 
@@ -44,11 +48,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'LerString';
 
@@ -60,11 +66,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'LerInteger';
 
@@ -76,11 +84,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'LerBoolean';
   
@@ -92,11 +102,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'LerData';
   
@@ -108,11 +120,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'LerHora';
   
@@ -124,11 +138,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'LerDataHora';
   
@@ -140,11 +156,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'EscreverString';
 
@@ -156,11 +174,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'EscreverInteger';
   
@@ -172,11 +192,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'EscreverBoolean';
   
@@ -188,11 +210,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'EscreverData';
   
@@ -204,16 +228,33 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'EscreverHora';
   
   procedure EscreverDataHora(Secao, Identificador: PChar; Valor: TDateTime); stdcall;
-  external 'libvrbcryptini32.dll' name 'EscreverDataHora';
+  external
+  {$IFDEF WIN32}
+  'libvrbcryptini32.dll'
+  {$ENDIF}
+  {$IFDEF WIN64}
+  'libvrbcryptini64.dll'
+  {$ENDIF}
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
+  {$ENDIF}
+  name 'EscreverDataHora';
   
   procedure ExisteSecao(Secao: PChar; out Existe: Boolean); stdcall;
   external
@@ -223,11 +264,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'ExisteSecao';
   
@@ -239,11 +282,13 @@ interface
   {$IFDEF WIN64}
   'libvrbcryptini64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbcryptini32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbcryptini64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'ExisteValor';
 

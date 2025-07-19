@@ -179,7 +179,7 @@ begin
     sql := 'select p.*, c.nome as nome_cidade, c.uf from participante p ' +
            'left join cidade c on c.id = p.id_cidade ' +
            'where p.id = :id and p.dono_cadastro = :dono_cadastro and ' +
-           'p.excluido = false and p.id_dono_cadastro = id_dono_cadastro ' +
+           'p.excluido = false and p.id_dono_cadastro = :id_dono_cadastro ' +
            'order by p.id';
 
     Qry.Close;

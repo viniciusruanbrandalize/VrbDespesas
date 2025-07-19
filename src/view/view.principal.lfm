@@ -28,6 +28,8 @@ object frmPrincipal: TfrmPrincipal
     Color = clWindow
     ParentBackground = False
     ParentColor = False
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 0
     object pnlMenu: TPanel
       Left = 0
@@ -57,7 +59,9 @@ object frmPrincipal: TfrmPrincipal
         ImageIndex = 0
         ImageWidth = 32
         Margin = 7
+        ShowHint = True
         ParentFont = False
+        ParentShowHint = False
       end
       object btnOperacao: TSpeedButton
         Left = 0
@@ -74,7 +78,9 @@ object frmPrincipal: TfrmPrincipal
         ImageIndex = 3
         ImageWidth = 32
         Margin = 7
+        ShowHint = True
         ParentFont = False
+        ParentShowHint = False
       end
       object btnUtilitario: TSpeedButton
         Left = 0
@@ -91,7 +97,9 @@ object frmPrincipal: TfrmPrincipal
         ImageIndex = 7
         ImageWidth = 32
         Margin = 7
+        ShowHint = True
         ParentFont = False
+        ParentShowHint = False
       end
       object btnRelatorio: TSpeedButton
         Left = 0
@@ -108,7 +116,9 @@ object frmPrincipal: TfrmPrincipal
         ImageIndex = 4
         ImageWidth = 32
         Margin = 7
+        ShowHint = True
         ParentFont = False
+        ParentShowHint = False
       end
       object btnAjuda: TSpeedButton
         Left = 0

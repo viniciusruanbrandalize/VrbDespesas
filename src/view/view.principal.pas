@@ -138,6 +138,7 @@ type
     procedure retairMenu;
     procedure mudarMenu(Index: Integer);
     procedure LiberarBloquearAcessos();
+    procedure AtribuirHintMenu();
   public
     procedure BarraLateralVazia(pnlAtivo: TPanel; Ativo: Boolean);
   end;
@@ -188,6 +189,7 @@ begin
   lblNomeUsuario.Caption := Controller.RetornarNomeUsuario;
   self.Caption := 'VrbDespesas by Vinícius Ruan Brandalize v' +
                    Controller.RetornarVersao;
+  AtribuirHintMenu();
 end;
 
 procedure TfrmPrincipal.imgMenuClick(Sender: TObject);
@@ -427,10 +429,22 @@ begin
   end;
 end;
 
+procedure TfrmPrincipal.AtribuirHintMenu();
+var
+  i: Integer;
+begin
+  for i := 0 to Pred(actMenu.ActionCount) do
+  begin
+    if Trim(TAction(actMenu.Actions[i]).Hint) = EmptyStr then
+      TAction(actMenu.Actions[i]).Hint := TAction(actMenu.Actions[i]).Caption;
+  end;
+end;
+
 procedure TfrmPrincipal.BarraLateralVazia(pnlAtivo: TPanel; Ativo: Boolean);
 begin
   pnlAtivo.Visible := Ativo;
   pnlMenuVazio.Visible := not Ativo;
+  pnlMenuRetair.Visible := Ativo;
 end;
 
 end.

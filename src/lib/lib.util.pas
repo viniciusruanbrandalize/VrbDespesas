@@ -38,7 +38,7 @@ end;
 {$ENDIF}
 
 {$IFDEF LINUX}
-function retornaIP: String;
+function retornarIP: String;
 begin
   //A implementar...
   Result := '127.0.0.1';

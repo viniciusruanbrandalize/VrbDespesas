@@ -12,11 +12,13 @@ interface
   {$IFDEF WIN64}
   'libvrbbcrypt64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbbcrypt32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbbcrypt64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbbcrypt32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbbcrypt64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'compareHashBCrypt';
 
@@ -28,11 +30,13 @@ interface
   {$IFDEF WIN64}
   'libvrbbcrypt64.dll'
   {$ENDIF}
-  {$IFDEF LINUX32}
-  'libvrbbcrypt32.so'
-  {$ENDIF}
-  {$IFDEF LINUX64}
-  'libvrbbcrypt64.so'
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbbcrypt32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbbcrypt64.so'
+    {$ENDIF}
   {$ENDIF}
   name 'encryptBCrypt';
 

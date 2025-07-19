@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="41"/>
-        <CursorPos X="14" Y="78"/>
+        <CursorPos X="44" Y="71"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="397"/>
-        <CursorPos X="40" Y="407"/>
+        <TopLine Value="403"/>
+        <CursorPos X="42" Y="416"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -94,8 +94,8 @@
         <Filename Value="..\src\lib\lib.cryptini.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="190"/>
-        <CursorPos X="40" Y="23"/>
+        <TopLine Value="257"/>
+        <CursorPos X="8" Y="298"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -128,8 +128,8 @@
         <Filename Value="..\src\lib\lib.util.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="110"/>
-        <CursorPos X="37" Y="43"/>
+        <TopLine Value="13"/>
+        <CursorPos X="9" Y="22"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -168,8 +168,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="52"/>
-        <CursorPos X="15" Y="71"/>
+        <TopLine Value="217"/>
+        <CursorPos X="56" Y="18"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -187,7 +187,8 @@
         <Filename Value="..\src\lib\lib.bcrypt.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="25" Y="23"/>
+        <TopLine Value="6"/>
+        <CursorPos X="46" Y="33"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -525,8 +526,8 @@
         <Filename Value="..\src\model\dao\model.dao.participante.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="166"/>
-        <CursorPos X="33" Y="193"/>
+        <TopLine Value="169"/>
+        <CursorPos X="52" Y="186"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -534,7 +535,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="85"/>
-        <CursorPos Y="94"/>
+        <CursorPos X="53" Y="113"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -545,7 +546,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="257"/>
-        <CursorPos Y="266"/>
+        <CursorPos Y="287"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -719,7 +720,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="99"/>
         <CursorPos X="34" Y="130"/>
-        <UsageCount Value="180"/>
+        <UsageCount Value="182"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatoriorecebimento.pas"/>
@@ -727,7 +728,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="13"/>
         <CursorPos X="54" Y="39"/>
-        <UsageCount Value="180"/>
+        <UsageCount Value="182"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatoriorecebimento.pas"/>
@@ -738,7 +739,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="58"/>
         <CursorPos X="51" Y="72"/>
-        <UsageCount Value="180"/>
+        <UsageCount Value="182"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.copiaseguranca.pas"/>
@@ -749,7 +750,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
         <CursorPos X="62" Y="64"/>
-        <UsageCount Value="169"/>
+        <UsageCount Value="171"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.copiaseguranca.pas"/>
@@ -757,7 +758,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="3"/>
         <CursorPos X="60" Y="30"/>
-        <UsageCount Value="165"/>
+        <UsageCount Value="167"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.copiaseguranca.pas"/>
@@ -765,7 +766,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="394"/>
         <CursorPos X="21" Y="477"/>
-        <UsageCount Value="165"/>
+        <UsageCount Value="167"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.configuracao.pas"/>
@@ -776,7 +777,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="54" Y="17"/>
-        <UsageCount Value="133"/>
+        <UsageCount Value="135"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.configuracao.pas"/>
@@ -784,7 +785,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="3"/>
         <CursorPos X="3" Y="15"/>
-        <UsageCount Value="132"/>
+        <UsageCount Value="134"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.selecionardonocadastro.pas"/>
@@ -795,14 +796,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="3" Y="15"/>
-        <UsageCount Value="119"/>
+        <UsageCount Value="121"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.selecionardonocadastro.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="45" Y="69"/>
-        <UsageCount Value="118"/>
+        <UsageCount Value="120"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.configuracao.pas"/>
@@ -810,7 +811,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="151"/>
         <CursorPos X="23" Y="187"/>
-        <UsageCount Value="110"/>
+        <UsageCount Value="112"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.ajuda.pas"/>
@@ -821,14 +822,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="23"/>
         <CursorPos X="66" Y="47"/>
-        <UsageCount Value="109"/>
+        <UsageCount Value="111"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.ajuda.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="38" Y="15"/>
-        <UsageCount Value="108"/>
+        <UsageCount Value="110"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.uctela.pas"/>
@@ -836,7 +837,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="30"/>
         <CursorPos X="41" Y="21"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacao.pas"/>
@@ -844,7 +845,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="65"/>
         <CursorPos X="5" Y="105"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="90"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.usuarioacesso.pas"/>
@@ -852,7 +853,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="147"/>
         <CursorPos X="26" Y="175"/>
-        <UsageCount Value="83"/>
+        <UsageCount Value="85"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.usuarioacesso.pas"/>
@@ -860,7 +861,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos Y="57"/>
-        <UsageCount Value="83"/>
+        <UsageCount Value="85"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacesso.pas"/>
@@ -868,14 +869,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="50"/>
         <CursorPos X="12" Y="80"/>
-        <UsageCount Value="81"/>
+        <UsageCount Value="83"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.version.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="6" Y="31"/>
-        <UsageCount Value="50"/>
+        <UsageCount Value="52"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.padrao.pas"/>
@@ -1254,7 +1255,40 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory HistoryIndex="7">
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="142" Column="26" TopLine="127"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="361" Column="35" TopLine="341"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="159" Column="3" TopLine="145"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="141" Column="19" TopLine="121"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="448" Column="5" TopLine="409"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="141" Column="18" TopLine="121"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="436" Column="3" TopLine="411"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="446" Column="26" TopLine="411"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>
@@ -1289,83 +1323,6 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="..\src\controller\controller.usuarioacesso.pas"/>
         <Line Value="109"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\view\view.participante.pas"/>
-        <Line Value="283"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\view\view.participante.pas"/>
-        <Line Value="268"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\view\view.participante.pas"/>
-        <Line Value="266"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\view\view.participante.pas"/>
-        <Line Value="265"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\view\view.participante.pas"/>
-        <Line Value="287"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\controller\controller.participante.pas"/>
-        <Line Value="94"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\model\dao\model.dao.participante.pas"/>
-        <Line Value="212"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\model\dao\model.dao.participante.pas"/>
-        <Line Value="213"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\model\dao\model.dao.participante.pas"/>
-        <Line Value="214"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\model\dao\model.dao.participante.pas"/>
-        <Line Value="215"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\model\dao\model.dao.participante.pas"/>
-        <Line Value="216"/>
       </Item>
     </BreakPoints>
   </Debugging>

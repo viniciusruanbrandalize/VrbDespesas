@@ -77,6 +77,66 @@
           </Linking>
         </CompilerOptions>
       </Item>
+      <Item Name="Linux32 Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\exe\vrbDespesasLinux32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\src\view;..\src\model;..\src\model\entity;..\src\model\connection;..\src\controller;..\src\model\dao;..\src\lib;..\src\model\ini;..\src\model\report"/>
+            <UnitOutputDirectory Value="..\compile\linux32"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item>
+      <Item Name="Linux64 Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\exe\vrbDespesasLinux64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\src\view;..\src\model;..\src\model\entity;..\src\model\connection;..\src\controller;..\src\model\dao;..\src\lib;..\src\model\ini;..\src\model\report"/>
+            <UnitOutputDirectory Value="..\compile\linux64"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
