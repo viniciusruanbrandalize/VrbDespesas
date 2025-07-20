@@ -247,8 +247,12 @@ var
 begin
   i := Pred(Controller.Despesa.DespesaFormaPagamento.Count);
   if (Sender as TComboBox).ItemIndex <> -1 then
+  begin
     Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id :=
       StrToInt(lbFormaPagamentoId.Items[(Sender as TComboBox).ItemIndex]);
+    Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Nome := (Sender as TComboBox).Text;
+    PrepararPesquisaGenerica(i);
+  end;
 end;
 
 procedure TfrmDespesa.cbFornecedorKeyUp(Sender: TObject; var Key: Word;
@@ -453,6 +457,8 @@ begin
     AjustarTelaPagamento(True);
     LimparCamposPagamento();
     Controller.AdicionarPagamento();
+    if cbFormaPagamento.CanFocus then
+      cbFormaPagamento.SetFocus;
   end
   else
     TfrmMessage.Mensagem('Valor pago já foi alcançado!', 'Aviso', 'C', [mbOK], mbOK);
