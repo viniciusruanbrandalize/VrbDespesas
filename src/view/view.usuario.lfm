@@ -63,7 +63,6 @@ inherited frmUsuario: TfrmUsuario
               TabOrder = 0
               Text = 'edtNome'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
             object edtEmail: TLabeledEdit[3]
               Left = 416
@@ -77,7 +76,6 @@ inherited frmUsuario: TfrmUsuario
               TabOrder = 1
               Text = 'edtEmail'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
             object edtSenha1: TLabeledEdit[4]
               Left = 8
@@ -93,7 +91,6 @@ inherited frmUsuario: TfrmUsuario
               TabOrder = 2
               Text = 'edtSenha1'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
             object edtSenha2: TLabeledEdit[5]
               Left = 8
@@ -109,7 +106,6 @@ inherited frmUsuario: TfrmUsuario
               TabOrder = 3
               Text = 'edtSenha2'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
             object lblCadastroAlteracao: TLabel[6]
               Left = 5

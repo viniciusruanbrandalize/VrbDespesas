@@ -97,7 +97,6 @@ type
     procedure cbSubtipoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cbSubtipoSelect(Sender: TObject);
     procedure edtDescricaoChange(Sender: TObject);
-    procedure edtDescricaoExit(Sender: TObject);
     procedure edtValorChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -163,51 +162,53 @@ var
   erro: string;
   valor: double;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidos then
   begin
-    Controller.Despesa.Descricao := edtDescricao.Text;
-    Controller.Despesa.Data := dtpData.Date;
-    Controller.Despesa.Hora := dtpHora.Time;
-    if not TryStrToFloat(edtValor.Text, valor) then
-      valor := 0;
-    Controller.Despesa.Valor := valor;
-    if not TryStrToFloat(edtDesconto.Text, valor) then
-      valor := 0;
-    Controller.Despesa.Desconto := valor;
-    if not TryStrToFloat(edtFrete.Text, valor) then
-      valor := 0;
-    Controller.Despesa.Frete := valor;
-    if not TryStrToFloat(edtOutros.Text, valor) then
-      valor := 0;
-    Controller.Despesa.Outros := valor;
-    if not TryStrToFloat(edtTotal.Text, valor) then
-      valor := 0;
-    Controller.Despesa.Total := valor;
-    Controller.Despesa.ChaveNFE := edtChaveNfe.Text;
-    Controller.Despesa.Observacao := mObs.Lines.Text;
-    Controller.Despesa.NivelPrecisao := trbNivelPrecisao.Position;
-    Controller.Despesa.Paga := True;
-    if Operacao = opInserir then
+
+    if (Operacao = opInserir) and (Controller.Despesa.DespesaFormaPagamento.Count <= 0) then
     begin
-      Controller.Despesa.Cadastro := Now;
-      if Controller.Despesa.DespesaFormaPagamento.Count > 0 then
+      TfrmMessage.Mensagem('Nenhuma forma de pagamento informada!', 'Aviso', 'C', [mbOK]);
+      Exit;
+    end;
+
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+    begin
+      Controller.Despesa.Descricao := edtDescricao.Text;
+      Controller.Despesa.Data := dtpData.Date;
+      Controller.Despesa.Hora := dtpHora.Time;
+      if not TryStrToFloat(edtValor.Text, valor) then
+        valor := 0;
+      Controller.Despesa.Valor := valor;
+      if not TryStrToFloat(edtDesconto.Text, valor) then
+        valor := 0;
+      Controller.Despesa.Desconto := valor;
+      if not TryStrToFloat(edtFrete.Text, valor) then
+        valor := 0;
+      Controller.Despesa.Frete := valor;
+      if not TryStrToFloat(edtOutros.Text, valor) then
+        valor := 0;
+      Controller.Despesa.Outros := valor;
+      if not TryStrToFloat(edtTotal.Text, valor) then
+        valor := 0;
+      Controller.Despesa.Total := valor;
+      Controller.Despesa.ChaveNFE := edtChaveNfe.Text;
+      Controller.Despesa.Observacao := mObs.Lines.Text;
+      Controller.Despesa.NivelPrecisao := trbNivelPrecisao.Position;
+      Controller.Despesa.Paga := True;
+      if Operacao = opInserir then
       begin
+        Controller.Despesa.Cadastro := Now;
         if not Controller.Inserir(Controller.Despesa, erro) then
           TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
-      end
-      else
-      begin
-        TfrmMessage.Mensagem('Nenhuma forma de pagamento informada!', 'Aviso', 'C', [mbOK]);
-        Exit;
       end;
+      if Operacao = opEditar then
+      begin
+        Controller.Despesa.Alteracao := Now;
+        if not Controller.Editar(Controller.Despesa, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      Controller.Despesa.Alteracao := Now;
-      if not Controller.Editar(Controller.Despesa, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
-    end;
-    inherited;
   end;
 end;
 
@@ -215,10 +216,13 @@ procedure TfrmDespesa.actSalvarFpgtoExecute(Sender: TObject);
 var
   i: integer;
 begin
-  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
-  AjustarTelaPagamento(False);
-  Controller.Despesa.DespesaFormaPagamento[i].Valor := StrToFloat(edtValorFpgto.Text);
-  IncluirPagamento();
+  if CamposEstaoPreenchidosPagamento then
+  begin
+    i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
+    AjustarTelaPagamento(False);
+    Controller.Despesa.DespesaFormaPagamento[i].Valor := StrToFloat(edtValorFpgto.Text);
+    IncluirPagamento();
+  end;
 end;
 
 procedure TfrmDespesa.cbFormaPagamentoKeyUp(Sender: TObject; var Key: Word;
@@ -314,11 +318,6 @@ begin
   ValidarObrigatorioChange(Sender);
 end;
 
-procedure TfrmDespesa.edtDescricaoExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
-end;
-
 procedure TfrmDespesa.edtValorChange(Sender: TObject);
 var
   Valor, Desc, Frete, Outros, Total: double;
@@ -333,6 +332,7 @@ begin
     Outros := 0;
   Total := Controller.CalcularValorTotal(valor, desc, frete, outros);
   edtTotal.Text := FormatFloat(',#0.00', Total);
+  lblObrigatorio.Visible := False;
 end;
 
 procedure TfrmDespesa.actExcluirExecute(Sender: TObject);

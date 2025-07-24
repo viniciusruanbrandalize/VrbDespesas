@@ -129,32 +129,20 @@ var
 begin
   if UpperCase(Driver) = 'FIREBIRD' then
   begin
-    {$IFDEF WIN32}
+    {$IFDEF MSWINDOWS}
     Lib := ExtractFilePath(ParamStr(0))+'fbclient.dll';
     {$ENDIF}
-    {$IFDEF WIN64}
-    Lib := ExtractFilePath(ParamStr(0))+'fbclient.dll';
-    {$ENDIF}
-    {$IFDEF LINUX32}
-    Lib := ExtractFilePath(ParamStr(0))+'fbclient.so';
-    {$ENDIF}
-    {$IFDEF LINUX64}
+    {$IFDEF LINUX}
     Lib := ExtractFilePath(ParamStr(0))+'fbclient.so';
     {$ENDIF}
   end
   else
   if UpperCase(Driver) = 'POSTGRESQL' then
   begin
-    {$IFDEF WIN32}
+    {$IFDEF MSWINDOWS}
     Lib := ExtractFilePath(ParamStr(0))+'libpq.dll';
     {$ENDIF}
-    {$IFDEF WIN64}
-    Lib := ExtractFilePath(ParamStr(0))+'libpq.dll';
-    {$ENDIF}
-    {$IFDEF LINUX32}
-    Lib := ExtractFilePath(ParamStr(0))+'libpq.so';
-    {$ENDIF}
-    {$IFDEF LINUX64}
+    {$IFDEF LINUX}
     Lib := ExtractFilePath(ParamStr(0))+'libpq.so';
     {$ENDIF}
   end
@@ -167,58 +155,42 @@ begin
     {$IFDEF WIN64}
     Lib := ExtractFilePath(ParamStr(0))+'sqlsrv64.dll';
     {$ENDIF}
-    {$IFDEF LINUX32}
-    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv32.so';
-    {$ENDIF}
-    {$IFDEF LINUX64}
-    Lib := ExtractFilePath(ParamStr(0))+'sqlsrv64.so';
+    {$IFDEF LINUX}
+      {$IFDEF CPU32}
+      Lib := ExtractFilePath(ParamStr(0))+'sqlsrv32.so';
+      {$ENDIF}
+      {$IFDEF CPU64}
+      Lib := ExtractFilePath(ParamStr(0))+'sqlsrv64.so';
+      {$ENDIF}
     {$ENDIF}
   end
   else
   if UpperCase(Driver) = 'MYSQL 5.7' then
   begin
-    {$IFDEF WIN32}
+    {$IFDEF MSWINDOWS}
     Lib := ExtractFilePath(ParamStr(0))+'libmariadb.dll';
     {$ENDIF}
-    {$IFDEF WIN64}
-    Lib := ExtractFilePath(ParamStr(0))+'libmariadb.dll';
-    {$ENDIF}
-    {$IFDEF LINUX32}
-    Lib := ExtractFilePath(ParamStr(0))+'libmariadb.so';
-    {$ENDIF}
-    {$IFDEF LINUX64}
+    {$IFDEF LINUX}
     Lib := ExtractFilePath(ParamStr(0))+'libmariadb.so';
     {$ENDIF}
   end
   else
   if Pos('MYSQL', UpperCase(Driver)) <> 0 then
   begin
-    {$IFDEF WIN32}
+    {$IFDEF MSWINDOWS}
     Lib := ExtractFilePath(ParamStr(0))+'libmysql.dll';
     {$ENDIF}
-    {$IFDEF WIN64}
-    Lib := ExtractFilePath(ParamStr(0))+'libmysql.dll';
-    {$ENDIF}
-    {$IFDEF LINUX32}
-    Lib := ExtractFilePath(ParamStr(0))+'libmysql.so';
-    {$ENDIF}
-    {$IFDEF LINUX64}
+    {$IFDEF LINUX}
     Lib := ExtractFilePath(ParamStr(0))+'libmysql.so';
     {$ENDIF}
   end
   else
   if UpperCase(Driver) = 'SQLITE3' then
   begin
-    {$IFDEF WIN32}
+    {$IFDEF MSWINDOWS}
     Lib := ExtractFilePath(ParamStr(0))+'SQLite3.dll';
     {$ENDIF}
-    {$IFDEF WIN64}
-    Lib := ExtractFilePath(ParamStr(0))+'SQLite3.dll';
-    {$ENDIF}
-    {$IFDEF LINUX32}
-    Lib := ExtractFilePath(ParamStr(0))+'SQLite3.so';
-    {$ENDIF}
-    {$IFDEF LINUX64}
+    {$IFDEF LINUX}
     Lib := ExtractFilePath(ParamStr(0))+'SQLite3.so';
     {$ENDIF}
   end;

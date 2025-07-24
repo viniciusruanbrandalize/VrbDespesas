@@ -44,7 +44,6 @@ type
     procedure cbCidadeKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cbCidadeSelect(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
-    procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -83,44 +82,47 @@ procedure TfrmParticipante.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidos then
   begin
-
-    Controller.Participante.Nome  := edtNome.Text;
-    Controller.Participante.Pessoa := lbPessoaValues.Items[cbPessoa.ItemIndex];
-    Controller.Participante.CNPJ   := edtCnpj.Text;
-    if Trim( edtIe.Text ) <> EmptyStr then
-      Controller.Participante.IE     := StrToInt(edtIe.Text)
-    else
-      Controller.Participante.IE     := 0;
-    Controller.Participante.Fantasia := edtFantasia.Text;
-    Controller.Participante.Telefone := edtTelefone.Text;
-    Controller.Participante.Celular  := edtCelular.Text;
-    Controller.Participante.Email    := edtEmail.Text;
-    Controller.Participante.CEP      := edtCep.Text;
-    Controller.Participante.Rua      := edtRua.Text;
-    if Trim( edtNumero.Text ) <> EmptyStr then
-      Controller.Participante.Numero   := StrToInt(edtNumero.Text)
-    else
-      Controller.Participante.Numero   := 0;
-    Controller.Participante.Complemento := edtComplemento.Text;
-    Controller.Participante.Bairro   := edtBairro.Text;
-    Controller.Participante.Obs      := mObs.Lines.Text;
-    Controller.Participante.EhDonoCadastro := False;
-
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      Controller.Participante.Cadastro := Now;
-      if not Controller.Inserir(Controller.Participante, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+
+      Controller.Participante.Nome  := edtNome.Text;
+      Controller.Participante.Pessoa := lbPessoaValues.Items[cbPessoa.ItemIndex];
+      Controller.Participante.CNPJ   := edtCnpj.Text;
+      if Trim( edtIe.Text ) <> EmptyStr then
+        Controller.Participante.IE     := StrToInt(edtIe.Text)
+      else
+        Controller.Participante.IE     := 0;
+      Controller.Participante.Fantasia := edtFantasia.Text;
+      Controller.Participante.Telefone := edtTelefone.Text;
+      Controller.Participante.Celular  := edtCelular.Text;
+      Controller.Participante.Email    := edtEmail.Text;
+      Controller.Participante.CEP      := edtCep.Text;
+      Controller.Participante.Rua      := edtRua.Text;
+      if Trim( edtNumero.Text ) <> EmptyStr then
+        Controller.Participante.Numero   := StrToInt(edtNumero.Text)
+      else
+        Controller.Participante.Numero   := 0;
+      Controller.Participante.Complemento := edtComplemento.Text;
+      Controller.Participante.Bairro   := edtBairro.Text;
+      Controller.Participante.Obs      := mObs.Lines.Text;
+      Controller.Participante.EhDonoCadastro := False;
+
+      if Operacao = opInserir then
+      begin
+        Controller.Participante.Cadastro := Now;
+        if not Controller.Inserir(Controller.Participante, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        Controller.Participante.Alteracao := Now;
+        if not Controller.Editar(Controller.Participante, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      Controller.Participante.Alteracao := Now;
-      if not Controller.Editar(Controller.Participante, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    inherited;
   end;
 end;
 
@@ -153,11 +155,6 @@ end;
 procedure TfrmParticipante.edtNomeChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
-end;
-
-procedure TfrmParticipante.edtNomeExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmParticipante.actExcluirExecute(Sender: TObject);

@@ -120,7 +120,6 @@ type
       );
     procedure cbBandeiraSelect(Sender: TObject);
     procedure edtNumeroChange(Sender: TObject);
-    procedure edtNumeroExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -281,24 +280,27 @@ procedure TfrmContaBancaria.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidos then
   begin
-    Controller.ContaBancaria.Agencia  := edtAgencia.Text;
-    Controller.ContaBancaria.Numero   := edtNumero.Text;
-    Controller.ContaBancaria.Tipo     := cbTipo.Items[cbTipo.ItemIndex];
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      Controller.ContaBancaria.Cadastro := Now;
-      if not Controller.Inserir(Controller.ContaBancaria, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Controller.ContaBancaria.Agencia  := edtAgencia.Text;
+      Controller.ContaBancaria.Numero   := edtNumero.Text;
+      Controller.ContaBancaria.Tipo     := cbTipo.Items[cbTipo.ItemIndex];
+      if Operacao = opInserir then
+      begin
+        Controller.ContaBancaria.Cadastro := Now;
+        if not Controller.Inserir(Controller.ContaBancaria, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        Controller.ContaBancaria.Alteracao := Now;
+        if not Controller.Editar(Controller.ContaBancaria, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      Controller.ContaBancaria.Alteracao := Now;
-      if not Controller.Editar(Controller.ContaBancaria, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    inherited;
   end;
 end;
 
@@ -306,29 +308,32 @@ procedure TfrmContaBancaria.actSalvarPixExecute(Sender: TObject);
 var
   Erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidosPix then
   begin
-    Controller.Pix.Chave := edtChave.Text;
-    Controller.Pix.Tipo  := cbTipoChave.Items[cbTipoChave.ItemIndex];
-    Controller.Pix.ContaBancaria.Id := controller.ContaBancaria.Id;
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      Controller.Pix.Cadastro := Now;
-      if not Controller.InserirPix(Controller.Pix, Erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Controller.Pix.Chave := edtChave.Text;
+      Controller.Pix.Tipo  := cbTipoChave.Items[cbTipoChave.ItemIndex];
+      Controller.Pix.ContaBancaria.Id := controller.ContaBancaria.Id;
+      if Operacao = opInserir then
+      begin
+        Controller.Pix.Cadastro := Now;
+        if not Controller.InserirPix(Controller.Pix, Erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+
+      if Operacao = opEditar then
+      begin
+        Controller.Pix.Alteracao := Now;
+        if not Controller.EditarPix(Controller.Pix, Erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+
+      pgcPix.ActivePage := tbsListaPix;
+      Operacao := opNenhum;
+      CarregarDadosPix;
+
     end;
-
-    if Operacao = opEditar then
-    begin
-      Controller.Pix.Alteracao := Now;
-      if not Controller.EditarPix(Controller.Pix, Erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-
-    pgcPix.ActivePage := tbsListaPix;
-    Operacao := opNenhum;
-    CarregarDadosPix;
-
   end;
 end;
 
@@ -397,11 +402,6 @@ end;
 procedure TfrmContaBancaria.edtNumeroChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
-end;
-
-procedure TfrmContaBancaria.edtNumeroExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmContaBancaria.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -488,6 +488,7 @@ begin
   CarregarSelecionadoCartao;
   Operacao := opEditar;
   pgcCartao.ActivePage := tbsCadastroCartao;
+  AddIdxComboBoxPesquisa(pnlFundoCadCartao);
 end;
 
 procedure TfrmContaBancaria.actEditarPixExecute(Sender: TObject);
@@ -496,6 +497,7 @@ begin
   CarregarSelecionadoPix;
   Operacao := opEditar;
   pgcPix.ActivePage := tbsCadastroPix;
+  AddIdxComboBoxPesquisa(pnlFundoCadPix);
 end;
 
 procedure TfrmContaBancaria.actExcluirCartaoExecute(Sender: TObject);
@@ -545,29 +547,32 @@ procedure TfrmContaBancaria.actSalvarCartaoExecute(Sender: TObject);
 var
   Erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidosCartao then
   begin
-    Controller.Cartao.Numero   := edtNumeroCartao.Text;
-    Controller.Cartao.Tipo     := lbTipoCartaoValues.Items[cbTipoCartao.ItemIndex];
-    Controller.Cartao.Validade := dtpValidade.Date;
-    Controller.Cartao.Aproximacao := ckbAproximacao.Checked;
-    Controller.Cartao.ContaBancaria.Id := Controller.ContaBancaria.Id;
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      Controller.Cartao.Cadastro := Now;
-      if not Controller.InserirCartao(Controller.Cartao, Erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    if Operacao = opEditar then
-    begin
-      Controller.Cartao.Alteracao := Now;
-      if not Controller.EditarCartao(Controller.Cartao, Erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
+      Controller.Cartao.Numero   := edtNumeroCartao.Text;
+      Controller.Cartao.Tipo     := lbTipoCartaoValues.Items[cbTipoCartao.ItemIndex];
+      Controller.Cartao.Validade := dtpValidade.Date;
+      Controller.Cartao.Aproximacao := ckbAproximacao.Checked;
+      Controller.Cartao.ContaBancaria.Id := Controller.ContaBancaria.Id;
+      if Operacao = opInserir then
+      begin
+        Controller.Cartao.Cadastro := Now;
+        if not Controller.InserirCartao(Controller.Cartao, Erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        Controller.Cartao.Alteracao := Now;
+        if not Controller.EditarCartao(Controller.Cartao, Erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
 
-    pgcCartao.ActivePage := tbsListaCartao;
-    Operacao := opNenhum;
-    CarregarDadosCartao;
+      pgcCartao.ActivePage := tbsListaCartao;
+      Operacao := opNenhum;
+      CarregarDadosCartao;
+    end;
   end;
 end;
 

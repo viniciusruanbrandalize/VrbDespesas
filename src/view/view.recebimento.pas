@@ -77,7 +77,6 @@ type
       Shift: TShiftState);
     procedure cbPagadorSalSelect(Sender: TObject);
     procedure edtDescricaoChange(Sender: TObject);
-    procedure edtDescricaoExit(Sender: TObject);
     procedure edtHEChange(Sender: TObject);
     procedure edtINSSChange(Sender: TObject);
     procedure edtIRChange(Sender: TObject);
@@ -124,76 +123,79 @@ var
   erro: String;
   valor: Double;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidos then
   begin
-
-    case FTipo of
-      telaSalario:
-      begin
-        Controller.Recebimento.Data := calData.DateTime;
-        Controller.Recebimento.Tipo := 0;
-        Controller.Recebimento.Descricao := 'Recebimento Salarial referente ao mês de '+
-                                             FormatDateTime('mmmm/yyyy', Controller.Recebimento.Data);
-        Controller.Recebimento.Ferias := rgFerias.ItemIndex = 0;
-        Controller.Recebimento.DecimoTerceiro := rg13.ItemIndex = 0;
-        if not TryStrToFloat(edtINSS.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.INSS := valor;
-        if not TryStrToFloat(edtIR.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.IR := valor;
-        if not TryStrToFloat(edtHE.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.HoraExtra := valor;
-        if not TryStrToFloat(edtOutros.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.Antecipacao := valor;
-        if not TryStrToFloat(edt13.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.ValorDecimoTerceiro := valor;
-        if not TryStrToFloat(edtFerias.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.ValorFerias := valor;
-        if not TryStrToFloat(edtValorBaseSal.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.ValorBase := valor;
-        if not TryStrToFloat(edtValorTotalSal.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.ValorTotal := valor;
-      end;
-      telaGeral:
-      begin
-        Controller.Recebimento.Data := dtpData.Date;
-        Controller.Recebimento.Tipo := 1;
-        Controller.Recebimento.Descricao := edtDescricao.Text;
-        if not TryStrToFloat(edtValorTotalRec.Text, valor) then
-          valor := 0;
-        Controller.Recebimento.ValorBase  := valor;
-        Controller.Recebimento.ValorTotal := valor;
-        Controller.Recebimento.Ferias         := False;
-        Controller.Recebimento.DecimoTerceiro := False;
-        Controller.Recebimento.INSS           := 0;
-        Controller.Recebimento.IR             := 0;
-        Controller.Recebimento.HoraExtra      := 0;
-        Controller.Recebimento.Antecipacao    := 0;
-        Controller.Recebimento.ValorDecimoTerceiro := 0;
-        Controller.Recebimento.ValorFerias    := 0;
-      end;
-    end;
-
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      Controller.Recebimento.Cadastro := Now;
-      if not Controller.Inserir(Controller.Recebimento, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+
+      case FTipo of
+        telaSalario:
+        begin
+          Controller.Recebimento.Data := calData.DateTime;
+          Controller.Recebimento.Tipo := 0;
+          Controller.Recebimento.Descricao := 'Recebimento Salarial referente ao mês de '+
+                                               FormatDateTime('mmmm/yyyy', Controller.Recebimento.Data);
+          Controller.Recebimento.Ferias := rgFerias.ItemIndex = 0;
+          Controller.Recebimento.DecimoTerceiro := rg13.ItemIndex = 0;
+          if not TryStrToFloat(edtINSS.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.INSS := valor;
+          if not TryStrToFloat(edtIR.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.IR := valor;
+          if not TryStrToFloat(edtHE.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.HoraExtra := valor;
+          if not TryStrToFloat(edtOutros.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.Antecipacao := valor;
+          if not TryStrToFloat(edt13.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.ValorDecimoTerceiro := valor;
+          if not TryStrToFloat(edtFerias.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.ValorFerias := valor;
+          if not TryStrToFloat(edtValorBaseSal.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.ValorBase := valor;
+          if not TryStrToFloat(edtValorTotalSal.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.ValorTotal := valor;
+        end;
+        telaGeral:
+        begin
+          Controller.Recebimento.Data := dtpData.Date;
+          Controller.Recebimento.Tipo := 1;
+          Controller.Recebimento.Descricao := edtDescricao.Text;
+          if not TryStrToFloat(edtValorTotalRec.Text, valor) then
+            valor := 0;
+          Controller.Recebimento.ValorBase  := valor;
+          Controller.Recebimento.ValorTotal := valor;
+          Controller.Recebimento.Ferias         := False;
+          Controller.Recebimento.DecimoTerceiro := False;
+          Controller.Recebimento.INSS           := 0;
+          Controller.Recebimento.IR             := 0;
+          Controller.Recebimento.HoraExtra      := 0;
+          Controller.Recebimento.Antecipacao    := 0;
+          Controller.Recebimento.ValorDecimoTerceiro := 0;
+          Controller.Recebimento.ValorFerias    := 0;
+        end;
+      end;
+
+      if Operacao = opInserir then
+      begin
+        Controller.Recebimento.Cadastro := Now;
+        if not Controller.Inserir(Controller.Recebimento, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        Controller.Recebimento.Alteracao := Now;
+        if not Controller.Editar(Controller.Recebimento, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      Controller.Recebimento.Alteracao := Now;
-      if not Controller.Editar(Controller.Recebimento, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    inherited;
   end;
 end;
 
@@ -328,11 +330,6 @@ end;
 procedure TfrmRecebimento.edtDescricaoChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
-end;
-
-procedure TfrmRecebimento.edtDescricaoExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmRecebimento.edtHEChange(Sender: TObject);

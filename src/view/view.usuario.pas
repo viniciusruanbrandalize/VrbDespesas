@@ -46,7 +46,6 @@ type
     procedure cklbTituloAcessoClickCheck(Sender: TObject);
     procedure cklbTituloTelaSelectionChange(Sender: TObject; User: boolean);
     procedure edtNomeChange(Sender: TObject);
-    procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -141,31 +140,34 @@ procedure TfrmUsuario.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if Controller.ValidarSenha(edtSenha1.Text, edtSenha2.Text, Operacao, erro) then
+  if CamposEstaoPreenchidos then
   begin
-    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+    if Controller.ValidarSenha(edtSenha1.Text, edtSenha2.Text, Operacao, erro) then
     begin
-      Controller.Usuario.Nome      := edtNome.Text;
-      Controller.Usuario.Email     := edtEmail.Text;
-      Controller.Usuario.Senha     := Controller.CriptografarSenha(edtSenha2.Text);
-      if Operacao = opInserir then
+      if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
       begin
-        Controller.Usuario.Cadastro := Now;
-        if not Controller.Inserir(Controller.Usuario, erro) then
-          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+        Controller.Usuario.Nome      := edtNome.Text;
+        Controller.Usuario.Email     := edtEmail.Text;
+        Controller.Usuario.Senha     := Controller.CriptografarSenha(edtSenha2.Text);
+        if Operacao = opInserir then
+        begin
+          Controller.Usuario.Cadastro := Now;
+          if not Controller.Inserir(Controller.Usuario, erro) then
+            TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+        end;
+        if Operacao = opEditar then
+        begin
+          Controller.Usuario.Alteracao := Now;
+          if not Controller.Editar(Controller.Usuario, erro) then
+            TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+        end;
+        inherited;
       end;
-      if Operacao = opEditar then
-      begin
-        Controller.Usuario.Alteracao := Now;
-        if not Controller.Editar(Controller.Usuario, erro) then
-          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-      end;
-      inherited;
+    end
+    else
+    begin
+      TfrmMessage.Mensagem(erro, 'Aviso', 'C', [mbOk])
     end;
-  end
-  else
-  begin
-    TfrmMessage.Mensagem(erro, 'Aviso', 'C', [mbOk])
   end;
 end;
 
@@ -198,11 +200,6 @@ end;
 procedure TfrmUsuario.edtNomeChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
-end;
-
-procedure TfrmUsuario.edtNomeExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmUsuario.FormClose(Sender: TObject; var CloseAction: TCloseAction);

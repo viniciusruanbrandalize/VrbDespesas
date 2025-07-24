@@ -298,6 +298,17 @@ object frmCadastroPadrao: TfrmCadastroPadrao
               ParentFont = False
               Visible = False
             end
+            object lblLimiteCampo: TLabel
+              Left = 736
+              Height = 15
+              Top = 0
+              Width = 178
+              Caption = '* Informar mais de x caracteres!'
+              Font.Color = 27607
+              Font.Style = [fsBold]
+              ParentFont = False
+              Visible = False
+            end
           end
         end
       end

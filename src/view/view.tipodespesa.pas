@@ -18,7 +18,6 @@ type
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
-    procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -30,6 +29,7 @@ type
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo : Boolean; override;
   end;
 
 var
@@ -54,31 +54,29 @@ procedure TfrmTipoDespesa.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
-    Controller.TipoDespesa.Nome  := edtNome.Text;
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      if not Controller.Inserir(Controller.TipoDespesa, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Controller.TipoDespesa.Nome  := edtNome.Text;
+      if Operacao = opInserir then
+      begin
+        if not Controller.Inserir(Controller.TipoDespesa, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        if not Controller.Editar(Controller.TipoDespesa, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      if not Controller.Editar(Controller.TipoDespesa, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    inherited;
   end;
 end;
 
 procedure TfrmTipoDespesa.edtNomeChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
-end;
-
-procedure TfrmTipoDespesa.edtNomeExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmTipoDespesa.actExcluirExecute(Sender: TObject);
@@ -155,6 +153,15 @@ begin
   Result := False;
   if Trim(edtNome.Text) = EmptyStr then
     ValidarObrigatorioExit(edtNome)
+  else
+    Result := True;
+end;
+
+function TfrmTipoDespesa.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  Result := False;
+  if Length(Trim(edtNome.Text)) < 3 then
+    ValidarTamanhoMinimoExit(edtNome)
   else
     Result := True;
 end;

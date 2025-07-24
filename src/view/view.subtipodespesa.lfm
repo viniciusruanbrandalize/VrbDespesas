@@ -62,7 +62,6 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               TabOrder = 0
               Text = 'edtNome'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
             object lbTipoId: TListBox[3]
               Left = 432
@@ -94,7 +93,6 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               TabOrder = 3
               Text = 'cbTipo'
               OnChange = cbTipoChange
-              OnExit = cbTipoExit
               OnKeyUp = cbTipoKeyUp
               OnSelect = cbTipoSelect
             end

@@ -386,7 +386,6 @@ inherited frmRecebimento: TfrmRecebimento
                     TabOrder = 1
                     Text = 'edtDescricao'
                     OnChange = edtDescricaoChange
-                    OnExit = edtDescricaoExit
                   end
                   object dtpData: TDateTimePicker
                     Left = 8

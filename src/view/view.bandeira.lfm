@@ -63,7 +63,6 @@ inherited frmBandeira: TfrmBandeira
               TabOrder = 0
               Text = 'edtNome'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
           end
         end

@@ -26,6 +26,7 @@ type
     cbPesquisa: TComboBox;
     edtPesquisa: TEdit;
     img: TImageList;
+    lblLimiteCampo: TLabel;
     lblObrigatorio: TLabel;
     lbPesquisa: TListBox;
     lvPadrao: TListView;
@@ -71,12 +72,16 @@ type
     procedure CarregarSelecionado; virtual; abstract;
     procedure LimparCampos; virtual; abstract;
     function CamposEstaoPreenchidos: Boolean; virtual; abstract;
+    function CamposEstaoComTamanhoMinimo: Boolean; virtual; abstract;
     procedure NumericoExit(Sender: TObject);
     procedure NumericoEnter(Sender: TObject);
     procedure NumericoKeyPress(Sender: TObject; var Key: char);
     procedure ValidarObrigatorioExit(Sender: TObject);
     procedure ValidarObrigatorioChange(Sender: TObject);
+    procedure ValidarTamanhoMinimoExit(Sender: TObject);
+    procedure ValidarMaiorQueZeroExit(Sender: TObject);
     procedure LiberarBloquearAcessos(var ListaDeAcoes: TActionList; Tela: String);
+    procedure AddIdxComboBoxPesquisa(var pnl: TPanel);
   end;
 
 var
@@ -104,6 +109,7 @@ begin
   Operacao := opEditar;
   pgcPadrao.ActivePage := tbsCadastro;
   SetarFocoPrimeiroCampo();
+  AddIdxComboBoxPesquisa(pnlFundoCadastro);
 end;
 
 procedure TfrmCadastroPadrao.actCancelarExecute(Sender: TObject);
@@ -234,7 +240,7 @@ begin
     lblObrigatorio.Visible := True;
   end
   else
-  if (Sender is TComboBox) and (Trim((Sender as TComboBox).Text) = EmptyStr) then
+  if (Sender is TComboBox) and ((Sender as TComboBox).ItemIndex = -1) then
   begin
     if (Sender as TComboBox).CanFocus then
       (Sender as TComboBox).SetFocus;
@@ -248,6 +254,35 @@ end;
 procedure TfrmCadastroPadrao.ValidarObrigatorioChange(Sender: TObject);
 begin
   lblObrigatorio.Visible := False;
+  lblLimiteCampo.Visible := False;
+end;
+
+procedure TfrmCadastroPadrao.ValidarTamanhoMinimoExit(Sender: TObject);
+begin
+  if (Sender is TLabeledEdit) and (Length(Trim((Sender as TLabeledEdit).Text)) < 3 ) then
+  begin
+    if (Sender as TLabeledEdit).CanFocus then
+      (Sender as TLabeledEdit).SetFocus;
+    lblLimiteCampo.Left := (Sender as TLabeledEdit).Left;
+    lblLimiteCampo.Top  := (Sender as TLabeledEdit).Top + (Sender as TLabeledEdit).Height;
+    lblLimiteCampo.Parent := (Sender as TLabeledEdit).Parent;
+    lblLimiteCampo.Caption := '* Informe no mínimo 3 caracteres!';
+    lblLimiteCampo.Visible := True;
+  end;
+end;
+
+procedure TfrmCadastroPadrao.ValidarMaiorQueZeroExit(Sender: TObject);
+begin
+  if (Sender is TLabeledEdit) and (StrToFloatDef((Sender as TLabeledEdit).Text, 0) <= 0) then
+  begin
+    if (Sender as TLabeledEdit).CanFocus then
+      (Sender as TLabeledEdit).SetFocus;
+    lblLimiteCampo.Left := (Sender as TLabeledEdit).Left;
+    lblLimiteCampo.Top  := (Sender as TLabeledEdit).Top + (Sender as TLabeledEdit).Height;
+    lblLimiteCampo.Parent := (Sender as TLabeledEdit).Parent;
+    lblLimiteCampo.Caption := '* Informe um valor maior que zero!';
+    lblLimiteCampo.Visible := True;
+  end;
 end;
 
 procedure TfrmCadastroPadrao.LiberarBloquearAcessos(var ListaDeAcoes: TActionList;
@@ -260,6 +295,25 @@ begin
     ControleAcesso.LiberarBloquearAcessos(ListaDeAcoes, Tela);
   finally
     FreeAndNil(ControleAcesso);
+  end;
+end;
+
+procedure TfrmCadastroPadrao.AddIdxComboBoxPesquisa(var pnl: TPanel);
+var
+  i: Integer;
+  cb: TComboBox;
+begin
+  for i := 0 to Pred(pnl.ControlCount) do
+  begin
+    if pnl.Controls[i] is TComboBox then
+    begin
+      cb := TComboBox( pnl.Controls[i] );
+      if Trim(cb.Text) <> EmptyStr then
+      begin
+        cb.Items.Add(cb.Text);
+        cb.ItemIndex := cb.Items.IndexOf(cb.Text);
+      end;
+    end;
   end;
 end;
 

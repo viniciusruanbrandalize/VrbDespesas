@@ -68,7 +68,6 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 3
               Text = 'edtNome'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
             object cbPessoa: TComboBox[3]
               Left = 5

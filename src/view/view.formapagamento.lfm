@@ -63,7 +63,6 @@ inherited frmFormaPagamento: TfrmFormaPagamento
               TabOrder = 0
               Text = 'edtNome'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
             object edtSigla: TLabeledEdit[3]
               Left = 512

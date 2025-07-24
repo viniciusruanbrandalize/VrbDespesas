@@ -138,7 +138,6 @@ inherited frmDespesa: TfrmDespesa
               TabOrder = 2
               Text = 'edtDescricao'
               OnChange = edtDescricaoChange
-              OnExit = edtDescricaoExit
             end
             object dtpData: TDateTimePicker[3]
               Left = 8
@@ -267,6 +266,7 @@ inherited frmDespesa: TfrmDespesa
               NumbersOnly = True
               TabOrder = 10
               Text = 'edtChaveNfe'
+              OnChange = edtDescricaoChange
             end
             object mObs: TMemo[12]
               Left = 8
@@ -277,6 +277,7 @@ inherited frmDespesa: TfrmDespesa
                 'mObs'
               )
               TabOrder = 11
+              OnChange = edtDescricaoChange
             end
             object lblObs: TLabel[13]
               Left = 8
@@ -412,6 +413,7 @@ inherited frmDespesa: TfrmDespesa
                     ParentFont = False
                     TabOrder = 0
                     Text = 'cbFormaPagamento'
+                    OnChange = edtDescricaoChange
                     OnKeyUp = cbFormaPagamentoKeyUp
                     OnSelect = cbFormaPagamentoSelect
                   end
@@ -623,6 +625,7 @@ inherited frmDespesa: TfrmDespesa
               ParentFont = False
               TabOrder = 3
               Text = 'cbFornecedor'
+              OnChange = edtDescricaoChange
               OnKeyUp = cbFornecedorKeyUp
               OnSelect = cbFornecedorSelect
             end
@@ -654,6 +657,7 @@ inherited frmDespesa: TfrmDespesa
               ParentFont = False
               TabOrder = 4
               Text = 'cbSubtipo'
+              OnChange = edtDescricaoChange
               OnKeyUp = cbSubtipoKeyUp
               OnSelect = cbSubtipoSelect
             end

@@ -40,7 +40,10 @@ inherited frmTipoDespesa: TfrmTipoDespesa
             inherited pnlBotaoCad: TPanel
               TabOrder = 1
             end
-            object edtNome: TLabeledEdit[2]
+            inherited lblLimiteCampo: TLabel
+              Visible = True
+            end
+            object edtNome: TLabeledEdit[3]
               Left = 8
               Height = 23
               Top = 32
@@ -52,7 +55,6 @@ inherited frmTipoDespesa: TfrmTipoDespesa
               TabOrder = 0
               Text = 'edtNome'
               OnChange = edtNomeChange
-              OnExit = edtNomeExit
             end
           end
         end

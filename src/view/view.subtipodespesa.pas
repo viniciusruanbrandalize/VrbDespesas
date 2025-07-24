@@ -22,11 +22,9 @@ type
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure cbTipoChange(Sender: TObject);
-    procedure cbTipoExit(Sender: TObject);
     procedure cbTipoKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cbTipoSelect(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
-    procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -62,31 +60,29 @@ procedure TfrmSubtipoDespesa.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidos then
   begin
-    Controller.SubtipoDespesa.Nome  := edtNome.Text;
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      if not Controller.Inserir(Controller.SubtipoDespesa, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Controller.SubtipoDespesa.Nome  := edtNome.Text;
+      if Operacao = opInserir then
+      begin
+        if not Controller.Inserir(Controller.SubtipoDespesa, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        if not Controller.Editar(Controller.SubtipoDespesa, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      if not Controller.Editar(Controller.SubtipoDespesa, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    inherited;
   end;
 end;
 
 procedure TfrmSubtipoDespesa.cbTipoChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
-end;
-
-procedure TfrmSubtipoDespesa.cbTipoExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmSubtipoDespesa.cbTipoKeyUp(Sender: TObject; var Key: Word;
@@ -118,11 +114,6 @@ end;
 procedure TfrmSubtipoDespesa.edtNomeChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Self);
-end;
-
-procedure TfrmSubtipoDespesa.edtNomeExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmSubtipoDespesa.FormClose(Sender: TObject;

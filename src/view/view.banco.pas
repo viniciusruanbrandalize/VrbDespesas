@@ -19,7 +19,6 @@ type
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure edtNumeroChange(Sender: TObject);
-    procedure edtNumeroExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -31,6 +30,7 @@ type
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo: Boolean; override;
   end;
 
 var
@@ -66,37 +66,35 @@ procedure TfrmBanco.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
-    Controller.Banco.Nome   := edtNome.Text;
-
-    if edtNumero.Text <> '' then
-      Controller.Banco.Numero := StrToInt(edtNumero.Text)
-    else
-      Controller.Banco.Numero := 0;
-
-    if Operacao = opInserir then
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
-      if not Controller.Inserir(Controller.Banco, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Controller.Banco.Nome   := edtNome.Text;
+
+      if edtNumero.Text <> '' then
+        Controller.Banco.Numero := StrToInt(edtNumero.Text)
+      else
+        Controller.Banco.Numero := 0;
+
+      if Operacao = opInserir then
+      begin
+        if not Controller.Inserir(Controller.Banco, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        if not Controller.Editar(Controller.Banco, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      if not Controller.Editar(Controller.Banco, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    inherited;
   end;
 end;
 
 procedure TfrmBanco.edtNumeroChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
-end;
-
-procedure TfrmBanco.edtNumeroExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmBanco.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -166,6 +164,18 @@ begin
   else
   if Trim(edtNome.Text) = EmptyStr then
     ValidarObrigatorioExit(edtNome)
+  else
+    Result := True;
+end;
+
+function TfrmBanco.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  Result := False;
+  if StrToIntDef(edtNumero.Text, 0) <= 0 then
+    ValidarMaiorQueZeroExit(edtNumero)
+  else
+  if Length(Trim(edtNome.Text)) < 3 then
+    ValidarTamanhoMinimoExit(edtNome)
   else
     Result := True;
 end;

@@ -18,7 +18,6 @@ type
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
-    procedure edtNomeExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -65,32 +64,30 @@ procedure TfrmBandeira.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+  if CamposEstaoPreenchidos then
   begin
-    Controller.Bandeira.Nome   := edtNome.Text;
+    if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+    begin
+      Controller.Bandeira.Nome   := edtNome.Text;
 
-    if Operacao = opInserir then
-    begin
-      if not Controller.Inserir(Controller.Bandeira, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      if Operacao = opInserir then
+      begin
+        if not Controller.Inserir(Controller.Bandeira, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      if Operacao = opEditar then
+      begin
+        if not Controller.Editar(Controller.Bandeira, erro) then
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      end;
+      inherited;
     end;
-    if Operacao = opEditar then
-    begin
-      if not Controller.Editar(Controller.Bandeira, erro) then
-        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    end;
-    inherited;
   end;
 end;
 
 procedure TfrmBandeira.edtNomeChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
-end;
-
-procedure TfrmBandeira.edtNomeExit(Sender: TObject);
-begin
-  ValidarObrigatorioExit(Sender);
 end;
 
 procedure TfrmBandeira.FormClose(Sender: TObject; var CloseAction: TCloseAction);

@@ -56,7 +56,7 @@ inherited frmBanco: TfrmBanco
             inherited pnlBotaoCad: TPanel
               TabOrder = 2
             end
-            object edtNome: TLabeledEdit[2]
+            object edtNome: TLabeledEdit[3]
               Left = 104
               Height = 23
               Top = 32
@@ -68,9 +68,8 @@ inherited frmBanco: TfrmBanco
               TabOrder = 1
               Text = 'edtNome'
               OnChange = edtNumeroChange
-              OnExit = edtNumeroExit
             end
-            object edtNumero: TLabeledEdit[3]
+            object edtNumero: TLabeledEdit[4]
               Left = 5
               Height = 23
               Top = 32
@@ -83,7 +82,6 @@ inherited frmBanco: TfrmBanco
               TabOrder = 0
               Text = 'edtNumero'
               OnChange = edtNumeroChange
-              OnExit = edtNumeroExit
             end
           end
         end

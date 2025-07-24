@@ -25,8 +25,8 @@ inherited frmContaBancaria: TfrmContaBancaria
         end
       end
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
+        ActivePage = tbsPix
+        TabIndex = 3
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -97,7 +97,6 @@ inherited frmContaBancaria: TfrmContaBancaria
               TabOrder = 1
               Text = 'edtAgencia'
               OnChange = edtNumeroChange
-              OnExit = edtNumeroExit
             end
             object edtNumero: TLabeledEdit[3]
               Left = 5
@@ -112,7 +111,6 @@ inherited frmContaBancaria: TfrmContaBancaria
               TabOrder = 0
               Text = 'edtNumero'
               OnChange = edtNumeroChange
-              OnExit = edtNumeroExit
             end
             object cbTipo: TComboBox[4]
               Left = 440
@@ -120,6 +118,7 @@ inherited frmContaBancaria: TfrmContaBancaria
               Top = 32
               Width = 192
               ItemHeight = 15
+              ItemIndex = 0
               Items.Strings = (
                 'Corrente'
                 'Poupança'
@@ -129,6 +128,7 @@ inherited frmContaBancaria: TfrmContaBancaria
               )
               Style = csDropDownList
               TabOrder = 2
+              Text = 'Corrente'
             end
             object lblTipoConta: TLabel[5]
               Left = 440
@@ -166,6 +166,7 @@ inherited frmContaBancaria: TfrmContaBancaria
               ParentFont = False
               TabOrder = 5
               Text = 'cbBanco'
+              OnChange = edtNumeroChange
               OnKeyUp = cbBancoKeyUp
               OnSelect = cbBancoSelect
             end
@@ -263,6 +264,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                         Left = 301
                         Top = 0
                         Action = actVisualizarCartao
+                        Visible = False
                       end
                     end
                   end
@@ -369,7 +371,6 @@ inherited frmContaBancaria: TfrmContaBancaria
                     TabOrder = 0
                     Text = 'edtNumeroCartao'
                     OnChange = edtNumeroChange
-                    OnExit = edtNumeroExit
                   end
                   object cbTipoCartao: TComboBox
                     Left = 208
@@ -377,6 +378,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     Top = 24
                     Width = 125
                     ItemHeight = 15
+                    ItemIndex = 0
                     Items.Strings = (
                       'Crédito'
                       'Débito'
@@ -384,6 +386,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     )
                     Style = csDropDownList
                     TabOrder = 1
+                    Text = 'Crédito'
                   end
                   object lblTipoCartao: TLabel
                     Left = 208
@@ -479,6 +482,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     ParentFont = False
                     TabOrder = 7
                     Text = 'cbBandeira'
+                    OnChange = edtNumeroChange
                     OnKeyUp = cbBandeiraKeyUp
                     OnSelect = cbBandeiraSelect
                   end
@@ -522,9 +526,9 @@ inherited frmContaBancaria: TfrmContaBancaria
               Height = 499
               Top = 32
               Width = 990
-              ActivePage = tbsCadastroPix
+              ActivePage = tbsListaPix
               Align = alClient
-              TabIndex = 1
+              TabIndex = 0
               TabOrder = 0
               object tbsListaPix: TTabSheet
                 Caption = 'tbsListaPix'
@@ -587,6 +591,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                         Left = 301
                         Top = 0
                         Action = actVisualizarPix
+                        Visible = False
                       end
                     end
                   end
@@ -645,7 +650,6 @@ inherited frmContaBancaria: TfrmContaBancaria
                     TabOrder = 0
                     Text = 'edtChave'
                     OnChange = edtNumeroChange
-                    OnExit = edtNumeroExit
                   end
                   object cbTipoChave: TComboBox
                     Left = 368
@@ -653,6 +657,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     Top = 26
                     Width = 245
                     ItemHeight = 15
+                    ItemIndex = 0
                     Items.Strings = (
                       'CPF'
                       'CNPJ'
@@ -661,6 +666,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                     )
                     Style = csDropDownList
                     TabOrder = 1
+                    Text = 'CPF'
                   end
                   object lblTipoChavePix: TLabel
                     Left = 368
