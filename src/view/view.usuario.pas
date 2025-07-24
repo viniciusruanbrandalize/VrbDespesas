@@ -57,6 +57,7 @@ type
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo: Boolean; override;
   end;
 
 var
@@ -140,7 +141,7 @@ procedure TfrmUsuario.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if CamposEstaoPreenchidos then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
     if Controller.ValidarSenha(edtSenha1.Text, edtSenha2.Text, Operacao, erro) then
     begin
@@ -291,6 +292,14 @@ begin
   else
   if Trim(edtSenha2.Text) = EmptyStr then
     ValidarObrigatorioExit(edtSenha2)
+  else
+    Result := True;
+end;
+
+function TfrmUsuario.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  if Length(Trim(edtNome.Text)) < 3 then
+    ValidarTamanhoMinimoExit(edtNome)
   else
     Result := True;
 end;

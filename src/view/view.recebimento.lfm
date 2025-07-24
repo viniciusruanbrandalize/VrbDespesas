@@ -20,7 +20,7 @@ inherited frmRecebimento: TfrmRecebimento
         end
         inherited tbsCadastro: TTabSheet
           inherited pnlFundoCadastro: TPanel
-            object pgcCadastro: TPageControl[2]
+            object pgcCadastro: TPageControl[3]
               Left = 0
               Height = 475
               Top = 0
@@ -250,6 +250,7 @@ inherited frmRecebimento: TfrmRecebimento
                       EditLabel.Caption = 'Valor Total: *'
                       TabOrder = 1
                       Text = 'edtValorTotalSal'
+                      OnChange = edtValorTotalSalChange
                     end
                   end
                   object lblContaBancariaSal: TLabel
@@ -419,7 +420,7 @@ inherited frmRecebimento: TfrmRecebimento
                   object edtValorTotalRec: TLabeledEdit
                     Left = 224
                     Height = 23
-                    Top = 72
+                    Top = 79
                     Width = 128
                     Alignment = taRightJustify
                     EditLabel.Height = 15
@@ -427,11 +428,12 @@ inherited frmRecebimento: TfrmRecebimento
                     EditLabel.Caption = 'Valor Total R$: *'
                     TabOrder = 4
                     Text = 'edtValorTotalRec'
+                    OnChange = edtValorTotalRecChange
                   end
                   object lblContaBancariaRec: TLabel
                     Left = 368
                     Height = 15
-                    Top = 54
+                    Top = 61
                     Width = 91
                     Caption = 'Conta Bancária: *'
                     Visible = False
@@ -439,7 +441,7 @@ inherited frmRecebimento: TfrmRecebimento
                   object cbContaBancariaRec: TComboBox
                     Left = 368
                     Height = 23
-                    Top = 72
+                    Top = 79
                     Width = 224
                     ItemHeight = 15
                     Style = csDropDownList
@@ -465,7 +467,7 @@ inherited frmRecebimento: TfrmRecebimento
                   object lbFormaPagamentoIdRec: TListBox
                     Left = 8
                     Height = 19
-                    Top = 97
+                    Top = 104
                     Width = 200
                     Items.Strings = (
                       'key'
@@ -480,7 +482,7 @@ inherited frmRecebimento: TfrmRecebimento
                   object lbContaBancariaRecId: TListBox
                     Left = 368
                     Height = 16
-                    Top = 97
+                    Top = 104
                     Width = 224
                     ItemHeight = 0
                     TabOrder = 8
@@ -513,14 +515,14 @@ inherited frmRecebimento: TfrmRecebimento
                   object lblFormaPagamentoRec: TLabel
                     Left = 8
                     Height = 15
-                    Top = 54
+                    Top = 61
                     Width = 125
                     Caption = 'Forma de Pagamento: *'
                   end
                   object cbFormaPagamentoRec: TComboBox
                     Left = 8
                     Height = 23
-                    Top = 72
+                    Top = 79
                     Width = 200
                     AutoComplete = True
                     AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]

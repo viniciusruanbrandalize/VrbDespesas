@@ -56,7 +56,7 @@ inherited frmParticipante: TfrmParticipante
             inherited pnlBotaoCad: TPanel
               TabOrder = 16
             end
-            object edtNome: TLabeledEdit[2]
+            object edtNome: TLabeledEdit[3]
               Left = 8
               Height = 23
               Top = 89
@@ -69,7 +69,7 @@ inherited frmParticipante: TfrmParticipante
               Text = 'edtNome'
               OnChange = edtNomeChange
             end
-            object cbPessoa: TComboBox[3]
+            object cbPessoa: TComboBox[4]
               Left = 5
               Height = 23
               Top = 32
@@ -84,14 +84,14 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 0
               Text = 'Física'
             end
-            object lblPessoa: TLabel[4]
+            object lblPessoa: TLabel[5]
               Left = 8
               Height = 15
               Top = 14
               Width = 47
               Caption = 'Pessoa: *'
             end
-            object edtFantasia: TLabeledEdit[5]
+            object edtFantasia: TLabeledEdit[6]
               Left = 424
               Height = 23
               Top = 89
@@ -103,7 +103,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 4
               Text = 'edtFantasia'
             end
-            object edtCnpj: TLabeledEdit[6]
+            object edtCnpj: TLabeledEdit[7]
               Left = 128
               Height = 23
               Top = 32
@@ -115,7 +115,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 1
               Text = 'edtCnpj'
             end
-            object edtIe: TLabeledEdit[7]
+            object edtIe: TLabeledEdit[8]
               Left = 304
               Height = 23
               Top = 32
@@ -127,7 +127,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 2
               Text = 'edtIe'
             end
-            object edtTelefone: TLabeledEdit[8]
+            object edtTelefone: TLabeledEdit[9]
               Left = 8
               Height = 23
               Top = 140
@@ -139,7 +139,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 5
               Text = 'edtTelefone'
             end
-            object edtCelular: TLabeledEdit[9]
+            object edtCelular: TLabeledEdit[10]
               Left = 184
               Height = 23
               Top = 140
@@ -151,7 +151,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 6
               Text = 'edtCelular'
             end
-            object edtEmail: TLabeledEdit[10]
+            object edtEmail: TLabeledEdit[11]
               Left = 360
               Height = 23
               Top = 140
@@ -163,7 +163,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 7
               Text = 'edtEmail'
             end
-            object edtCep: TLabeledEdit[11]
+            object edtCep: TLabeledEdit[12]
               Left = 8
               Height = 23
               Top = 194
@@ -175,7 +175,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 8
               Text = 'edtCep'
             end
-            object btnBuscaCep: TSpeedButton[12]
+            object btnBuscaCep: TSpeedButton[13]
               Cursor = crHandPoint
               Left = 132
               Height = 23
@@ -186,7 +186,7 @@ inherited frmParticipante: TfrmParticipante
               ImageIndex = 5
               ShowCaption = False
             end
-            object edtRua: TLabeledEdit[13]
+            object edtRua: TLabeledEdit[14]
               Left = 192
               Height = 23
               Top = 194
@@ -198,7 +198,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 9
               Text = 'edtRua'
             end
-            object edtNumero: TLabeledEdit[14]
+            object edtNumero: TLabeledEdit[15]
               Left = 616
               Height = 23
               Top = 194
@@ -211,7 +211,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 10
               Text = 'edtNumero'
             end
-            object edtComplemento: TLabeledEdit[15]
+            object edtComplemento: TLabeledEdit[16]
               Left = 728
               Height = 23
               Top = 194
@@ -223,7 +223,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 11
               Text = 'edtComplemento'
             end
-            object edtBairro: TLabeledEdit[16]
+            object edtBairro: TLabeledEdit[17]
               Left = 8
               Height = 23
               Top = 246
@@ -235,7 +235,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 12
               Text = 'edtBairro'
             end
-            object edtUf: TLabeledEdit[17]
+            object edtUf: TLabeledEdit[18]
               Left = 600
               Height = 23
               Top = 246
@@ -252,7 +252,7 @@ inherited frmParticipante: TfrmParticipante
               Text = 'edtUf'
               Visible = False
             end
-            object mObs: TMemo[18]
+            object mObs: TMemo[19]
               Left = 8
               Height = 76
               Top = 300
@@ -262,14 +262,14 @@ inherited frmParticipante: TfrmParticipante
               )
               TabOrder = 15
             end
-            object lblObs: TLabel[19]
+            object lblObs: TLabel[20]
               Left = 8
               Height = 15
               Top = 280
               Width = 203
               Caption = 'Observações / Informações adicionais:'
             end
-            object lbPessoaValues: TListBox[20]
+            object lbPessoaValues: TListBox[21]
               Left = 5
               Height = 8
               Top = 56
@@ -282,7 +282,7 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 17
               Visible = False
             end
-            object lbCidadeId: TListBox[21]
+            object lbCidadeId: TListBox[22]
               Left = 304
               Height = 19
               Top = 270
@@ -297,14 +297,14 @@ inherited frmParticipante: TfrmParticipante
               TabOrder = 18
               Visible = False
             end
-            object lblCidade: TLabel[22]
+            object lblCidade: TLabel[23]
               Left = 304
               Height = 15
               Top = 228
               Width = 40
               Caption = 'Cidade:'
             end
-            object cbCidade: TComboBox[23]
+            object cbCidade: TComboBox[24]
               Left = 304
               Height = 23
               Top = 246

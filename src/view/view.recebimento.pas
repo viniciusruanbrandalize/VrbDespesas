@@ -82,6 +82,8 @@ type
     procedure edtIRChange(Sender: TObject);
     procedure edtOutrosChange(Sender: TObject);
     procedure edtValorBaseSalChange(Sender: TObject);
+    procedure edtValorTotalRecChange(Sender: TObject);
+    procedure edtValorTotalSalChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -97,6 +99,7 @@ type
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo: Boolean; override;
     property Tipo: TTelaRecebimento read FTipo write FTipo;
   end;
 
@@ -123,7 +126,7 @@ var
   erro: String;
   valor: Double;
 begin
-  if CamposEstaoPreenchidos then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
     if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
@@ -355,6 +358,17 @@ end;
 procedure TfrmRecebimento.edtValorBaseSalChange(Sender: TObject);
 begin
   CalcularTotal();
+  lblLimiteCampo.Visible := False;
+end;
+
+procedure TfrmRecebimento.edtValorTotalRecChange(Sender: TObject);
+begin
+  lblLimiteCampo.Visible := False;
+end;
+
+procedure TfrmRecebimento.edtValorTotalSalChange(Sender: TObject);
+begin
+  lblLimiteCampo.Visible := False;
 end;
 
 procedure TfrmRecebimento.actIncluirExecute(Sender: TObject);
@@ -681,6 +695,33 @@ begin
       else
       if cbFormaPagamentoRec.ItemIndex = -1 then
         ValidarObrigatorioExit(cbFormaPagamentoRec)
+      else
+        Result := True;
+    end;
+  end;
+end;
+
+function TfrmRecebimento.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  Result := False;
+  case FTipo of
+    telaSalario:
+    begin
+      if StrToFloatDef(edtValorBaseSal.Text, 0) <= 0 then
+        ValidarMaiorQueZeroExit(edtValorBaseSal)
+      else
+      if StrToFloatDef(edtValorTotalSal.Text, 0) <= 0 then
+        ValidarMaiorQueZeroExit(edtValorTotalSal)
+      else
+        Result := True;
+    end;
+    telaGeral:
+    begin
+      if Length(Trim(edtDescricao.Text)) < 3 then
+        ValidarTamanhoMinimoExit(edtDescricao)
+      else
+      if StrToFloatDef(edtValorTotalRec.Text, 0) <= 0 then
+        ValidarMaiorQueZeroExit(edtValorTotalRec)
       else
         Result := True;
     end;

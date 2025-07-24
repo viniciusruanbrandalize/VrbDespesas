@@ -57,6 +57,7 @@ type
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo: Boolean; override;
     property EhDonoCadastro: Boolean read FEhDonoCadastro write SetEhDonoCadastro;
   end;
 
@@ -82,7 +83,7 @@ procedure TfrmParticipante.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if CamposEstaoPreenchidos then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
     if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
@@ -291,6 +292,15 @@ begin
   Result := False;
   if Trim(edtNome.Text) = EmptyStr then
     ValidarObrigatorioExit(edtNome)
+  else
+    Result := True;
+end;
+
+function TfrmParticipante.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  Result := False;
+  if Length(Trim(edtNome.Text)) < 3 then
+    ValidarTamanhoMinimoExit(edtNome)
   else
     Result := True;
 end;

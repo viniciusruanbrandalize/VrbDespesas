@@ -51,7 +51,7 @@ inherited frmFormaPagamento: TfrmFormaPagamento
             inherited pnlBotaoCad: TPanel
               TabOrder = 2
             end
-            object edtNome: TLabeledEdit[2]
+            object edtNome: TLabeledEdit[3]
               Left = 8
               Height = 23
               Top = 32
@@ -64,7 +64,7 @@ inherited frmFormaPagamento: TfrmFormaPagamento
               Text = 'edtNome'
               OnChange = edtNomeChange
             end
-            object edtSigla: TLabeledEdit[3]
+            object edtSigla: TLabeledEdit[4]
               Left = 512
               Height = 23
               Top = 32

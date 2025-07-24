@@ -135,11 +135,13 @@ type
     procedure ExibirInformacoesConta;
     function CamposEstaoPreenchidosCartao: Boolean;
     function CamposEstaoPreenchidosPix: Boolean;
+    function CamposEstaoComTamanhoMinimoPix: Boolean;
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo: Boolean; override;
   end;
 
 var
@@ -276,11 +278,21 @@ begin
     Result := True;
 end;
 
+function TfrmContaBancaria.CamposEstaoComTamanhoMinimoPix: Boolean;
+begin
+  Result := false;
+  Result := False;
+  if Length(Trim(edtChave.Text)) < 3 then
+    ValidarTamanhoMinimoExit(edtChave)
+  else
+    Result := True;
+end;
+
 procedure TfrmContaBancaria.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if CamposEstaoPreenchidos then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
     if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
@@ -308,7 +320,7 @@ procedure TfrmContaBancaria.actSalvarPixExecute(Sender: TObject);
 var
   Erro: String;
 begin
-  if CamposEstaoPreenchidosPix then
+  if CamposEstaoPreenchidosPix and CamposEstaoComTamanhoMinimoPix then
   begin
     if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
@@ -624,6 +636,11 @@ begin
     ValidarObrigatorioExit(cbBanco)
   else
     Result := True;
+end;
+
+function TfrmContaBancaria.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  Result := True;
 end;
 
 end.

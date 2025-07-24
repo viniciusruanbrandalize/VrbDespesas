@@ -114,11 +114,13 @@ type
     procedure edtCartaoChange(Sender: TObject);
     procedure edtContaBancariaChange(Sender: TObject);
     function CamposEstaoPreenchidosPagamento: Boolean;
+    function CamposEstaoComTamanhoMinimoPagamento: Boolean;
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo: Boolean; override;
   end;
 
 var
@@ -162,7 +164,7 @@ var
   erro: string;
   valor: double;
 begin
-  if CamposEstaoPreenchidos then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
 
     if (Operacao = opInserir) and (Controller.Despesa.DespesaFormaPagamento.Count <= 0) then
@@ -216,7 +218,7 @@ procedure TfrmDespesa.actSalvarFpgtoExecute(Sender: TObject);
 var
   i: integer;
 begin
-  if CamposEstaoPreenchidosPagamento then
+  if CamposEstaoPreenchidosPagamento and CamposEstaoComTamanhoMinimoPagamento then
   begin
     i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
     AjustarTelaPagamento(False);
@@ -333,6 +335,7 @@ begin
   Total := Controller.CalcularValorTotal(valor, desc, frete, outros);
   edtTotal.Text := FormatFloat(',#0.00', Total);
   lblObrigatorio.Visible := False;
+  lblLimiteCampo.Visible := False;
 end;
 
 procedure TfrmDespesa.actExcluirExecute(Sender: TObject);
@@ -670,6 +673,15 @@ begin
     Result := True;
 end;
 
+function TfrmDespesa.CamposEstaoComTamanhoMinimoPagamento: Boolean;
+begin
+  Result := False;
+  if StrToIntDef(edtValorFpgto.Text, 0) <= 0 then
+    ValidarMaiorQueZeroExit(edtValorFpgto)
+  else
+    Result := True;
+end;
+
 procedure TfrmDespesa.CarregarDados;
 begin
   lvPadrao.Items.Clear;
@@ -746,6 +758,21 @@ begin
   else
   if cbSubtipo.ItemIndex = -1 then
     ValidarObrigatorioExit(cbSubtipo)
+  else
+    Result := True;
+end;
+
+function TfrmDespesa.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  Result := False;
+  if Length(Trim(edtDescricao.Text)) < 3 then
+    ValidarTamanhoMinimoExit(edtDescricao)
+  else
+  if StrToFloatDef(edtValor.Text, 0) <= 0 then
+    ValidarMaiorQueZeroExit(edtValor)
+  else
+  if StrToFloatDef(edtTotal.Text, 0) <= 0 then
+    ValidarMaiorQueZeroExit(edtTotal)
   else
     Result := True;
 end;

@@ -30,6 +30,7 @@ type
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo: Boolean; override;
   end;
 
 var
@@ -77,7 +78,7 @@ procedure TfrmFormaPagamento.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if CamposEstaoPreenchidos then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
     if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
@@ -156,6 +157,15 @@ begin
   Result := False;
   if Trim(edtNome.Text) = EmptyStr then
     ValidarObrigatorioExit(edtNome)
+  else
+    Result := True;
+end;
+
+function TfrmFormaPagamento.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  Result := False;
+  if Length(Trim(edtNome.Text)) < 3 then
+    ValidarTamanhoMinimoExit(edtNome)
   else
     Result := True;
 end;

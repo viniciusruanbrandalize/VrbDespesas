@@ -36,6 +36,7 @@ type
     procedure LimparCampos; override;
     procedure CarregarSelecionado; override;
     function CamposEstaoPreenchidos: Boolean; override;
+    function CamposEstaoComTamanhoMinimo: Boolean; override;
   end;
 
 var
@@ -60,7 +61,7 @@ procedure TfrmSubtipoDespesa.actSalvarExecute(Sender: TObject);
 var
   erro: String;
 begin
-  if CamposEstaoPreenchidos then
+  if CamposEstaoPreenchidos and CamposEstaoComTamanhoMinimo then
   begin
     if TfrmMessage.Mensagem('Deseja salvar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
     begin
@@ -197,6 +198,15 @@ begin
   else
   if cbTipo.ItemIndex = -1 then
     ValidarObrigatorioExit(cbTipo)
+  else
+    Result := True;
+end;
+
+function TfrmSubtipoDespesa.CamposEstaoComTamanhoMinimo: Boolean;
+begin
+  Result := False;
+  if Length(Trim(edtNome.Text)) < 3 then
+    ValidarTamanhoMinimoExit(edtNome)
   else
     Result := True;
 end;
