@@ -92,8 +92,8 @@ type
     Controller: TRecebimentoController;
     FTipo: TTelaRecebimento;
     procedure AjustarListView();
-    procedure AjustarCbLbPesquisa();
     procedure CalcularTotal();
+    procedure PrepararPesquisaGenerica();
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -245,8 +245,11 @@ end;
 procedure TfrmRecebimento.cbFormaPagamentoRecSelect(Sender: TObject);
 begin
   if (Sender as TComboBox).ItemIndex <> -1 then
+  begin
     controller.Recebimento.FormaPagamento.Id :=
       StrToInt(lbFormaPagamentoIdRec.Items[(Sender as TComboBox).ItemIndex]);
+    PrepararPesquisaGenerica();
+  end;
 end;
 
 procedure TfrmRecebimento.cbFormaPagamentoSalKeyUp(Sender: TObject;
@@ -272,8 +275,11 @@ end;
 procedure TfrmRecebimento.cbFormaPagamentoSalSelect(Sender: TObject);
 begin
   if (Sender as TComboBox).ItemIndex <> -1 then
+  begin
     controller.Recebimento.FormaPagamento.Id :=
       StrToInt(lbFormaPagamentoIdSal.Items[(Sender as TComboBox).ItemIndex]);
+    PrepararPesquisaGenerica();
+  end;
 end;
 
 procedure TfrmRecebimento.cbPagadorRecKeyUp(Sender: TObject; var Key: Word;
@@ -431,7 +437,6 @@ procedure TfrmRecebimento.FormCreate(Sender: TObject);
 begin
   inherited;
   Controller := TRecebimentoController.Create;
-  AjustarCbLbPesquisa();
   pgcCadastro.ShowTabs := False;
   pgcCadastro.Style    := tsButtons;
   edtINSS.OnExit       := @NumericoExit;
@@ -536,23 +541,6 @@ begin
 
 end;
 
-procedure TfrmRecebimento.AjustarCbLbPesquisa();
-begin
-  case FTipo of
-    telaSalario:
-    begin
-      //lbPesquisa.Items.Clear;
-      //cbPesquisa.Items.Clear;
-      //cbPesquisa.Items.Add('');
-      //lbPesquisa.Items.Add('');
-    end;
-    telaGeral:
-    begin
-      //
-    end;
-  end;
-end;
-
 procedure TfrmRecebimento.CalcularTotal();
 var
   inss, ir, outros, he, base, total: Double;
@@ -569,6 +557,46 @@ begin
     base := 0;
   total := Controller.CalcularValorTotal(inss, ir, he, outros, base);
   edtValorTotalSal.Text := FormatFloat(',#0.00', total);
+end;
+
+procedure TfrmRecebimento.PrepararPesquisaGenerica();
+var
+  idFpgto,
+  qtdReg: Integer;
+begin
+
+  {
+   1  - DINHEIRO
+   2  - CARTAO DEBITO
+   3  - CARTAO CREDITO
+   4  - PIX
+   5  - TRANSFERENCIA BANCARIA
+   6  - BOLETO
+   7  - DEPOSITO
+   8  - VALE
+   9  - CHEQUE
+  }
+
+  idFpgto := Controller.Recebimento.FormaPagamento.Id;
+  Controller.Recebimento.ContaBancaria.Id := -1;
+
+  cbContaBancariaRec.Visible  := (idFpgto in [5,6]) and (FTipo = telaGeral);
+  lblContaBancariaRec.Visible := (idFpgto in [5,6]) and (FTipo = telaGeral);
+  cbContaBancariaSal.Visible  := (idFpgto in [5,6]) and (FTipo = telaSalario);
+  lblContaBancariaSal.Visible := (idFpgto in [5,6]) and (FTipo = telaSalario);
+
+  case idFpgto of
+    5, 6:
+    begin
+      case FTipo of
+        telaGeral:   Controller.PesquisarContaBancaria(cbContaBancariaRec, lbContaBancariaRecId, qtdReg);
+        telaSalario: Controller.PesquisarContaBancaria(cbContaBancariaSal, lbContaBancariaSalId, qtdReg);
+      end;
+      if qtdReg = 0 then
+        TfrmMessage.Mensagem('Nenhuma conta bancária cadastrada!', 'Aviso', 'C', [mbOK]);
+    end;
+  end;
+
 end;
 
 procedure TfrmRecebimento.CarregarDados;

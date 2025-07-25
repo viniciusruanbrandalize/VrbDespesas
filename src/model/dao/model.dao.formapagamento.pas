@@ -163,7 +163,8 @@ begin
     end;
 
     Qry.ParamByName('nome').AsString  := FormaPagamento.Nome;
-    Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
+    if Trim(FormaPagamento.Sigla) <> EmptyStr then
+      Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
     Qry.ParamByName('excluido').AsBoolean := FormaPagamento.Excluido;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
@@ -193,7 +194,8 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger   := FormaPagamento.Id;
     Qry.ParamByName('nome').AsString  := FormaPagamento.Nome;
-    Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
+    if Trim(FormaPagamento.Sigla) <> EmptyStr then
+      Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 
