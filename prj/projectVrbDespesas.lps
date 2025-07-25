@@ -19,8 +19,9 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <TopLine Value="436"/>
-        <CursorPos X="23" Y="457"/>
+        <CursorPos X="36" Y="452"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -357,8 +358,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="175"/>
-        <CursorPos X="7" Y="215"/>
+        <TopLine Value="174"/>
+        <CursorPos X="35" Y="195"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -400,8 +401,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="268"/>
-        <CursorPos X="47" Y="291"/>
+        <TopLine Value="267"/>
+        <CursorPos X="70" Y="284"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -541,13 +542,10 @@
         <ComponentName Value="frmParticipante"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="62"/>
-        <CursorPos X="66" Y="89"/>
+        <CursorPos X="20" Y="85"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.cep.pas"/>

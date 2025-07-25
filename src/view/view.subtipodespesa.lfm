@@ -59,6 +59,7 @@ inherited frmSubtipoDespesa: TfrmSubtipoDespesa
               EditLabel.Height = 15
               EditLabel.Width = 408
               EditLabel.Caption = 'Nome: *'
+              MaxLength = 100
               TabOrder = 0
               Text = 'edtNome'
               OnChange = edtNomeChange

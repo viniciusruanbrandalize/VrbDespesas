@@ -384,6 +384,7 @@ inherited frmRecebimento: TfrmRecebimento
                     EditLabel.Height = 15
                     EditLabel.Width = 448
                     EditLabel.Caption = 'Descrição: *'
+                    MaxLength = 100
                     TabOrder = 1
                     Text = 'edtDescricao'
                     OnChange = edtDescricaoChange

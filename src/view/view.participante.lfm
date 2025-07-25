@@ -111,7 +111,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'CNPJ:'
-              MaxLength = 100
+              MaxLength = 14
               TabOrder = 1
               Text = 'edtCnpj'
             end
@@ -123,7 +123,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'Inscrição Estadual:'
-              MaxLength = 100
+              MaxLength = 9
               TabOrder = 2
               Text = 'edtIe'
             end
@@ -135,7 +135,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'Telefone:'
-              MaxLength = 100
+              MaxLength = 20
               TabOrder = 5
               Text = 'edtTelefone'
             end
@@ -147,7 +147,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'Celular:'
-              MaxLength = 100
+              MaxLength = 20
               TabOrder = 6
               Text = 'edtCelular'
             end
@@ -159,7 +159,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 400
               EditLabel.Caption = 'E-mail:'
-              MaxLength = 100
+              MaxLength = 200
               TabOrder = 7
               Text = 'edtEmail'
             end
@@ -194,7 +194,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 408
               EditLabel.Caption = 'Rua:'
-              MaxLength = 100
+              MaxLength = 200
               TabOrder = 9
               Text = 'edtRua'
             end
@@ -206,7 +206,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 96
               EditLabel.Caption = 'Número:'
-              MaxLength = 100
+              MaxLength = 8
               NumbersOnly = True
               TabOrder = 10
               Text = 'edtNumero'
@@ -219,7 +219,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 200
               EditLabel.Caption = 'Complemento:'
-              MaxLength = 100
+              MaxLength = 50
               TabOrder = 11
               Text = 'edtComplemento'
             end
@@ -231,7 +231,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 280
               EditLabel.Caption = 'Bairro:'
-              MaxLength = 100
+              MaxLength = 80
               TabOrder = 12
               Text = 'edtBairro'
             end
@@ -245,7 +245,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Caption = 'UF:'
               Font.Color = 2977025
               Font.Style = [fsBold]
-              MaxLength = 100
+              MaxLength = 2
               ParentFont = False
               ReadOnly = True
               TabOrder = 14
@@ -260,6 +260,7 @@ inherited frmParticipante: TfrmParticipante
               Lines.Strings = (
                 'mObs'
               )
+              MaxLength = 300
               TabOrder = 15
             end
             object lblObs: TLabel[20]
