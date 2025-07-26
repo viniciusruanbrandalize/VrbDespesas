@@ -286,7 +286,8 @@ begin
     Qry.ParamByName('data').AsDate         := Despesa.Data;
     Qry.ParamByName('hora').AsTime         := Despesa.Hora;
     Qry.ParamByName('descricao').AsString  := Despesa.Descricao;
-    Qry.ParamByName('chave_nfe').AsString  := Despesa.ChaveNFE;
+    if Trim(Despesa.ChaveNFE) <> EmptyStr then
+      Qry.ParamByName('chave_nfe').AsString  := Despesa.ChaveNFE;
     Qry.ParamByName('valor').AsFloat       := Despesa.Valor;
     Qry.ParamByName('desconto').AsFloat    := Despesa.Desconto;
     Qry.ParamByName('frete').AsFloat       := Despesa.Frete;
@@ -295,7 +296,8 @@ begin
     Qry.ParamByName('paga').AsBoolean      := Despesa.Paga;
     Qry.ParamByName('parcela').AsFloat     := Despesa.Parcela;
     Qry.ParamByName('cadastro').AsDateTime := Despesa.Cadastro;
-    Qry.ParamByName('obs').AsString        := Despesa.Observacao;
+    if Trim(Despesa.Observacao) <> EmptyStr then
+      Qry.ParamByName('obs').AsString      := Despesa.Observacao;
     Qry.ParamByName('id_fornecedor').AsInteger := Despesa.Fornecedor.Id;
     Qry.ParamByName('id_subtipo').AsInteger := Despesa.SubTipo.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Despesa.UsuarioCadastro.Id;
@@ -399,7 +401,8 @@ begin
     Qry.ParamByName('data').AsDate         := Despesa.Data;
     Qry.ParamByName('hora').AsTime         := Despesa.Hora;
     Qry.ParamByName('descricao').AsString  := Despesa.Descricao;
-    Qry.ParamByName('chave_nfe').AsString  := Despesa.ChaveNFE;
+    if Trim(Despesa.ChaveNFE) <> EmptyStr then
+      Qry.ParamByName('chave_nfe').AsString  := Despesa.ChaveNFE;
     Qry.ParamByName('valor').AsFloat       := Despesa.Valor;
     Qry.ParamByName('desconto').AsFloat    := Despesa.Desconto;
     Qry.ParamByName('frete').AsFloat       := Despesa.Frete;
@@ -408,7 +411,8 @@ begin
     Qry.ParamByName('paga').AsBoolean      := Despesa.Paga;
     Qry.ParamByName('parcela').AsFloat     := Despesa.Parcela;
     Qry.ParamByName('alteracao').AsDateTime := Despesa.Alteracao;
-    Qry.ParamByName('obs').AsString        := Despesa.Observacao;
+    if Trim(Despesa.Observacao) <> EmptyStr then
+      Qry.ParamByName('obs').AsString       := Despesa.Observacao;
     Qry.ParamByName('id_fornecedor').AsInteger := Despesa.Fornecedor.Id;
     Qry.ParamByName('id_subtipo').AsInteger := Despesa.SubTipo.Id;
     Qry.ParamByName('nivel_precisao').AsInteger := Despesa.NivelPrecisao;

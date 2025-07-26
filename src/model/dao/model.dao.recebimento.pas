@@ -219,7 +219,8 @@ begin
     end;
 
     Qry.ParamByName('tipo').AsInteger             := Recebimento.Tipo;
-    Qry.ParamByName('descricao').AsString         := Recebimento.Descricao;
+    if Trim(Recebimento.Descricao) <> EmptyStr then
+      Qry.ParamByName('descricao').AsString       := Recebimento.Descricao;
     Qry.ParamByName('data').AsDate                := Recebimento.Data;
     Qry.ParamByName('hora_extra').AsFloat         := Recebimento.HoraExtra;
     Qry.ParamByName('inss').AsFloat               := Recebimento.INSS;
@@ -271,7 +272,8 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger               := Recebimento.Id;
-    Qry.ParamByName('descricao').AsString         := Recebimento.Descricao;
+    if Trim(Recebimento.Descricao) <> EmptyStr then
+      Qry.ParamByName('descricao').AsString       := Recebimento.Descricao;
     Qry.ParamByName('data').AsDate                := Recebimento.Data;
     Qry.ParamByName('hora_extra').AsFloat         := Recebimento.HoraExtra;
     Qry.ParamByName('inss').AsFloat               := Recebimento.INSS;

@@ -292,21 +292,33 @@ begin
 
     Qry.ParamByName('pessoa').AsString        := Participante.Pessoa;
     Qry.ParamByName('nome').AsString          := Participante.Nome;
-    Qry.ParamByName('fantasia').AsString      := Participante.Fantasia;
-    Qry.ParamByName('cnpj').AsString          := Participante.CNPJ;
-    Qry.ParamByName('ie').AsInteger           := Participante.IE;
-    Qry.ParamByName('telefone').AsString      := Participante.Telefone;
-    Qry.ParamByName('celular').AsString       := Participante.Celular;
-    Qry.ParamByName('email').AsString         := Participante.Email;
-    Qry.ParamByName('cep').AsString           := Participante.CEP;
-    Qry.ParamByName('rua').AsString           := Participante.Rua;
-    Qry.ParamByName('numero').AsInteger       := Participante.Numero;
-    Qry.ParamByName('complemento').AsString   := Participante.Complemento;
-    Qry.ParamByName('bairro').AsString        := Participante.Bairro;
-    Qry.ParamByName('obs').AsString           := Participante.Obs;
+    if Trim(Participante.Fantasia) <> EmptyStr then
+      Qry.ParamByName('fantasia').AsString    := Participante.Fantasia;
+    if Trim(Participante.CNPJ) <> EmptyStr then
+      Qry.ParamByName('cnpj').AsString        := Participante.CNPJ;
+    if Participante.IE <> 0 then
+      Qry.ParamByName('ie').AsInteger         := Participante.IE;
+    if Trim(Participante.Telefone) <> EmptyStr then
+      Qry.ParamByName('telefone').AsString    := Participante.Telefone;
+    if Trim(Participante.Celular) <> EmptyStr then
+      Qry.ParamByName('celular').AsString     := Participante.Celular;
+    if Trim(Participante.Email) <> EmptyStr then
+      Qry.ParamByName('email').AsString       := Participante.Email;
+    if Trim(Participante.CEP) <> EmptyStr then
+      Qry.ParamByName('cep').AsString         := Participante.CEP;
+    if Trim(Participante.Rua) <> EmptyStr then
+      Qry.ParamByName('rua').AsString         := Participante.Rua;
+    if Participante.Numero <> 0 then
+      Qry.ParamByName('numero').AsInteger     := Participante.Numero;
+    if Trim(Participante.Complemento) <> EmptyStr then
+      Qry.ParamByName('complemento').AsString := Participante.Complemento;
+    if Trim(Participante.Bairro) <> EmptyStr then
+      Qry.ParamByName('bairro').AsString      := Participante.Bairro;
+    if Trim(Participante.Obs) <> EmptyStr then
+      Qry.ParamByName('obs').AsString         := Participante.Obs;
     Qry.ParamByName('cadastro').AsDateTime    := Participante.Cadastro;
     Qry.ParamByName('dono_cadastro').AsBoolean := Participante.EhDonoCadastro;
-    Qry.ParamByName('excluido').AsBoolean     := Participante.Excluido;
+    Qry.ParamByName('excluido').AsBoolean      := Participante.Excluido;
     Qry.ParamByName('id_cidade').AsInteger     := Participante.Cidade.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Participante.UsuarioCadastro.Id;
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
@@ -342,18 +354,30 @@ begin
     Qry.ParamByName('id').AsInteger           := Participante.Id;
     Qry.ParamByName('pessoa').AsString        := Participante.Pessoa;
     Qry.ParamByName('nome').AsString          := Participante.Nome;
-    Qry.ParamByName('fantasia').AsString      := Participante.Fantasia;
-    Qry.ParamByName('cnpj').AsString          := Participante.CNPJ;
-    Qry.ParamByName('ie').AsInteger           := Participante.IE;
-    Qry.ParamByName('telefone').AsString      := Participante.Telefone;
-    Qry.ParamByName('celular').AsString       := Participante.Celular;
-    Qry.ParamByName('email').AsString         := Participante.Email;
-    Qry.ParamByName('cep').AsString           := Participante.CEP;
-    Qry.ParamByName('rua').AsString           := Participante.Rua;
-    Qry.ParamByName('numero').AsInteger       := Participante.Numero;
-    Qry.ParamByName('complemento').AsString   := Participante.Complemento;
-    Qry.ParamByName('bairro').AsString        := Participante.Bairro;
-    Qry.ParamByName('obs').AsString           := Participante.Obs;
+    if Trim(Participante.Fantasia) <> EmptyStr then
+      Qry.ParamByName('fantasia').AsString    := Participante.Fantasia;
+    if Trim(Participante.CNPJ) <> EmptyStr then
+      Qry.ParamByName('cnpj').AsString        := Participante.CNPJ;
+    if Participante.IE <> 0 then
+      Qry.ParamByName('ie').AsInteger         := Participante.IE;
+    if Trim(Participante.Telefone) <> EmptyStr then
+      Qry.ParamByName('telefone').AsString    := Participante.Telefone;
+    if Trim(Participante.Celular) <> EmptyStr then
+      Qry.ParamByName('celular').AsString     := Participante.Celular;
+    if Trim(Participante.Email) <> EmptyStr then
+      Qry.ParamByName('email').AsString       := Participante.Email;
+    if Trim(Participante.CEP) <> EmptyStr then
+      Qry.ParamByName('cep').AsString         := Participante.CEP;
+    if Trim(Participante.Rua) <> EmptyStr then
+      Qry.ParamByName('rua').AsString         := Participante.Rua;
+    if Participante.Numero <> 0 then
+      Qry.ParamByName('numero').AsInteger     := Participante.Numero;
+    if Trim(Participante.Complemento) <> EmptyStr then
+      Qry.ParamByName('complemento').AsString := Participante.Complemento;
+    if Trim(Participante.Bairro) <> EmptyStr then
+      Qry.ParamByName('bairro').AsString      := Participante.Bairro;
+    if Trim(Participante.Obs) <> EmptyStr then
+      Qry.ParamByName('obs').AsString         := Participante.Obs;
     Qry.ParamByName('alteracao').AsDateTime   := Participante.Alteracao;
     Qry.ParamByName('dono_cadastro').AsBoolean := Participante.EhDonoCadastro;
     Qry.ParamByName('id_cidade').AsInteger     := Participante.Cidade.Id;

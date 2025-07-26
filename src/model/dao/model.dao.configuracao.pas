@@ -213,7 +213,8 @@ begin
 
     Qry.ParamByName('nome').AsString      := Configuracao.Nome;
     Qry.ParamByName('descricao').AsString := Configuracao.Descricao;
-    Qry.ParamByName('uso').AsString       := Configuracao.Uso;
+    if Trim(Configuracao.Uso) <> EmptyStr then
+      Qry.ParamByName('uso').AsString     := Configuracao.Uso;
     Qry.ParamByName('valor').AsString     := Configuracao.Valor;
     Qry.ParamByName('excluido').AsBoolean := Configuracao.Excluido;
     Qry.ExecSQL;
@@ -245,7 +246,8 @@ begin
     Qry.ParamByName('id').AsInteger       := Configuracao.Id;
     Qry.ParamByName('nome').AsString      := Configuracao.Nome;
     Qry.ParamByName('descricao').AsString := Configuracao.Descricao;
-    Qry.ParamByName('uso').AsString       := Configuracao.Uso;
+    if Trim(Configuracao.Uso) <> EmptyStr then
+      Qry.ParamByName('uso').AsString     := Configuracao.Uso;
     Qry.ParamByName('valor').AsString     := Configuracao.Valor;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
