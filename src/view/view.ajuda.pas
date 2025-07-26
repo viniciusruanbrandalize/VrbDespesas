@@ -13,15 +13,24 @@ type
   { TfrmAjuda }
 
   TfrmAjuda = class(TForm)
+    imgApoio: TImage;
     imgLogoSobre: TImage;
+    lblDoacao: TLabel;
+    lblCopySobre: TLabel;
+    lblCopyApoio: TLabel;
+    lblDescApoio: TLabel;
+    lblInfoSoftware: TLabel;
     lblDataVersao: TLabel;
+    lblTituloApoio: TLabel;
     lblVersao: TLabel;
     lblDescSobre: TLabel;
     lblTituloSobre: TLabel;
+    pnlFundoApoio: TPanel;
     pnlBottomSobre: TPanel;
     pnlFundoSobre: TPanel;
     pgc: TPageControl;
     pnlFundo: TPanel;
+    tbsApoio: TTabSheet;
     tbsSobre: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
