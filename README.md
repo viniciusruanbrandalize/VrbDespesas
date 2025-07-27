@@ -8,7 +8,7 @@
 * <a href="https://www.php.net/"> PHP 8.4.5 </a>
 * <a href="https://kotlinlang.org/"> Kotlin </a>
 * <a href="https://jrsoftware.org/isinfo.php"> Inno Setup </a>
-### Banco de dados compatíveis:
+### Bancos de dados compatíveis:
 * <a href="https://www.firebirdsql.org/"> Firebird 5.0 </a>
 * <a href="https://www.postgresql.org/"> Postgresql </a>
 * <a href="https://mariadb.org/"> MariaDB </a>
