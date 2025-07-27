@@ -20,9 +20,8 @@ type
     procedure Listar(lv: TListView; DonoCadastro: Boolean);
     procedure Pesquisar(lv: TListView; Campo, Busca: String; DonoCadastro: Boolean);
     procedure PesquisarCidade(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
-    procedure PesquisarDonoCadastro(var objParticipante: TParticipante; out Erro: string);
     function BuscarCEP(var objParticipante: TParticipante; out Erro: String): Boolean;
-    function BuscarPorId(objParticipante : TParticipante; Id: Integer; out Erro: String): Boolean;
+    function BuscarPorId(objParticipante : TParticipante; Id: Integer; DonoCadastro: Boolean; out Erro: String): Boolean;
     function Inserir(objParticipante : TParticipante; out Erro: string): Boolean;
     function Editar(objParticipante : TParticipante; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
@@ -49,12 +48,6 @@ procedure TParticipanteController.PesquisarCidade(lbNome: TComboBox; lbId: TList
   busca: String; out QtdRegistro: Integer);
 begin
   ParticipanteDAO.PesquisarCidade(lbNome, lbId, busca, QtdRegistro);
-end;
-
-procedure TParticipanteController.PesquisarDonoCadastro(var objParticipante: TParticipante;
-  out Erro: string);
-begin
-  ParticipanteDAO.BuscarPorId(objParticipante, 0, Erro, True);
 end;
 
 function TParticipanteController.BuscarCEP(var objParticipante: TParticipante;
@@ -88,10 +81,10 @@ begin
   end;
 end;
 
-function TParticipanteController.BuscarPorId(objParticipante: TParticipante; Id: Integer; out
-  Erro: String): Boolean;
+function TParticipanteController.BuscarPorId(objParticipante: TParticipante; Id: Integer;
+  DonoCadastro: Boolean; out Erro: String): Boolean;
 begin
-  Result := ParticipanteDAO.BuscarPorId(objParticipante, Id, Erro);
+  Result := ParticipanteDAO.BuscarPorId(objParticipante, Id, DonoCadastro, Erro);
 end;
 
 function TParticipanteController.Inserir(objParticipante: TParticipante; out Erro: string): Boolean;

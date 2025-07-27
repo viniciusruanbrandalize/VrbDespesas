@@ -108,7 +108,7 @@ begin
       Controller.Participante.Complemento := edtComplemento.Text;
       Controller.Participante.Bairro   := edtBairro.Text;
       Controller.Participante.Obs      := mObs.Lines.Text;
-      Controller.Participante.EhDonoCadastro := False;
+      Controller.Participante.EhDonoCadastro := FEhDonoCadastro;
 
       if Operacao = opInserir then
       begin
@@ -261,7 +261,7 @@ var
   erro: String;
 begin
   id := StrToInt(lvPadrao.Selected.Caption);
-  if Controller.BuscarPorId(controller.Participante, id, erro) then
+  if Controller.BuscarPorId(controller.Participante, id, FEhDonoCadastro, erro) then
   begin
     cbPessoa.ItemIndex := lbPessoaValues.Items.IndexOf(Controller.Participante.Pessoa);
     edtCnpj.Text       := Controller.Participante.CNPJ;

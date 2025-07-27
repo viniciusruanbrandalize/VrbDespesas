@@ -19,7 +19,7 @@ type
     procedure Listar(lv: TListView; DonoCadastro: Boolean = false);
     procedure Pesquisar(lv: TListView; Campo, Busca: String; DonoCadastro: Boolean = false);
     procedure PesquisarCidade(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
-    function BuscarPorId(Participante : TParticipante; Id: Integer; out Erro: String; DonoCadastro: Boolean = false): Boolean;
+    function BuscarPorId(Participante : TParticipante; Id: Integer; DonoCadastro: Boolean; out Erro: String): Boolean;
     function BuscarIdCidadePorIBGE(IBGE: Integer; out Erro: String): Integer;
     function Inserir(Participante : TParticipante; out Erro: string): Boolean;
     function Editar(Participante : TParticipante; out Erro: string): Boolean;
@@ -169,8 +169,8 @@ begin
   end;
 end;
 
-function TParticipanteDAO.BuscarPorId(Participante : TParticipante; Id: Integer; out Erro: String;
-  DonoCadastro: Boolean = false): Boolean;
+function TParticipanteDAO.BuscarPorId(Participante : TParticipante; Id: Integer;
+  DonoCadastro: Boolean; out Erro: String): Boolean;
 var
   sql: String;
 begin

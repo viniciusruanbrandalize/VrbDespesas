@@ -55,7 +55,7 @@ begin
   {$IFOPT D+}
   FUsuario.Id := 1;
   FUsuario.Nome := 'ADMIN';
-  FDonoCadastro.Id := 91;
+  FDonoCadastro.Id := 1;
   {$ELSE}
   {$ENDIF}
 end;
