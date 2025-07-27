@@ -7,6 +7,12 @@
 * <a href="https://www.lazarus-ide.org/"> <img src="img/readme/icone_lazarus.ico" alt="logo do lazarus" width="25" height="25" align="left"/> Lazarus FPC (Versão 3.4).</a>
 * <a href="https://www.php.net/"> PHP 8.4.5 </a>
 * <a href="https://kotlinlang.org/"> Kotlin </a>
+* <a href="https://jrsoftware.org/isinfo.php"> Inno Setup </a>
+### Banco de dados compatíveis:
+* <a href="https://www.firebirdsql.org/"> Firebird 5.0 </a>
+* <a href="https://www.postgresql.org/"> Postgresql </a>
+* <a href="https://mariadb.org/"> MariaDB </a>
+* <a href="https://www.mysql.com/"> MySQL </a>
 
 ## Arquitetura:
 * Padrão MVC
