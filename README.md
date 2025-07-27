@@ -4,7 +4,7 @@
  Software de controle e gerenciamento de despesas.
  
 ## Tecnologias utilizadas:
-* <a href="https://www.lazarus-ide.org/">Lazarus FPC (Versão 3.4).</a>
+* <a href="https://www.lazarus-ide.org/">Lazarus FPC (Versão 3.4).</a> <img src="img/readme/icone_lazarus.ico" alt="logo do lazarus" width="50" height="50" align="right"/>
 
 ## Arquitetura:
 * Padrão MVC
