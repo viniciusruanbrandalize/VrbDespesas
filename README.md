@@ -1,4 +1,4 @@
-<img src="prj/projectVrbDespesas.ico" alt="imagem do projeto" align="right"/>
+<img src="prj/projectVrbDespesas.ico" alt="imagem do projeto" width="50" height="50" align="right"/>
 
 # VrbDespesas
  Software de controle e gerenciamento de despesas.
