@@ -1,9 +1,17 @@
-# vrbDespesas
- Sistema de controle de despesas utilizando o padrão MVC (Orientado à objetos) e a IDE Lazarus.
+<img src="prj/projectVrbDespesa.ico" align="right"/>
 
-# Dependências:
-* VrbLibCep -> https://github.com/viniciusruanbrandalize/VrbLibCep
-* lazReport -> https://github.com/alrieckert/lazarus/tree/master/components/lazreport
-* lazReportPdfExport -> https://github.com/alrieckert/lazarus/tree/master/components/lazreport/source/addons/pdfexport
-* libVrbBCrypt (.dll/.so) -> https://github.com/viniciusruanbrandalize/libVrbBCrypt
-* libVrbCryptIni (.dll/.so) -> https://github.com/viniciusruanbrandalize/libVrbCryptIni
+# VrbDespesas
+ Software de controle e gerenciamento de despesas.
+ 
+## Tecnologias utilizadas:
+* <a href="https://www.lazarus-ide.org/">Lazarus FPC (Versão 3.4).</a>
+
+## Arquitetura:
+* Padrão MVC
+
+## Dependências do projeto:
+* <a href="https://github.com/viniciusruanbrandalize/VrbLibCep">VrbLibCep</a>
+* <a href="https://github.com/alrieckert/lazarus/tree/master/components/lazreport">lazReport</a>
+* <a href="https://github.com/alrieckert/lazarus/tree/master/components/lazreport/source/addons/pdfexport">lazReportPdfExport</a>
+* <a href="https://github.com/viniciusruanbrandalize/libVrbBCrypt">libVrbBCrypt (.dll/.so)</a>
+* <a href="https://github.com/viniciusruanbrandalize/libVrbCryptIni">libVrbCryptIni (.dll/.so)</a>

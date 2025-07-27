@@ -16,7 +16,6 @@ object frmPrincipal: TfrmPrincipal
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 600
