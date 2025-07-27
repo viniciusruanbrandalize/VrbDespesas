@@ -5,6 +5,8 @@
  
 ## Tecnologias utilizadas:
 * <a href="https://www.lazarus-ide.org/"> <img src="img/readme/icone_lazarus.ico" alt="logo do lazarus" width="25" height="25" align="left"/> Lazarus FPC (Versão 3.4).</a>
+* <a href="https://www.php.net/"> PHP 8.4.5 </a>
+* <a href="https://kotlinlang.org/"> Kotlin </a>
 
 ## Arquitetura:
 * Padrão MVC
