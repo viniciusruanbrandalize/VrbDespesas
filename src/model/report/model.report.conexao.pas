@@ -38,6 +38,7 @@ type
     procedure ConfiguraComponentes();
   public
     procedure CarregarLogo();
+    function ExportarPDF(Arquivo: String): Boolean;
     property DiretorioRelatorios: String read FDir write FDir;
     property IDDonoCadastro: Integer read FIDDonoCadastro write FIDDonoCadastro;
   end;
@@ -72,6 +73,11 @@ procedure TdmConexaoReport.CarregarLogo();
 begin
   if Assigned(frReport.FindObject('imgLogo')) then
     TfrPictureView(frReport.FindObject('imgLogo')).Picture.LoadFromFile(FDir+'logo.ico');
+end;
+
+function TdmConexaoReport.ExportarPDF(Arquivo: String): Boolean;
+begin
+  Result := frReport.ExportTo(TfrTNPDFExportFilter, Arquivo);
 end;
 
 end.

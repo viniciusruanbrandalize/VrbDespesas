@@ -87,9 +87,8 @@ begin
         begin
           if BuscarPorId(UsuarioBusca, Usuario.Id, Erro) then
           begin
-            lib.bcrypt.compareHashBCrypt(Pchar(Senha1),
-                                       Pchar(UsuarioBusca.Senha),
-                                       SenhaValida);
+            SenhaValida := lib.bcrypt.compareHashBCrypt(Pchar(Senha1),
+                                                        Pchar(UsuarioBusca.Senha));
             if not SenhaValida then
               Erro := 'Nova Senha difere da senha atual!';
           end;
@@ -108,11 +107,8 @@ begin
 end;
 
 function TUsuarioController.CriptografarSenha(Senha: String): String;
-var
-  SenhaCriptografada: PChar;
 begin
-  lib.bcrypt.encryptBCrypt(PChar(Senha), SenhaCriptografada);
-  Result := SenhaCriptografada;
+  Result := lib.bcrypt.encryptBCrypt(PChar(Senha));
 end;
 
 constructor TUsuarioController.Create;

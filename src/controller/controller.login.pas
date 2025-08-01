@@ -38,7 +38,7 @@ begin
   valida := false;
   if LoginDAO.EncontrarUsuario(objUsuario, Nome, Erro) then
   begin
-    lib.bcrypt.compareHashBCrypt(PChar(Senha), PChar(objUsuario.Senha), valida);
+    valida := lib.bcrypt.compareHashBCrypt(PChar(Senha), PChar(objUsuario.Senha));
     if not valida then
       erro := 'Senha incorreta!'
     else

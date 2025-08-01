@@ -4,7 +4,7 @@ unit lib.bcrypt;
 
 interface
 
-  procedure compareHashBCrypt(textoPuro, textoHash: PChar; out Valido: Boolean); stdcall;
+  function compareHashBCrypt(textoPuro, textoHash: PChar): Boolean; stdcall;
   external
    {$IFDEF WIN32}
   'libvrbbcrypt32.dll'
@@ -22,7 +22,7 @@ interface
   {$ENDIF}
   name 'compareHashBCrypt';
 
-  procedure encryptBCrypt(texto: PChar; out TextoEncriptado: PChar); stdcall;
+  function encryptBCrypt(texto: PChar): PChar; stdcall;
   external
    {$IFDEF WIN32}
   'libvrbbcrypt32.dll'

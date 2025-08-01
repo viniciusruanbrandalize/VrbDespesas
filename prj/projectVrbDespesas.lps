@@ -3,14 +3,14 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Win32 Debug"/>
+    <BuildModes Active="Win32 Release"/>
     <Units>
       <Unit>
         <Filename Value="projectVrbDespesas.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="41"/>
-        <CursorPos X="84" Y="54"/>
+        <TopLine Value="43"/>
+        <CursorPos Y="80"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -20,7 +20,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="83" Y="13"/>
+        <CursorPos X="79" Y="24"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -185,8 +185,8 @@
         <Filename Value="..\src\lib\lib.bcrypt.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="6"/>
-        <CursorPos X="46" Y="33"/>
+        <TopLine Value="8"/>
+        <CursorPos X="21" Y="45"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -390,8 +390,8 @@
         <Filename Value="..\src\controller\controller.usuario.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="68"/>
-        <CursorPos X="3" Y="74"/>
+        <TopLine Value="90"/>
+        <CursorPos X="70" Y="109"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -463,7 +463,8 @@
         <Filename Value="..\src\controller\controller.login.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos Y="43"/>
+        <TopLine Value="44"/>
+        <CursorPos X="45" Y="52"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -632,8 +633,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="138"/>
-        <CursorPos X="32" Y="156"/>
+        <TopLine Value="95"/>
+        <CursorPos X="44" Y="100"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -643,8 +644,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="85"/>
-        <CursorPos X="55" Y="107"/>
+        <TopLine Value="261"/>
+        <CursorPos X="22" Y="285"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -662,15 +663,16 @@
         <Filename Value="..\src\model\report\model.report.despesa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="436"/>
-        <CursorPos X="62" Y="324"/>
+        <TopLine Value="7"/>
+        <CursorPos X="83" Y="447"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatoriodespesa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="34" Y="13"/>
+        <TopLine Value="96"/>
+        <CursorPos X="19" Y="118"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -680,8 +682,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="38"/>
-        <CursorPos X="12" Y="78"/>
+        <TopLine Value="46"/>
+        <CursorPos X="42" Y="83"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -747,7 +749,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
         <CursorPos X="62" Y="64"/>
-        <UsageCount Value="191"/>
+        <UsageCount Value="194"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.copiaseguranca.pas"/>
@@ -755,7 +757,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="3"/>
         <CursorPos X="60" Y="30"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="190"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.copiaseguranca.pas"/>
@@ -763,7 +765,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="394"/>
         <CursorPos X="21" Y="477"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="190"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.configuracao.pas"/>
@@ -774,7 +776,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="54" Y="17"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="158"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.configuracao.pas"/>
@@ -782,7 +784,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="3"/>
         <CursorPos X="3" Y="15"/>
-        <UsageCount Value="154"/>
+        <UsageCount Value="157"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.selecionardonocadastro.pas"/>
@@ -793,14 +795,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="3" Y="15"/>
-        <UsageCount Value="141"/>
+        <UsageCount Value="144"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.selecionardonocadastro.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="45" Y="69"/>
-        <UsageCount Value="140"/>
+        <UsageCount Value="143"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.configuracao.pas"/>
@@ -808,7 +810,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="214"/>
         <CursorPos X="26" Y="245"/>
-        <UsageCount Value="132"/>
+        <UsageCount Value="135"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.ajuda.pas"/>
@@ -819,14 +821,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="27"/>
         <CursorPos X="3" Y="59"/>
-        <UsageCount Value="131"/>
+        <UsageCount Value="134"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.ajuda.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="38" Y="15"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="133"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.uctela.pas"/>
@@ -834,7 +836,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="30"/>
         <CursorPos X="41" Y="21"/>
-        <UsageCount Value="110"/>
+        <UsageCount Value="113"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacao.pas"/>
@@ -842,7 +844,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="65"/>
         <CursorPos X="5" Y="105"/>
-        <UsageCount Value="110"/>
+        <UsageCount Value="113"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.usuarioacesso.pas"/>
@@ -850,7 +852,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="147"/>
         <CursorPos X="26" Y="175"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.usuarioacesso.pas"/>
@@ -858,7 +860,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos Y="57"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacesso.pas"/>
@@ -866,14 +868,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="50"/>
         <CursorPos X="12" Y="80"/>
-        <UsageCount Value="103"/>
+        <UsageCount Value="106"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.version.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="14" Y="31"/>
-        <UsageCount Value="72"/>
+        <UsageCount Value="75"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.padrao.pas"/>
@@ -1170,9 +1172,9 @@
         <Filename Value="D:\IDE\Lazarus\3.4_cross_compile_fcp3.2.2\lazarus\components\lazreport\source\lr_class.pas"/>
         <UnitName Value="LR_Class"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="12240"/>
-        <CursorPos Y="12249"/>
-        <UsageCount Value="9"/>
+        <TopLine Value="11406"/>
+        <CursorPos X="15" Y="11218"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="D:\IDE\Lazarus\3.4_cross_compile_fcp3.2.2\lazarus\components\lazreport\source\lr_view.pas"/>
@@ -1183,7 +1185,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="436"/>
         <CursorPos X="3" Y="441"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="D:\IDE\Lazarus\3.4_cross_compile_fcp3.2.2\lazarus\lcl\extctrls.pp"/>
@@ -1255,10 +1257,6 @@
     <JumpHistory HistoryIndex="7">
       <Position>
         <Filename Value="..\src\view\view.principal.pas"/>
-        <Caret Line="142" Column="26" TopLine="127"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.principal.pas"/>
         <Caret Line="361" Column="35" TopLine="341"/>
       </Position>
       <Position>
@@ -1284,6 +1282,10 @@
       <Position>
         <Filename Value="..\src\view\view.principal.pas"/>
         <Caret Line="446" Column="26" TopLine="411"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="18" Column="65"/>
       </Position>
     </JumpHistory>
     <RunParams>
