@@ -3,15 +3,13 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Win32 Release"/>
+    <BuildModes Active="Win32 Debug"/>
     <Units>
       <Unit>
         <Filename Value="projectConfDespesas.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
+        <CursorPos X="30" Y="26"/>
         <UsageCount Value="24"/>
       </Unit>
       <Unit>
@@ -20,7 +18,7 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <CursorPos X="40" Y="21"/>
+        <CursorPos X="2" Y="24"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -30,24 +28,9 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="51" Y="16"/>
+        <CursorPos X="20" Y="28"/>
         <UsageCount Value="24"/>
         <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\configurador\src\view\view.mensagem.pas"/>
-        <ComponentName Value="frmMessage"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UsageCount Value="20"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\configurador\src\lib\lib.cryptini.pas"/>
-        <UsageCount Value="20"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\configurador\src\model\ini\model.ini.conexao.pas"/>
-        <UsageCount Value="20"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.mensagem.pas"/>
@@ -70,6 +53,21 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="14"/>
         <UsageCount Value="23"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\configurador\src\view\view.mensagem.pas"/>
+        <ComponentName Value="frmMessage"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\configurador\src\lib\lib.cryptini.pas"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\configurador\src\model\ini\model.ini.conexao.pas"/>
+        <UsageCount Value="20"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\connection\model.connection.ini.pas"/>

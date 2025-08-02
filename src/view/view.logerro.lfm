@@ -1,18 +1,18 @@
 object frmLogErro: TfrmLogErro
   Left = 481
-  Height = 500
+  Height = 400
   Top = 250
-  Width = 800
+  Width = 640
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Histórico de Erros'
-  ClientHeight = 500
-  ClientWidth = 800
-  DesignTimePPI = 120
+  ClientHeight = 400
+  ClientWidth = 640
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
+  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 500
@@ -29,15 +29,15 @@ object frmLogErro: TfrmLogErro
     object mErro: TMemo
       Cursor = crHandPoint
       Left = 8
-      Height = 300
+      Height = 240
       Top = 8
       Width = 784
       Align = alTop
-      BorderSpacing.Around = 8
+      BorderSpacing.Around = 6
       BorderStyle = bsNone
       CharCase = ecUppercase
       Font.Color = 2569157
-      Font.Height = -15
+      Font.Height = -12
       Font.Name = 'Courier New'
       Font.Style = [fsBold]
       Lines.Strings = (
@@ -57,23 +57,23 @@ object frmLogErro: TfrmLogErro
       Top = 316
       Width = 784
       Align = alClient
-      BorderSpacing.Around = 8
+      BorderSpacing.Around = 6
       Columns = <      
         item
           Caption = 'ID'
-          Width = 110
+          Width = 88
         end      
         item
           Caption = 'Data'
-          Width = 120
+          Width = 96
         end      
         item
           Caption = 'Hora'
-          Width = 120
+          Width = 96
         end      
         item
           Caption = 'Descrição'
-          Width = 420
+          Width = 336
         end>
       PopupMenu = PopupMenuLv
       RowSelect = True
@@ -83,16 +83,16 @@ object frmLogErro: TfrmLogErro
   end
   object PopupMenuLv: TPopupMenu
     Images = imgList
-    Left = 48
-    Top = 56
+    Left = 38
+    Top = 45
     object MenuItem1: TMenuItem
       Action = actVisualizar
     end
   end
   object actList: TActionList
     Images = imgList
-    Left = 128
-    Top = 56
+    Left = 102
+    Top = 45
     object actCopiar: TAction
       Caption = 'Copiar'
       ImageIndex = 1
@@ -112,8 +112,8 @@ object frmLogErro: TfrmLogErro
   object imgList: TImageList
     Height = 32
     Width = 32
-    Left = 56
-    Top = 128
+    Left = 45
+    Top = 102
     Bitmap = {
       4C7A050000002000000020000000A71200000000000078DAED9B095C53C7F6C7
       6FC2266055B06E58AB20222AD2226EB48AECC8129210924016B29164B2920564
@@ -328,8 +328,8 @@ object frmLogErro: TfrmLogErro
   end
   object PopupMenuMemo: TPopupMenu
     Images = imgList
-    Left = 224
-    Top = 56
+    Left = 179
+    Top = 45
     object MenuItem4: TMenuItem
       Action = actCopiar
     end

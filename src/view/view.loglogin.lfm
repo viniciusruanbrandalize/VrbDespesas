@@ -1,38 +1,37 @@
 object frmLogLogin: TfrmLogLogin
   Left = 481
-  Height = 543
+  Height = 434
   Top = 250
-  Width = 800
+  Width = 640
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Histórico de Login'
-  ClientHeight = 543
-  ClientWidth = 800
-  DesignTimePPI = 120
+  ClientHeight = 434
+  ClientWidth = 640
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
   object pnlFundo: TPanel
     Left = 0
-    Height = 543
+    Height = 434
     Top = 0
-    Width = 800
+    Width = 640
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 543
-    ClientWidth = 800
+    ClientHeight = 434
+    ClientWidth = 640
     Color = 15925228
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object lv: TListView
-      Left = 10
-      Height = 523
-      Top = 10
-      Width = 780
+      Left = 8
+      Height = 418
+      Top = 8
+      Width = 624
       Align = alClient
-      BorderSpacing.Around = 10
+      BorderSpacing.Around = 8
       BorderStyle = bsNone
       Columns = <      
         item
@@ -41,23 +40,23 @@ object frmLogLogin: TfrmLogLogin
         end      
         item
           Caption = 'Data'
-          Width = 100
+          Width = 80
         end      
         item
           Caption = 'Hora'
-          Width = 100
+          Width = 80
         end      
         item
           Caption = 'Computador'
-          Width = 200
+          Width = 160
         end      
         item
           Caption = 'IP'
-          Width = 150
+          Width = 120
         end      
         item
           Caption = 'Usuário'
-          Width = 200
+          Width = 160
         end>
       RowSelect = True
       TabOrder = 0

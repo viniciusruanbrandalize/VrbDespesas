@@ -11,6 +11,7 @@ object frmRelatorioParametro: TfrmRelatorioParametro
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poOwnerFormCenter
+  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 328

@@ -1,19 +1,19 @@
 object frmMessage: TfrmMessage
   Left = 622
-  Height = 200
+  Height = 160
   Top = 268
-  Width = 500
+  Width = 400
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Mensagem'
-  ClientHeight = 200
-  ClientWidth = 500
+  ClientHeight = 160
+  ClientWidth = 400
   Color = 14286807
-  Constraints.MinHeight = 50
-  Constraints.MinWidth = 400
-  DesignTimePPI = 120
+  Constraints.MinHeight = 40
+  Constraints.MinWidth = 320
   OnShow = FormShow
   Position = poScreenCenter
+  LCLVersion = '3.4.0.0'
   object Panel1: TPanel
     Left = 0
     Height = 200
@@ -29,23 +29,23 @@ object frmMessage: TfrmMessage
     TabOrder = 0
     object pnlBotoes: TPanel
       Left = 0
-      Height = 40
-      Top = 160
+      Height = 32
+      Top = 168
       Width = 500
       Align = alBottom
       BevelOuter = bvNone
-      ClientHeight = 40
+      ClientHeight = 32
       ClientWidth = 500
       ParentBackground = False
       TabOrder = 0
       object btnSim: TBitBtn
-        Left = 302
+        Left = 321
         Height = 35
         Top = 0
-        Width = 94
+        Width = 75
         Align = alRight
-        BorderSpacing.Right = 5
-        BorderSpacing.Bottom = 5
+        BorderSpacing.Right = 4
+        BorderSpacing.Bottom = 4
         Caption = '&Sim'
         Font.CharSet = ANSI_CHARSET
         Font.Color = 2977025
@@ -61,13 +61,13 @@ object frmMessage: TfrmMessage
         Visible = False
       end
       object btnNao: TBitBtn
-        Left = 401
+        Left = 420
         Height = 35
         Top = 0
-        Width = 94
+        Width = 75
         Align = alRight
-        BorderSpacing.Right = 5
-        BorderSpacing.Bottom = 5
+        BorderSpacing.Right = 4
+        BorderSpacing.Bottom = 4
         Caption = '&Não'
         Font.CharSet = ANSI_CHARSET
         Font.Color = 2977025
@@ -83,13 +83,13 @@ object frmMessage: TfrmMessage
         Visible = False
       end
       object btnOk: TBitBtn
-        Left = 203
+        Left = 222
         Height = 35
         Top = 0
-        Width = 94
+        Width = 75
         Align = alRight
-        BorderSpacing.Right = 5
-        BorderSpacing.Bottom = 5
+        BorderSpacing.Right = 4
+        BorderSpacing.Bottom = 4
         Caption = '&OK'
         Default = True
         Font.CharSet = ANSI_CHARSET
@@ -109,18 +109,18 @@ object frmMessage: TfrmMessage
     end
     object pnlIcones: TPanel
       Left = 16
-      Height = 128
-      Top = 30
-      Width = 128
+      Height = 102
+      Top = 24
+      Width = 102
       Anchors = [akTop]
       BevelOuter = bvNone
-      ClientHeight = 128
-      ClientWidth = 128
+      ClientHeight = 102
+      ClientWidth = 102
       ParentBackground = False
       TabOrder = 1
       object imgDeletar: TImage
         Left = 0
-        Height = 64
+        Height = 51
         Top = 0
         Width = 128
         Align = alTop
@@ -236,7 +236,7 @@ object frmMessage: TfrmMessage
       end
       object imgQuestao: TImage
         Left = 0
-        Height = 64
+        Height = 51
         Top = 128
         Width = 128
         Align = alTop
@@ -607,7 +607,7 @@ object frmMessage: TfrmMessage
       end
       object imgCuidado: TImage
         Left = 0
-        Height = 64
+        Height = 51
         Top = 128
         Width = 128
         Align = alTop
@@ -984,7 +984,7 @@ object frmMessage: TfrmMessage
       end
       object imgInformacao: TImage
         Left = 0
-        Height = 64
+        Height = 51
         Top = 128
         Width = 128
         Align = alTop
@@ -1094,7 +1094,7 @@ object frmMessage: TfrmMessage
       end
       object imgErro: TImage
         Left = 0
-        Height = 64
+        Height = 51
         Top = 128
         Width = 128
         Align = alTop
@@ -1241,7 +1241,7 @@ object frmMessage: TfrmMessage
       end
       object imgSucesso: TImage
         Left = 0
-        Height = 64
+        Height = 51
         Top = 64
         Width = 128
         Align = alTop
@@ -1357,15 +1357,15 @@ object frmMessage: TfrmMessage
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = Panel1
       AnchorSideTop.Side = asrCenter
-      Left = 144
-      Height = 115
-      Top = 43
-      Width = 350
+      Left = 115
+      Height = 92
+      Top = 34
+      Width = 380
       Anchors = [akTop, akLeft, akRight]
       BevelOuter = bvNone
       BorderWidth = 5
-      ClientHeight = 115
-      ClientWidth = 350
+      ClientHeight = 92
+      ClientWidth = 380
       ParentBackground = False
       TabOrder = 2
       object scboxMensagem: TScrollBox
@@ -1390,7 +1390,7 @@ object frmMessage: TfrmMessage
           Caption = 'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
           Font.CharSet = ANSI_CHARSET
           Font.Color = 2977025
-          Font.Height = -20
+          Font.Height = -16
           Font.Name = 'Segoe UI Semibold'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -1405,8 +1405,8 @@ object frmMessage: TfrmMessage
   object ImgList: TImageList
     Height = 160
     Width = 160
-    Left = 456
-    Top = 16
+    Left = 365
+    Top = 13
     Bitmap = {
       4C7A03000000A0000000A0000000687C00000000000078DAEC7D07745357D6B5
       E5A26AD992552DD9926CC945B6D5BB644B722FB857C036D8B484404808A4174A

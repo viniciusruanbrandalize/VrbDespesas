@@ -13,6 +13,7 @@ object frmCopiaSeguranca: TfrmCopiaSeguranca
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
+  LCLVersion = '3.4.0.0'
   object pgb: TProgressBar
     Left = 8
     Height = 20
