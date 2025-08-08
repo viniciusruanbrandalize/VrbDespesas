@@ -33,15 +33,16 @@ inherited frmContaBancaria: TfrmContaBancaria
               Columns = <              
                 item
                   Caption = 'Código'
+                  Visible = False
                   Width = 100
                 end              
                 item
                   Caption = 'Número'
-                  Width = 200
+                  Width = 250
                 end              
                 item
                   Caption = 'Agência'
-                  Width = 200
+                  Width = 250
                 end              
                 item
                   Caption = 'Banco'

@@ -15,11 +15,12 @@ inherited frmTipoDespesa: TfrmTipoDespesa
               Columns = <              
                 item
                   Caption = 'Código'
+                  Visible = False
                   Width = 100
                 end              
                 item
                   Caption = 'Nome'
-                  Width = 800
+                  Width = 920
                 end>
             end
             inherited pnlPesquisa: TPanel

@@ -15,11 +15,12 @@ inherited frmBanco: TfrmBanco
               Columns = <              
                 item
                   Caption = 'Código'
+                  Visible = False
                   Width = 100
                 end              
                 item
                   Caption = 'Nome'
-                  Width = 820
+                  Width = 920
                 end>
             end
             inherited pnlPesquisa: TPanel

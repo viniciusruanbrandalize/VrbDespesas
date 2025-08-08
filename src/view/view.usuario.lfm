@@ -15,11 +15,12 @@ inherited frmUsuario: TfrmUsuario
               Columns = <              
                 item
                   Caption = 'Código'
+                  Visible = False
                   Width = 100
                 end              
                 item
                   Caption = 'Nome'
-                  Width = 620
+                  Width = 720
                 end              
                 item
                   Caption = 'Cadastro'

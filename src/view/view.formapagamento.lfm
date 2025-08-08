@@ -15,15 +15,16 @@ inherited frmFormaPagamento: TfrmFormaPagamento
               Columns = <              
                 item
                   Caption = 'Código'
+                  Visible = False
                   Width = 100
                 end              
                 item
                   Caption = 'Nome'
-                  Width = 700
+                  Width = 750
                 end              
                 item
                   Caption = 'Sigla'
-                  Width = 100
+                  Width = 150
                 end>
             end
             inherited pnlPesquisa: TPanel

@@ -209,7 +209,7 @@ inherited frmParticipante: TfrmParticipante
               MaxLength = 8
               NumbersOnly = True
               TabOrder = 10
-              Text = 'edtNumero'
+              Text = 'edtNumer'
             end
             object edtComplemento: TLabeledEdit[16]
               Left = 728
@@ -249,7 +249,7 @@ inherited frmParticipante: TfrmParticipante
               ParentFont = False
               ReadOnly = True
               TabOrder = 14
-              Text = 'edtUf'
+              Text = 'ed'
               Visible = False
             end
             object mObs: TMemo[19]
@@ -339,6 +339,7 @@ inherited frmParticipante: TfrmParticipante
     end
     object actBuscarCep: TAction[8]
       Caption = 'Buscar CEP'
+      Hint = 'Buscar pelo CEP'
       ImageIndex = 5
       OnExecute = actBuscarCepExecute
     end
