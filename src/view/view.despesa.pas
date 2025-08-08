@@ -701,7 +701,7 @@ end;
 function TfrmDespesa.CamposEstaoComTamanhoMinimoPagamento: Boolean;
 begin
   Result := False;
-  if StrToIntDef(edtValorFpgto.Text, 0) <= 0 then
+  if StrToFloatDef(edtValorFpgto.Text, 0) <= 0 then
     ValidarMaiorQueZeroExit(edtValorFpgto)
   else
     Result := True;
