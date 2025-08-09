@@ -43,6 +43,7 @@ type
   public
     procedure Listar(lv: TListView); override;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
+    function BuscarTodos(ListaConfiguracao: TListaConfiguracao; out Erro: String): Boolean;
     function BuscarPorId(Configuracao : TConfiguracao; Id: Integer; out Erro: String): Boolean;
     function BuscarPorNome(Configuracao : TConfiguracao; Nome: String; out Erro: String): Boolean;
     function Inserir(Configuracao : TConfiguracao; out Erro: string): Boolean;
@@ -131,6 +132,53 @@ begin
   end;
 end;
 
+function TConfiguracaoDAO.BuscarTodos(ListaConfiguracao: TListaConfiguracao;
+  out Erro: String): Boolean;
+var
+  sql: String;
+  i: Integer;
+begin
+  try
+
+    sql := 'select * from configuracao ' +
+           'where excluido = false ' +
+           'order by descricao';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.Open;
+    Qry.First;
+
+    ListaConfiguracao.Clear;
+
+    while not Qry.EOF do
+    begin
+
+      ListaConfiguracao.Add(TConfiguracao.Create);
+      i := Pred(ListaConfiguracao.Count);
+
+      with ListaConfiguracao.Items[i] do
+      begin
+        Id         := Qry.FieldByName('id').AsInteger;
+        Nome       := Qry.FieldByName('nome').AsString;
+        Descricao  := Qry.FieldByName('descricao').AsString;
+        Uso        := Qry.FieldByName('uso').AsString;
+        Valor      := Qry.FieldByName('valor').AsString;
+        Componente := Qry.FieldByName('componente').AsString;
+      end;
+
+      Qry.Next;
+
+    end;
+
+    Result := True;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
 function TConfiguracaoDAO.BuscarPorId(Configuracao : TConfiguracao; Id: Integer; out Erro: String): Boolean;
 var
   sql: String;
@@ -154,6 +202,7 @@ begin
       Configuracao.Descricao := Qry.FieldByName('descricao').AsString;
       Configuracao.Uso       := Qry.FieldByName('uso').AsString;
       Configuracao.Valor     := Qry.FieldByName('valor').AsString;
+      Configuracao.Componente:= Qry.FieldByName('componente').AsString;
       Result := True;
     end
     else
@@ -198,6 +247,7 @@ begin
       Configuracao.Descricao := Qry.FieldByName('descricao').AsString;
       Configuracao.Uso       := Qry.FieldByName('uso').AsString;
       Configuracao.Valor     := Qry.FieldByName('valor').AsString;
+      Configuracao.Componente:= Qry.FieldByName('componente').AsString;
       Result := True;
     end
     else
@@ -223,8 +273,8 @@ var
 begin
   try
 
-    sql := 'insert into configuracao(id, nome, descricao, uso, valor, excluido) values ' +
-           '(:id, :nome, :descricao, :uso, :valor, :excluido)';
+    sql := 'insert into configuracao(id, nome, descricao, uso, valor, excluido, componente) values ' +
+           '(:id, :nome, :descricao, :uso, :valor, :excluido, :componente)';
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -241,6 +291,8 @@ begin
     if Trim(Configuracao.Uso) <> EmptyStr then
       Qry.ParamByName('uso').AsString     := Configuracao.Uso;
     Qry.ParamByName('valor').AsString     := Configuracao.Valor;
+    if Trim(Configuracao.Componente) <> EmptyStr then
+      Qry.ParamByName('componente').AsString := Configuracao.Componente;
     Qry.ParamByName('excluido').AsBoolean := Configuracao.Excluido;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
@@ -262,7 +314,7 @@ begin
   try
 
     sql := 'update configuracao set nome = :nome, ' +
-           'descricao = :descricao, uso = :uso, valor = :valor ' +
+           'descricao = :descricao, uso = :uso, valor = :valor, componente = :componente ' +
            'where id = :id';
 
     Qry.Close;
@@ -274,6 +326,8 @@ begin
     if Trim(Configuracao.Uso) <> EmptyStr then
       Qry.ParamByName('uso').AsString     := Configuracao.Uso;
     Qry.ParamByName('valor').AsString     := Configuracao.Valor;
+    if Trim(Configuracao.Componente) <> EmptyStr then
+      Qry.ParamByName('componente').AsString := Configuracao.Componente;
     Qry.ExecSQL;
     dmConexao1.SQLTransaction.Commit;
 

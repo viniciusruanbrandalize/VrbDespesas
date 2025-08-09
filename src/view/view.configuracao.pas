@@ -31,7 +31,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls,
-  StdCtrls, Buttons, controller.configuracao;
+  StdCtrls, Buttons, controller.configuracao, view.mensagem;
 
 type
 
@@ -40,13 +40,14 @@ type
   TfrmConfiguracao = class(TForm)
     btnSelDirPgDumpBkp: TSpeedButton;
     btnSelDirMysqlDumpBkp: TSpeedButton;
-    Edit1: TEdit;
+    edtPesquisa: TEdit;
     edtPgDump: TLabeledEdit;
     edtMySQLDump: TLabeledEdit;
     gbBackup: TGroupBox;
     imgList: TImageList;
     edtGbak: TLabeledEdit;
     openDlg: TOpenDialog;
+    pnlConfiguracaoGeral: TPanel;
     pnlFundoGeral: TPanel;
     pnlFundoLocal: TPanel;
     pnlBotoes: TPanel;
@@ -55,7 +56,7 @@ type
     btnSelDirGbakBkp: TSpeedButton;
     btnSalvar: TSpeedButton;
     btnCancelar: TSpeedButton;
-    SpeedButton1: TSpeedButton;
+    btnPesquisar: TSpeedButton;
     tbsGeral: TTabSheet;
     tbsLocal: TTabSheet;
     procedure btnCancelarClick(Sender: TObject);
@@ -71,6 +72,8 @@ type
     procedure LimparCampos();
     procedure CarregarConfiguracoes();
     procedure Salvar();
+    procedure SalvarConfGeral();
+    procedure CriarComponentes();
   public
 
   end;
@@ -125,12 +128,14 @@ end;
 
 procedure TfrmConfiguracao.FormShow(Sender: TObject);
 begin
+  pnlConfiguracaoGeral.Caption := '';
   pgc.ActivePageIndex := 0;
   LimparCampos();
   CarregarConfiguracoes();
   {$IFDEF MSWINDOWS}
   openDlg.Filter := 'Executáveis|*.exe';
   {$ENDIF}
+  CriarComponentes();
 end;
 
 procedure TfrmConfiguracao.LimparCampos();
@@ -149,10 +154,78 @@ end;
 
 procedure TfrmConfiguracao.Salvar();
 begin
+  SalvarConfGeral();
   Controller.ConfiguracaoINI.GBak      := edtGbak.Text;
   Controller.ConfiguracaoINI.MySQLDump := edtMySQLDump.Text;
   Controller.ConfiguracaoINI.PGDump    := edtPgDump.Text;
   Controller.ConfiguracaoINI.Escrever;
+end;
+
+procedure TfrmConfiguracao.SalvarConfGeral();
+var
+  i, id: Integer;
+  Erro: String;
+begin
+  for i := 0 to Pred(pnlConfiguracaoGeral.ControlCount) do
+  begin
+    if pnlConfiguracaoGeral.Controls[i] is TCheckBox then
+    begin
+      id := TCheckBox(pnlConfiguracaoGeral.Controls[i]).Tag;
+      if Controller.BuscarPorId(Controller.Configuracao, id, Erro) then
+      begin
+        if TCheckBox(pnlConfiguracaoGeral.Controls[i]).Checked then
+          Controller.Configuracao.Valor := '1'
+        else
+          Controller.Configuracao.Valor := '0';
+        if not Controller.Editar(Controller.Configuracao, Erro) then
+        begin
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+          Abort;
+        end;
+      end
+      else
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+    end;
+  end;
+end;
+
+procedure TfrmConfiguracao.CriarComponentes();
+var
+  Erro: String;
+  i, topo, esquerda: Integer;
+  ckb: TCheckBox;
+begin
+  if Controller.BuscarTodos(Controller.ListaConfiguracao, Erro) then
+  begin
+    topo     := 5;
+    esquerda := 5;
+    for i := 0 to Pred(Controller.ListaConfiguracao.Count) do
+    begin
+      with Controller.ListaConfiguracao[i] do
+      begin
+        if Trim(Componente) <> '' then
+        begin
+          if UpperCase(Trim(Componente)) = 'TCHECKBOX' then
+          begin
+            ckb          := TCheckBox.Create(Self);
+            ckb.Parent   := pnlConfiguracaoGeral;
+            ckb.Name     := 'ckb'+Nome;
+            ckb.Tag      := Id;
+            ckb.Caption  := Descricao;
+            ckb.Hint     := Uso;
+            ckb.ShowHint := True;
+            ckb.Top      := topo;
+            ckb.Left     := esquerda;
+            ckb.Checked  := Valor = '1';
+          end;
+          topo     := topo + 10;
+          esquerda := esquerda + 10;
+        end;
+      end;
+    end;
+  end
+  else
+    TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
 end;
 
 end.

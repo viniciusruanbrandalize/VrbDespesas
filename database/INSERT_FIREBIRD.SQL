@@ -1,6 +1,6 @@
 INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES (1, 'NUMERO_VERSAO','Número da versão do sistema','Número da versão do sistema','1.0.0.0',false);
 INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES (2, 'DATA_VERSAO','Data da versão do sistema','Data da versão do sistema','26/04/2025',false);
-INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES (3,'USAR_CARTAO_VALE','Usar o cartão quando for informado pagamento como Vale','Pede as informações do cartão na forma de pagamento Vale','1',false);
+INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO, COMPONENTE) VALUES (3,'USAR_CARTAO_VALE','Usar o cartão quando for informado pagamento como Vale','Pede as informações do cartão na forma de pagamento Vale','1',false,'TCheckBox');
 
 SET GENERATOR gen_id_configuracao TO 2;
 

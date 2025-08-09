@@ -30,7 +30,7 @@ unit controller.configuracao;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, model.dao.configuracao,
+  Classes, SysUtils, ComCtrls, model.dao.configuracao,
   model.entity.configuracao, model.ini.configuracao;
 
 type
@@ -41,8 +41,12 @@ type
   private
     DAO: TConfiguracaoDAO;
   public
+    ListaConfiguracao: TListaConfiguracao;
     Configuracao:    TConfiguracao;
     ConfiguracaoINI: TConfiguracaoINI;
+    function BuscarTodos(Lista: TListaConfiguracao; out Erro: String): Boolean;
+    function Editar(objConfiguracao: TConfiguracao; out Erro: String): Boolean;
+    function BuscarPorId(objConfiguracao: TConfiguracao; Id: Integer; out Erro: String): Boolean;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -51,18 +55,38 @@ implementation
 
 { TConfiguracaoController }
 
+function TConfiguracaoController.BuscarTodos(
+  Lista: TListaConfiguracao; out Erro: String): Boolean;
+begin
+  Result := DAO.BuscarTodos(Lista, Erro);
+end;
+
+function TConfiguracaoController.Editar(objConfiguracao: TConfiguracao; out
+  Erro: String): Boolean;
+begin
+  Result := DAO.Editar(objConfiguracao, Erro);
+end;
+
+function TConfiguracaoController.BuscarPorId(objConfiguracao: TConfiguracao;
+  Id: Integer; out Erro: String): Boolean;
+begin
+  Result := DAO.BuscarPorId(objConfiguracao, Id, Erro);
+end;
+
 constructor TConfiguracaoController.Create;
 begin
   Configuracao := TConfiguracao.Create;
-  ConfiguracaoINI := TConfiguracaoINI.Create;
+  ListaConfiguracao := TListaConfiguracao.Create;
   DAO := TConfiguracaoDAO.Create;
+  ConfiguracaoINI := TConfiguracaoINI.Create;
 end;
 
 destructor TConfiguracaoController.Destroy;
 begin
   FreeAndNil(Configuracao);
-  FreeAndNil(ConfiguracaoINI);
+  FreeAndNil(ListaConfiguracao);
   FreeAndNil(DAO);
+  FreeAndNil(ConfiguracaoINI);
   inherited Destroy;
 end;
 

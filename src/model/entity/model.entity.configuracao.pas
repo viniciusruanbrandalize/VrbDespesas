@@ -30,7 +30,7 @@ unit model.entity.configuracao;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, Generics.Collections;
 
 type
 
@@ -43,13 +43,16 @@ type
     FDescricao: String;
     FUso: String;
     FValor: String;
+    FComponente: String;
     FExcluido: Boolean;
+    function GetComponente: String;
     function GetDescricao: String;
     function GetExcluido: Boolean;
     function GetId: Integer;
     function GetNome: String;
     function GetUso: String;
     function GetValor: String;
+    procedure SetComponente(AValue: String);
     procedure SetDescricao(AValue: String);
     procedure SetExcluido(AValue: Boolean);
     procedure SetId(AValue: Integer);
@@ -65,8 +68,12 @@ type
     property Descricao: String read GetDescricao write SetDescricao;
     property Uso: String read GetUso write SetUso;
     property Valor: String read GetValor write SetValor;
+    property Componente: String read GetComponente write SetComponente;
     property Excluido: Boolean read GetExcluido write SetExcluido;
   end;
+
+type
+  TListaConfiguracao = specialize TObjectList<TConfiguracao>;
 
 implementation
 
@@ -80,6 +87,11 @@ end;
 function TConfiguracao.GetDescricao: String;
 begin
   Result := FDescricao;
+end;
+
+function TConfiguracao.GetComponente: String;
+begin
+  Result := FComponente;
 end;
 
 function TConfiguracao.GetExcluido: Boolean;
@@ -100,6 +112,11 @@ end;
 function TConfiguracao.GetValor: String;
 begin
   Result := FValor;
+end;
+
+procedure TConfiguracao.SetComponente(AValue: String);
+begin
+  FComponente := AValue;
 end;
 
 procedure TConfiguracao.SetDescricao(AValue: String);

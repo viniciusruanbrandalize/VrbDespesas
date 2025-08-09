@@ -232,6 +232,7 @@ create table dbo.configuracao (
 	descricao varchar(500) not null,
 	uso varchar(500),
 	valor varchar(100) not null,
+	componente varchar(50),
 	excluido bit not null,
 	constraint pk_configuracao primary key (id)
 );

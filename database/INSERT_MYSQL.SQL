@@ -1,6 +1,6 @@
 INSERT INTO CONFIGURACAO (NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES ('NUMERO_VERSAO','Número da versão do sistema','Número da versão do sistema','1.0.0.0',0);
 INSERT INTO CONFIGURACAO (NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES ('DATA_VERSAO','Data da versão do sistema','Data da versão do sistema','26/04/2025',0);
-INSERT INTO CONFIGURACAO (NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES ('USAR_CARTAO_VALE','Usar o cartão quando for informado pagamento como Vale','Pede as informações do cartão na forma de pagamento Vale','1',0);
+INSERT INTO CONFIGURACAO (NOME,DESCRICAO,USO,VALOR,EXCLUIDO, COMPONENTE) VALUES ('USAR_CARTAO_VALE','Usar o cartão quando for informado pagamento como Vale','Pede as informações do cartão na forma de pagamento Vale','1',0,'TCheckBox');
 
 INSERT INTO BANCO (NUMERO,NOME,EXCLUIDO) VALUES (748,'Sicredi',0);
 INSERT INTO BANCO (NUMERO,NOME,EXCLUIDO) VALUES (1,'Banco Do Brasil',0);

@@ -12,7 +12,6 @@ object frmConfiguracao: TfrmConfiguracao
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 441
@@ -56,19 +55,33 @@ object frmConfiguracao: TfrmConfiguracao
           ClientWidth = 724
           ParentBackground = False
           TabOrder = 0
-          object Edit1: TEdit
+          object edtPesquisa: TEdit
             Left = 8
             Height = 23
-            Top = 8
+            Top = -15
             Width = 600
             TabOrder = 0
-            Text = 'Edit1'
+            Text = 'edtPesquisa'
+            Visible = False
           end
-          object SpeedButton1: TSpeedButton
+          object btnPesquisar: TSpeedButton
             Left = 616
             Height = 23
-            Top = 8
+            Top = -15
             Width = 104
+            Caption = 'Pesquisar'
+            Visible = False
+          end
+          object pnlConfiguracaoGeral: TPanel
+            Left = 0
+            Height = 338
+            Top = 0
+            Width = 724
+            Align = alClient
+            BevelOuter = bvNone
+            Caption = 'pnlConfiguracaoGeral'
+            ParentBackground = False
+            TabOrder = 1
           end
         end
       end
