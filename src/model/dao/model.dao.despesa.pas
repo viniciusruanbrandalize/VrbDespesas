@@ -33,7 +33,7 @@ uses
   Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, DB, model.dao.padrao,
   model.entity.despesa, model.entity.despesaformapagamento,
   model.entity.arquivo, model.connection.conexao1, model.connection.conexao2,
-  lib.util;
+  DateUtils;
 
 type
 
@@ -44,7 +44,8 @@ type
     QryArquivo: TSQLQuery;
   public
     procedure Listar(lv: TListView); override;
-    procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
+    procedure Pesquisar(lv: TListView; Campo, Busca: String); overload; deprecated;
+    procedure Pesquisar(lv: TListView; Campo, Busca: String; DataInicial, DataFinal: TDateTime); overload;
     function BuscarPorId(Despesa : TDespesa; Id: Integer; out Erro: String): Boolean;
     function Inserir(Despesa : TDespesa; out Erro: string): Boolean;
     function Editar(Despesa : TDespesa; out Erro: string): Boolean;
@@ -81,7 +82,8 @@ begin
     begin
       sql := 'select first 100 d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where d.paga = true and d.id_dono_cadastro = :id_dono_cadastro ' +
+             'where d.paga = true and d.id_dono_cadastro = :id_dono_cadastro and ' +
+             'd.data between :data_inicial and :data_final ' +
              'order by d.data desc, d.hora desc';
     end
     else
@@ -89,7 +91,8 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where d.paga = true and d.id_dono_cadastro = :id_dono_cadastro ' +
+             'where d.paga = true and d.id_dono_cadastro = :id_dono_cadastro and ' +
+             'd.data between :data_inicial and :data_final ' +
              'order by d.data desc, d.hora desc ' +
              'limit 100';
     end;
@@ -98,6 +101,8 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('data_inicial').AsDateTime    := StartOfTheMonth(Now);
+    Qry.ParamByName('data_final').AsDateTime      := EndOfTheMonth(Now);
     Qry.Open;
 
     Qry.First;
@@ -149,6 +154,62 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.Open;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('data').AsString);
+      item.SubItems.Add(qry.FieldByName('hora').AsString);
+      item.SubItems.Add(qry.FieldByName('nome_fornecedor').AsString);
+      item.SubItems.Add(qry.FieldByName('descricao').AsString);
+      item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('total').AsFloat));
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
+  end;
+end;
+
+procedure TDespesaDAO.Pesquisar(lv: TListView; Campo, Busca: String;
+  DataInicial, DataFinal: TDateTime);
+var
+  sql: String;
+  item : TListItem;
+  valor: Double;
+begin
+  try
+
+    if TryStrToFloat(Busca, valor) then
+    begin
+      sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
+             'left join participante f on f.id = d.id_fornecedor ' +
+             'where '+campo+' = :busca and d.paga = true and ' +
+             'd.id_dono_cadastro = :id_dono_cadastro and '+
+             'd.data between :data_inicial and :data_final '+
+             'order by d.data desc, d.hora desc';
+    end
+    else
+    begin
+      sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
+             'left join participante f on f.id = d.id_fornecedor ' +
+             'where UPPER('+campo+') like :busca and d.paga = true and ' +
+             'd.id_dono_cadastro = :id_dono_cadastro and ' +
+             'd.data between :data_inicial and :data_final '+
+             'order by d.data desc, d.hora desc';
+    end;
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('data_inicial').AsDateTime    := DataInicial;
+    Qry.ParamByName('data_final').AsDateTime      := DataFinal;
     Qry.Open;
 
     Qry.First;
@@ -494,6 +555,22 @@ var
 begin
   try
 
+    sql := 'delete from arquivo where id_despesa = :id_despesa';
+
+    QryArquivo.Close;
+    QryArquivo.SQL.Clear;
+    QryArquivo.SQL.Add(sql);
+    QryArquivo.ParamByName('id_despesa').AsInteger  := Id;
+    QryArquivo.ExecSQL;
+
+    sql := 'delete from despesa_forma_pgto where id_despesa = :id_despesa';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id_despesa').AsInteger  := Id;
+    Qry.ExecSQL;
+
     sql := 'delete from despesa where id = :id';
 
     Qry.Close;
@@ -501,12 +578,16 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
+
+    dmConexao2.SQLTransaction.Commit;
     dmConexao1.SQLTransaction.Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      dmConexao2.SQLTransaction.Rollback;
+      dmConexao1.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao excluir despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;

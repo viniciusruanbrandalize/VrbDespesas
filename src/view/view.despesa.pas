@@ -32,7 +32,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   ComCtrls, Menus, Buttons, ActnList, DateTimePicker, view.cadastropadrao,
-  lib.types, controller.despesa, view.mensagem, LCLType;
+  lib.types, controller.despesa, view.mensagem, LCLType, DateUtils;
 
 type
 
@@ -138,6 +138,7 @@ type
     procedure edtPixChange(Sender: TObject);
     procedure edtCartaoChange(Sender: TObject);
     procedure edtContaBancariaChange(Sender: TObject);
+    procedure AtribuirValorPadraoPesquisa();
     function CamposEstaoPreenchidosPagamento: Boolean;
     function CamposEstaoComTamanhoMinimoPagamento: Boolean;
   public
@@ -412,6 +413,11 @@ var
 begin
   if openDlg.Execute then
   begin
+    if ExtractFileExt(openDlg.FileName) = EmptyStr then
+    begin
+      TfrmMessage.Mensagem('Não é permitido incluir um arquivo sem extensão!', 'Aviso', 'C', [mbOK], mbOK);
+      Exit;
+    end;
     Controller.AdicionarArquivo(Controller.Despesa);
     i := Controller.Despesa.Arquivo.Count - 1;
     Controller.Despesa.Arquivo[i].Nome           := ChangeFileExt(ExtractFileName(openDlg.FileName), EmptyStr);
@@ -496,7 +502,7 @@ procedure TfrmDespesa.actPesquisarExecute(Sender: TObject);
 begin
   lvPadrao.Items.Clear;
   Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex],
-    edtPesquisa.Text);
+    edtPesquisa.Text, dtpInicial.Date, dtpFinal.Date);
 end;
 
 procedure TfrmDespesa.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -513,6 +519,7 @@ end;
 procedure TfrmDespesa.FormShow(Sender: TObject);
 begin
   LiberarBloquearAcessos(Self.actList, Self.Name);
+  AtribuirValorPadraoPesquisa();
   inherited;
 end;
 
@@ -689,6 +696,14 @@ begin
   Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '-1';
 end;
 
+procedure TfrmDespesa.AtribuirValorPadraoPesquisa();
+begin
+  dtpInicial.Date      := StartOfTheMonth(Now);
+  dtpFinal.Date        := EndOfTheMonth(Now);
+  edtPesquisa.Text     := '';
+  cbPesquisa.ItemIndex := 0;
+end;
+
 function TfrmDespesa.CamposEstaoPreenchidosPagamento: Boolean;
 begin
   Result := False;
@@ -712,6 +727,7 @@ begin
   lvPadrao.Items.Clear;
   Controller.Listar(lvPadrao);
   AjustarTelaPagamento(False);
+  AtribuirValorPadraoPesquisa();
 end;
 
 procedure TfrmDespesa.LimparCampos;

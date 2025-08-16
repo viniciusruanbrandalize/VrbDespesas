@@ -333,7 +333,7 @@ begin
     if pnl.Controls[i] is TComboBox then
     begin
       cb := TComboBox( pnl.Controls[i] );
-      if Trim(cb.Text) <> EmptyStr then
+      if (Trim(cb.Text) <> EmptyStr) and (cb.Style <> csDropDownList) then
       begin
         cb.Items.Add(cb.Text);
         cb.ItemIndex := cb.Items.IndexOf(cb.Text);

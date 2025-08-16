@@ -7,8 +7,6 @@ inherited frmParticipante: TfrmParticipante
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -83,6 +81,7 @@ inherited frmParticipante: TfrmParticipante
               Style = csDropDownList
               TabOrder = 0
               Text = 'Física'
+              OnChange = cbPessoaChange
             end
             object lblPessoa: TLabel[5]
               Left = 8
@@ -112,6 +111,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 160
               EditLabel.Caption = 'CNPJ:'
               MaxLength = 14
+              NumbersOnly = True
               TabOrder = 1
               Text = 'edtCnpj'
             end
@@ -124,6 +124,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Width = 160
               EditLabel.Caption = 'Inscrição Estadual:'
               MaxLength = 9
+              NumbersOnly = True
               TabOrder = 2
               Text = 'edtIe'
             end
@@ -328,6 +329,9 @@ inherited frmParticipante: TfrmParticipante
     end
   end
   inherited actList: TActionList
+    inherited actIncluir: TAction
+      OnExecute = actIncluirExecute
+    end
     inherited actExcluir: TAction
       OnExecute = actExcluirExecute
     end

@@ -43,7 +43,7 @@ type
   public
     Recebimento: TRecebimento;
     procedure Listar(lv: TListView; Tipo: Integer);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure Pesquisar(lv: TListView; Campo, Busca: String; DataInicial, DataFinal: TDateTime; Tipo: Integer);
     procedure PesquisarPagador(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     procedure PesquisarFormaPagamento(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     procedure PesquisarContaBancaria(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
@@ -65,9 +65,9 @@ begin
   RecebimentoDao.Listar(lv, Tipo);
 end;
 
-procedure TRecebimentoController.Pesquisar(lv: TListView; Campo, Busca: String);
+procedure TRecebimentoController.Pesquisar(lv: TListView; Campo, Busca: String; DataInicial, DataFinal: TDateTime; Tipo: Integer);
 begin
-  RecebimentoDao.Pesquisar(lv, campo, busca);
+  RecebimentoDao.Pesquisar(lv, campo, busca, DataInicial, DataFinal, Tipo);
 end;
 
 procedure TRecebimentoController.PesquisarPagador(lbNome: TComboBox; lbId: TListBox;

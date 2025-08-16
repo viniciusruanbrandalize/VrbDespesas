@@ -32,7 +32,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Calendar,
   StdCtrls, ExtCtrls, DateTimePicker, view.cadastropadrao,
-  controller.recebimento, lib.types, view.mensagem, LCLType;
+  controller.recebimento, lib.types, view.mensagem, LCLType, DateUtils;
 
 type
 
@@ -47,6 +47,8 @@ type
     cbFormaPagamentoSal: TComboBox;
     cbPagadorRec: TComboBox;
     dtpData: TDateTimePicker;
+    dtpFinal: TDateTimePicker;
+    dtpInicial: TDateTimePicker;
     edtHE: TLabeledEdit;
     edt13: TLabeledEdit;
     edtValorBaseSal: TLabeledEdit;
@@ -65,6 +67,7 @@ type
     lblPagadorSal: TLabel;
     lblPagadorRec: TLabel;
     lblFormaPagamentoSal: TLabel;
+    lblPeriodoFiltro: TLabel;
     lbPagadorIdSal: TListBox;
     lbFormaPagamentoIdSal: TListBox;
     lbPagadorIdRec: TListBox;
@@ -119,6 +122,7 @@ type
     procedure AjustarListView();
     procedure CalcularTotal();
     procedure PrepararPesquisaGenerica();
+    procedure AtribuirValorPadraoPesquisa();
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -143,7 +147,7 @@ uses
 procedure TfrmRecebimento.actPesquisarExecute(Sender: TObject);
 begin
   lvPadrao.Items.Clear;
-  Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex], edtPesquisa.Text);
+  Controller.Pesquisar(lvPadrao, lbPesquisa.Items[cbPesquisa.ItemIndex], edtPesquisa.Text, dtpInicial.Date, dtpFinal.Date, Integer(FTipo));
 end;
 
 procedure TfrmRecebimento.actSalvarExecute(Sender: TObject);
@@ -429,8 +433,16 @@ procedure TfrmRecebimento.actEditarExecute(Sender: TObject);
 begin
   inherited;
   case FTipo of
-    telaSalario: pgcCadastro.ActivePage := tbsSalario;
-    telaGeral:   pgcCadastro.ActivePage := tbsRecGeral;
+    telaSalario:
+    begin
+      pgcCadastro.ActivePage := tbsSalario;
+      AddIdxComboBoxPesquisa(pnlFundoSalario);
+    end;
+    telaGeral:
+    begin
+      pgcCadastro.ActivePage := tbsRecGeral;
+      AddIdxComboBoxPesquisa(pnlFundoRecGeral);
+    end;
   end;
 end;
 
@@ -502,6 +514,7 @@ procedure TfrmRecebimento.FormShow(Sender: TObject);
 begin
   LiberarBloquearAcessos(Self.actList, Self.Name);
   AjustarListView();
+  AtribuirValorPadraoPesquisa();
   inherited;
 end;
 
@@ -624,6 +637,14 @@ begin
 
 end;
 
+procedure TfrmRecebimento.AtribuirValorPadraoPesquisa();
+begin
+  dtpInicial.Date      := StartOfTheMonth(Now);
+  dtpFinal.Date        := EndOfTheMonth(Now);
+  edtPesquisa.Text     := '';
+  cbPesquisa.ItemIndex := 0;
+end;
+
 procedure TfrmRecebimento.CarregarDados;
 begin
   lvPadrao.Items.Clear;
@@ -631,6 +652,7 @@ begin
     telaSalario: Controller.Listar(lvPadrao, 0);
     telaGeral:   Controller.Listar(lvPadrao, 1);
   end;
+  AtribuirValorPadraoPesquisa();
 end;
 
 procedure TfrmRecebimento.LimparCampos;

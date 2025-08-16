@@ -64,10 +64,12 @@ type
     mObs: TMemo;
     procedure actBuscarCepExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
+    procedure actIncluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure cbCidadeKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cbCidadeSelect(Sender: TObject);
+    procedure cbPessoaChange(Sender: TObject);
     procedure edtNomeChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -77,6 +79,7 @@ type
     FEhDonoCadastro: Boolean;  {Abrir form de devedor/participantes}
     Controller: TParticipanteController;
     procedure SetEhDonoCadastro(AValue: Boolean);
+    procedure MudarCamposPorPessoa(Pessoa: Char);
   public
     procedure CarregarDados; override;
     procedure LimparCampos; override;
@@ -178,6 +181,11 @@ begin
     controller.Participante.Cidade.Id := StrToInt(lbCidadeId.Items[(Sender as TComboBox).ItemIndex]);
 end;
 
+procedure TfrmParticipante.cbPessoaChange(Sender: TObject);
+begin
+  MudarCamposPorPessoa(lbPessoaValues.Items[cbPessoa.ItemIndex][1]);
+end;
+
 procedure TfrmParticipante.edtNomeChange(Sender: TObject);
 begin
   ValidarObrigatorioChange(Sender);
@@ -198,6 +206,12 @@ begin
       TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
     Operacao := opNenhum;
   end;
+end;
+
+procedure TfrmParticipante.actIncluirExecute(Sender: TObject);
+begin
+  inherited;
+  MudarCamposPorPessoa(lbPessoaValues.Items[cbPessoa.ItemIndex][1]);
 end;
 
 procedure TfrmParticipante.actBuscarCepExecute(Sender: TObject);
@@ -253,6 +267,24 @@ begin
   FEhDonoCadastro := AValue;
 end;
 
+procedure TfrmParticipante.MudarCamposPorPessoa(Pessoa: Char);
+begin
+  if UpperCase(Pessoa) = 'F' then
+  begin
+    edtCnpj.EditLabel.Caption := 'CPF:';
+    edtCnpj.MaxLength         := 11;
+    edtFantasia.Visible       := False;
+    edtFantasia.Clear;
+  end
+  else
+  if UpperCase(Pessoa) = 'J' then
+  begin
+    edtCnpj.EditLabel.Caption := 'CNPJ:';
+    edtCnpj.MaxLength         := 14;
+    edtFantasia.Visible       := True;
+  end;
+end;
+
 procedure TfrmParticipante.CarregarDados;
 begin
   lvPadrao.Items.Clear;
@@ -304,6 +336,7 @@ begin
     cbCidade.Text      := Controller.Participante.Cidade.Nome;
     edtUf.Text         := Controller.Participante.Cidade.Estado.UF;
     mObs.Lines.Text    := Controller.Participante.Obs;
+    MudarCamposPorPessoa(lbPessoaValues.Items[cbPessoa.ItemIndex][1]);
   end
   else
   begin

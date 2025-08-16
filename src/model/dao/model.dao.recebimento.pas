@@ -30,8 +30,8 @@ unit model.dao.recebimento;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.dao.padrao, model.entity.recebimento,
-  model.connection.conexao1;
+  Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.dao.padrao,
+  model.entity.recebimento, model.connection.conexao1, DateUtils;
 
 type
 
@@ -42,7 +42,8 @@ type
 
   public
     procedure Listar(lv: TListView; Tipo: Integer);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
+    procedure Pesquisar(lv: TListView; Campo, Busca: String); overload; deprecated;
+    procedure Pesquisar(lv: TListView; Campo, Busca: String; DataInicial, DataFinal: TDateTime; Tipo: Integer); overload;
     function BuscarPorId(Recebimento : TRecebimento; Id: Integer; out Erro: String): Boolean;
     function Inserir(Recebimento: TRecebimento; out Erro: string): Boolean;
     function Editar(Recebimento: TRecebimento; out Erro: string): Boolean;
@@ -64,16 +65,32 @@ var
 begin
   try
 
-    sql := 'select r.*, p.nome as nome_pagador from recebimento r ' +
-           'left join participante p on p.id = r.id_pagador ' +
-           'where r.tipo = :tipo and r.id_dono_cadastro = :id_dono_cadastro ' +
-           'order by r.data desc';
+    if Driver = DRV_FIREBIRD then
+    begin
+      sql := 'select first 100 r.*, p.nome as nome_pagador from recebimento r ' +
+             'left join participante p on p.id = r.id_pagador ' +
+             'where r.tipo = :tipo and r.id_dono_cadastro = :id_dono_cadastro and ' +
+             'r.data between :data_inicial and :data_final ' +
+             'order by r.data desc';
+    end
+    else
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    begin
+      sql := 'select r.*, p.nome as nome_pagador from recebimento r ' +
+             'left join participante p on p.id = r.id_pagador ' +
+             'where r.tipo = :tipo and r.id_dono_cadastro = :id_dono_cadastro and ' +
+             'r.data between :data_inicial and :data_final ' +
+             'order by r.data desc ' +
+             'limit 100';
+    end;
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('tipo').AsInteger := Tipo;
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('data_inicial').AsDateTime    := StartOfTheMonth(Now);
+    Qry.ParamByName('data_final').AsDateTime      := EndOfTheMonth(Now);
     Qry.Open;
 
     Qry.First;
@@ -143,6 +160,74 @@ begin
       item := lv.Items.Add;
       item.Caption := Qry.FieldByName('id').AsString;
       item.SubItems.Add(qry.FieldByName('nome').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    qry.Close;
+  end;
+end;
+
+procedure TRecebimentoDAO.Pesquisar(lv: TListView; Campo, Busca: String;
+  DataInicial, DataFinal: TDateTime; Tipo: Integer);
+var
+  sql: String;
+  item : TListItem;
+  valor: Double;
+begin
+  try
+
+    if TryStrToFloat(Busca, valor) then
+    begin
+      sql := 'select r.*, p.nome as nome_pagador from recebimento r ' +
+             'left join participante p on p.id = r.id_pagador ' +
+             'where '+campo+' = :busca and r.tipo = :tipo and ' +
+             'r.id_dono_cadastro = :id_dono_cadastro and ' +
+             'r.data between :data_inicial and :data_final ' +
+             'order by r.data desc';
+    end
+    else
+    begin
+      sql := 'select r.*, p.nome as nome_pagador from recebimento r ' +
+             'left join participante p on p.id = r.id_pagador ' +
+             'where UPPER('+campo+') like :busca and r.tipo = :tipo and ' +
+             'r.id_dono_cadastro = :id_dono_cadastro and '+
+             'r.data between :data_inicial and :data_final ' +
+             'order by r.data desc';
+    end;
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('tipo').AsInteger             := Tipo;
+    Qry.ParamByName('data_inicial').AsDateTime    := DataInicial;
+    Qry.ParamByName('data_final').AsDateTime      := DataFinal;
+    Qry.Open;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      item := lv.Items.Add;
+      item.Caption := Qry.FieldByName('id').AsString;
+      item.SubItems.Add(qry.FieldByName('data').AsString);
+      item.SubItems.Add(qry.FieldByName('nome_pagador').AsString);
+      case Tipo of
+        0:
+        begin
+          item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('hora_extra').AsFloat));
+          item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('inss').AsFloat));
+          item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('ir').AsFloat));
+          item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('valor_base').AsFloat));
+        end;
+        1:
+        begin
+          item.SubItems.Add(qry.FieldByName('descricao').AsString);
+        end;
+      end;
+      item.SubItems.Add(FormatFloat(',#0.00', qry.FieldByName('valor_total').AsFloat));
       Qry.Next;
     end;
 

@@ -440,6 +440,7 @@ object frmPrincipal: TfrmPrincipal
         ImageIndex = 8
         ImageWidth = 32
         Margin = 7
+        Visible = False
         ParentFont = False
       end
       object btnDespesa: TSpeedButton

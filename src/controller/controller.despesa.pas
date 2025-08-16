@@ -45,7 +45,7 @@ type
   public
     Despesa: TDespesa;
     procedure Listar(lv: TListView);
-    procedure Pesquisar(lv: TListView; Campo, Busca: String);
+    procedure Pesquisar(lv: TListView; Campo, Busca: String; DataInicial, DataFinal: TDateTime);
     procedure PesquisarSubtipo(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     procedure PesquisarFornecedor(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
     procedure PesquisarFormaPagamento(lbNome: TComboBox; lbId: TListBox; busca: String; out QtdRegistro: Integer);
@@ -84,9 +84,9 @@ begin
   DespesaDAO.Listar(lv);
 end;
 
-procedure TDespesaController.Pesquisar(lv: TListView; Campo, Busca: String);
+procedure TDespesaController.Pesquisar(lv: TListView; Campo, Busca: String; DataInicial, DataFinal: TDateTime);
 begin
-  DespesaDAO.Pesquisar(lv, Campo, Busca);
+  DespesaDAO.Pesquisar(lv, Campo, Busca, DataInicial, DataFinal);
 end;
 
 procedure TDespesaController.PesquisarSubtipo(lbNome: TComboBox; lbId: TListBox;

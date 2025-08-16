@@ -7,8 +7,6 @@ inherited frmDespesa: TfrmDespesa
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -68,7 +66,6 @@ inherited frmDespesa: TfrmDespesa
                 TrailingSeparator = False
                 TextForNullDate = '  /  /  '
                 LeadingZeros = True
-                Visible = False
                 Kind = dtkDate
                 TimeFormat = tf24
                 TimeDisplay = tdHMS
@@ -91,7 +88,6 @@ inherited frmDespesa: TfrmDespesa
                 TrailingSeparator = False
                 TextForNullDate = '  /  /  '
                 LeadingZeros = True
-                Visible = False
                 Kind = dtkDate
                 TimeFormat = tf24
                 TimeDisplay = tdHMS
@@ -109,12 +105,11 @@ inherited frmDespesa: TfrmDespesa
                 Width = 16
                 AutoSize = False
                 Caption = ' à '
-                Visible = False
               end
             end
             inherited lbPesquisa: TListBox
               Items.Strings = (
-                'd.nome'
+                'd.descricao'
                 'f.nome'
               )
               ItemHeight = 15
@@ -293,9 +288,9 @@ inherited frmDespesa: TfrmDespesa
               Height = 280
               Top = 112
               Width = 522
-              ActivePage = tbsPagamento
+              ActivePage = tbsArquivo
               Images = img
-              TabIndex = 0
+              TabIndex = 1
               TabOrder = 12
               object tbsPagamento: TTabSheet
                 Caption = 'Pagamento'

@@ -13,8 +13,70 @@ inherited frmRecebimento: TfrmRecebimento
           inherited pnlFundoLista: TPanel
             inherited pnlPesquisa: TPanel
               inherited edtPesquisa: TEdit
+                AnchorSideLeft.Control = dtpFinal
+                Left = 358
+                Width = 500
                 Text = ''
               end
+              object dtpInicial: TDateTimePicker[3]
+                Left = 160
+                Height = 23
+                Top = 13
+                Width = 83
+                CenturyFrom = 1941
+                MaxDate = 2958465
+                MinDate = -53780
+                TabOrder = 2
+                TrailingSeparator = False
+                TextForNullDate = '  /  /  '
+                LeadingZeros = True
+                Kind = dtkDate
+                TimeFormat = tf24
+                TimeDisplay = tdHMS
+                DateMode = dmComboBox
+                Date = 45697
+                Time = 0.483964456019748
+                UseDefaultSeparators = True
+                HideDateTimeParts = []
+                MonthNames = 'Long'
+              end
+              object lblPeriodoFiltro: TLabel[4]
+                Left = 248
+                Height = 20
+                Top = 16
+                Width = 16
+                AutoSize = False
+                Caption = ' à '
+              end
+              object dtpFinal: TDateTimePicker[5]
+                Left = 267
+                Height = 23
+                Top = 13
+                Width = 83
+                CenturyFrom = 1941
+                MaxDate = 2958465
+                MinDate = -53780
+                TabOrder = 3
+                TrailingSeparator = False
+                TextForNullDate = '  /  /  '
+                LeadingZeros = True
+                Kind = dtkDate
+                TimeFormat = tf24
+                TimeDisplay = tdHMS
+                DateMode = dmComboBox
+                Date = 45697
+                Time = 0.483964456019748
+                UseDefaultSeparators = True
+                HideDateTimeParts = []
+                MonthNames = 'Long'
+              end
+            end
+            inherited lbPesquisa: TListBox
+              Top = 121
+              Items.Strings = (
+                'descricao'
+              )
+              ItemHeight = 15
             end
           end
         end
