@@ -55,7 +55,7 @@ Source: ..\exe\SQLite3.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\database\ARQUIVO_INSTALACAO.FDB; DestDir: {app}\database; DestName: ARQUIVO.FDB; Flags: ignoreversion
 Source: ..\database\DESPESA_INSTALACAO.FDB; DestDir: {app}\database; DestName: DESPESA.FDB; Flags: ignoreversion
 Source: ..\exe\reports\*.lrf; DestDir: {app}\reports; Flags: ignoreversion
-Source: ..\exe\reports\*.ico; DestDir: {app}\reports; Flags: ignoreversion
+Source: ..\exe\reports\*.png; DestDir: {app}\reports; Flags: ignoreversion
 Source: ..\exe\resources\*.*; DestDir: {app}\resources; Flags: ignoreversion
 
 [Icons]
