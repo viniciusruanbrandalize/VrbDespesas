@@ -30,8 +30,9 @@ unit model.dao.copiaseguranca;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, StdCtrls, model.dao.padrao, Forms, dialogs,
-  lib.types, model.ini.configuracao, model.ini.conexao, process,
+  Classes, SysUtils, ComCtrls, StdCtrls, model.dao.padrao, model.connection.conexao1,
+  Forms, dialogs, lib.types, model.ini.configuracao, model.ini.conexao, process,
+  model.entity.logbackup,
   {$IFDEF MSWINDOWS}
   Windows
   {$ENDIF}
@@ -59,6 +60,7 @@ type
     procedure GerarInserts(var pgb: TProgressBar; var lblStatus: TLabel);
     procedure GerarSequencias(var pgb: TProgressBar; var lblStatus: TLabel);
     function FazerDump(Destino: String; var mLog: TMemo): Boolean;
+    function GravarLog(objLogBackup: TLogBackup; out Erro: String): Boolean;
   public
     function FazerBackup(Destino: String; var pgb: TProgressBar; var lblStatus: TLabel; var mLog: TMemo; Tipo: TTipoBackup): Boolean;
     constructor Create;
@@ -311,6 +313,7 @@ var
   ArqLnCmd: TStringList;
   ConfigINI: TConfiguracaoINI;
   ConexaoINI: TConexaoINI;
+  LogBackup: TLogBackup;
   UsuarioDB1,
   SenhaDB1,
   NomeBanco1,
@@ -319,7 +322,9 @@ var
   gbak,
   pgdump,
   mysqldump,
-  ArqTemp: String;
+  ArqTemp,
+  ArqBackupFinal,
+  Erro: String;
 begin
 
   MemStream := TMemoryStream.Create;
@@ -352,6 +357,7 @@ begin
     begin
 
       ArqTemp := ExtractFilePath(ParamStr(0))+'TEMP.FDB';
+      ArqBackupFinal := Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.FBK';
 
       if FileExists(NomeBanco1) then
       begin
@@ -371,7 +377,7 @@ begin
       aProcess.PArameters.Add('-password');
       aProcess.Parameters.Add(SenhaDB1);
       aProcess.Parameters.Add(ArqTemp);
-      aProcess.Parameters.Add(Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.FBK');
+      aProcess.Parameters.Add(ArqBackupFinal);
 
     end
     else
@@ -391,13 +397,13 @@ begin
     else
     if DAO.Driver = DRV_POSTGRESQL then
     begin
+      ArqBackupFinal := Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.backup';
 
       ArqLnCmd := TStringList.Create;
       try
         ArqLnCmd.Add('set pgpassword="'+SenhaDB1+'"');
         ArqLnCmd.Add(
-                     '"' + pgdump + '" --file "' +
-                     Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.backup" ' +
+                     '"' + pgdump + '" --file "'+ArqBackupFinal+'" ' +
                      '--host "'+HostDB1+'" --port '+PortaDB1+' --username "'+UsuarioDB1+'" ' +
                      '--no-password --verbose --format=c --blobs "'+NomeBanco1+'"');
         ArqLnCmd.SaveToFile(ExtractFilePath(ParamStr(0))+'bkp_pg.bat');
@@ -431,9 +437,22 @@ begin
     Lines.LoadFromStream(MemStream);
 
     if (DAO.Driver = DRV_MYSQL) or (DAO.Driver = DRV_MARIADB) then
-      MemStream.SaveToFile(Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.SQL');
+    begin
+      ArqBackupFinal := Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.SQL';
+      MemStream.SaveToFile(ArqBackupFinal);
+    end;
 
     mLog.Lines := Lines;
+
+    LogBackup := TLogBackup.Create;
+    try
+      LogBackup.Data := Now;
+      LogBackup.Hora := Now;
+      LogBackup.LocalArquivo := ArqBackupFinal;
+      GravarLog(LogBackup, Erro);
+    finally
+      FreeAndNil(LogBackup);
+    end;
 
     Result := True;
 
@@ -450,6 +469,42 @@ begin
     aProcess.Free;
     Lines.Free;
     MemStream.Free;
+  end;
+end;
+
+function TCopiaSegurancaDAO.GravarLog(objLogBackup: TLogBackup; out Erro: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'insert into log_backup(id, data, hora, local_arquivo) values ' +
+            '(:id, :data, :hora, :local_arquivo)';
+
+    DAO.Qry.Close;
+    DAO.Qry.SQL.Clear;
+    DAO.Qry.SQL.Add(sql);
+
+    if not DAO.AutoInc then
+    begin
+      objLogBackup.Id := DAO.GerarId(SEQ_ID_LOG_BACKUP);
+      DAO.Qry.ParamByName('id').AsInteger  := objLogBackup.Id;
+    end;
+
+    DAO.Qry.ParamByName('data').AsDateTime := objLogBackup.Data;
+    DAO.Qry.ParamByName('hora').AsDateTime := objLogBackup.Hora;
+    DAO.Qry.ParamByName('local_arquivo').AsString := objLogBackup.LocalArquivo;
+
+    DAO.Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao gravar o log de backup: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
   end;
 end;
 
