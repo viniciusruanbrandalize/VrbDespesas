@@ -7,10 +7,22 @@ inherited frmUsuario: TfrmUsuario
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
+            inherited pnlBotaoLista: TPanel
+              inherited ToolBarLista: TToolBar
+                object btnAcessos: TToolButton[4]
+                  Left = 321
+                  Top = 0
+                  Action = actAcesso
+                end
+                object btnDevedor: TToolButton[5]
+                  Left = 424
+                  Top = 0
+                  Action = actDevedor
+                end
+              end
+            end
             inherited lvPadrao: TListView
               Columns = <              
                 item
@@ -302,6 +314,45 @@ inherited frmUsuario: TfrmUsuario
             end
           end
         end
+        object tbsDevedor: TTabSheet[3]
+          Caption = 'tbsDevedor'
+          ClientHeight = 531
+          ClientWidth = 990
+          object pnlFundoDevedor: TPanel
+            Left = 0
+            Height = 531
+            Top = 0
+            Width = 990
+            Align = alClient
+            BevelOuter = bvNone
+            ClientHeight = 531
+            ClientWidth = 990
+            ParentBackground = False
+            TabOrder = 0
+            object ToolBarCadastro2: TToolBar
+              Left = 5
+              Height = 60
+              Top = 466
+              Width = 980
+              Align = alBottom
+              BorderSpacing.Around = 5
+              ButtonHeight = 60
+              ButtonWidth = 100
+              Caption = 'ToolBarCadastro2'
+              EdgeInner = esNone
+              EdgeOuter = esNone
+              Images = img
+              ImagesWidth = 32
+              ShowCaptions = True
+              TabOrder = 0
+              object btnVoltarDevedor: TToolButton
+                Left = 1
+                Top = 0
+                Action = actVoltarAcesso
+              end
+            end
+          end
+        end
       end
     end
   end
@@ -328,10 +379,18 @@ inherited frmUsuario: TfrmUsuario
       ImageIndex = 11
       OnExecute = actVoltarAcessoExecute
     end
+    object actDevedor: TAction[10]
+      Caption = 'Gerenciar Devedores'
+      ImageIndex = 14
+      OnExecute = actDevedorExecute
+    end
   end
   inherited pMenuPadrao: TPopupMenu
     object MenuItem4: TMenuItem[3]
       Action = actAcesso
+    end
+    object MenuItem5: TMenuItem[4]
+      Action = actDevedor
     end
   end
 end

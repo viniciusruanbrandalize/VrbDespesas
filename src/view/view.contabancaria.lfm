@@ -25,8 +25,8 @@ inherited frmContaBancaria: TfrmContaBancaria
         end
       end
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
+        ActivePage = tbsPix
+        TabIndex = 3
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited lvPadrao: TListView
@@ -528,9 +528,9 @@ inherited frmContaBancaria: TfrmContaBancaria
               Height = 499
               Top = 32
               Width = 990
-              ActivePage = tbsCadastroPix
+              ActivePage = tbsListaPix
               Align = alClient
-              TabIndex = 1
+              TabIndex = 0
               TabOrder = 0
               object tbsListaPix: TTabSheet
                 Caption = 'tbsListaPix'

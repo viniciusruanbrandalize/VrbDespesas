@@ -40,8 +40,10 @@ type
 
   TfrmUsuario = class(TfrmCadastroPadrao)
     actAcesso: TAction;
+    actDevedor: TAction;
     actVoltarAcesso: TAction;
     btnVoltarAcesso: TToolButton;
+    btnVoltarDevedor: TToolButton;
     cklbTituloAcesso: TCheckListBox;
     cklbTituloTela: TCheckListBox;
     Label1: TLabel;
@@ -54,14 +56,21 @@ type
     lbNomeTela: TListBox;
     lbNomeAcesso: TListBox;
     MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
+    pnlFundoDevedor: TPanel;
     pnlAcessoAcesso: TPanel;
     pnlTelaAcesso: TPanel;
     pnlTituloAcesso: TPanel;
     pnlFundoAcesso: TPanel;
+    tbsDevedor: TTabSheet;
     tbsAcesso: TTabSheet;
     ToolBarCadastro1: TToolBar;
+    btnAcessos: TToolButton;
+    btnDevedor: TToolButton;
+    ToolBarCadastro2: TToolBar;
     procedure actAcessoExecute(Sender: TObject);
     procedure actCancelarAcessoExecute(Sender: TObject);
+    procedure actDevedorExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
     procedure actIncluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
@@ -102,16 +111,21 @@ var
   erro: String;
   id: Integer;
 begin
-  if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
-                           [mbNao, mbSim], mbNao) then
+  if Assigned(lvPadrao.Selected) then
   begin
-    id := StrToInt(lvPadrao.Selected.Caption);
-    if Controller.Excluir(id, erro) then
-      inherited
-    else
-      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    Operacao := opNenhum;
-  end;
+    if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
+                             [mbNao, mbSim], mbNao) then
+    begin
+      id := StrToInt(lvPadrao.Selected.Caption);
+      if Controller.Excluir(id, erro) then
+        inherited
+      else
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Operacao := opNenhum;
+    end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmUsuario.actAcessoExecute(Sender: TObject);
@@ -119,18 +133,23 @@ var
   id: Integer;
   erro: String;
 begin
-  id := StrToInt(lvPadrao.Selected.Caption);
-  if Controller.BuscarPorId(controller.Usuario, id, erro) then
+  if Assigned(lvPadrao.Selected) then
   begin
-    if Controller.ControleAcesso.CarregarArquivosDeAcoes(erro) then
+    id := StrToInt(lvPadrao.Selected.Caption);
+    if Controller.BuscarPorId(controller.Usuario, id, erro) then
     begin
-      pgcPadrao.ActivePage := tbsAcesso;
-      cklbTituloAcesso.Items.Clear;
-      pnlTituloAcesso.Caption := 'Gerenciar acessos do usuário '+
-                                  Controller.Usuario.Nome;
-      Controller.ControleAcesso.ListarTelas(lbNomeTela, cklbTituloTela);
+      if Controller.ControleAcesso.CarregarArquivosDeAcoes(erro) then
+      begin
+        pgcPadrao.ActivePage := tbsAcesso;
+        cklbTituloAcesso.Items.Clear;
+        pnlTituloAcesso.Caption := 'Gerenciar acessos do usuário '+
+                                    Controller.Usuario.Nome;
+        Controller.ControleAcesso.ListarTelas(lbNomeTela, cklbTituloTela);
+      end;
     end;
-  end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmUsuario.actCancelarAcessoExecute(Sender: TObject);
@@ -139,6 +158,16 @@ begin
   begin
     pgcPadrao.ActivePage := tbsLista;
   end;
+end;
+
+procedure TfrmUsuario.actDevedorExecute(Sender: TObject);
+begin
+  if Assigned(lvPadrao.Selected) then
+  begin
+    //
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmUsuario.actIncluirExecute(Sender: TObject);

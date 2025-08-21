@@ -129,12 +129,20 @@ end;
 
 procedure TfrmCadastroPadrao.actEditarExecute(Sender: TObject);
 begin
-  LimparCampos;
-  CarregarSelecionado;
-  Operacao := opEditar;
-  pgcPadrao.ActivePage := tbsCadastro;
-  SetarFocoPrimeiroCampo();
-  AddIdxComboBoxPesquisa(pnlFundoCadastro);
+  if Assigned(lvPadrao.Selected) then
+  begin
+    LimparCampos;
+    CarregarSelecionado;
+    Operacao := opEditar;
+    pgcPadrao.ActivePage := tbsCadastro;
+    SetarFocoPrimeiroCampo();
+    AddIdxComboBoxPesquisa(pnlFundoCadastro);
+  end
+  else
+  begin
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
+    Exit;
+  end;
 end;
 
 procedure TfrmCadastroPadrao.actCancelarExecute(Sender: TObject);

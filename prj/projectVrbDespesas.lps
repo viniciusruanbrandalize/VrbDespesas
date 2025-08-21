@@ -21,7 +21,7 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <TopLine Value="436"/>
-        <CursorPos X="17" Y="460"/>
+        <CursorPos X="51" Y="459"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -30,6 +30,7 @@
         <Filename Value="..\src\model\entity\model.entity.banco.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
+        <TopLine Value="85"/>
         <CursorPos X="11" Y="24"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -37,7 +38,7 @@
         <Filename Value="..\src\model\entity\model.entity.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="19"/>
+        <TopLine Value="99"/>
         <CursorPos X="32" Y="38"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -98,7 +99,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="11" Y="26"/>
+        <TopLine Value="140"/>
+        <CursorPos X="3" Y="147"/>
         <UsageCount Value="203"/>
       </Unit>
       <Unit>
@@ -161,8 +163,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="306"/>
-        <CursorPos X="7" Y="346"/>
+        <TopLine Value="121"/>
+        <CursorPos X="10" Y="147"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -172,8 +174,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="148"/>
-        <CursorPos X="57" Y="179"/>
+        <TopLine Value="126"/>
+        <CursorPos X="12" Y="134"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -190,7 +192,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="29" Y="22"/>
+        <TopLine Value="69"/>
+        <CursorPos X="65" Y="89"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -243,7 +246,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="44" Y="24"/>
+        <TopLine Value="160"/>
+        <CursorPos X="7" Y="200"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -271,6 +275,7 @@
         <Filename Value="..\src\model\entity\model.entity.cidade.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
+        <TopLine Value="72"/>
         <CursorPos X="11" Y="24"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -278,6 +283,7 @@
         <Filename Value="..\src\model\entity\model.entity.contabancaria.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
+        <TopLine Value="136"/>
         <CursorPos X="11" Y="24"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -285,6 +291,7 @@
         <Filename Value="..\src\model\entity\model.entity.bandeira.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
+        <TopLine Value="68"/>
         <CursorPos X="11" Y="24"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -313,7 +320,7 @@
         <Filename Value="..\src\model\entity\model.entity.despesa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="102"/>
+        <TopLine Value="206"/>
         <CursorPos X="17" Y="122"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -328,6 +335,7 @@
         <Filename Value="..\src\model\entity\model.entity.cartao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
+        <TopLine Value="199"/>
         <CursorPos X="11" Y="24"/>
         <UsageCount Value="202"/>
       </Unit>
@@ -338,8 +346,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="186"/>
-        <CursorPos X="3" Y="188"/>
+        <TopLine Value="203"/>
+        <CursorPos X="6" Y="245"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -378,7 +386,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="49" Y="23"/>
+        <TopLine Value="322"/>
+        <CursorPos X="6" Y="362"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -388,7 +397,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="27" Y="28"/>
+        <TopLine Value="84"/>
+        <CursorPos X="51" Y="37"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -405,7 +415,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="11" Y="24"/>
+        <TopLine Value="38"/>
+        <CursorPos X="61" Y="30"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -461,7 +472,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="9" Y="12"/>
+        <TopLine Value="160"/>
+        <CursorPos X="86" Y="200"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -486,7 +498,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="30" Y="28"/>
+        <TopLine Value="666"/>
+        <CursorPos X="20" Y="707"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -510,8 +523,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="327"/>
-        <CursorPos X="22" Y="357"/>
+        <TopLine Value="332"/>
+        <CursorPos X="8" Y="372"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -569,8 +582,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="724"/>
-        <CursorPos X="50" Y="751"/>
+        <TopLine Value="389"/>
+        <CursorPos X="84" Y="397"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -592,7 +605,7 @@
         <Filename Value="..\src\model\entity\model.entity.arquivo.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="4"/>
+        <TopLine Value="123"/>
         <CursorPos X="42" Y="38"/>
         <UsageCount Value="201"/>
       </Unit>
@@ -661,8 +674,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="420"/>
-        <CursorPos X="48" Y="449"/>
+        <TopLine Value="442"/>
+        <CursorPos X="42" Y="477"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -716,7 +729,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="75"/>
-        <CursorPos X="12" Y="114"/>
+        <CursorPos X="39" Y="115"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -724,15 +737,15 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="27"/>
-        <CursorPos X="11" Y="24"/>
+        <CursorPos X="3" Y="55"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.copiaseguranca.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="518"/>
-        <CursorPos X="10" Y="560"/>
+        <TopLine Value="266"/>
+        <CursorPos X="3" Y="329"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -744,7 +757,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="90"/>
         <CursorPos Y="126"/>
-        <UsageCount Value="182"/>
+        <UsageCount Value="188"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.configuracao.pas"/>
@@ -752,7 +765,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="51"/>
         <CursorPos Y="89"/>
-        <UsageCount Value="181"/>
+        <UsageCount Value="187"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.selecionardonocadastro.pas"/>
@@ -762,7 +775,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="168"/>
+        <UsageCount Value="174"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.selecionardonocadastro.pas"/>
@@ -770,7 +783,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="52"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="167"/>
+        <UsageCount Value="173"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.configuracao.pas"/>
@@ -778,7 +791,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="262"/>
         <CursorPos X="17" Y="297"/>
-        <UsageCount Value="159"/>
+        <UsageCount Value="165"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.ajuda.pas"/>
@@ -788,49 +801,49 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="9" Y="24"/>
-        <UsageCount Value="158"/>
+        <UsageCount Value="164"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.ajuda.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="163"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.uctela.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="137"/>
+        <UsageCount Value="143"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="137"/>
+        <UsageCount Value="143"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.usuarioacesso.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="132"/>
+        <UsageCount Value="138"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.usuarioacesso.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="30" Y="26"/>
-        <UsageCount Value="132"/>
+        <UsageCount Value="138"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacesso.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="136"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.version.pas"/>
@@ -838,7 +851,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="14"/>
         <CursorPos X="6" Y="56"/>
-        <UsageCount Value="99"/>
+        <UsageCount Value="105"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.padrao.pas"/>
@@ -1210,7 +1223,12 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="446" Column="42" TopLine="436"/>
+      </Position>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>

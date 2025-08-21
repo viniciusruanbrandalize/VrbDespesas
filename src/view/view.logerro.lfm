@@ -15,23 +15,23 @@ object frmLogErro: TfrmLogErro
   LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
-    Height = 500
+    Height = 400
     Top = 0
-    Width = 800
+    Width = 640
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 500
-    ClientWidth = 800
+    ClientHeight = 400
+    ClientWidth = 640
     Color = 15925228
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
     object mErro: TMemo
       Cursor = crHandPoint
-      Left = 8
+      Left = 6
       Height = 240
-      Top = 8
-      Width = 784
+      Top = 6
+      Width = 628
       Align = alTop
       BorderSpacing.Around = 6
       BorderStyle = bsNone
@@ -52,10 +52,10 @@ object frmLogErro: TfrmLogErro
     end
     object lv: TListView
       Cursor = crHandPoint
-      Left = 8
-      Height = 176
-      Top = 316
-      Width = 784
+      Left = 6
+      Height = 142
+      Top = 252
+      Width = 628
       Align = alClient
       BorderSpacing.Around = 6
       Columns = <      

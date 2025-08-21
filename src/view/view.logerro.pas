@@ -31,7 +31,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  ComCtrls, Menus, ActnList, controller.logerro;
+  ComCtrls, Menus, ActnList, controller.logerro, view.mensagem;
 
 type
 
@@ -88,14 +88,19 @@ var
   erro: String;
   sl: TStringList;
 begin
-  sl := TStringList.Create;
-  try
-    mErro.Visible := True;
-    controller.BuscarPorId(lv.Selected.Caption, sl, erro);
-    mErro.Text := sl.Text;
-  finally
-    sl.Free;
-  end;
+  if Assigned(lv.Selected) then
+  begin
+    sl := TStringList.Create;
+    try
+      mErro.Visible := True;
+      controller.BuscarPorId(lv.Selected.Caption, sl, erro);
+      mErro.Text := sl.Text;
+    finally
+      sl.Free;
+    end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmLogErro.FormCreate(Sender: TObject);

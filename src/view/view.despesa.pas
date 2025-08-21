@@ -369,16 +369,21 @@ var
   erro: string;
   id: integer;
 begin
-  if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?',
-    'Aviso', 'D', [mbNao, mbSim], mbNao) then
+  if Assigned(lvPadrao.Selected) then
   begin
-    id := StrToInt(lvPadrao.Selected.Caption);
-    if Controller.Excluir(id, erro) then
-      inherited
-    else
-      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
-    Operacao := opNenhum;
-  end;
+    if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?',
+      'Aviso', 'D', [mbNao, mbSim], mbNao) then
+    begin
+      id := StrToInt(lvPadrao.Selected.Caption);
+      if Controller.Excluir(id, erro) then
+        inherited
+      else
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK]);
+      Operacao := opNenhum;
+    end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmDespesa.actExcluirFpgtoExecute(Sender: TObject);
@@ -387,7 +392,9 @@ begin
   begin
     Controller.ExcluirPagamento(lvPagamento.Selected.Index);
     lvPagamento.Selected.Delete;
-  end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmDespesa.actExportarArquivoExecute(Sender: TObject);
@@ -404,7 +411,9 @@ begin
     begin
       Controller.Despesa.Arquivo[i].Binario.SaveToFile(saveDlg.FileName);
     end;
-  end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmDespesa.actIncluirArquivoExecute(Sender: TObject);
@@ -476,7 +485,9 @@ begin
       TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOK], mbOK);
     lvArquivo.Items.Clear;
     Controller.ListarArquivos(lvArquivo, Controller.Despesa);
-  end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmDespesa.actIncluirFpgtoExecute(Sender: TObject);

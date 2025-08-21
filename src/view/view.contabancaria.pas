@@ -452,16 +452,21 @@ var
   erro: String;
   id: Integer;
 begin
-  if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
-                           [mbNao, mbSim], mbNao) then
+  if Assigned(lvPadrao.Selected) then
   begin
-    id := StrToInt(lvPadrao.Selected.Caption);
-    if Controller.Excluir(id, erro) then
-      inherited
-    else
-      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    Operacao := opNenhum;
-  end;
+    if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
+                             [mbNao, mbSim], mbNao) then
+    begin
+      id := StrToInt(lvPadrao.Selected.Caption);
+      if Controller.Excluir(id, erro) then
+        inherited
+      else
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Operacao := opNenhum;
+    end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmContaBancaria.actExcluirPixExecute(Sender: TObject);
@@ -469,19 +474,24 @@ var
   erro: String;
   id: String;
 begin
-  if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
-                           [mbNao, mbSim], mbNao) then
+  if Assigned(lvPix.Selected) then
   begin
-    id := lvPix.Selected.Caption;
-    if Controller.ExcluirPix(id, erro) then
+    if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
+                             [mbNao, mbSim], mbNao) then
     begin
-      Operacao := opExcluir;
-      CarregarDadosPix;
-    end
-    else
-      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    Operacao := opNenhum;
-  end;
+      id := lvPix.Selected.Caption;
+      if Controller.ExcluirPix(id, erro) then
+      begin
+        Operacao := opExcluir;
+        CarregarDadosPix;
+      end
+      else
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Operacao := opNenhum;
+    end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmContaBancaria.actIncluirCartaoExecute(Sender: TObject);
@@ -511,30 +521,45 @@ end;
 
 procedure TfrmContaBancaria.actCartaoExecute(Sender: TObject);
 begin
-  CarregarSelecionado;
-  CarregarDadosCartao;
-  ExibirInformacoesConta;
-  pgcPadrao.ActivePage := tbsCartao;
-  btnVoltar.Visible := True;
-  btnFechar.Visible := False;
+  if Assigned(lvPadrao.Selected) then
+  begin
+    CarregarSelecionado;
+    CarregarDadosCartao;
+    ExibirInformacoesConta;
+    pgcPadrao.ActivePage := tbsCartao;
+    btnVoltar.Visible := True;
+    btnFechar.Visible := False;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmContaBancaria.actEditarCartaoExecute(Sender: TObject);
 begin
-  LimparCamposCartao;
-  CarregarSelecionadoCartao;
-  Operacao := opEditar;
-  pgcCartao.ActivePage := tbsCadastroCartao;
-  AddIdxComboBoxPesquisa(pnlFundoCadCartao);
+  if Assigned(lvCartao.Selected) then
+  begin
+    LimparCamposCartao;
+    CarregarSelecionadoCartao;
+    Operacao := opEditar;
+    pgcCartao.ActivePage := tbsCadastroCartao;
+    AddIdxComboBoxPesquisa(pnlFundoCadCartao);
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmContaBancaria.actEditarPixExecute(Sender: TObject);
 begin
-  LimparCamposPix;
-  CarregarSelecionadoPix;
-  Operacao := opEditar;
-  pgcPix.ActivePage := tbsCadastroPix;
-  AddIdxComboBoxPesquisa(pnlFundoCadPix);
+  if Assigned(lvPix.Selected) then
+  begin
+    LimparCamposPix;
+    CarregarSelecionadoPix;
+    Operacao := opEditar;
+    pgcPix.ActivePage := tbsCadastroPix;
+    AddIdxComboBoxPesquisa(pnlFundoCadPix);
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmContaBancaria.actExcluirCartaoExecute(Sender: TObject);
@@ -542,19 +567,24 @@ var
   erro: String;
   id: Integer;
 begin
-  if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
-                           [mbNao, mbSim], mbNao) then
+  if Assigned(lvCartao.Selected) then
   begin
-    id := StrToInt(lvCartao.Selected.Caption);
-    if Controller.ExcluirCartao(id, erro) then
+    if TfrmMessage.Mensagem('Deseja excluir o item selecionado ?', 'Aviso', 'D',
+                             [mbNao, mbSim], mbNao) then
     begin
-      Operacao := opExcluir;
-      CarregarDadosCartao;
-    end
-    else
-      TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
-    Operacao := opNenhum;
-  end;
+      id := StrToInt(lvCartao.Selected.Caption);
+      if Controller.ExcluirCartao(id, erro) then
+      begin
+        Operacao := opExcluir;
+        CarregarDadosCartao;
+      end
+      else
+        TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+      Operacao := opNenhum;
+    end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmContaBancaria.actIncluirPixExecute(Sender: TObject);
@@ -572,12 +602,17 @@ end;
 
 procedure TfrmContaBancaria.actPixExecute(Sender: TObject);
 begin
-  CarregarSelecionado;
-  CarregarDadosPix;
-  ExibirInformacoesConta;
-  pgcPadrao.ActivePage := tbsPix;
-  btnVoltar.Visible := True;
-  btnFechar.Visible := False;
+  if Assigned(lvPadrao.Selected) then
+  begin
+    CarregarSelecionado;
+    CarregarDadosPix;
+    ExibirInformacoesConta;
+    pgcPadrao.ActivePage := tbsPix;
+    btnVoltar.Visible := True;
+    btnFechar.Visible := False;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
 procedure TfrmContaBancaria.actSalvarCartaoExecute(Sender: TObject);
