@@ -31,7 +31,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
-  ComCtrls, Buttons, LR_View, lib.visual, controller.usuarioacesso;
+  ComCtrls, Buttons, LR_View, TAGraph, TATools, lib.visual,
+  controller.usuarioacesso;
 
 type
 
@@ -47,11 +48,17 @@ type
     actCsv: TAction;
     actTxt: TAction;
     actList: TActionList;
+    btnCsvGrafico: TSpeedButton;
     btnFechar: TSpeedButton;
     btnImprimir: TSpeedButton;
+    btnImprimirGrafico: TSpeedButton;
+    btnPdfGrafico: TSpeedButton;
+    btnTxtGrafico: TSpeedButton;
+    chGrafico: TChart;
     fpnlOpcoes: TFlowPanel;
     frPreview: TfrPreview;
     img: TImageList;
+    pnlFundoGrafico: TPanel;
     pnlTopoDesigner: TPanel;
     pnlFundoDesigner: TPanel;
     pnlOpcoes: TPanel;
@@ -63,7 +70,9 @@ type
     btnTxt: TSpeedButton;
     btnCsv: TSpeedButton;
     btnProcurar: TSpeedButton;
+    pnlTopoGrafico: TPanel;
     SaveDlg: TSaveDialog;
+    tbsGrafico: TTabSheet;
     tbsDesigner: TTabSheet;
     tbsPrincipal: TTabSheet;
     procedure actCsvExecute(Sender: TObject);
@@ -97,7 +106,7 @@ begin
   if pgc.ActivePage = tbsPrincipal then
     Close
   else
-  if pgc.ActivePage = tbsDesigner then
+  if (pgc.ActivePage = tbsDesigner) or (pgc.ActivePage = tbsGrafico) then
   begin
     pgc.ActivePage := tbsPrincipal;
     actFechar.ImageIndex := 0;

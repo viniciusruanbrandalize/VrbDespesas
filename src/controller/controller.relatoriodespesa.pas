@@ -31,7 +31,7 @@ interface
 
 uses
   Classes, SysUtils, LR_View, ComCtrls, StdCtrls, model.report.despesa,
-  model.dao.padrao;
+  model.dao.padrao, TAGraph;
 
 type
 
@@ -46,7 +46,7 @@ type
                           Busca: String; out Erro: String): Boolean;
     function ComparativoMensal(var Preview: TfrPreview; anoInicial, anoFinal, mes: Integer;
                           out Erro: String): Boolean;
-    function ComparativoAnual(var Preview: TfrPreview; anoInicial, anoFinal: Integer;
+    function ComparativoAnual(var Preview: TfrPreview; var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer;
                           out Erro: String): Boolean;
     function TotalPorMes(var Preview: TfrPreview; ano: Integer; out Erro: String): Boolean;
     function TotalPorSubtipo(var Preview: TfrPreview; dInicial, dFinal: TDate;
@@ -86,10 +86,10 @@ begin
 end;
 
 function TRelatorioDespesaController.ComparativoAnual(var Preview: TfrPreview;
-  anoInicial, anoFinal: Integer; out Erro: String): Boolean;
+  var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer; out Erro: String): Boolean;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
-  Result := Relatorio.ComparativoAnual(anoInicial, anoFinal, Erro);
+  Result := Relatorio.ComparativoAnual(Grafico, anoInicial, anoFinal, Tipo,  Erro);
 end;
 
 function TRelatorioDespesaController.TotalPorMes(var Preview: TfrPreview;

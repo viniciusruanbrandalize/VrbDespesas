@@ -44,6 +44,7 @@ type
     cbTipo0: TComboBox;
     cbMes1: TComboBox;
     cbPesquisa0: TComboBox;
+    cbTipo2: TComboBox;
     dtpFinal4: TDateTimePicker;
     dtpInicial0: TDateTimePicker;
     dtpFinal0: TDateTimePicker;
@@ -53,6 +54,7 @@ type
     edtAno3: TSpinEdit;
     edtPesquisa0: TEdit;
     img: TImageList;
+    lblTipo2: TLabel;
     lblAnoFinal2: TLabel;
     lblAnoInicial2: TLabel;
     lblAno3: TLabel;

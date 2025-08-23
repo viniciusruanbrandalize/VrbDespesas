@@ -38,13 +38,14 @@ interface
 uses
   Classes, SysUtils, SQLDB, SQLDBLib, IBConnection, LR_Class, LR_DBSet,
   LR_E_CSV, LR_E_TXT, LR_Desgn, LR_Shape, lr_e_pdf, model.connection.conexao1,
-  LR_View;
+  LR_View, LR_PGrid, LR_ChBox;
 
 type
 
   { TdmConexaoReport }
 
   TdmConexaoReport = class(TDataModule)
+    frCheckBoxObject: TfrCheckBoxObject;
     frCSVExport: TfrCSVExport;
     frDBDataSet: TfrDBDataSet;
     frDesigner: TfrDesigner;

@@ -32,7 +32,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
   ActnList, view.relatoriopadrao, lib.visual, view.relatorioparametro,
-  controller.relatoriodespesa, view.mensagem;
+  controller.relatoriodespesa, view.mensagem, TAGraph, TASeries, TACustomSource;
 
 type
 
@@ -46,6 +46,7 @@ type
     actTotalSubtipo: TAction;
     actTotalPorMes: TAction;
     actPorPeriodo: TAction;
+    chGraficoBarSeries1: TBarSeries;
     pnlComparativoAnual: TPanel;
     pnlTotalPorMes: TPanel;
     pnlPeriodo: TPanel;
@@ -294,7 +295,7 @@ end;
 
 procedure TfrmRelatorioDespesa.actComparativoAnualExecute(Sender: TObject);
 var
-  Inicial, Final: Integer;
+  Inicial, Final, Tipo: Integer;
   Erro: String;
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
@@ -304,9 +305,20 @@ begin
     begin
       Inicial := frmRelatorioParametro.edtAnoInicial2.Value;
       Final   := frmRelatorioParametro.edtAnoFinal2.Value;
-      if Controller.ComparativoAnual(frPreview, Inicial, Final, Erro) then
+      Tipo    := frmRelatorioParametro.cbTipo2.ItemIndex;
+      if Controller.ComparativoAnual(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
       begin
-        pgc.ActivePage := tbsDesigner;
+        if Tipo = 0 then
+          pgc.ActivePage := tbsDesigner
+        else
+        begin
+          chGrafico.Title.Text.Clear;
+          chGrafico.Title.Text.Add('Comparativo Anual de '+Inicial.ToString+' à '+Final.ToString);
+          chGrafico.AxisList.Axes[1].Title.Caption := 'Ano';
+          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
+          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+          pgc.ActivePage := tbsGrafico;
+        end;
         actFechar.ImageIndex := 1;
       end
       else

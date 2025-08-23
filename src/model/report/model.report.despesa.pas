@@ -30,7 +30,8 @@ unit model.report.despesa;
 interface
 
 uses
-  Classes, SysUtils, StdCtrls, model.report.conexao, model.dao.padrao;
+  Classes, SysUtils, StdCtrls, TAGraph, TASeries, model.report.conexao,
+  model.dao.padrao;
 
 type
 
@@ -50,7 +51,7 @@ type
     {$Region 'Relatorios'}
     function PorPeriodo(dInicial, dFinal: TDate; Tipo, BuscaId: Integer; Busca: String; out Erro: String): Boolean;
     function ComparativoMensal(anoInicial, anoFinal, mes: Integer; out Erro: String): Boolean;
-    function ComparativoAnual(anoInicial, anoFinal: Integer; out Erro: String): Boolean;
+    function ComparativoAnual(var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer; out Erro: String): Boolean;
     function TotalPorMes(ano: Integer; out Erro: String): Boolean;
     function TotalPorSubtipo(dInicial, dFinal: TDate; out Erro: String): Boolean;
     function TotalPorTipo(dInicial, dFinal: TDate; out Erro: String): Boolean;
@@ -265,8 +266,10 @@ begin
   end;
 end;
 
-function TDespesaReport.ComparativoAnual(anoInicial, anoFinal: Integer; out
+function TDespesaReport.ComparativoAnual(var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer; out
   Erro: String): Boolean;
+var
+  SerieBarra: TBarSeries;
 begin
   try
     if DAO.Driver = DRV_FIREBIRD then
@@ -299,13 +302,32 @@ begin
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
 
-    dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
-                                         'despesa_comparativo_anual.lrf');
+    case Tipo of
+      0:
+      begin
+        dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+                                           'despesa_comparativo_anual.lrf');
 
-    dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+anoInicial.ToString+
+        dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+anoInicial.ToString+
                                                                 ' à '+anoFinal.ToString;
-    dmRelatorio.CarregarLogo();
-    dmRelatorio.frReport.ShowReport;
+        dmRelatorio.CarregarLogo();
+        dmRelatorio.frReport.ShowReport;
+      end;
+      1:
+      begin
+        Grafico.Series.Clear;
+        SerieBarra := TBarSeries.Create(nil);
+        SerieBarra.SeriesColor := $00156A00;
+        Grafico.AddSeries(SerieBarra);
+        TBarSeries(Grafico.Series.Items[0]).ListSource.Clear;
+        dmRelatorio.qryPadrao.First;
+        while not dmRelatorio.qryPadrao.EOF do
+        begin
+          TBarSeries(Grafico.Series.Items[0]).ListSource.Add( dmRelatorio.qryPadrao.FieldByName('ano').AsInteger, dmRelatorio.qryPadrao.FieldByName('total').AsFloat);
+          dmRelatorio.qryPadrao.Next;
+        end;
+      end;
+    end;
 
     Result := True;
 

@@ -35,9 +35,9 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, datetimectrls, lazreportpdfexport, view.principal, view.mensagem,
-  controller.banco, controller.principal, controller.erro, model.entity.banco,
-  model.entity.configuracao, model.entity.formapagamento,
+  Forms, datetimectrls, tachartlazaruspkg, lazreportpdfexport, view.principal,
+  view.mensagem, controller.banco, controller.principal, controller.erro,
+  model.entity.banco, model.entity.configuracao, model.entity.formapagamento,
   model.entity.recebimento, model.entity.usuario, model.entity.subtipodespesa,
   model.entity.tipodespesa, model.entity.participante, model.entity.pais,
   model.entity.estado, model.entity.cidade, model.entity.contabancaria,

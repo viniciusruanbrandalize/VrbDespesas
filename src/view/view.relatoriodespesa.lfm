@@ -6,8 +6,6 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
   OnShow = FormShow
   inherited pnlFundo: TPanel
     inherited pgc: TPageControl
-      ActivePage = tbsPrincipal
-      TabIndex = 0
       inherited tbsPrincipal: TTabSheet
         inherited pnlFundoTbs1: TPanel
           inherited pnlOpcoes: TPanel
@@ -175,6 +173,36 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
                 TabOrder = 6
                 OnClick = pnlTotalPorFormaPgtoClick
               end
+            end
+          end
+        end
+      end
+      inherited tbsGrafico: TTabSheet
+        inherited pnlFundoGrafico: TPanel
+          inherited chGrafico: TChart
+            AxisList = <            
+              item
+                Marks.LabelBrush.Style = bsClear
+                Minors = <>
+                Title.LabelFont.Orientation = 900
+                Title.Visible = True
+                Title.Caption = 'y'
+                Title.LabelBrush.Style = bsClear
+              end            
+              item
+                Grid.Style = psClear
+                Alignment = calBottom
+                Marks.Format = '%0:.4g'
+                Marks.LabelBrush.Style = bsClear
+                Marks.Style = smsCustom
+                Minors = <>
+                Range.Min = 1900
+                Title.Visible = True
+                Title.Caption = 'x'
+                Title.LabelBrush.Style = bsClear
+              end>
+            object chGraficoBarSeries1: TBarSeries[0]
+              BarBrush.Color = clRed
             end
           end
         end

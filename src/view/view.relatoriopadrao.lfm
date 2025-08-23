@@ -11,7 +11,6 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 600
@@ -67,9 +66,9 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
       Height = 561
       Top = 39
       Width = 1000
-      ActivePage = tbsDesigner
+      ActivePage = tbsGrafico
       Align = alClient
-      TabIndex = 1
+      TabIndex = 2
       TabOrder = 1
       object tbsPrincipal: TTabSheet
         Caption = 'tbsPrincipal'
@@ -230,6 +229,133 @@ object frmRelatorioPadrao: TfrmRelatorioPadrao
               ShowHint = True
               ParentShowHint = False
             end
+          end
+        end
+      end
+      object tbsGrafico: TTabSheet
+        Caption = 'tbsGrafico'
+        ClientHeight = 533
+        ClientWidth = 992
+        object pnlFundoGrafico: TPanel
+          Left = 0
+          Height = 533
+          Top = 0
+          Width = 992
+          Align = alClient
+          BevelOuter = bvNone
+          ClientHeight = 533
+          ClientWidth = 992
+          ParentBackground = False
+          TabOrder = 0
+          object pnlTopoGrafico: TPanel
+            Left = 5
+            Height = 50
+            Top = 5
+            Width = 982
+            Align = alTop
+            BorderSpacing.Around = 5
+            BevelOuter = bvNone
+            ClientHeight = 50
+            ClientWidth = 982
+            Color = clForm
+            ParentBackground = False
+            ParentColor = False
+            TabOrder = 0
+            object btnPdfGrafico: TSpeedButton
+              Left = 0
+              Height = 50
+              Top = 0
+              Width = 63
+              Action = actPdf
+              Align = alLeft
+              Flat = True
+              Images = img
+              ImageIndex = 4
+              ImageWidth = 32
+              ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
+            end
+            object btnTxtGrafico: TSpeedButton
+              Left = 126
+              Height = 50
+              Top = 0
+              Width = 63
+              Action = actTxt
+              Align = alLeft
+              Flat = True
+              Images = img
+              ImageIndex = 5
+              ImageWidth = 32
+              ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
+            end
+            object btnCsvGrafico: TSpeedButton
+              Left = 63
+              Height = 50
+              Top = 0
+              Width = 63
+              Action = actCsv
+              Align = alLeft
+              Flat = True
+              Images = img
+              ImageIndex = 3
+              ImageWidth = 32
+              ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
+            end
+            object btnImprimirGrafico: TSpeedButton
+              Left = 189
+              Height = 50
+              Top = 0
+              Width = 63
+              Action = actImprimir
+              Align = alLeft
+              Flat = True
+              Images = img
+              ImageIndex = 8
+              ImageWidth = 32
+              ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
+            end
+          end
+          object chGrafico: TChart
+            Left = 5
+            Height = 468
+            Top = 60
+            Width = 982
+            AxisList = <            
+              item
+                Marks.LabelBrush.Style = bsClear
+                Minors = <>
+                Title.LabelFont.Orientation = 900
+                Title.Visible = True
+                Title.Caption = 'y'
+                Title.LabelBrush.Style = bsClear
+              end            
+              item
+                Grid.Style = psClear
+                Alignment = calBottom
+                Marks.LabelBrush.Style = bsClear
+                Minors = <>
+                Title.Visible = True
+                Title.Caption = 'x'
+                Title.LabelBrush.Style = bsClear
+              end>
+            Title.Font.Color = 1403392
+            Title.Font.Height = -13
+            Title.Font.Style = [fsBold]
+            Title.Text.Strings = (
+              'Relatório x'
+            )
+            Title.Visible = True
+            Title.Wordwrap = True
+            Align = alClient
+            BorderSpacing.Around = 5
+            ParentColor = True
           end
         end
       end
