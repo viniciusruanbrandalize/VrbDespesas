@@ -33,7 +33,7 @@ uses
   Classes, SysUtils, SQLDB, SQLDBLib, SQLite3Conn, PQConnection,
   oracleconnection, odbcconn, MSSQLConn, mysql57conn, mysql56conn, mysql80conn,
   mysql55conn, mysql51conn, mysql50conn, mysql41conn, mysql40conn, IBConnection,
-  model.ini.conexao, forms, view.mensagem, DB;
+  model.ini.conexao, forms, ExtCtrls, view.mensagem, DB;
 
 type
 
@@ -44,9 +44,11 @@ type
     SQLDBLibraryLoader: TSQLDBLibraryLoader;
     SQLQuery: TSQLQuery;
     SQLTransaction: TSQLTransaction;
+    tmrInatividade: TTimer;
     procedure DataModuleCreate(Sender: TObject);
     procedure SQLConnectorLog(Sender: TSQLConnection; EventType: TDBEventType;
       const Msg: String);
+    procedure tmrInatividadeTimer(Sender: TObject);
   private
     procedure ConectarBaseDeDados();
     function VerificarNomeDLL(Driver: String): String;
@@ -100,6 +102,11 @@ begin
   end;
 end;
 
+procedure TdmConexao2.tmrInatividadeTimer(Sender: TObject);
+begin
+  TestarConexao;
+end;
+
 procedure TdmConexao2.DataModuleCreate(Sender: TObject);
 begin
   ConectarBaseDeDados;
@@ -137,7 +144,9 @@ begin
     end;
 
     try
-      SQLConnector.Connected := True;
+      SQLConnector.Connected  := True;
+      tmrInatividade.Interval := ini.Inatividade2 * 1000;
+      tmrInatividade.Enabled  := ini.Inatividade2 > 0;
     except on e:Exception do
       TfrmMessage.Mensagem('Erro ao conectar com o banco de dados: '+
                             e.Message, 'Erro', 'E', [mbOk]);

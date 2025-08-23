@@ -1479,10 +1479,4 @@ object frmPrincipal: TfrmPrincipal
     Left = 26
     Top = 198
   end
-  object tmrConexao: TTimer
-    Interval = 60000
-    OnTimer = tmrConexaoTimer
-    Left = 26
-    Top = 256
-  end
 end

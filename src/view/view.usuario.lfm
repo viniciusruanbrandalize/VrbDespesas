@@ -351,6 +351,23 @@ inherited frmUsuario: TfrmUsuario
                 Action = actVoltarAcesso
               end
             end
+            object pnlTituloDevedor: TPanel
+              Left = 5
+              Height = 30
+              Top = 5
+              Width = 980
+              Align = alTop
+              Alignment = taLeftJustify
+              BorderSpacing.Around = 5
+              BevelOuter = bvNone
+              Caption = 'Gerenciar acessos do usuário'
+              Font.Color = 1403392
+              Font.Height = -20
+              Font.Style = [fsBold]
+              ParentBackground = False
+              ParentFont = False
+              TabOrder = 1
+            end
           end
         end
       end

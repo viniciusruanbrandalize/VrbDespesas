@@ -33,8 +33,9 @@ uses
   Classes, SysUtils, SQLDB, SQLDBLib, SQLite3Conn, PQConnection,
   oracleconnection, odbcconn, mysql40conn, mysql41conn, mysql50conn,
   mysql51conn, mysql55conn, mysql56conn, mysql57conn, mysql80conn, MSSQLConn,
-  IBConnection, model.ini.conexao, forms, view.mensagem, DB, lib.types,
-  model.entity.usuariodonocadastro, model.entity.usuario, model.entity.participante;
+  IBConnection, model.ini.conexao, forms, ExtCtrls, view.mensagem, DB,
+  lib.types, model.entity.usuariodonocadastro, model.entity.usuario,
+  model.entity.participante;
 
 type
 
@@ -45,10 +46,12 @@ type
     SQLDBLibraryLoader: TSQLDBLibraryLoader;
     SQLQuery: TSQLQuery;
     SQLTransaction: TSQLTransaction;
+    tmrInatividade: TTimer;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure SQLConnectorLog(Sender: TSQLConnection; EventType: TDBEventType;
       const Msg: String);
+    procedure tmrInatividadeTimer(Sender: TObject);
   private
     FUsuario: TUsuario;
     FDonoCadastro: TParticipante;
@@ -129,6 +132,11 @@ begin
   end;
 end;
 
+procedure TdmConexao1.tmrInatividadeTimer(Sender: TObject);
+begin
+  TestarConexao;
+end;
+
 procedure TdmConexao1.ConectarBaseDeDados();
 var
   ini: TConexaoINI;
@@ -161,7 +169,9 @@ begin
     end;
 
     try
-      SQLConnector.Connected := True;
+      SQLConnector.Connected  := True;
+      tmrInatividade.Interval := ini.Inatividade1 * 1000;
+      tmrInatividade.Enabled  := ini.Inatividade1 > 0;
     except on e:Exception do
       TfrmMessage.Mensagem('Erro ao conectar com o banco de dados: '+
                             e.Message, 'Erro', 'E', [mbOk]);

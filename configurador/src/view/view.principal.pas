@@ -50,11 +50,13 @@ type
     ckbLogSql1: TCheckBox;
     ckbLogSql2: TCheckBox;
     edtBanco2: TEdit;
+    edtInatividade1: TEdit;
     edtEsquema1: TEdit;
     edtCharset2: TEdit;
     edtEsquema2: TEdit;
     edtPorta2: TEdit;
     edtCharset1: TEdit;
+    edtInatividade2: TEdit;
     edtSenha2: TEdit;
     edtServidor1: TEdit;
     edtPorta1: TEdit;
@@ -72,6 +74,8 @@ type
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -343,6 +347,7 @@ begin
   edtCharset1.Text    := Controller.INI.CharSet1;
   ckbLogSql1.Checked  := Controller.INI.LogSQL1;
   edtEsquema1.Text    := Controller.INI.Esquema1;
+  edtInatividade1.Text:= Controller.INI.Inatividade1.ToString;
 
   cbDriver2.ItemIndex := cbDriver2.Items.IndexOf(Controller.INI.Driver2);
   edtServidor2.Text   := Controller.INI.Servidor2;
@@ -353,6 +358,7 @@ begin
   edtCharset2.Text    := Controller.INI.CharSet2;
   ckbLogSql2.Checked  := Controller.INI.LogSQL2;
   edtEsquema2.Text    := Controller.INI.Esquema2;
+  edtInatividade2.Text:= Controller.INI.Inatividade2.ToString;
 
   cbDriver1.OnChange(cbDriver1);
   cbDriver2.OnChange(cbDriver2);
@@ -371,6 +377,7 @@ begin
   Controller.INI.CharSet1  := edtCharset1.Text;
   Controller.INI.LogSQL1   := ckbLogSql1.Checked;
   Controller.INI.Esquema1  := edtEsquema1.Text;
+  Controller.INI.Inatividade1 := StrToInt(edtInatividade1.Text);
 
   Controller.INI.Driver2   := cbDriver2.Text;
   Controller.INI.Servidor2 := edtServidor2.Text ;
@@ -381,6 +388,7 @@ begin
   Controller.INI.CharSet2  := edtCharset2.Text;
   Controller.INI.LogSQL2   := ckbLogSql2.Checked;
   Controller.INI.Esquema2  := edtEsquema2.Text;
+  Controller.INI.Inatividade2 := StrToInt(edtInatividade2.Text);
 
   Controller.INI.Escrever;
 

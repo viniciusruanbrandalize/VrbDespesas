@@ -36,4 +36,10 @@ object dmConexao2: TdmConexao2
     Left = 56
     Top = 141
   end
+  object tmrInatividade: TTimer
+    Enabled = False
+    OnTimer = tmrInatividadeTimer
+    Left = 186
+    Top = 77
+  end
 end

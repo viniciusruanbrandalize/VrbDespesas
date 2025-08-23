@@ -62,6 +62,7 @@ type
     pnlTelaAcesso: TPanel;
     pnlTituloAcesso: TPanel;
     pnlFundoAcesso: TPanel;
+    pnlTituloDevedor: TPanel;
     tbsDevedor: TTabSheet;
     tbsAcesso: TTabSheet;
     ToolBarCadastro1: TToolBar;
@@ -161,10 +162,19 @@ begin
 end;
 
 procedure TfrmUsuario.actDevedorExecute(Sender: TObject);
+var
+  id: Integer;
+  Erro: String;
 begin
   if Assigned(lvPadrao.Selected) then
   begin
-    //
+    id := StrToInt(lvPadrao.Selected.Caption);
+    if Controller.BuscarPorId(controller.Usuario, id, Erro) then
+    begin
+      pgcPadrao.ActivePage := tbsDevedor;
+      pnlTituloDevedor.Caption := 'Gerenciar acessos do usuário '+
+                                    Controller.Usuario.Nome;
+    end;
   end
   else
     TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);

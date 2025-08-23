@@ -17,7 +17,6 @@ object frmPrincipal: TfrmPrincipal
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 336
@@ -201,7 +200,7 @@ object frmPrincipal: TfrmPrincipal
             Text = 'edtCharset1'
           end
           object ckbLogSql1: TCheckBox
-            Left = 115
+            Left = 248
             Height = 19
             Top = 198
             Width = 62
@@ -244,6 +243,26 @@ object frmPrincipal: TfrmPrincipal
             ImageIndex = 4
             ImageWidth = 16
             OnClick = btnTestarConexao1Click
+          end
+          object edtInatividade1: TEdit
+            Left = 111
+            Height = 23
+            Top = 198
+            Width = 101
+            MaxLength = 10
+            NumbersOnly = True
+            TabOrder = 10
+            Text = 'edtInatividade1'
+          end
+          object Label17: TLabel
+            Left = 111
+            Height = 15
+            Hint = 'Evita a inatividade do servidor, baseado no tempo em segundos.'
+            Top = 183
+            Width = 80
+            Caption = 'Inatividade (s) :'
+            ParentShowHint = False
+            ShowHint = True
           end
         end
       end
@@ -389,7 +408,7 @@ object frmPrincipal: TfrmPrincipal
             Text = 'edtCharset2'
           end
           object ckbLogSql2: TCheckBox
-            Left = 115
+            Left = 248
             Height = 19
             Top = 198
             Width = 62
@@ -432,6 +451,26 @@ object frmPrincipal: TfrmPrincipal
             ImageIndex = 4
             ImageWidth = 16
             OnClick = btnTestarConexao2Click
+          end
+          object Label18: TLabel
+            Left = 111
+            Height = 15
+            Hint = 'Evita a inatividade do servidor, baseado no tempo em segundos.'
+            Top = 183
+            Width = 80
+            Caption = 'Inatividade (s) :'
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object edtInatividade2: TEdit
+            Left = 111
+            Height = 23
+            Top = 198
+            Width = 101
+            MaxLength = 10
+            NumbersOnly = True
+            TabOrder = 10
+            Text = 'edtInatividade2'
           end
         end
       end
