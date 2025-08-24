@@ -86,11 +86,11 @@ object frmRelatorioParametro: TfrmRelatorioParametro
       Height = 242
       Top = 36
       Width = 474
-      ActivePage = tbs3
+      ActivePage = tbs2
       Align = alClient
       BorderSpacing.Left = 5
       BorderSpacing.Right = 5
-      TabIndex = 3
+      TabIndex = 2
       TabOrder = 2
       object tbs0: TTabSheet
         Caption = 'tbs0'
@@ -366,7 +366,7 @@ object frmRelatorioParametro: TfrmRelatorioParametro
             ItemIndex = 0
             Items.Strings = (
               'Normal'
-              'Gráfico'
+              'Gráfico de barras'
             )
             Style = csDropDownList
             TabOrder = 2
@@ -429,7 +429,9 @@ object frmRelatorioParametro: TfrmRelatorioParametro
             ItemIndex = 0
             Items.Strings = (
               'Normal'
-              'Gráfico'
+              'Gráfico de barras'
+              'Gráfico de linhas'
+              'Gráfico de linhas (área)'
             )
             Style = csDropDownList
             TabOrder = 1

@@ -32,7 +32,8 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
   ActnList, view.relatoriopadrao, lib.visual, view.relatorioparametro,
-  controller.relatoriodespesa, view.mensagem, TAGraph, TASeries, TACustomSource;
+  controller.relatoriodespesa, view.mensagem, TAGraph, TASeries, TACustomSource,
+  TAFuncSeries, TARadialSeries;
 
 type
 
@@ -46,7 +47,9 @@ type
     actTotalSubtipo: TAction;
     actTotalPorMes: TAction;
     actPorPeriodo: TAction;
+    chGraficoAreaSeries1: TAreaSeries;
     chGraficoBarSeries1: TBarSeries;
+    chGraficoLineSeries1: TLineSeries;
     pnlComparativoAnual: TPanel;
     pnlTotalPorMes: TPanel;
     pnlPeriodo: TPanel;

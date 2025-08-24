@@ -6,8 +6,6 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
   OnShow = FormShow
   inherited pnlFundo: TPanel
     inherited pgc: TPageControl
-      ActivePage = tbsPrincipal
-      TabIndex = 0
       inherited tbsPrincipal: TTabSheet
         inherited pnlFundoTbs1: TPanel
           inherited pnlOpcoes: TPanel
@@ -205,6 +203,10 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
               end>
             object chGraficoBarSeries1: TBarSeries[0]
               BarBrush.Color = clRed
+            end
+            object chGraficoLineSeries1: TLineSeries[1]
+            end
+            object chGraficoAreaSeries1: TAreaSeries[2]
             end
           end
         end
