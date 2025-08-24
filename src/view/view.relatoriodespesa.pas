@@ -56,6 +56,8 @@ type
     pnlTotalPorFormaPgto: TPanel;
     procedure actComparativoAnualExecute(Sender: TObject);
     procedure actComparativoMensalExecute(Sender: TObject);
+    procedure actImagemGraficoExecute(Sender: TObject);
+    procedure actPdfGraficoExecute(Sender: TObject);
     procedure actPorPeriodoExecute(Sender: TObject);
     procedure actTotalFPgtoExecute(Sender: TObject);
     procedure actTotalPorMesExecute(Sender: TObject);
@@ -192,7 +194,7 @@ end;
 
 procedure TfrmRelatorioDespesa.actTotalPorMesExecute(Sender: TObject);
 var
-  Ano: Integer;
+  Ano, Tipo: Integer;
   Erro: String;
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
@@ -201,9 +203,20 @@ begin
     if frmRelatorioParametro.ShowModal = mrOK then
     begin
       Ano := frmRelatorioParametro.edtAno3.Value;
-      if Controller.TotalPorMes(frPreview, Ano, Erro) then
+      Tipo := frmRelatorioParametro.cbTipo3.ItemIndex;
+      if Controller.TotalPorMes(frPreview, chGrafico, Ano, Tipo, Erro) then
       begin
-        pgc.ActivePage := tbsDesigner;
+        if Tipo = 0 then
+          pgc.ActivePage := tbsDesigner
+        else
+        begin
+          chGrafico.Title.Text.Clear;
+          chGrafico.Title.Text.Add('Total anual por mês - '+Ano.ToString);
+          chGrafico.AxisList.Axes[1].Title.Caption := '';
+          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
+          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+          pgc.ActivePage := tbsGrafico;
+        end;
         actFechar.ImageIndex := 1;
       end
       else
@@ -291,6 +304,17 @@ begin
   finally
     FreeAndNil(frmRelatorioParametro);
   end;
+end;
+
+procedure TfrmRelatorioDespesa.actImagemGraficoExecute(Sender: TObject);
+begin
+  controller.GerarImagemGrafico(chGrafico, True);
+end;
+
+procedure TfrmRelatorioDespesa.actPdfGraficoExecute(Sender: TObject);
+begin
+  controller.GerarImagemGrafico(chGrafico);
+  actPdf.Execute;
 end;
 
 procedure TfrmRelatorioDespesa.actComparativoAnualExecute(Sender: TObject);

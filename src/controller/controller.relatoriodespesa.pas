@@ -48,7 +48,7 @@ type
                           out Erro: String): Boolean;
     function ComparativoAnual(var Preview: TfrPreview; var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer;
                           out Erro: String): Boolean;
-    function TotalPorMes(var Preview: TfrPreview; ano: Integer; out Erro: String): Boolean;
+    function TotalPorMes(var Preview: TfrPreview; var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
     function TotalPorSubtipo(var Preview: TfrPreview; dInicial, dFinal: TDate;
                           out Erro: String): Boolean;
     function TotalPorTipo(var Preview: TfrPreview; dInicial, dFinal: TDate;
@@ -61,6 +61,10 @@ type
     procedure PesquisarSubtipo(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
     procedure PesquisarTipo(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
     procedure PesquisarFormaPagamento(CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
+    {$EndRegion}
+
+    {$Region 'Utils'}
+    procedure GerarImagemGrafico(Grafico: TChart; SalvarImg: Boolean = False);
     {$EndRegion}
 
     constructor Create;
@@ -93,10 +97,10 @@ begin
 end;
 
 function TRelatorioDespesaController.TotalPorMes(var Preview: TfrPreview;
-  ano: Integer; out Erro: String): Boolean;
+  var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
-  Result := Relatorio.TotalPorMes(ano, Erro);
+  Result := Relatorio.TotalPorMes(Grafico, ano, Tipo, Erro);
 end;
 
 function TRelatorioDespesaController.TotalPorSubtipo(var Preview: TfrPreview;
@@ -136,6 +140,11 @@ procedure TRelatorioDespesaController.PesquisarFormaPagamento(
   CbNome: TComboBox; lbId: TListBox; out QtdRegistro: Integer);
 begin
   Relatorio.PesquisaGenerica(TB_FORMA_PGTO, CbNome, lbId, '', -1, QtdRegistro);
+end;
+
+procedure TRelatorioDespesaController.GerarImagemGrafico(Grafico: TChart; SalvarImg: Boolean = False);
+begin
+  Relatorio.dmRelatorio.GerarImagemGrafico(Grafico, SalvarImg);
 end;
 
 constructor TRelatorioDespesaController.Create;

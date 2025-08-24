@@ -41,6 +41,8 @@ type
   TfrmRelatorioPadrao = class(TForm)
     actFechar: TAction;
     actImprimir: TAction;
+    actImagemGrafico: TAction;
+    actPdfGrafico: TAction;
     actProcurar: TAction;
     actMaisZoom: TAction;
     actMenosZoom: TAction;
@@ -48,12 +50,11 @@ type
     actCsv: TAction;
     actTxt: TAction;
     actList: TActionList;
-    btnCsvGrafico: TSpeedButton;
+    btnImgGrafico: TSpeedButton;
     btnFechar: TSpeedButton;
     btnImprimir: TSpeedButton;
     btnImprimirGrafico: TSpeedButton;
     btnPdfGrafico: TSpeedButton;
-    btnTxtGrafico: TSpeedButton;
     chGrafico: TChart;
     fpnlOpcoes: TFlowPanel;
     frPreview: TfrPreview;

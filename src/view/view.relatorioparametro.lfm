@@ -86,11 +86,11 @@ object frmRelatorioParametro: TfrmRelatorioParametro
       Height = 242
       Top = 36
       Width = 474
-      ActivePage = tbs1
+      ActivePage = tbs3
       Align = alClient
       BorderSpacing.Left = 5
       BorderSpacing.Right = 5
-      TabIndex = 1
+      TabIndex = 3
       TabOrder = 2
       object tbs0: TTabSheet
         Caption = 'tbs0'
@@ -412,6 +412,28 @@ object frmRelatorioParametro: TfrmRelatorioParametro
             MinValue = 1900
             TabOrder = 0
             Value = 1900
+          end
+          object lblTipo3: TLabel
+            Left = 8
+            Height = 15
+            Top = 63
+            Width = 27
+            Caption = 'Tipo:'
+          end
+          object cbTipo3: TComboBox
+            Left = 8
+            Height = 23
+            Top = 80
+            Width = 192
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'Normal'
+              'Gráfico'
+            )
+            Style = csDropDownList
+            TabOrder = 1
+            Text = 'Normal'
           end
         end
       end

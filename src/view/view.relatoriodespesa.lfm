@@ -6,6 +6,8 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
   OnShow = FormShow
   inherited pnlFundo: TPanel
     inherited pgc: TPageControl
+      ActivePage = tbsPrincipal
+      TabIndex = 0
       inherited tbsPrincipal: TTabSheet
         inherited pnlFundoTbs1: TPanel
           inherited pnlOpcoes: TPanel
@@ -252,6 +254,12 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
       Tag = 1
       Caption = 'Total Por Forma Pgto.'
       OnExecute = actTotalFPgtoExecute
+    end
+    inherited actPdfGrafico: TAction[15]
+      OnExecute = actPdfGraficoExecute
+    end
+    inherited actImagemGrafico: TAction[16]
+      OnExecute = actImagemGraficoExecute
     end
   end
 end

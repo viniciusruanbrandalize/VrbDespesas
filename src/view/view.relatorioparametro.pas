@@ -45,6 +45,7 @@ type
     cbMes1: TComboBox;
     cbPesquisa0: TComboBox;
     cbTipo2: TComboBox;
+    cbTipo3: TComboBox;
     dtpFinal4: TDateTimePicker;
     dtpInicial0: TDateTimePicker;
     dtpFinal0: TDateTimePicker;
@@ -66,6 +67,7 @@ type
     lblPesquisa0: TLabel;
     lblDataInicial0: TLabel;
     lblDataFinal0: TLabel;
+    lblTipo3: TLabel;
     lbPesquisaId0: TListBox;
     pnlFundo3: TPanel;
     pnlFundo2: TPanel;

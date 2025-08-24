@@ -111,7 +111,7 @@ object dmConexaoReport: TdmConexaoReport
     Top = 16
   end
   object SQLConnector: TSQLConnector
-    Connected = True
+    Connected = False
     LoginPrompt = False
     DatabaseName = 'D:\Projetos\vrbDespesas\database\DESPESA.FDB'
     KeepConnection = False
@@ -134,7 +134,7 @@ object dmConexaoReport: TdmConexaoReport
     Top = 152
   end
   object SQLTransaction: TSQLTransaction
-    Active = True
+    Active = False
     Action = caNone
     Database = SQLConnector
     Left = 272

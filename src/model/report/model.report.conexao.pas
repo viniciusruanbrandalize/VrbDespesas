@@ -38,7 +38,7 @@ interface
 uses
   Classes, SysUtils, SQLDB, SQLDBLib, IBConnection, LR_Class, LR_DBSet,
   LR_E_CSV, LR_E_TXT, LR_Desgn, LR_Shape, lr_e_pdf, model.connection.conexao1,
-  LR_View, LR_PGrid, LR_ChBox;
+  LR_View, LR_PGrid, LR_ChBox, Graphics, TAGraph, Dialogs, ExtCtrls;
 
 type
 
@@ -64,6 +64,7 @@ type
     procedure ConfiguraComponentes();
   public
     procedure CarregarLogo();
+    procedure GerarImagemGrafico(Grafico: TChart; SalvarImg: Boolean = False);
     property DiretorioRelatorios: String read FDir write FDir;
     property IDDonoCadastro: Integer read FIDDonoCadastro write FIDDonoCadastro;
   end;
@@ -92,6 +93,47 @@ begin
   qryPadrao.DataBase   := dmConexao1.SQLConnector;
   frDBDataSet.DataSet  := qryPadrao;
   frReport.Dataset     := frDBDataSet;
+end;
+
+procedure TdmConexaoReport.GerarImagemGrafico(Grafico: TChart; SalvarImg: Boolean = False);
+var
+  jpg: TRasterImage;
+  sDlg: TSaveDialog;
+begin
+  jpg := Grafico.SaveToImage(TJpegImage);
+  try
+    TJPegImage(jpg).CompressionQuality := 100;
+    if SalvarImg then
+    begin
+      sDlg := TSaveDialog.Create(nil);
+      try
+        sDlg.Filter := 'JPG|*.jpg|Bitmap|*.bmp';
+        sDlg.FileName := 'Sem Título';
+        if sDlg.Execute then
+        begin
+          if UpperCase(ExtractFileExt(sDlg.FileName)) = '.JPG' then
+            jpg.SaveToFile(sDlg.FileName)
+          else
+          if UpperCase(ExtractFileExt(sDlg.FileName)) = '.BMP' then
+            Grafico.SaveToBitmapFile(sDlg.FileName)
+          else
+            jpg.SaveToFile(sDlg.FileName);
+        end;
+      finally
+        sDlg.Free;
+      end;
+    end
+    else
+    begin
+      if Assigned(frReport.FindObject('imgGrafico')) then
+      begin
+        TFrPictureView(frReport.FindObject('imgGrafico')).Picture.Assign(jpg);
+        frReport.ShowReport;
+      end;
+    end;
+  finally
+    jpg.Free;
+  end;
 end;
 
 procedure TdmConexaoReport.CarregarLogo();
