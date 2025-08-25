@@ -41,11 +41,12 @@ type
     actGerar: TAction;
     actCancelar: TAction;
     actList: TActionList;
-    cbTipo0: TComboBox;
+    cbTipoPesquisa0: TComboBox;
     cbMes1: TComboBox;
     cbPesquisa0: TComboBox;
     cbTipo2: TComboBox;
     cbTipo3: TComboBox;
+    cbTipo1: TComboBox;
     dtpFinal4: TDateTimePicker;
     dtpInicial0: TDateTimePicker;
     dtpFinal0: TDateTimePicker;
@@ -68,6 +69,7 @@ type
     lblDataInicial0: TLabel;
     lblDataFinal0: TLabel;
     lblTipo3: TLabel;
+    lblTipo1: TLabel;
     lbPesquisaId0: TListBox;
     pnlFundo3: TPanel;
     pnlFundo2: TPanel;
@@ -93,7 +95,7 @@ type
     tbs0: TTabSheet;
     procedure actCancelarExecute(Sender: TObject);
     procedure actGerarExecute(Sender: TObject);
-    procedure cbTipo0Change(Sender: TObject);
+    procedure cbTipoPesquisa0Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -173,7 +175,7 @@ begin
   ModalResult := mrOK;
 end;
 
-procedure TfrmRelatorioParametro.cbTipo0Change(Sender: TObject);
+procedure TfrmRelatorioParametro.cbTipoPesquisa0Change(Sender: TObject);
 var
   qtdRegistro: Integer;
 begin
@@ -186,7 +188,7 @@ begin
 
   edtPesquisa0.Visible := False;
 
-  case cbTipo0.ItemIndex of
+  case cbTipoPesquisa0.ItemIndex of
     7:
     begin
       TfrmRelatorioDespesa(Self.Owner).Controller.PesquisarFormaPagamento(cbPesquisa0,
@@ -211,7 +213,7 @@ begin
   if cbPesquisa0.Items.Count > 0 then
     cbPesquisa0.ItemIndex := 0;
 
-  cbPesquisa0.Visible := (cbTipo0.ItemIndex in [7, 8, 9]);
+  cbPesquisa0.Visible := (cbTipoPesquisa0.ItemIndex in [7, 8, 9]);
 end;
 
 end.

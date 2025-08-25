@@ -142,7 +142,7 @@ begin
     begin
       Inicial := frmRelatorioParametro.dtpInicial0.date;
       Final   := frmRelatorioParametro.dtpFinal0.date;
-      Tipo    := frmRelatorioParametro.cbTipo0.ItemIndex;
+      Tipo    := frmRelatorioParametro.cbTipoPesquisa0.ItemIndex;
       BuscaId := 0;
 
       if frmRelatorioParametro.cbPesquisa0.Items.Count > 0 then
@@ -215,7 +215,7 @@ begin
         begin
           chGrafico.Title.Text.Clear;
           chGrafico.Title.Text.Add('Total anual por mês - '+Ano.ToString);
-          chGrafico.AxisList.Axes[1].Title.Caption := '';
+          chGrafico.AxisList.Axes[1].Title.Caption := 'Mês';
           chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
           chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
           pgc.ActivePage := tbsGrafico;
@@ -285,7 +285,7 @@ end;
 procedure TfrmRelatorioDespesa.actComparativoMensalExecute(Sender: TObject);
 var
   Inicial, Final: Integer;
-  Mes: Integer;
+  Mes, Tipo: Integer;
   Erro: String;
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
@@ -296,9 +296,21 @@ begin
       Inicial := frmRelatorioParametro.edtAnoInicial1.Value;
       Final   := frmRelatorioParametro.edtAnoFinal1.Value;
       Mes     := frmRelatorioParametro.cbMes1.ItemIndex+1;
-      if Controller.ComparativoMensal(frPreview, Inicial, Final, Mes, Erro) then
+      Tipo    := frmRelatorioParametro.cbTipo1.ItemIndex;
+      if Controller.ComparativoMensal(frPreview, chGrafico, Inicial, Final, Mes, Tipo, Erro) then
       begin
-        pgc.ActivePage := tbsDesigner;
+        if Tipo = 0 then
+          pgc.ActivePage := tbsDesigner
+        else
+        begin
+          chGrafico.Title.Text.Clear;
+          chGrafico.Title.Text.Add('Comparativo Mensal - '+FormatFloat('00', Mes)+'/'+Inicial.ToString+' à '+
+                                                           FormatFloat('00', Mes)+'/'+Final.ToString);
+          chGrafico.AxisList.Axes[1].Title.Caption := 'Ano';
+          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
+          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+          pgc.ActivePage := tbsGrafico;
+        end;
         actFechar.ImageIndex := 1;
       end
       else

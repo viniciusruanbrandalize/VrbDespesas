@@ -44,8 +44,8 @@ type
     {$Region 'Relatórios'}
     function PorPeriodo(var Preview: TfrPreview; dInicial, dFinal: TDate; Tipo, BuscaId: Integer;
                           Busca: String; out Erro: String): Boolean;
-    function ComparativoMensal(var Preview: TfrPreview; anoInicial, anoFinal, mes: Integer;
-                          out Erro: String): Boolean;
+    function ComparativoMensal(var Preview: TfrPreview; var Grafico: TChart; anoInicial, anoFinal, mes: Integer;
+                          Tipo: Integer; out Erro: String): Boolean;
     function ComparativoAnual(var Preview: TfrPreview; var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer;
                           out Erro: String): Boolean;
     function TotalPorMes(var Preview: TfrPreview; var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
@@ -83,10 +83,11 @@ begin
 end;
 
 function TRelatorioDespesaController.ComparativoMensal(var Preview: TfrPreview;
-  anoInicial, anoFinal, mes: Integer; out Erro: String): Boolean;
+  var Grafico: TChart; anoInicial, anoFinal, mes: Integer; Tipo: Integer;
+  out Erro: String): Boolean;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
-  Result := Relatorio.ComparativoMensal(anoInicial, anoFinal, mes, Erro);
+  Result := Relatorio.ComparativoMensal(Grafico, anoInicial, anoFinal, mes, Tipo, Erro);
 end;
 
 function TRelatorioDespesaController.ComparativoAnual(var Preview: TfrPreview;
