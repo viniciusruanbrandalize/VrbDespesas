@@ -42,7 +42,7 @@ type
     Relatorio: TRecebimentoReport;
   public
     {$Region 'Relatórios'}
-    function DeclaracaoDeRenda(var Preview: TfrPreview; ano: Integer;
+    function DeclaracaoDeRenda(var Preview: TfrPreview; ano, TipoRece: Integer;
                           out Erro: String): Boolean;
     {$EndRegion}
 
@@ -59,10 +59,10 @@ implementation
 { TRelatorioRecebimentoController }
 
 function TRelatorioRecebimentoController.DeclaracaoDeRenda(var Preview: TfrPreview;
-  ano: Integer; out Erro: String): Boolean;
+  ano, TipoRece: Integer; out Erro: String): Boolean;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
-  Result := Relatorio.DeclaracaoDeRenda(ano, Erro);
+  Result := Relatorio.DeclaracaoDeRenda(ano, TipoRece, Erro);
 end;
 
 constructor TRelatorioRecebimentoController.Create;

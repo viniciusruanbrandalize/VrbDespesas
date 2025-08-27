@@ -30,7 +30,7 @@ unit model.report.recebimento;
 interface
 
 uses
-  Classes, SysUtils, StdCtrls, model.report.conexao, model.dao.padrao;
+  Classes, SysUtils, StrUtils, StdCtrls, model.report.conexao, model.dao.padrao;
 
 type
 
@@ -48,7 +48,7 @@ type
     dmRelatorio: TdmConexaoReport;
 
     {$Region 'Relatorios'}
-    function DeclaracaoDeRenda(ano: Integer; out Erro: String): Boolean;
+    function DeclaracaoDeRenda(ano, tipoRece: Integer; out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -64,7 +64,7 @@ implementation
 
 { TRecebimentoReport }
 
-function TRecebimentoReport.DeclaracaoDeRenda(ano: Integer; out Erro: String): Boolean;
+function TRecebimentoReport.DeclaracaoDeRenda(ano, tipoRece: Integer; out Erro: String): Boolean;
 begin
   try
     if DAO.Driver = DRV_FIREBIRD then
@@ -86,8 +86,9 @@ begin
               '(case when extract(month from data) = 12 THEN ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) END) as mes_nome '+
               'from recebimento '+
-              'where extract(year from data) = :ano and tipo = 0 and ' +
-              'id_dono_cadastro = :id_dono_cadastro '+
+              'where extract(year from data) = :ano and ' +
+              'id_dono_cadastro = :id_dono_cadastro ' +
+              IfThen(tipoRece<>2, 'and tipo = :tipo ') +
               'group by mes, ano '+
               'order by mes desc';
     end
@@ -111,8 +112,9 @@ begin
               '(case when extract(month from data) = 12 THEN ''Dezembro'' '+
               ' end) end) end) end) end) end) end) end) end) end) end) END) as mes_nome '+
               'from recebimento '+
-              'where ano = :ano and tipo = 0 and '+
-              'id_dono_cadastro = :id_dono_cadastro '+
+              'where ano = :ano and '+
+              'id_dono_cadastro = :id_dono_cadastro ' +
+              IfThen(tipoRece<>2, 'and tipo = :tipo ') +
               'group by mes, ano '+
               'order by mes desc';
     end;
@@ -122,6 +124,12 @@ begin
     dmConexaoReport.qryPadrao.SQL.Add(FSQL);
     dmConexaoReport.qryPadrao.ParamByName('ano').AsInteger  := ano;
     dmConexaoReport.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmConexaoReport.IDDonoCadastro;
+
+    case tipoRece of
+      0: dmConexaoReport.qryPadrao.ParamByName('tipo').AsInteger := 1;
+      1: dmConexaoReport.qryPadrao.ParamByName('tipo').AsInteger := 0;
+    end;
+
     dmConexaoReport.qryPadrao.Open;
 
     dmConexaoReport.frReport.LoadFromFile(dmConexaoReport.DiretorioRelatorios +

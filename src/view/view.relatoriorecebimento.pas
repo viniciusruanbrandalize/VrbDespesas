@@ -74,17 +74,21 @@ end;
 
 procedure TfrmRelatorioRecebimento.actDeclaracaoRendaExecute(Sender: TObject);
 var
-  Ano: Integer;
+  Ano, TipoRece: Integer;
   Erro: String;
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
   try
     frmRelatorioParametro.IndiceTab := 3;
+    frmRelatorioParametro.cbTipo3.Visible  := False;
+    frmRelatorioParametro.lblTipo3.Visible := False;
+    frmRelatorioParametro.rgTipoRec3.Visible := True;
     if frmRelatorioParametro.ShowModal = mrOK then
     begin
       Ano   := frmRelatorioParametro.edtAno3.Value;
+      TipoRece := frmRelatorioParametro.rgTipoRec3.ItemIndex;
 
-      if Controller.DeclaracaoDeRenda(frPreview, Ano, Erro) then
+      if Controller.DeclaracaoDeRenda(frPreview, Ano, TipoRece, Erro) then
       begin
         pgc.ActivePage := tbsDesigner;
         actFechar.ImageIndex := 1;

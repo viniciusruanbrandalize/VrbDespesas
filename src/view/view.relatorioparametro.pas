@@ -86,6 +86,7 @@ type
     btnCancelar: TSpeedButton;
     edtAnoInicial1: TSpinEdit;
     edtAnoFinal1: TSpinEdit;
+    rgTipoRec3: TRadioGroup;
     tbs6: TTabSheet;
     tbs7: TTabSheet;
     tbs8: TTabSheet;

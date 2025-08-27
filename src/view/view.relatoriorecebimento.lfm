@@ -49,5 +49,9 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
       Caption = 'Declaração de Renda'
       OnExecute = actDeclaracaoRendaExecute
     end
+    inherited actPdfGrafico: TAction[9]
+    end
+    inherited actImagemGrafico: TAction[10]
+    end
   end
 end
