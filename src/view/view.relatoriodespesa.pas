@@ -50,6 +50,7 @@ type
     chGraficoAreaSeries1: TAreaSeries;
     chGraficoBarSeries1: TBarSeries;
     chGraficoLineSeries1: TLineSeries;
+    chGraficoPieSeries1: TPieSeries;
     pnlComparativoAnual: TPanel;
     pnlTotalPorMes: TPanel;
     pnlPeriodo: TPanel;
@@ -173,6 +174,7 @@ procedure TfrmRelatorioDespesa.actTotalFPgtoExecute(Sender: TObject);
 var
   Inicial, Final: TDate;
   Erro: String;
+  Tipo: Integer;
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
   try
@@ -181,10 +183,21 @@ begin
     begin
       Inicial := frmRelatorioParametro.dtpInicial4.date;
       Final   := frmRelatorioParametro.dtpFinal4.date;
+      Tipo    := frmRelatorioParametro.cbTipo4.ItemIndex;
 
-      if Controller.TotalPorFormaPgto(frPreview, Inicial, Final, Erro) then
+      if Controller.TotalPorFormaPgto(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
       begin
-        pgc.ActivePage := tbsDesigner;
+        if Tipo = 0 then
+          pgc.ActivePage := tbsDesigner
+        else
+        begin
+          chGrafico.Title.Text.Clear;
+          chGrafico.Title.Text.Add('Total por forma de pagamento - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
+          chGrafico.AxisList.Axes[1].Title.Caption := 'Forma de Pagamento';
+          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
+          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+          pgc.ActivePage := tbsGrafico;
+        end;
         actFechar.ImageIndex := 1;
       end
       else
@@ -234,6 +247,7 @@ procedure TfrmRelatorioDespesa.actTotalSubtipoExecute(Sender: TObject);
 var
   Inicial, Final: TDate;
   Erro: String;
+  Tipo: Integer;
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
   try
@@ -242,10 +256,20 @@ begin
     begin
       Inicial := frmRelatorioParametro.dtpInicial4.date;
       Final   := frmRelatorioParametro.dtpFinal4.date;
-
-      if Controller.TotalPorSubtipo(frPreview, Inicial, Final, Erro) then
+      Tipo    := frmRelatorioParametro.cbTipo4.ItemIndex;
+      if Controller.TotalPorSubtipo(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
       begin
-        pgc.ActivePage := tbsDesigner;
+        if Tipo = 0 then
+          pgc.ActivePage := tbsDesigner
+        else
+        begin
+          chGrafico.Title.Text.Clear;
+          chGrafico.Title.Text.Add('Total por subtipo - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
+          chGrafico.AxisList.Axes[1].Title.Caption := 'Subtipo';
+          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
+          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+          pgc.ActivePage := tbsGrafico;
+        end;
         actFechar.ImageIndex := 1;
       end
       else
@@ -260,6 +284,7 @@ procedure TfrmRelatorioDespesa.actTotalTipoExecute(Sender: TObject);
 var
   Inicial, Final: TDate;
   Erro: String;
+  Tipo: Integer;
 begin
   frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
   try
@@ -268,10 +293,21 @@ begin
     begin
       Inicial := frmRelatorioParametro.dtpInicial4.date;
       Final   := frmRelatorioParametro.dtpFinal4.date;
+      Tipo    := frmRelatorioParametro.cbTipo4.ItemIndex;
 
-      if Controller.TotalPorTipo(frPreview, Inicial, Final, Erro) then
+      if Controller.TotalPorTipo(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
       begin
-        pgc.ActivePage := tbsDesigner;
+        if Tipo = 0 then
+          pgc.ActivePage := tbsDesigner
+        else
+        begin
+          chGrafico.Title.Text.Clear;
+          chGrafico.Title.Text.Add('Total por tipo - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
+          chGrafico.AxisList.Axes[1].Title.Caption := 'Tipo';
+          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
+          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+          pgc.ActivePage := tbsGrafico;
+        end;
         actFechar.ImageIndex := 1;
       end
       else

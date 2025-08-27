@@ -49,11 +49,11 @@ type
     function ComparativoAnual(var Preview: TfrPreview; var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer;
                           out Erro: String): Boolean;
     function TotalPorMes(var Preview: TfrPreview; var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
-    function TotalPorSubtipo(var Preview: TfrPreview; dInicial, dFinal: TDate;
+    function TotalPorSubtipo(var Preview: TfrPreview; var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer;
                           out Erro: String): Boolean;
-    function TotalPorTipo(var Preview: TfrPreview; dInicial, dFinal: TDate;
+    function TotalPorTipo(var Preview: TfrPreview; var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer;
                           out Erro: String): Boolean;
-    function TotalPorFormaPgto(var Preview: TfrPreview; dInicial, dFinal: TDate;
+    function TotalPorFormaPgto(var Preview: TfrPreview; var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer;
                           out Erro: String): Boolean;
     {$EndRegion}
 
@@ -105,24 +105,24 @@ begin
 end;
 
 function TRelatorioDespesaController.TotalPorSubtipo(var Preview: TfrPreview;
-  dInicial, dFinal: TDate; out Erro: String): Boolean;
+  var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer; out Erro: String): Boolean;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
-  Result := Relatorio.TotalPorSubtipo(dInicial, dFinal, Erro);
+  Result := Relatorio.TotalPorSubtipo(Grafico, dInicial, dFinal, Tipo, Erro);
 end;
 
 function TRelatorioDespesaController.TotalPorTipo(var Preview: TfrPreview;
-  dInicial, dFinal: TDate; out Erro: String): Boolean;
+  var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer; out Erro: String): Boolean;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
-  Result := Relatorio.TotalPorTipo(dInicial, dFinal, Erro);
+  Result := Relatorio.TotalPorTipo(Grafico, dInicial, dFinal, Tipo, Erro);
 end;
 
 function TRelatorioDespesaController.TotalPorFormaPgto(var Preview: TfrPreview;
-  dInicial, dFinal: TDate; out Erro: String): Boolean;
+  var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer;  out Erro: String): Boolean;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
-  Result := Relatorio.TotalPorFormaPgto(dInicial, dFinal, Erro);
+  Result := Relatorio.TotalPorFormaPgto(Grafico, dInicial, dFinal, Tipo, Erro);
 end;
 
 procedure TRelatorioDespesaController.PesquisarSubtipo(CbNome: TComboBox;

@@ -41,6 +41,7 @@ type
     actGerar: TAction;
     actCancelar: TAction;
     actList: TActionList;
+    cbTipo4: TComboBox;
     cbTipoPesquisa0: TComboBox;
     cbMes1: TComboBox;
     cbPesquisa0: TComboBox;
@@ -70,6 +71,7 @@ type
     lblDataFinal0: TLabel;
     lblTipo3: TLabel;
     lblTipo1: TLabel;
+    lblTipo4: TLabel;
     lbPesquisaId0: TListBox;
     pnlFundo3: TPanel;
     pnlFundo2: TPanel;

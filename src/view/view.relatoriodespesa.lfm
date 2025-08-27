@@ -203,10 +203,17 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
               end>
             object chGraficoBarSeries1: TBarSeries[0]
               BarBrush.Color = clRed
+              Marks.Format = '%0:.9g'
+              Marks.Style = smsValue
             end
             object chGraficoLineSeries1: TLineSeries[1]
             end
             object chGraficoAreaSeries1: TAreaSeries[2]
+            end
+            object chGraficoPieSeries1: TPieSeries[3]
+              Legend.Multiplicity = lmPoint
+              Marks.Format = '%2:s %1:.2f%%'
+              Marks.Style = smsLabelPercent
             end
           end
         end

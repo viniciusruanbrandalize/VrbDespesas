@@ -45,6 +45,7 @@ type
       NomeMes: array  [1..12] of string = ('Janeiro', 'Fevereiro', 'Março',
       'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
       'Novembro', 'Dezembro');
+    procedure LimparSeriesGrafico(var Grafico: TChart);
   public
     dmRelatorio: TdmConexaoReport;
 
@@ -53,9 +54,9 @@ type
     function ComparativoMensal(var Grafico: TChart; anoInicial, anoFinal, mes: Integer; Tipo: Integer; out Erro: String): Boolean;
     function ComparativoAnual(var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer; out Erro: String): Boolean;
     function TotalPorMes(var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
-    function TotalPorSubtipo(dInicial, dFinal: TDate; out Erro: String): Boolean;
-    function TotalPorTipo(dInicial, dFinal: TDate; out Erro: String): Boolean;
-    function TotalPorFormaPgto(dInicial, dFinal: TDate; out Erro: String): Boolean;
+    function TotalPorSubtipo(var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer; out Erro: String): Boolean;
+    function TotalPorTipo(var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer; out Erro: String): Boolean;
+    function TotalPorFormaPgto(var Grafico: TChart; dInicial, dFinal: TDate; Tipo: Integer; out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -70,6 +71,15 @@ end;
 implementation
 
 { TDespesaReport }
+
+procedure TDespesaReport.LimparSeriesGrafico(var Grafico: TChart);
+begin
+  TBarSeries(Grafico.Series.Items[0]).ListSource.Clear;
+  TLineSeries(Grafico.Series.Items[1]).ListSource.Clear;
+  TAreaSeries(Grafico.Series.Items[2]).ListSource.Clear;
+  TPieSeries(Grafico.Series.Items[3]).ListSource.Clear;
+  Grafico.Legend.Visible := False;
+end;
 
 function TDespesaReport.PorPeriodo(dInicial, dFinal: TDate; Tipo, BuscaId: Integer;
   Busca: String; out Erro: String): Boolean;
@@ -247,9 +257,7 @@ begin
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 
-    TBarSeries(Grafico.Series.Items[0]).ListSource.Clear;
-    TLineSeries(Grafico.Series.Items[1]).ListSource.Clear;
-    TAreaSeries(Grafico.Series.Items[2]).ListSource.Clear;
+    LimparSeriesGrafico(Grafico);
 
     case Tipo of
       0:
@@ -349,9 +357,7 @@ begin
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 
-    TBarSeries(Grafico.Series.Items[0]).ListSource.Clear;
-    TLineSeries(Grafico.Series.Items[1]).ListSource.Clear;
-    TAreaSeries(Grafico.Series.Items[2]).ListSource.Clear;
+    LimparSeriesGrafico(Grafico);
 
     case Tipo of
       0:
@@ -474,9 +480,7 @@ begin
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 
-    TBarSeries(Grafico.Series.Items[0]).ListSource.Clear;
-    TLineSeries(Grafico.Series.Items[1]).ListSource.Clear;
-    TAreaSeries(Grafico.Series.Items[2]).ListSource.Clear;
+    LimparSeriesGrafico(Grafico);
 
     case Tipo of
       0:
@@ -538,8 +542,8 @@ begin
   end;
 end;
 
-function TDespesaReport.TotalPorSubtipo(dInicial, dFinal: TDate; out
-  Erro: String): Boolean;
+function TDespesaReport.TotalPorSubtipo(var Grafico: TChart; dInicial, dFinal: TDate;
+  Tipo: Integer; out Erro: String): Boolean;
 begin
   try
 
@@ -566,9 +570,34 @@ begin
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
+    dmRelatorio.qryPadrao.First;
 
-    dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+    LimparSeriesGrafico(Grafico);
+
+    case Tipo of
+      0:
+      begin
+        dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
                                          'despesa_total_subtipo.lrf');
+      end;
+      1:
+      begin
+
+        while not dmRelatorio.qryPadrao.EOF do
+        begin
+          if dmRelatorio.qryPadrao.FieldByName('total').AsFloat > 0 then
+          begin
+            TPieSeries(Grafico.Series.Items[3]).add(dmRelatorio.qryPadrao.FieldByName('total').AsFloat,
+                                                  dmRelatorio.qryPadrao.FieldByName('nome_subtipo').AsString,
+                                                  Random($FFFFFF));
+          end;
+          dmRelatorio.qryPadrao.Next;
+        end;
+
+        dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+                                           'despesa_grafico.lrf');
+      end;
+    end;
 
     dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
                                                    DateToStr(dInicial)+' à '+DateToStr(dFinal);
@@ -587,8 +616,8 @@ begin
   end;
 end;
 
-function TDespesaReport.TotalPorTipo(dInicial, dFinal: TDate; out Erro: String
-  ): Boolean;
+function TDespesaReport.TotalPorTipo(var Grafico: TChart; dInicial, dFinal: TDate;
+  Tipo: Integer; out Erro: String): Boolean;
 begin
   try
 
@@ -618,9 +647,34 @@ begin
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
+    dmRelatorio.qryPadrao.First;
 
-    dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+    LimparSeriesGrafico(Grafico);
+
+    case Tipo of
+      0:
+      begin
+        dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
                                          'despesa_total_tipo.lrf');
+      end;
+      1:
+      begin
+
+        while not dmRelatorio.qryPadrao.EOF do
+        begin
+          if dmRelatorio.qryPadrao.FieldByName('total').AsFloat > 0 then
+          begin
+            TPieSeries(Grafico.Series.Items[3]).add(dmRelatorio.qryPadrao.FieldByName('total').AsFloat,
+                                                  dmRelatorio.qryPadrao.FieldByName('nome_tipo').AsString,
+                                                  Random($FFFFFF));
+          end;
+          dmRelatorio.qryPadrao.Next;
+        end;
+
+        dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+                                           'despesa_grafico.lrf');
+      end;
+    end;
 
     dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
                                                    DateToStr(dInicial)+' à '+DateToStr(dFinal);
@@ -639,8 +693,8 @@ begin
   end;
 end;
 
-function TDespesaReport.TotalPorFormaPgto(dInicial, dFinal: TDate; out
-  Erro: String): Boolean;
+function TDespesaReport.TotalPorFormaPgto(var Grafico: TChart; dInicial, dFinal: TDate;
+  Tipo: Integer; out Erro: String): Boolean;
 begin
   try
 
@@ -670,9 +724,34 @@ begin
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
     dmRelatorio.qryPadrao.Open;
+    dmRelatorio.qryPadrao.First;
 
-    dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+    LimparSeriesGrafico(Grafico);
+
+    case Tipo of
+      0:
+      begin
+        dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
                                          'despesa_total_forma_pgto.lrf');
+      end;
+      1:
+      begin
+
+        while not dmRelatorio.qryPadrao.EOF do
+        begin
+          if dmRelatorio.qryPadrao.FieldByName('total').AsFloat > 0 then
+          begin
+            TPieSeries(Grafico.Series.Items[3]).add(dmRelatorio.qryPadrao.FieldByName('total').AsFloat,
+                                                  dmRelatorio.qryPadrao.FieldByName('nome_forma_pagamento').AsString,
+                                                  Random($FFFFFF));
+          end;
+          dmRelatorio.qryPadrao.Next;
+        end;
+
+        dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +
+                                           'despesa_grafico.lrf');
+      end;
+    end;
 
     dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
                                                    DateToStr(dInicial)+' à '+DateToStr(dFinal);
