@@ -267,7 +267,7 @@ inherited frmDespesa: TfrmDespesa
             end
             object mObs: TMemo[13]
               Left = 8
-              Height = 160
+              Height = 149
               Top = 179
               Width = 384
               Lines.Strings = (
@@ -276,6 +276,9 @@ inherited frmDespesa: TfrmDespesa
               MaxLength = 300
               TabOrder = 11
               OnChange = edtDescricaoChange
+              OnEnter = mObsEnter
+              OnExit = mObsExit
+              OnKeyUp = mObsKeyUp
             end
             object lblObs: TLabel[14]
               Left = 8
@@ -658,6 +661,16 @@ inherited frmDespesa: TfrmDespesa
               OnChange = edtDescricaoChange
               OnKeyUp = cbSubtipoKeyUp
               OnSelect = cbSubtipoSelect
+            end
+            object lblInfoMobs: TLabel[25]
+              Left = 8
+              Height = 15
+              Top = 330
+              Width = 380
+              Alignment = taCenter
+              AutoSize = False
+              Caption = '"Ctrl+Enter" para quebra de linhas'
+              Visible = False
             end
           end
         end

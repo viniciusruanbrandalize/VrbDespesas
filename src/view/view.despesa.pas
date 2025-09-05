@@ -69,6 +69,7 @@ type
     edtFrete: TLabeledEdit;
     edtOutros: TLabeledEdit;
     edtValorFpgto: TLabeledEdit;
+    lblInfoMobs: TLabel;
     lblFormaPagamento: TLabel;
     lblSubtipo: TLabel;
     lblInfoPrecisao: TLabel;
@@ -127,6 +128,9 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure mObsEnter(Sender: TObject);
+    procedure mObsExit(Sender: TObject);
+    procedure mObsKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     Controller: TDespesaController;
     procedure AjustarTelaPagamento(Inserindo: boolean);
@@ -532,6 +536,23 @@ begin
   LiberarBloquearAcessos(Self.actList, Self.Name);
   AtribuirValorPadraoPesquisa();
   inherited;
+end;
+
+procedure TfrmDespesa.mObsEnter(Sender: TObject);
+begin
+  lblInfoMobs.Visible := True;
+end;
+
+procedure TfrmDespesa.mObsExit(Sender: TObject);
+begin
+  lblInfoMobs.Visible := False;
+end;
+
+procedure TfrmDespesa.mObsKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (ssShift in Shift) and (key = VK_RETURN) then
+    mObs.Lines.Add(#13);
 end;
 
 procedure TfrmDespesa.AjustarTelaPagamento(Inserindo: boolean);
