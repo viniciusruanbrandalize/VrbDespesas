@@ -321,6 +321,15 @@ create table uc_acesso (
 	constraint fk_uc_acesso_usuario foreign key (id_usuario) references usuario(id)
 );
 
+create table token_api (
+	id integer not null auto_increment,
+	token varchar(100) not null,
+	geracao timestamp not null,
+	validade timestamp not null,
+	excluido tinyint(1) not null,
+	constraint pk_token_api primary key (id)
+);
+
 --db arquivo mysql / mariaDB
 
 create table arquivo (

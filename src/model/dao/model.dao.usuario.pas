@@ -32,7 +32,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, SQLDB, model.entity.usuario,
   model.dao.padrao, model.connection.conexao1, CheckLst, StdCtrls,
-  model.entity.uctela, model.entity.ucacao;
+  model.entity.uctela, model.entity.ucacao, model.entity.usuariodonocadastro;
 
 type
 
@@ -44,10 +44,15 @@ type
   public
     procedure Listar(lv: TListView); override;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
+    procedure ListarDevedores(var lbNome: TListBox; var lbTitulo: TCheckListBox);
+    procedure BuscarDevedorPorUsuario(var lbNome: TListBox; var lbTitulo: TCheckListBox; IdUsuario: Integer);
     function BuscarPorId(Usuario : TUsuario; Id: Integer; out Erro: String): Boolean;
     function Inserir(Usuario : TUsuario; out Erro: string): Boolean;
     function Editar(Usuario : TUsuario; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
+    function InserirDevedor(UsuarioDevedor : TUsuarioDonoCadastro; out Erro: string): Boolean;
+    function ExcluirDevedor(UsuarioDevedor : TUsuarioDonoCadastro; out Erro: string): Boolean;
+    function UsuarioDevedorJaExiste(UsuarioDevedor : TUsuarioDonoCadastro): Boolean;
     constructor Create; override;
     destructor Destroy; override;
   end;
@@ -128,6 +133,75 @@ begin
 
   finally
     qry.Close;
+  end;
+end;
+
+procedure TUsuarioDAO.ListarDevedores(var lbNome: TListBox;
+  var lbTitulo: TCheckListBox);
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select id, nome, fantasia from participante ' +
+           'where excluido = false and dono_cadastro ' +
+           'order by nome asc';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.Open;
+
+    lbTitulo.Items.Clear;
+    lbNome.Items.Clear;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      lbTitulo.Items.Add(qry.FieldByName('nome').AsString);
+      lbNome.Items.Add(qry.FieldByName('id').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    Qry.Close;
+  end;
+end;
+
+procedure TUsuarioDAO.BuscarDevedorPorUsuario(var lbNome: TListBox;
+  var lbTitulo: TCheckListBox; IdUsuario: Integer);
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select p.id, p.nome, p.fantasia from participante p ' +
+           'left join usuario_dono_cadastro usd on usd.id_dono_cadastro = p.id ' +
+           'where usd.id_usuario = :id_usuario and p.excluido = false and ' +
+           'p.dono_cadastro = true ' +
+           'order by p.nome asc';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id_usuario').AsInteger := IdUsuario;
+    Qry.Open;
+
+    lbTitulo.Items.Clear;
+    lbNome.Items.Clear;
+
+    Qry.First;
+
+    while not Qry.EOF do
+    begin
+      lbTitulo.Items.Add(qry.FieldByName('nome').AsString);
+      lbNome.Items.Add(qry.FieldByName('id').AsString);
+      Qry.Next;
+    end;
+
+  finally
+    Qry.Close;
   end;
 end;
 
@@ -284,6 +358,94 @@ begin
         end;
       end;
     end;
+  end;
+end;
+
+function TUsuarioDAO.InserirDevedor(UsuarioDevedor: TUsuarioDonoCadastro;
+  out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'insert into usuario_dono_cadastro(id, id_usuario, id_dono_cadastro, ' +
+           'cadastro) values (:id, :id_usuario, :id_dono_cadastro, :cadastro)';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+
+    if not AutoInc then
+    begin
+      UsuarioDevedor.Id := GerarId(SEQ_ID_USUARIO_DONO_CADASTRO);
+      Qry.ParamByName('id').AsInteger := UsuarioDevedor.Id;
+    end;
+
+    Qry.ParamByName('id_usuario').AsInteger       := UsuarioDevedor.Usuario.Id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := UsuarioDevedor.DonoCadastro.Id;
+    Qry.ParamByName('cadastro').AsDateTime        := UsuarioDevedor.Cadastro;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao inserir acessos ao devedor: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TUsuarioDAO.ExcluirDevedor(UsuarioDevedor : TUsuarioDonoCadastro; out Erro: string): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'delete from usuario_dono_cadastro ' +
+           'where id_dono_cadastro = :id_dono_cadastro and id_usuario = :id_usuario';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id_dono_cadastro').AsInteger  := UsuarioDevedor.DonoCadastro.Id;
+    Qry.ParamByName('id_usuario').AsInteger        := UsuarioDevedor.Usuario.Id;
+    Qry.ExecSQL;
+    dmConexao1.SQLTransaction.Commit;
+
+    Result := True;
+
+  except on E: Exception do
+    begin
+      Erro := 'Ocorreu um erro ao excluir acesso ao devedor: ' + sLineBreak + E.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TUsuarioDAO.UsuarioDevedorJaExiste(UsuarioDevedor: TUsuarioDonoCadastro): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select id from usuario_dono_cadastro ' +
+           'where id_dono_cadastro = :id_dono_cadastro and ' +
+           'id_usuario = :id_usuario ' +
+           'order by id';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('id_usuario').AsInteger       := UsuarioDevedor.Usuario.Id;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := UsuarioDevedor.DonoCadastro.Id;
+    Qry.Open;
+
+    Result := Qry.RecordCount > 0;
+
+  finally
+    Qry.Close;
   end;
 end;
 

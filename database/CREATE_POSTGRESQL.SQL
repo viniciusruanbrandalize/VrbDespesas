@@ -167,6 +167,14 @@ create sequence public.seq_id_configuracao
 	start 1
 	cache 1
 	no cycle;
+	
+create sequence public.seq_id_token_api
+	increment by 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	start 1
+	cache 1
+	no cycle;
 
 create table public.pais (
 	id integer not null,
@@ -486,6 +494,15 @@ create table public.uc_acesso (
 	constraint pk_uc_acesso primary key (id),
 	constraint fk_uc_acesso_uc_acao foreign key (id_acao) references uc_acao(id),
 	constraint fk_uc_acesso_usuario foreign key (id_usuario) references usuario(id)
+);
+
+create table public.token_api (
+	id integer not null,
+	token varchar(100) not null,
+	geracao timestamp not null,
+	validade timestamp not null,
+	excluido boolean not null,
+	constraint pk_token_api primary key (id)
 );
 
 --db arquivo postgresql

@@ -87,3 +87,6 @@ id,nome,titulo,nome_uc_tela
 86,actExcluir,"Excluir",frmUsuario
 87,actVisualizar,"Visualizar",frmUsuario
 88,actAcesso,"Gerenciar Acessos",frmUsuario
+89,actDevedor,"Gerenciar Devedores",frmUsuario
+90,actIncluirDevedorAcesso,"Incluir Devedor",frmUsuario
+91,actExcluirDevedorAcesso,"Excluir Devedor",frmUsuario

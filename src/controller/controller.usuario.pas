@@ -31,7 +31,8 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, model.entity.usuario, lib.bcrypt, lib.types,
-  model.dao.padrao, model.dao.usuario, controller.usuarioacesso;
+  model.dao.padrao, model.dao.usuario, controller.usuarioacesso, StdCtrls,
+  CheckLst, model.entity.usuariodonocadastro;
 
 type
 
@@ -42,6 +43,7 @@ type
     UsuarioDAO: TUsuarioDAO;
   public
     Usuario: TUsuario;
+    UsuarioDevedor: TUsuarioDonoCadastro;
     ControleAcesso: TUsuarioAcessoController;
     procedure Listar(lv: TListView);
     procedure Pesquisar(lv: TListView; Campo, Busca: String);
@@ -51,6 +53,11 @@ type
     function Excluir(Id: Integer; out Erro: string): Boolean;
     function ValidarSenha(Senha1, Senha2 : String; Operacao: TOperacaoCRUD; out Erro: String): Boolean;
     function CriptografarSenha(Senha: String): String;
+    procedure BuscarDevedorPorUsuario(var lbNome: TListBox; var lbTitulo: TCheckListBox; IdUsuario: Integer);
+    procedure ListarDevedores(var lbNome: TListBox; var lbTitulo: TCheckListBox);
+    function InserirDevedor(objUsuarioDevedor : TUsuarioDonoCadastro; out Erro: string): Boolean;
+    function ExcluirDevedor(objUsuarioDevedor : TUsuarioDonoCadastro; out Erro: string): Boolean;
+    function UsuarioDevedorJaExiste(objUsuarioDevedor : TUsuarioDonoCadastro): Boolean;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -136,9 +143,40 @@ begin
   Result := lib.bcrypt.encryptBCrypt(PChar(Senha));
 end;
 
+procedure TUsuarioController.BuscarDevedorPorUsuario(var lbNome: TListBox;
+  var lbTitulo: TCheckListBox; IdUsuario: Integer);
+begin
+  UsuarioDAO.BuscarDevedorPorUsuario(lbNome, lbTitulo, IdUsuario);
+end;
+
+procedure TUsuarioController.ListarDevedores(var lbNome: TListBox;
+  var lbTitulo: TCheckListBox);
+begin
+  UsuarioDAO.ListarDevedores(lbNome, lbTitulo);
+end;
+
+function TUsuarioController.InserirDevedor(
+  objUsuarioDevedor: TUsuarioDonoCadastro; out Erro: string): Boolean;
+begin
+  Result := UsuarioDAO.InserirDevedor(objUsuarioDevedor, Erro);
+end;
+
+function TUsuarioController.ExcluirDevedor(
+  objUsuarioDevedor: TUsuarioDonoCadastro; out Erro: string): Boolean;
+begin
+  Result := UsuarioDAO.ExcluirDevedor(objUsuarioDevedor, Erro);
+end;
+
+function TUsuarioController.UsuarioDevedorJaExiste(
+  objUsuarioDevedor: TUsuarioDonoCadastro): Boolean;
+begin
+  Result := UsuarioDAO.UsuarioDevedorJaExiste(objUsuarioDevedor);
+end;
+
 constructor TUsuarioController.Create;
 begin
   Usuario    := TUsuario.Create;
+  UsuarioDevedor := TUsuarioDonoCadastro.Create;
   UsuarioDAO := TUsuarioDAO.Create;
   ControleAcesso := TUsuarioAcessoController.Create;
 end;
@@ -146,6 +184,7 @@ end;
 destructor TUsuarioController.Destroy;
 begin
   Usuario.Free;
+  UsuarioDevedor.Free;
   UsuarioDAO.Free;
   ControleAcesso.Free;
   inherited Destroy;

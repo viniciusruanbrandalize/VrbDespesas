@@ -41,12 +41,18 @@ type
   TfrmUsuario = class(TfrmCadastroPadrao)
     actAcesso: TAction;
     actDevedor: TAction;
+    actIncluirDevedorAcesso: TAction;
+    actExcluirDevedorAcesso: TAction;
     actVoltarAcesso: TAction;
     btnVoltarAcesso: TToolButton;
     btnVoltarDevedor: TToolButton;
     cklbTituloAcesso: TCheckListBox;
+    cklbTituloDevedorAcesso: TCheckListBox;
     cklbTituloTela: TCheckListBox;
+    cklbTituloDevedorDisp: TCheckListBox;
     Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     lbl1: TLabel;
     lblCadastroAlteracao: TLabel;
     edtNome: TLabeledEdit;
@@ -55,14 +61,22 @@ type
     edtSenha2: TLabeledEdit;
     lbNomeTela: TListBox;
     lbNomeAcesso: TListBox;
+    lbNomeDevedorDisp: TListBox;
+    lbNomeDevedorAcesso: TListBox;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
+    MenuItem6: TMenuItem;
+    MenuItem7: TMenuItem;
+    pMenuDevedorAcesso: TPopupMenu;
+    pnlDevedorDisp1: TPanel;
     pnlFundoDevedor: TPanel;
     pnlAcessoAcesso: TPanel;
     pnlTelaAcesso: TPanel;
+    pnlDevedorDisp: TPanel;
     pnlTituloAcesso: TPanel;
     pnlFundoAcesso: TPanel;
     pnlTituloDevedor: TPanel;
+    pMenuDevedorDisp: TPopupMenu;
     tbsDevedor: TTabSheet;
     tbsAcesso: TTabSheet;
     ToolBarCadastro1: TToolBar;
@@ -72,7 +86,9 @@ type
     procedure actAcessoExecute(Sender: TObject);
     procedure actCancelarAcessoExecute(Sender: TObject);
     procedure actDevedorExecute(Sender: TObject);
+    procedure actExcluirDevedorAcessoExecute(Sender: TObject);
     procedure actExcluirExecute(Sender: TObject);
+    procedure actIncluirDevedorAcessoExecute(Sender: TObject);
     procedure actIncluirExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarAcessoExecute(Sender: TObject);
@@ -129,6 +145,28 @@ begin
     TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
+procedure TfrmUsuario.actIncluirDevedorAcessoExecute(Sender: TObject);
+var
+  idDevedor: Integer;
+  Erro: String;
+begin
+  idDevedor := StrToIntDef(lbNomeDevedorDisp.Items[cklbTituloDevedorDisp.ItemIndex], 0);
+  Controller.UsuarioDevedor.Usuario.Id      := Controller.Usuario.Id;
+  Controller.UsuarioDevedor.DonoCadastro.Id := idDevedor;
+  Controller.UsuarioDevedor.Cadastro        := Now;
+  if Controller.UsuarioDevedorJaExiste(Controller.UsuarioDevedor) then
+    Abort;
+  if idDevedor > 0 then
+  begin
+    if not Controller.InserirDevedor(Controller.UsuarioDevedor, Erro) then
+      TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk])
+    else
+      Controller.BuscarDevedorPorUsuario(lbNomeDevedorAcesso, cklbTituloDevedorAcesso, Controller.Usuario.Id);
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
+end;
+
 procedure TfrmUsuario.actAcessoExecute(Sender: TObject);
 var
   id: Integer;
@@ -171,10 +209,31 @@ begin
     id := StrToInt(lvPadrao.Selected.Caption);
     if Controller.BuscarPorId(controller.Usuario, id, Erro) then
     begin
+      Controller.ListarDevedores(lbNomeDevedorDisp, cklbTituloDevedorDisp);
+      Controller.BuscarDevedorPorUsuario(lbNomeDevedorAcesso, cklbTituloDevedorAcesso, Controller.Usuario.Id);
       pgcPadrao.ActivePage := tbsDevedor;
       pnlTituloDevedor.Caption := 'Gerenciar acessos do usuário '+
                                     Controller.Usuario.Nome;
     end;
+  end
+  else
+    TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
+end;
+
+procedure TfrmUsuario.actExcluirDevedorAcessoExecute(Sender: TObject);
+var
+  idDevedor: Integer;
+  Erro: String;
+begin
+  idDevedor := StrToIntDef(lbNomeDevedorAcesso.Items[cklbTituloDevedorAcesso.ItemIndex], 0);
+  Controller.UsuarioDevedor.Usuario.Id      := Controller.Usuario.Id;
+  Controller.UsuarioDevedor.DonoCadastro.Id := idDevedor;
+  if idDevedor > 0 then
+  begin
+    if not Controller.ExcluirDevedor(Controller.UsuarioDevedor, Erro) then
+      TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk])
+    else
+      Controller.BuscarDevedorPorUsuario(lbNomeDevedorAcesso, cklbTituloDevedorAcesso, Controller.Usuario.Id);
   end
   else
     TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);

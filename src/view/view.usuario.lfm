@@ -7,6 +7,8 @@ inherited frmUsuario: TfrmUsuario
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
+        ActivePage = tbsDevedor
+        TabIndex = 3
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
             inherited pnlBotaoLista: TPanel
@@ -368,6 +370,137 @@ inherited frmUsuario: TfrmUsuario
               ParentFont = False
               TabOrder = 1
             end
+            object pnlDevedorDisp: TPanel
+              Left = 5
+              Height = 421
+              Top = 40
+              Width = 300
+              Align = alLeft
+              BorderSpacing.Around = 5
+              BevelOuter = bvNone
+              ClientHeight = 421
+              ClientWidth = 300
+              ParentBackground = False
+              TabOrder = 2
+              object Label2: TLabel
+                Left = 0
+                Height = 20
+                Top = 0
+                Width = 300
+                Align = alTop
+                Alignment = taCenter
+                Caption = 'Todos os devedores'
+                Color = clWhite
+                Font.Color = 1403392
+                Font.Height = -15
+                Font.Style = [fsBold]
+                ParentColor = False
+                ParentFont = False
+                Transparent = False
+              end
+              object cklbTituloDevedorDisp: TCheckListBox
+                Cursor = crHandPoint
+                Left = 0
+                Height = 401
+                Top = 20
+                Width = 300
+                Align = alClient
+                BorderStyle = bsNone
+                Items.Strings = (
+                  'Dev 1'
+                  'Dev 2'
+                )
+                ItemHeight = 21
+                PopupMenu = pMenuDevedorDisp
+                Style = lbOwnerDrawFixed
+                TabOrder = 0
+                Data = {
+                  020000000000
+                }
+              end
+            end
+            object pnlDevedorDisp1: TPanel
+              Left = 320
+              Height = 421
+              Top = 40
+              Width = 300
+              Align = alLeft
+              BorderSpacing.Left = 10
+              BorderSpacing.Around = 5
+              BevelOuter = bvNone
+              ClientHeight = 421
+              ClientWidth = 300
+              ParentBackground = False
+              TabOrder = 3
+              object Label3: TLabel
+                Left = 0
+                Height = 20
+                Top = 0
+                Width = 300
+                Align = alTop
+                Alignment = taCenter
+                Caption = 'Devedores que o usuário pode acessar'
+                Color = clWhite
+                Font.Color = 1403392
+                Font.Height = -15
+                Font.Style = [fsBold]
+                ParentColor = False
+                ParentFont = False
+                Transparent = False
+              end
+              object cklbTituloDevedorAcesso: TCheckListBox
+                Cursor = crHandPoint
+                Left = 0
+                Height = 401
+                Top = 20
+                Width = 300
+                Align = alClient
+                BorderStyle = bsNone
+                Items.Strings = (
+                  'Dev 1'
+                  'Dev 2'
+                )
+                ItemHeight = 21
+                PopupMenu = pMenuDevedorAcesso
+                Style = lbOwnerDrawFixed
+                TabOrder = 0
+                Data = {
+                  020000000000
+                }
+              end
+            end
+            object lbNomeDevedorDisp: TListBox
+              Left = 691
+              Height = 80
+              Top = 64
+              Width = 100
+              Items.Strings = (
+                '1'
+                '2'
+                '3'
+                '4'
+                '5'
+              )
+              ItemHeight = 15
+              TabOrder = 4
+              Visible = False
+            end
+            object lbNomeDevedorAcesso: TListBox
+              Left = 800
+              Height = 80
+              Top = 64
+              Width = 100
+              Items.Strings = (
+                '1'
+                '2'
+                '3'
+                '4'
+                '5'
+              )
+              ItemHeight = 15
+              TabOrder = 5
+              Visible = False
+            end
           end
         end
       end
@@ -387,6 +520,7 @@ inherited frmUsuario: TfrmUsuario
       OnExecute = actSalvarExecute
     end
     object actAcesso: TAction[8]
+      Tag = 1
       Caption = 'Gerenciar Acessos'
       ImageIndex = 8
       OnExecute = actAcessoExecute
@@ -397,9 +531,22 @@ inherited frmUsuario: TfrmUsuario
       OnExecute = actVoltarAcessoExecute
     end
     object actDevedor: TAction[10]
+      Tag = 1
       Caption = 'Gerenciar Devedores'
       ImageIndex = 14
       OnExecute = actDevedorExecute
+    end
+    object actIncluirDevedorAcesso: TAction[11]
+      Tag = 1
+      Caption = 'Incluir Devedor'
+      ImageIndex = 1
+      OnExecute = actIncluirDevedorAcessoExecute
+    end
+    object actExcluirDevedorAcesso: TAction[12]
+      Tag = 1
+      Caption = 'Excluir Devedor'
+      ImageIndex = 3
+      OnExecute = actExcluirDevedorAcessoExecute
     end
   end
   inherited pMenuPadrao: TPopupMenu
@@ -408,6 +555,22 @@ inherited frmUsuario: TfrmUsuario
     end
     object MenuItem5: TMenuItem[4]
       Action = actDevedor
+    end
+  end
+  object pMenuDevedorDisp: TPopupMenu[4]
+    Images = img
+    Left = 376
+    Top = 6
+    object MenuItem6: TMenuItem
+      Action = actIncluirDevedorAcesso
+    end
+  end
+  object pMenuDevedorAcesso: TPopupMenu[5]
+    Images = img
+    Left = 496
+    Top = 6
+    object MenuItem7: TMenuItem
+      Action = actExcluirDevedorAcesso
     end
   end
 end
