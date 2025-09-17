@@ -35,6 +35,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
+  SysUtils,
   Forms, datetimectrls, tachartlazaruspkg, lazreportpdfexport, view.principal,
   view.mensagem, controller.banco, controller.principal, controller.erro,
   model.entity.banco, model.entity.configuracao, model.entity.formapagamento,
@@ -71,6 +72,13 @@ uses
 {$R *.res}
 
 begin
+
+  {$Region 'Formatos BR'}
+  FormatSettings.DateSeparator := '/';
+  FormatSettings.DecimalSeparator := ',';
+  FormatSettings.ThousandSeparator := #0;
+  {$EndRegion}
+
   RequireDerivedFormResource:=True;
   Application.Scaled:=True;
   Application.Initialize;

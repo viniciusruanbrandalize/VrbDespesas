@@ -3,14 +3,14 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Win32 Release"/>
+    <BuildModes Active="Win32 Debug"/>
     <Units>
       <Unit>
         <Filename Value="projectVrbDespesas.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="48"/>
-        <CursorPos X="74" Y="69"/>
+        <TopLine Value="74"/>
+        <CursorPos X="43" Y="78"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="427"/>
-        <CursorPos X="59" Y="446"/>
+        <TopLine Value="428"/>
+        <CursorPos X="23" Y="454"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -680,8 +680,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="442"/>
-        <CursorPos X="42" Y="477"/>
+        <TopLine Value="368"/>
+        <CursorPos Y="407"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -696,8 +696,8 @@
         <Filename Value="..\src\controller\controller.recebimento.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="49"/>
-        <CursorPos X="77" Y="70"/>
+        <TopLine Value="60"/>
+        <CursorPos X="51" Y="70"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -797,7 +797,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="262"/>
         <CursorPos X="17" Y="297"/>
-        <UsageCount Value="196"/>
+        <UsageCount Value="199"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.ajuda.pas"/>
@@ -807,28 +807,28 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="9" Y="24"/>
-        <UsageCount Value="195"/>
+        <UsageCount Value="198"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.ajuda.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="194"/>
+        <UsageCount Value="197"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.uctela.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="174"/>
+        <UsageCount Value="177"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="174"/>
+        <UsageCount Value="177"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.usuarioacesso.pas"/>
@@ -836,7 +836,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="110"/>
         <CursorPos X="3" Y="115"/>
-        <UsageCount Value="169"/>
+        <UsageCount Value="172"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.usuarioacesso.pas"/>
@@ -844,22 +844,22 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="11" Y="35"/>
-        <UsageCount Value="169"/>
+        <UsageCount Value="172"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacesso.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="167"/>
+        <UsageCount Value="170"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.version.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="15"/>
-        <CursorPos X="9" Y="56"/>
-        <UsageCount Value="136"/>
+        <CursorPos X="30" Y="31"/>
+        <UsageCount Value="139"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.padrao.pas"/>
@@ -1284,6 +1284,13 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="289"/>
         <CursorPos X="14" Y="310"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\IDE\Lazarus\2.6_cross_compile_fcp3.2.2\fpcsrc\rtl\objpas\sysutils\sysinth.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="61"/>
+        <CursorPos X="3" Y="82"/>
         <UsageCount Value="10"/>
       </Unit>
     </Units>
