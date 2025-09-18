@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="76"/>
-        <CursorPos X="30" Y="87"/>
+        <CursorPos X="15" Y="90"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="428"/>
-        <CursorPos X="25" Y="443"/>
+        <TopLine Value="435"/>
+        <CursorPos X="33" Y="381"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -166,7 +166,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="127"/>
-        <CursorPos X="85" Y="143"/>
+        <CursorPos X="9" Y="151"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -401,15 +401,16 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="84"/>
-        <CursorPos X="51" Y="37"/>
+        <TopLine Value="85"/>
+        <CursorPos X="15" Y="99"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.logerro.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="11" Y="24"/>
+        <TopLine Value="53"/>
+        <CursorPos X="23" Y="67"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -544,8 +545,8 @@
         <Filename Value="..\src\model\ini\model.ini.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="92"/>
-        <CursorPos X="7" Y="134"/>
+        <TopLine Value="93"/>
+        <CursorPos Y="130"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -705,8 +706,8 @@
         <Filename Value="..\src\model\report\model.report.recebimento.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="105"/>
-        <CursorPos X="13" Y="172"/>
+        <TopLine Value="104"/>
+        <CursorPos X="42" Y="138"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -770,8 +771,8 @@
         <Filename Value="..\src\controller\controller.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="51"/>
-        <CursorPos Y="89"/>
+        <TopLine Value="52"/>
+        <CursorPos Y="90"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -823,14 +824,14 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="180"/>
+        <UsageCount Value="181"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="180"/>
+        <UsageCount Value="181"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.usuarioacesso.pas"/>
@@ -838,7 +839,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="110"/>
         <CursorPos X="3" Y="115"/>
-        <UsageCount Value="175"/>
+        <UsageCount Value="176"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.usuarioacesso.pas"/>
@@ -846,14 +847,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="11" Y="35"/>
-        <UsageCount Value="175"/>
+        <UsageCount Value="176"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.ucacesso.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="24"/>
-        <UsageCount Value="173"/>
+        <UsageCount Value="174"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.version.pas"/>
@@ -861,7 +862,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="15"/>
         <CursorPos X="23" Y="54"/>
-        <UsageCount Value="142"/>
+        <UsageCount Value="143"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.padrao.pas"/>
@@ -1296,7 +1297,7 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="1">
+    <JumpHistory HistoryIndex="3">
       <Position>
         <Filename Value="..\src\view\view.principal.pas"/>
         <Caret Line="442" Column="65" TopLine="430"/>
@@ -1304,6 +1305,14 @@
       <Position>
         <Filename Value="..\src\view\view.principal.pas"/>
         <Caret Line="440" Column="69" TopLine="428"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="430" Column="45" TopLine="410"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\view\view.principal.pas"/>
+        <Caret Line="469" Column="4" TopLine="430"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -1347,20 +1356,6 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="..\src\model\dao\model.dao.participante.pas"/>
         <Line Value="251"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\controller\controller.configuracao.pas"/>
-        <Line Value="89"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\controller\controller.configuracao.pas"/>
-        <Line Value="90"/>
       </Item>
     </BreakPoints>
     <Watches>

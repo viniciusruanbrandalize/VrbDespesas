@@ -12,7 +12,6 @@ object frmLogErro: TfrmLogErro
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 400
@@ -59,6 +58,10 @@ object frmLogErro: TfrmLogErro
       Align = alClient
       BorderSpacing.Around = 6
       Columns = <      
+        item
+          Caption = 'IDID'
+          Visible = False
+        end      
         item
           Caption = 'ID'
           Width = 88

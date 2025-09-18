@@ -66,6 +66,7 @@ begin
     ErroINI.CarregarPorSecao(ID);
     Item := lv.Items.Add;
     Item.Caption := ErroINI.ID;
+    Item.SubItems.Add(ErroINI.ID);
     Item.SubItems.Add(DateToStr(ErroINI.Data));
     Item.SubItems.Add(TimeToStr(ErroINI.Hora));
     Item.SubItems.Add(ErroINI.MensagemTratada);

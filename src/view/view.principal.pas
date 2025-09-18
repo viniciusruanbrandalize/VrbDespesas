@@ -35,7 +35,8 @@ uses
   view.formapagamento, view.tipodespesa, view.subtipodespesa, view.usuario,
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
   view.participante, view.despesa, view.relatoriodespesa, view.recebimento,
-  view.relatoriorecebimento, view.copiaseguranca, view.configuracao, view.ajuda;
+  view.relatoriorecebimento, view.copiaseguranca, view.configuracao, view.ajuda,
+  view.mensagem;
 
 type
 
@@ -374,11 +375,15 @@ begin
   Controller.TratarErros(Sender, E);
 end;
 
-procedure TfrmPrincipal.FormClose(Sender: TObject; var CloseAction: TCloseAction
-  );
+procedure TfrmPrincipal.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   if not pnlMenu.Visible then
     Abort;
+  {$IFOPT D+}
+  {$ELSE}
+  if not TfrmMessage.Mensagem('Deseja fechar o VrbDespesas ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
+    Abort;
+  {$ENDIF}
 end;
 
 procedure TfrmPrincipal.TimerTimer(Sender: TObject);
