@@ -47,9 +47,9 @@ uses
   Classes, SysUtils;
 
 const
-  NUMERO_VERSAO = '0.4.1-alpha';
+  NUMERO_VERSAO = '0.4.2-alpha';
 const
-  DATA_VERSA0   = '17/09/2025';
+  DATA_VERSA0   = '18/09/2025';
 
 implementation
 

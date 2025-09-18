@@ -84,7 +84,6 @@ begin
   Application.Initialize;
   Application.CreateForm(TdmConexao1, dmConexao1);
   Application.CreateForm(TdmConexao2, dmConexao2);
-  Application.CreateForm(TdmConexaoReport, dmConexaoReport);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
 
   {$IFOPT D+}
@@ -109,6 +108,9 @@ begin
       frmLogin.Free;
     end;
   {$ENDIF}
+
+  //Cria depois para pegar o id do dono do cadastro correto
+  Application.CreateForm(TdmConexaoReport, dmConexaoReport);
 
   Application.Run;
 end.
