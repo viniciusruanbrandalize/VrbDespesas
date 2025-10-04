@@ -423,11 +423,44 @@ create table public.despesa_forma_pgto (
 	id_despesa integer not null,
 	id_forma_pgto integer not null,
 	constraint pk_despesa_forma_pgto primary key (id),
-	constraint fk_despesa_froma_pgto_conta foreign key (id_conta_bancaria) references conta_bancaria(id),
-	constraint fk_despesa_froma_pgto_pix foreign key (chave_pix) references pix(chave),
-	constraint fk_despesa_froma_pgto_cartao foreign key (id_cartao) references cartao(id),
-	constraint fk_despesa_froma_pgto_despesa foreign key (id_despesa) references despesa(id),
+	constraint fk_despesa_forma_pgto_conta foreign key (id_conta_bancaria) references conta_bancaria(id),
+	constraint fk_despesa_forma_pgto_pix foreign key (chave_pix) references pix(chave),
+	constraint fk_despesa_forma_pgto_cartao foreign key (id_cartao) references cartao(id),
+	constraint fk_despesa_forma_pgto_despesa foreign key (id_despesa) references despesa(id),
 	constraint fk_despesa_forma_pgto_forma_pgto foreign key (id_forma_pgto) references forma_pgto(id)
+);
+
+create table public.uc_tela (
+	nome varchar(300) not null,   /*name do form*/
+	titulo varchar(300) not null, /*caption do form*/
+	constraint pk_uc_tela primary key (nome)
+); 
+
+create table public.uc_acao (
+	id integer not null,
+	nome varchar(300) not null,    /*name da action*/
+	titulo varchar(300) not null,  /*caption da action*/
+	nome_uc_tela varchar(300) not null,
+	constraint pk_uc_acao primary key (id),
+	constraint fk_uc_acao_uc_tela foreign key (nome_uc_tela) references uc_tela(nome)
+);
+
+create table public.uc_acesso (
+	id integer not null,
+	id_acao integer not null,
+	id_usuario integer not null,
+	constraint pk_uc_acesso primary key (id),
+	constraint fk_uc_acesso_uc_acao foreign key (id_acao) references uc_acao(id),
+	constraint fk_uc_acesso_usuario foreign key (id_usuario) references usuario(id)
+);
+
+create table public.token_api (
+	id integer not null,
+	token varchar(100) not null,
+	geracao timestamp not null,
+	validade timestamp not null,
+	excluido boolean not null,
+	constraint pk_token_api primary key (id)
 );
 
 create table public.login (
@@ -472,39 +505,6 @@ create table public.recebimento (
 alter table public.recebimento add cadastro timestamp;
 alter table public.recebimento add alteracao timestamp;
 
-create table public.uc_tela (
-	nome varchar(300) not null,   /*name do form*/
-	titulo varchar(300) not null, /*caption do form*/
-	constraint pk_uc_tela primary key (nome)
-); 
-
-create table public.uc_acao (
-	id integer not null,
-	nome varchar(300) not null,    /*name da action*/
-	titulo varchar(300) not null,  /*caption da action*/
-	nome_uc_tela varchar(300) not null,
-	constraint pk_uc_acao primary key (id),
-	constraint fk_uc_acao_uc_tela foreign key (nome_uc_tela) references uc_tela(nome)
-);
-
-create table public.uc_acesso (
-	id integer not null,
-	id_acao integer not null,
-	id_usuario integer not null,
-	constraint pk_uc_acesso primary key (id),
-	constraint fk_uc_acesso_uc_acao foreign key (id_acao) references uc_acao(id),
-	constraint fk_uc_acesso_usuario foreign key (id_usuario) references usuario(id)
-);
-
-create table public.token_api (
-	id integer not null,
-	token varchar(100) not null,
-	geracao timestamp not null,
-	validade timestamp not null,
-	excluido boolean not null,
-	constraint pk_token_api primary key (id)
-);
-
 --db arquivo postgresql
 
 create sequence public.seq_id_arquivo
@@ -519,7 +519,7 @@ create table public.arquivo (
 	id integer not null, 
 	nome varchar(250) not null, 
 	extensao varchar(50) not null, 
-	binario blob sub_type 0 not null, 
+	binario bytea not null, 
 	data_hora_upload timestamp not null, 
 	id_despesa integer not null,
 	constraint pk_arquivo primary key (id)

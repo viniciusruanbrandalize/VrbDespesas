@@ -248,10 +248,10 @@ create table despesa_forma_pgto (
 	id_despesa integer not null,
 	id_forma_pgto integer not null,
 	constraint pk_despesa_forma_pgto primary key (id),
-	constraint fk_despesa_froma_pgto_conta foreign key (id_conta_bancaria) references conta_bancaria(id),
-	constraint fk_despesa_froma_pgto_pix foreign key (chave_pix) references pix(chave),
-	constraint fk_despesa_froma_pgto_cartao foreign key (id_cartao) references cartao(id),
-	constraint fk_despesa_froma_pgto_despesa foreign key (id_despesa) references despesa(id),
+	constraint fk_despesa_forma_pgto_conta foreign key (id_conta_bancaria) references conta_bancaria(id),
+	constraint fk_despesa_forma_pgto_pix foreign key (chave_pix) references pix(chave),
+	constraint fk_despesa_forma_pgto_cartao foreign key (id_cartao) references cartao(id),
+	constraint fk_despesa_forma_pgto_despesa foreign key (id_despesa) references despesa(id),
 	constraint fk_despesa_forma_pgto_forma_pgto foreign key (id_forma_pgto) references forma_pgto(id)
 );
 
