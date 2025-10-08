@@ -39,9 +39,9 @@ type
   TConfiguracaoINI = class
   private
   
-	FArquivoINI: String;
-	FKey:        String;
-	FMd5:        String;
+    FArquivoINI: String;
+    FKey:        String;
+    FMd5:        String;
 
     { BACKUP }
     FGBak: String;
@@ -94,7 +94,7 @@ begin
   begin
 
     lib.cryptini.EscreverString('BACKUP', 'GBAK', 'C:\Program Files (x86)\Firebird\Firebird_5_0\gbak.exe');
-    lib.cryptini.EscreverString('BACKUP', 'PGDUMP', 'C:\Program Files\PostgreSQL\16\bin\pg_dump.exe');
+    lib.cryptini.EscreverString('BACKUP', 'PGDUMP', 'C:\Program Files\PostgreSQL\17\bin\pg_dump.exe');
     lib.cryptini.EscreverString('BACKUP', 'MYSQLDUMP', 'D:\Projetos\Databases\Utilitarios\MySQL 5.7\bin\mysqldump.exe');
 
     lib.cryptini.EscreverInteger('DONO_CADASTRO', 'ID', 1);

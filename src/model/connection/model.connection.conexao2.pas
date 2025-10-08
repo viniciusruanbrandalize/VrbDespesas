@@ -140,7 +140,7 @@ begin
       HostName              := ini.Servidor2;
       UserName              := ini.Usuario2;
       Password              := ini.Senha2;
-      Params.Values['Port'] := ini.Porta2.ToString;
+      Params.Values['port'] := ini.Porta2.ToString;
     end;
 
     try
