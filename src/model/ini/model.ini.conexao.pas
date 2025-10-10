@@ -65,6 +65,10 @@ type
     FEsquema2:  String;
     FInatividade2: Integer;
 
+    FArq:       String;
+    FKey:       String;
+    FMD5:       String;
+
     procedure Ler;
     procedure GravarDefault;
 
@@ -109,60 +113,60 @@ implementation
 procedure TConexaoINI.Ler;
 begin
 
-  lib.cryptini.LerString('CONEXAO_1', 'DRIVER', FDriver1);
-  lib.cryptini.LerString('CONEXAO_1', 'SERVIDOR', FServidor1);
-  lib.cryptini.LerInteger('CONEXAO_1', 'PORTA', FPorta1);
-  lib.cryptini.LerString('CONEXAO_1', 'BANCO', FBanco1);
-  lib.cryptini.LerString('CONEXAO_1', 'USUARIO', FUsuario1);
-  lib.cryptini.LerString('CONEXAO_1', 'SENHA', FSenha1);
-  lib.cryptini.LerString('CONEXAO_1', 'BIBLIOTECA', FNomeDLL1);
-  lib.cryptini.LerString('CONEXAO_1', 'CHARSET', FCharSet1);
-  lib.cryptini.LerBoolean('CONEXAO_1', 'LOG', FLogSQL1);
-  lib.cryptini.LerString('CONEXAO_1', 'ESQUEMA', FEsquema1);
-  lib.cryptini.LerInteger('CONEXAO_1', 'INATIVIDADE', FInatividade1);
+  FDriver1      := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'DRIVER', '');
+  FServidor1    := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SERVIDOR', '');
+  FPorta1       := lib.cryptini.LerInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'PORTA', 0);
+  FBanco1       := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BANCO', '');
+  FUsuario1     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'USUARIO', '');
+  FSenha1       := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SENHA', '');
+  FNomeDLL1     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BIBLIOTECA', '');
+  FCharSet1     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'CHARSET', '');
+  FLogSQL1      := lib.cryptini.LerBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'LOG', false);
+  FEsquema1     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'ESQUEMA', '');
+  FInatividade1 := lib.cryptini.LerInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'INATIVIDADE', 0);
 
-  lib.cryptini.LerString('CONEXAO_2', 'DRIVER', FDriver2);
-  lib.cryptini.LerString('CONEXAO_2', 'SERVIDOR', FServidor2);
-  lib.cryptini.LerInteger('CONEXAO_2', 'PORTA', FPorta2);
-  lib.cryptini.LerString('CONEXAO_2', 'BANCO', FBanco2);
-  lib.cryptini.LerString('CONEXAO_2', 'USUARIO', FUsuario2);
-  lib.cryptini.LerString('CONEXAO_2', 'SENHA', FSenha2);
-  lib.cryptini.LerString('CONEXAO_2', 'BIBLIOTECA', FNomeDLL2);
-  lib.cryptini.LerString('CONEXAO_2', 'CHARSET', FCharSet2);
-  lib.cryptini.LerBoolean('CONEXAO_2', 'LOG', FLogSQL2);
-  lib.cryptini.LerString('CONEXAO_2', 'ESQUEMA', FEsquema2);
-  lib.cryptini.LerInteger('CONEXAO_2', 'INATIVIDADE', FInatividade2);
+  FDriver2      := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'DRIVER', '');
+  FServidor2    := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SERVIDOR', '');
+  FPorta2       := lib.cryptini.LerInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'PORTA', 0);
+  FBanco2       := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BANCO', '');
+  FUsuario2     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'USUARIO', '');
+  FSenha2       := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SENHA', '');
+  FNomeDLL2     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BIBLIOTECA', '');
+  FCharSet2     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'CHARSET', '');
+  FLogSQL2      := lib.cryptini.LerBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'LOG', false);
+  FEsquema2     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'ESQUEMA', '');
+  FInatividade2 := lib.cryptini.LerInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'INATIVIDADE', 0);
 
 end;
 
 procedure TConexaoINI.GravarDefault;
 begin
-  if not FileExists(ExtractFilePath(ParamStr(0))+'conexao.ini') then
+  if not FileExists(FArq) then
   begin
 
-    lib.cryptini.EscreverString('CONEXAO_1', 'DRIVER', 'Firebird');
-    lib.cryptini.EscreverString('CONEXAO_1', 'SERVIDOR', '127.0.0.1');
-    lib.cryptini.EscreverInteger('CONEXAO_1', 'PORTA', 3050);
-    lib.cryptini.EscreverString('CONEXAO_1', 'BANCO', PChar(ExtractFilePath(ParamStr(0))+'Database\DESPESAS.FDB'));
-    lib.cryptini.EscreverString('CONEXAO_1', 'USUARIO', 'SYSDBA');
-    lib.cryptini.EscreverString('CONEXAO_1', 'SENHA', 'masterkey');
-    lib.cryptini.EscreverString('CONEXAO_1', 'BIBLIOTECA', 'fbclient.dll');
-    lib.cryptini.EscreverString('CONEXAO_1', 'CHARSET', 'UTF8');
-    lib.cryptini.EscreverBoolean('CONEXAO_1', 'LOG', false);
-    lib.cryptini.EscreverString('CONEXAO_1', 'ESQUEMA', '');
-    lib.cryptini.EscreverInteger('CONEXAO_1', 'INATIVIDADE', 43200);
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'DRIVER', 'Firebird');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SERVIDOR', '127.0.0.1');
+    lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'PORTA', 3050);
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BANCO', PChar(ExtractFilePath(ParamStr(0))+'Database\DESPESAS.FDB'));
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'USUARIO', 'SYSDBA');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SENHA', 'masterkey');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BIBLIOTECA', 'fbclient.dll');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'CHARSET', 'UTF8');
+    lib.cryptini.EscreverBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'LOG', false);
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'ESQUEMA', '');
+    lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'INATIVIDADE', 43200);
 
-    lib.cryptini.EscreverString('CONEXAO_2', 'DRIVER', 'SQLite3');
-    lib.cryptini.EscreverString('CONEXAO_2', 'SERVIDOR', '127.0.0.1');
-    lib.cryptini.EscreverInteger('CONEXAO_2', 'PORTA', 0);
-    lib.cryptini.EscreverString('CONEXAO_2', 'BANCO', 'D:\Projetos\Lazarus\Compras\database\ARQUIVOS.DB');
-    lib.cryptini.EscreverString('CONEXAO_2', 'USUARIO', 'root');
-    lib.cryptini.EscreverString('CONEXAO_2', 'SENHA', 'senha');
-    lib.cryptini.EscreverString('CONEXAO_2', 'BIBLIOTECA', 'SQLite.dll');
-    lib.cryptini.EscreverString('CONEXAO_2', 'CHARSET', 'UTF8');
-    lib.cryptini.EscreverBoolean('CONEXAO_2', 'LOG', false);
-    lib.cryptini.EscreverString('CONEXAO_2', 'ESQUEMA', '');
-    lib.cryptini.EscreverInteger('CONEXAO_2', 'INATIVIDADE', 43200);
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'DRIVER', 'SQLite3');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SERVIDOR', '127.0.0.1');
+    lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'PORTA', 0);
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BANCO', PChar(ExtractFilePath(ParamStr(0))+'Database\ARQUIVOS.DB'));
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'USUARIO', 'root');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SENHA', 'senha');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BIBLIOTECA', 'SQLite.dll');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'CHARSET', 'UTF8');
+    lib.cryptini.EscreverBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'LOG', false);
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'ESQUEMA', '');
+    lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'INATIVIDADE', 43200);
 
   end;
 end;
@@ -170,47 +174,43 @@ end;
 procedure TConexaoINI.Escrever;
 begin
 
-  lib.cryptini.EscreverString('CONEXAO_1', 'DRIVER', PChar(FDriver1));
-  lib.cryptini.EscreverString('CONEXAO_1', 'SERVIDOR',  PChar(FServidor1));
-  lib.cryptini.EscreverInteger('CONEXAO_1', 'PORTA',  FPorta1);
-  lib.cryptini.EscreverString('CONEXAO_1', 'BANCO',  PChar(FBanco1));
-  lib.cryptini.EscreverString('CONEXAO_1', 'USUARIO',  PChar(FUsuario1));
-  lib.cryptini.EscreverString('CONEXAO_1', 'SENHA',  PChar(FSenha1));
-  lib.cryptini.EscreverString('CONEXAO_1', 'BIBLIOTECA',  PChar(FNomeDLL1));
-  lib.cryptini.EscreverString('CONEXAO_1', 'CHARSET', PChar(FCharSet1));
-  lib.cryptini.EscreverBoolean('CONEXAO_1', 'LOG', FLogSQL1);
-  lib.cryptini.EscreverString('CONEXAO_1', 'ESQUEMA', PChar(FEsquema1));
-  lib.cryptini.EscreverInteger('CONEXAO_1', 'INATIVIDADE', FInatividade1);
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'DRIVER', PChar(FDriver1));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SERVIDOR',  PChar(FServidor1));
+  lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'PORTA',  FPorta1);
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BANCO',  PChar(FBanco1));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'USUARIO',  PChar(FUsuario1));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SENHA',  PChar(FSenha1));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BIBLIOTECA',  PChar(FNomeDLL1));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'CHARSET', PChar(FCharSet1));
+  lib.cryptini.EscreverBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'LOG', FLogSQL1);
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'ESQUEMA', PChar(FEsquema1));
+  lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'INATIVIDADE', FInatividade1);
 
-  lib.cryptini.EscreverString('CONEXAO_2', 'DRIVER',  PChar(FDriver2));
-  lib.cryptini.EscreverString('CONEXAO_2', 'SERVIDOR',  PChar(FServidor2));
-  lib.cryptini.EscreverInteger('CONEXAO_2', 'PORTA',  FPorta2);
-  lib.cryptini.EscreverString('CONEXAO_2', 'BANCO',  PChar(FBanco2));
-  lib.cryptini.EscreverString('CONEXAO_2', 'USUARIO',  PChar(FUsuario2));
-  lib.cryptini.EscreverString('CONEXAO_2', 'SENHA',  PChar(FSenha2));
-  lib.cryptini.EscreverString('CONEXAO_2', 'BIBLIOTECA',  PChar(FNomeDLL2));
-  lib.cryptini.EscreverString('CONEXAO_2', 'CHARSET', PChar(FCharSet2));
-  lib.cryptini.EscreverBoolean('CONEXAO_2', 'LOG', FLogSQL2);
-  lib.cryptini.EscreverString('CONEXAO_2', 'ESQUEMA', PChar(FEsquema2));
-  lib.cryptini.EscreverInteger('CONEXAO_2', 'INATIVIDADE', FInatividade2);
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'DRIVER',  PChar(FDriver2));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SERVIDOR',  PChar(FServidor2));
+  lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'PORTA',  FPorta2);
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BANCO',  PChar(FBanco2));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'USUARIO',  PChar(FUsuario2));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SENHA',  PChar(FSenha2));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BIBLIOTECA',  PChar(FNomeDLL2));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'CHARSET', PChar(FCharSet2));
+  lib.cryptini.EscreverBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'LOG', FLogSQL2);
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'ESQUEMA', PChar(FEsquema2));
+  lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'INATIVIDADE', FInatividade2);
 
 end;
 
 constructor TConexaoINI.Create;
-var
-  arq, key, md5: String;
 begin
-  arq   := ExtractFilePath(ParamStr(0))+'conexao.ini';
-  md5   := 'compras_laz_2025_MD5';
-  key   := 'compras_laz_2025_KEY';
-  lib.cryptini.inicializar(PChar(arq), PChar(key), PChar(md5));
+  FArq   := ExtractFilePath(ParamStr(0))+'conexao.ini';
+  FMD5   := 'compras_laz_2025_MD5';
+  FKey   := 'compras_laz_2025_KEY';
   GravarDefault;
   ler;
 end;
 
 destructor TConexaoINI.Destroy;
 begin
-  lib.cryptini.finalizar;
   inherited Destroy;
 end;
 

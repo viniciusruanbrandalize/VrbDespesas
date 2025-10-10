@@ -1,0 +1,330 @@
+{
+*******************************************************************************
+*   VRBDespesas                                                               *
+*   Controle e gerenciamento de despesas.                                     *
+*                                                                             *
+*   Copyright (C) 2025 Vinícius Ruan Brandalize.                              *
+*                                                                             *
+*   This program is free software: you can redistribute it and/or modify      *
+*   it under the terms of the GNU General Public License as published by      *
+*   the Free Software Foundation, either version 3 of the License, or         *
+*   (at your option) any later version.                                       *
+*                                                                             *
+*   This program is distributed in the hope that it will be useful,           *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+*   GNU General Public License for more details.                              *
+*                                                                             *
+*   You should have received a copy of the GNU General Public License         *
+*   along with this program.  If not, see <https://www.gnu.org/licenses/>.    *
+*                                                                             *
+*   Contact: viniciusbrandalize2@gmail.com.                                   *
+*                                                                             *
+*******************************************************************************
+}
+
+unit lib.cryptini;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, dynlibs, view.mensagem, Dialogs;
+
+type
+  TLibCryptINIInicializar = procedure(Arquivo, key, MD5: PChar);
+  TLibCryptINIFinalizar = procedure();
+  TLibCryptINILerString = function(Secao, Identificador: PChar): Pchar; stdcall;
+  TLibCryptINILerString255 = function(Secao, Identificador: PChar): ShortString; stdcall;
+  TLibCryptINILerInteger = function(Secao, Identificador: PChar): Integer; stdcall;
+  TLibCryptINILerBoolean = function(Secao, Identificador: PChar): Boolean; stdcall;
+  TLibCryptINILerData = function(Secao, Identificador: PChar): TDate; stdcall;
+  TLibCryptINILerHora = function(Secao, Identificador: PChar): TTime; stdcall;
+  TLibCryptINILerDataHora = function(Secao, Identificador: PChar): TDateTime; stdcall;
+  TLibCryptINIEscreverString = procedure(Secao, Identificador, Valor: PChar); stdcall;
+  TLibCryptINIEscreverInteger = procedure(Secao, Identificador: PChar; Valor: Integer); stdcall;
+  TLibCryptINIEscreverBoolean = procedure(Secao, Identificador: PChar; Valor: Boolean); stdcall;
+  TLibCryptINIEscreverData = procedure(Secao, Identificador: PChar; Valor: TDate); stdcall;
+  TLibCryptINIEscreverHora = procedure(Secao, Identificador: PChar; Valor: TTime); stdcall;
+  TLibCryptINIEscreverDataHora = procedure(Secao, Identificador: PChar; Valor: TDateTime); stdcall;
+  TLibCryptINIExisteSecao = function(Secao: PChar): Boolean; stdcall;
+  TLibCryptINIExisteValor = function(Secao, Identificador: PChar): Boolean; stdcall;
+
+type
+
+  { TLibCryptINI }
+
+  TLibCryptINI = class
+    private
+      FNomeLib: String;
+      FHandle:  THandle;
+      FInicializar: TLibCryptINIInicializar;
+      FFinalizar: TLibCryptINIFinalizar;
+      FLerString: TLibCryptINILerString;
+      FLerString255: TLibCryptINILerString255;
+      FLerInteger: TLibCryptINILerInteger;
+      FLerBoolean: TLibCryptINILerBoolean;
+      FLerData:  TLibCryptINILerData;
+      FLerHora: TLibCryptINILerHora;
+      FLerDataHora: TLibCryptINILerDataHora;
+      FEscreverString: TLibCryptINIEscreverString;
+      FEscreverInteger: TLibCryptINIEscreverInteger;
+      FEscreverBoolean: TLibCryptINIEscreverBoolean;
+      FEscreverData: TLibCryptINIEscreverData;
+      FEscreverHora: TLibCryptINIEscreverHora;
+      FEscreverDataHora: TLibCryptINIEscreverDataHora;
+      FExisteSecao: TLibCryptINIExisteSecao;
+      FExisteValor: TLibCryptINIExisteValor;
+      procedure MapearFuncoes;
+    public
+      procedure Inicializar(Arquivo, key, MD5: PChar);
+      procedure finalizar;
+      procedure LerString(Secao, Identificador: PChar; out Valor: String);
+      procedure LerString255(Secao, Identificador: PChar; out Valor: String);
+      procedure LerInteger(Secao, Identificador: PChar; out Valor: Integer);
+      procedure LerBoolean(Secao, Identificador: PChar; out Valor: Boolean);
+      procedure LerData(Secao, Identificador: PChar; out Valor: TDate);
+      procedure LerHora(Secao, Identificador: PChar; out Valor: TTime);
+      procedure LerDataHora(Secao, Identificador: PChar; out Valor: TDateTime);
+      procedure EscreverString(Secao, Identificador, Valor: PChar);
+      procedure EscreverInteger(Secao, Identificador: PChar; Valor: Integer);
+      procedure EscreverBoolean(Secao, Identificador: PChar; Valor: Boolean);
+      procedure EscreverData(Secao, Identificador: PChar; Valor: TDate);
+      procedure EscreverHora(Secao, Identificador: PChar; Valor: TTime);
+      procedure EscreverDataHora(Secao, Identificador: PChar; Valor: TDateTime);
+      procedure ExisteSecao(Secao: PChar; out Existe: Boolean);
+      procedure ExisteValor(Secao, Identificador: PChar; out Existe: Boolean);
+      constructor Create;
+      destructor Destroy; override;
+  end;
+
+implementation
+
+{ TLibCryptINI }
+
+procedure TLibCryptINI.MapearFuncoes;
+begin
+  if FHandle <> 0 then
+  begin
+    Pointer(FInicializar) := GetProcAddress(FHandle, 'inicializar');
+    Pointer(FFinalizar) := GetProcAddress(FHandle, 'finalizar');
+    Pointer(FLerString) := GetProcAddress(FHandle, 'LerString');
+    Pointer(FLerString255) := GetProcAddress(FHandle, 'LerString255');
+    Pointer(FLerBoolean) := GetProcAddress(FHandle, 'LerBoolean');
+    Pointer(FLerInteger) := GetProcAddress(FHandle, 'LerInteger');
+    Pointer(FLerData) := GetProcAddress(FHandle, 'LerData');
+    Pointer(FLerHora) := GetProcAddress(FHandle, 'LerHora');
+    Pointer(FLerDataHora) := GetProcAddress(FHandle, 'LerDataHora');
+    Pointer(FEscreverString) := GetProcAddress(FHandle, 'EscreverString');
+    Pointer(FEscreverBoolean) := GetProcAddress(FHandle, 'EscreverBoolean');
+    Pointer(FEscreverInteger) := GetProcAddress(FHandle, 'EscreverInteger');
+    Pointer(FEscreverData) := GetProcAddress(FHandle, 'EscreverData');
+    Pointer(FEscreverHora) := GetProcAddress(FHandle, 'EscreverHora');
+    Pointer(FEscreverDataHora) := GetProcAddress(FHandle, 'EscreverDataHora');
+    Pointer(FExisteSecao) := GetProcAddress(FHandle, 'ExisteSecao');
+    Pointer(FExisteValor) := GetProcAddress(FHandle, 'ExisteValor');
+  end
+  else
+    TfrmMessage.Mensagem(FNomeLib + ' não encontrada!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.Inicializar(Arquivo, key, MD5: PChar);
+begin
+  FHandle := LoadLibrary(FNomeLib);
+  if FHandle <> 0 then
+  begin
+    Pointer(FInicializar) := GetProcAddress(FHandle, 'inicializar');
+    if Assigned(FInicializar) then
+      FInicializar(Arquivo, key, MD5)
+    else
+      TfrmMessage.Mensagem('Função "inicializar" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+    FreeLibrary(FHandle);
+  end
+  else
+    TfrmMessage.Mensagem(FNomeLib + ' não encontrada!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.finalizar;
+begin
+  FHandle := LoadLibrary(FNomeLib);
+  if FHandle <> 0 then
+  begin
+    Pointer(FFinalizar) := GetProcAddress(FHandle, 'finalizar');
+    if Assigned(FFinalizar) then
+      FFinalizar()
+    else
+      TfrmMessage.Mensagem('Função "finalizar" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+    FreeLibrary(FHandle);
+  end
+  else
+    TfrmMessage.Mensagem(FNomeLib + ' não encontrada!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.LerString(Secao, Identificador: PChar; out Valor: String);
+begin
+  FHandle := LoadLibrary(FNomeLib);
+  if FHandle <> 0 then
+  begin
+    Pointer(FLerString) := GetProcedureAddress(FHandle, 'LerString');
+    if Assigned(FLerString) then
+      Valor := FLerString(Secao, Identificador)
+    else
+      TfrmMessage.Mensagem('Função "LerString" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+    ShowMessage(Valor);
+    FreeLibrary(FHandle);
+  end
+  else
+    TfrmMessage.Mensagem(FNomeLib + ' não encontrada!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.LerString255(Secao, Identificador: PChar; out
+  Valor: String);
+begin
+  if Assigned(FLerString255) then
+    Valor := FLerString255(Secao, Identificador)
+  else
+    TfrmMessage.Mensagem('Função "LerString255" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+  ShowMessage(Valor);
+end;
+
+procedure TLibCryptINI.LerInteger(Secao, Identificador: PChar; out
+  Valor: Integer);
+begin
+  if Assigned(FLerInteger) then
+    Valor := FLerInteger(Secao, Identificador)
+  else
+    TfrmMessage.Mensagem('Função "LerInteger" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+  ShowMessage(IntToStr(Valor));
+end;
+
+procedure TLibCryptINI.LerBoolean(Secao, Identificador: PChar; out
+  Valor: Boolean);
+begin
+  if Assigned(FLerBoolean) then
+    Valor := FLerBoolean(Secao, Identificador)
+  else
+    TfrmMessage.Mensagem('Função "LerBoolean" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.LerData(Secao, Identificador: PChar; out Valor: TDate);
+begin
+  if Assigned(FLerData) then
+    Valor := FLerData(Secao, Identificador)
+  else
+    TfrmMessage.Mensagem('Função "LerData" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.LerHora(Secao, Identificador: PChar; out Valor: TTime);
+begin
+  if Assigned(FLerHora) then
+    Valor := FLerHora(Secao, Identificador)
+  else
+    TfrmMessage.Mensagem('Função "LerHora" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.LerDataHora(Secao, Identificador: PChar; out
+  Valor: TDateTime);
+begin
+  if Assigned(FLerDataHora) then
+    Valor := FLerDataHora(Secao, Identificador)
+  else
+    TfrmMessage.Mensagem('Função "LerDataHora" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.EscreverString(Secao, Identificador, Valor: PChar);
+begin
+  if Assigned(FEscreverString) then
+    FEscreverString(Secao, Identificador, Valor)
+  else
+    TfrmMessage.Mensagem('Função "EscreverString" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.EscreverInteger(Secao, Identificador: PChar;
+  Valor: Integer);
+begin
+  if Assigned(FEscreverInteger) then
+    FEscreverInteger(Secao, Identificador, Valor)
+  else
+    TfrmMessage.Mensagem('Função "EscreverInteger" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.EscreverBoolean(Secao, Identificador: PChar;
+  Valor: Boolean);
+begin
+  if Assigned(FEscreverBoolean) then
+    FEscreverBoolean(Secao, Identificador, Valor)
+  else
+    TfrmMessage.Mensagem('Função "EscreverBoolean" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.EscreverData(Secao, Identificador: PChar; Valor: TDate);
+begin
+  if Assigned(FEscreverData) then
+    FEscreverData(Secao, Identificador, Valor)
+  else
+    TfrmMessage.Mensagem('Função "EscreverData" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.EscreverHora(Secao, Identificador: PChar; Valor: TTime);
+begin
+  if Assigned(FEscreverHora) then
+    FEscreverHora(Secao, Identificador, Valor)
+  else
+    TfrmMessage.Mensagem('Função "EscreverHora" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.EscreverDataHora(Secao, Identificador: PChar;
+  Valor: TDateTime);
+begin
+  if Assigned(FEscreverDataHora) then
+    FEscreverDataHora(Secao, Identificador, Valor)
+  else
+    TfrmMessage.Mensagem('Função "EscreverDataHora" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.ExisteSecao(Secao: PChar; out Existe: Boolean);
+begin
+  if Assigned(FExisteSecao) then
+    Existe := FExisteSecao(Secao)
+  else
+    TfrmMessage.Mensagem('Função "ExisteSecao" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+procedure TLibCryptINI.ExisteValor(Secao, Identificador: PChar; out
+  Existe: Boolean);
+begin
+  if Assigned(FExisteValor) then
+    Existe := FExisteValor(Secao, Identificador)
+  else
+    TfrmMessage.Mensagem('Função "ExisteValor" não encontrada em '+FNomeLib+'!', 'Erro', 'E', [TMyButtons.mbOk], TMyButtons.mbOk, 12);
+end;
+
+constructor TLibCryptINI.Create;
+begin
+  {$IFDEF WIN32}
+  FNomeLib := 'libvrbcryptini32.dll';
+  {$ENDIF}
+  {$IFDEF WIN64}
+  FNomeLib := 'libvrbcryptini64.dll';
+  {$ENDIF}
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      FNomeLib := 'libvrbcryptini32.so';
+    {$ENDIF}
+    {$IFDEF CPU64}
+      FNomeLib := 'libvrbcryptini64.so';
+    {$ENDIF}
+  {$ENDIF}
+  //FHandle := LoadLibrary(FNomeLib);
+  //MapearFuncoes;
+end;
+
+destructor TLibCryptINI.Destroy;
+begin
+  inherited Destroy;
+  //FreeLibrary(FHandle);
+end;
+
+end.
+

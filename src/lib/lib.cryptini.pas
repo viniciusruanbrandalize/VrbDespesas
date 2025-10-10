@@ -29,43 +29,7 @@ unit lib.cryptini;
 
 interface
 
-  procedure inicializar(Arquivo, key, MD5: PChar); stdcall;
-  external
-  {$IFDEF WIN32}
-  'libvrbcryptini32.dll'
-  {$ENDIF}
-  {$IFDEF WIN64}
-  'libvrbcryptini64.dll'
-  {$ENDIF}
-  {$IFDEF LINUX}
-    {$IFDEF CPU32}
-      'libvrbcryptini32.so'
-    {$ENDIF}
-    {$IFDEF CPU64}
-      'libvrbcryptini64.so'
-    {$ENDIF}
-  {$ENDIF}
-  name 'inicializar';
-
-  procedure finalizar; stdcall;
-  external
-  {$IFDEF WIN32}
-  'libvrbcryptini32.dll'
-  {$ENDIF}
-  {$IFDEF WIN64}
-  'libvrbcryptini64.dll'
-  {$ENDIF}
-  {$IFDEF LINUX}
-    {$IFDEF CPU32}
-      'libvrbcryptini32.so'
-    {$ENDIF}
-    {$IFDEF CPU64}
-      'libvrbcryptini64.so'
-    {$ENDIF}
-  {$ENDIF}
-  name 'finalizar';
-
-  procedure LerString(Secao, Identificador: PChar; out Valor: String); stdcall;
+  function LerString(Arquivo, key, MD5, Secao, Identificador, Default: PChar): Pchar; stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -83,7 +47,25 @@ interface
   {$ENDIF}
   name 'LerString';
 
-  procedure LerInteger(Secao, Identificador: PChar; out Valor: Integer); stdcall;
+  function LerString255(Arquivo, key, MD5, Secao, Identificador, Default: PChar): ShortString; stdcall;
+  external
+  {$IFDEF WIN32}
+  'libvrbcryptini32.dll'
+  {$ENDIF}
+  {$IFDEF WIN64}
+  'libvrbcryptini64.dll'
+  {$ENDIF}
+  {$IFDEF LINUX}
+    {$IFDEF CPU32}
+      'libvrbcryptini32.so'
+    {$ENDIF}
+    {$IFDEF CPU64}
+      'libvrbcryptini64.so'
+    {$ENDIF}
+  {$ENDIF}
+  name 'LerString255';
+
+  function LerInteger(Arquivo, key, MD5, Secao, Identificador: PChar; Default: Integer): Integer; stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -101,7 +83,7 @@ interface
   {$ENDIF}
   name 'LerInteger';
 
-  procedure LerBoolean(Secao, Identificador: PChar; out Valor: Boolean); stdcall;
+  function LerBoolean(Arquivo, key, MD5, Secao, Identificador: PChar; Default: Boolean): Boolean; stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -119,7 +101,7 @@ interface
   {$ENDIF}
   name 'LerBoolean';
   
-  procedure LerData(Secao, Identificador: PChar; out Valor: TDate); stdcall;
+  function LerData(Arquivo, key, MD5, Secao, Identificador: PChar; Default: TDate): TDate; stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -137,7 +119,7 @@ interface
   {$ENDIF}
   name 'LerData';
   
-  procedure LerHora(Secao, Identificador: PChar; out Valor: TTime); stdcall;
+  function LerHora(Arquivo, key, MD5, Secao, Identificador: PChar; Default: TTime): TTime; stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -155,7 +137,7 @@ interface
   {$ENDIF}
   name 'LerHora';
   
-  procedure LerDataHora(Secao, Identificador: PChar; out Valor: TDateTime); stdcall;
+  function LerDataHora(Arquivo, key, MD5, Secao, Identificador: PChar; Default: TDateTime): TDateTime; stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -173,7 +155,7 @@ interface
   {$ENDIF}
   name 'LerDataHora';
   
-  procedure EscreverString(Secao, Identificador, Valor: PChar); stdcall;
+  procedure EscreverString(Arquivo, key, MD5, Secao, Identificador, Valor: PChar); stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -191,7 +173,7 @@ interface
   {$ENDIF}
   name 'EscreverString';
 
-  procedure EscreverInteger(Secao, Identificador: PChar; Valor: Integer); stdcall;
+  procedure EscreverInteger(Arquivo, key, MD5, Secao, Identificador: PChar; Valor: Integer); stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -209,7 +191,7 @@ interface
   {$ENDIF}
   name 'EscreverInteger';
   
-  procedure EscreverBoolean(Secao, Identificador: PChar; Valor: Boolean); stdcall;
+  procedure EscreverBoolean(Arquivo, key, MD5, Secao, Identificador: PChar; Valor: Boolean); stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -227,7 +209,7 @@ interface
   {$ENDIF}
   name 'EscreverBoolean';
   
-  procedure EscreverData(Secao, Identificador: PChar; Valor: TDate); stdcall;
+  procedure EscreverData(Arquivo, key, MD5, Secao, Identificador: PChar; Valor: TDate); stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -245,7 +227,7 @@ interface
   {$ENDIF}
   name 'EscreverData';
   
-  procedure EscreverHora(Secao, Identificador: PChar; Valor: TTime); stdcall;
+  procedure EscreverHora(Arquivo, key, MD5, Secao, Identificador: PChar; Valor: TTime); stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -263,7 +245,7 @@ interface
   {$ENDIF}
   name 'EscreverHora';
   
-  procedure EscreverDataHora(Secao, Identificador: PChar; Valor: TDateTime); stdcall;
+  procedure EscreverDataHora(Arquivo, key, MD5, Secao, Identificador: PChar; Valor: TDateTime); stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -281,7 +263,7 @@ interface
   {$ENDIF}
   name 'EscreverDataHora';
   
-  procedure ExisteSecao(Secao: PChar; out Existe: Boolean); stdcall;
+  function ExisteSecao(Arquivo, key, MD5, Secao: PChar): Boolean; stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'
@@ -299,7 +281,7 @@ interface
   {$ENDIF}
   name 'ExisteSecao';
   
-  procedure ExisteValor(Secao, Identificador: PChar; out Existe: Boolean); stdcall;
+  function ExisteValor(Arquivo, key, MD5, Secao, Identificador: PChar): Boolean; stdcall;
   external
   {$IFDEF WIN32}
   'libvrbcryptini32.dll'

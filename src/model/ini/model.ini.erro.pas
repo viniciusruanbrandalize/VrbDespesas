@@ -68,6 +68,8 @@ type
     FModoExe:           String; {DEBUG/RELEASE}
     FUsuario:           String;
     FArquivoErr:        String;
+    FKEY:               String;
+    FMD5:               String;
 
     function GetArquiteturaExe: String;
     function GetClasseErro: String;
@@ -370,7 +372,7 @@ begin
   cod := 1;
   while True do
   begin
-    lib.cryptini.ExisteSecao(PChar(FormatFloat('000000', cod)), SecaoExiste);
+    SecaoExiste := lib.cryptini.ExisteSecao(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(FormatFloat('000000', cod)));
     if not SecaoExiste then
       break;
     cod:= cod + 1;
@@ -383,68 +385,67 @@ var
   secao: String;
 begin
   secao := VerificarSecaoAtual;
-  lib.cryptini.EscreverData( PChar(secao), 'DATA',                  FData);
-  lib.cryptini.EscreverHora( PChar(secao), 'HORA',                  FHora);
-  lib.cryptini.EscreverString( PChar(secao), 'NOME_COMPUTADOR',     PChar(FNomeComputador));
-  lib.cryptini.EscreverString( PChar(secao), 'IP_COMPUTADOR',       PChar(FIPComputador));
-  lib.cryptini.EscreverString( PChar(secao), 'MENSAGEM',            PChar(FMensagem));
-  lib.cryptini.EscreverString( PChar(secao), 'MENSAGEM_TRATADA',    PChar(FMensagemTratada));
-  lib.cryptini.EscreverString( PChar(secao), 'CLASSE_ERRO',         PChar(FClasseErro));
-  lib.cryptini.EscreverString( PChar(secao), 'UNIDADE_ERRO',        PChar(FUnidadeErro));
-  lib.cryptini.EscreverString( PChar(secao), 'NOME_FORM_ATIVO',     PChar(FNomeFormAtivo));
-  lib.cryptini.EscreverString( PChar(secao), 'TITULO_FORM_ATIVO',   PChar(FTituloFormAtivo));
-  lib.cryptini.EscreverString( PChar(secao), 'UNIDADE_FORM_ATIVO',  PChar(FUnidadeFormAtivo));
-  lib.cryptini.EscreverString( PChar(secao), 'NOME_OBJ_ATIVO',      PChar(FNomeObjAtivo));
-  lib.cryptini.EscreverString( PChar(secao), 'TITULO_OBJ_ATIVO',    PChar(FTituloObjAtivo));
-  lib.cryptini.EscreverString( PChar(secao), 'UNIDADE_OBJ_ATIVO',   PChar(FUnidadeObjAtivo));
-  lib.cryptini.EscreverString( PChar(secao), 'NOME_OBJ_ERRO',       PChar(FNomeObjErro));
-  lib.cryptini.EscreverString( PChar(secao), 'TITULO_OBJ_ERRO',     PChar(FTituloObjErro));
-  lib.cryptini.EscreverString( PChar(secao), 'UNIDADE_OBJ_ERRO',    PChar(FUnidadeObjErro));
-  lib.cryptini.EscreverInteger( PChar(secao), 'LINHA_ERRO',         FLinhaErro);
-  lib.cryptini.EscreverString( PChar(secao), 'FUNCAO_ERRO',         PChar(FFuncaoErro));
-  lib.cryptini.EscreverString( PChar(secao), 'VERSAO_EXE',          PChar(FVersaoExe));
-  lib.cryptini.EscreverData( PChar(secao), 'DATA_VERSAO_EXE',       FDataVersaoExe);
-  lib.cryptini.EscreverString( PChar(secao), 'ARQUITETURA_EXE',     PChar(FArquiteturaExe));
-  lib.cryptini.EscreverString( PChar(secao), 'DIRETORIO_EXE',       PChar(FDiretorioExe));
-  lib.cryptini.EscreverString( PChar(secao), 'SISTEMA_OPERACIONAL', PChar(FSistemaOperacional));
-  lib.cryptini.EscreverString( PChar(secao), 'MODO_EXE',            PChar(FModoExe));
-  lib.cryptini.EscreverString( PChar(secao), 'USUARIO',             PChar(FUsuario));
+  lib.cryptini.EscreverData( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'DATA',                  FData);
+  lib.cryptini.EscreverHora( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'HORA',                  FHora);
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'NOME_COMPUTADOR',     PChar(FNomeComputador));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'IP_COMPUTADOR',       PChar(FIPComputador));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'MENSAGEM',            PChar(FMensagem));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'MENSAGEM_TRATADA',    PChar(FMensagemTratada));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'CLASSE_ERRO',         PChar(FClasseErro));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'UNIDADE_ERRO',        PChar(FUnidadeErro));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'NOME_FORM_ATIVO',     PChar(FNomeFormAtivo));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'TITULO_FORM_ATIVO',   PChar(FTituloFormAtivo));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'UNIDADE_FORM_ATIVO',  PChar(FUnidadeFormAtivo));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'NOME_OBJ_ATIVO',      PChar(FNomeObjAtivo));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'TITULO_OBJ_ATIVO',    PChar(FTituloObjAtivo));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'UNIDADE_OBJ_ATIVO',   PChar(FUnidadeObjAtivo));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'NOME_OBJ_ERRO',       PChar(FNomeObjErro));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'TITULO_OBJ_ERRO',     PChar(FTituloObjErro));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'UNIDADE_OBJ_ERRO',    PChar(FUnidadeObjErro));
+  lib.cryptini.EscreverInteger( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'LINHA_ERRO',         FLinhaErro);
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'FUNCAO_ERRO',         PChar(FFuncaoErro));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'VERSAO_EXE',          PChar(FVersaoExe));
+  lib.cryptini.EscreverData( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'DATA_VERSAO_EXE',       FDataVersaoExe);
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'ARQUITETURA_EXE',     PChar(FArquiteturaExe));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'DIRETORIO_EXE',       PChar(FDiretorioExe));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'SISTEMA_OPERACIONAL', PChar(FSistemaOperacional));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'MODO_EXE',            PChar(FModoExe));
+  lib.cryptini.EscreverString( PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(secao), 'USUARIO',             PChar(FUsuario));
 end;
 
 procedure TErroINI.CarregarPorSecao(Secao: String);
 begin
   FId := Secao;
-  lib.cryptini.LerData(PChar(Secao),    'DATA', FData);
-  lib.cryptini.LerHora(PChar(Secao),    'HORA', FHora);
-  lib.cryptini.LerString(PChar(Secao),  'MENSAGEM', FMensagem);
-  lib.cryptini.LerString(PChar(Secao),  'MENSAGEM_TRATADA', FMensagemTratada);
-  lib.cryptini.LerString(PChar(Secao),  'NOME_COMPUTADOR', FNomeComputador);
-  lib.cryptini.LerString(PChar(Secao),  'IP_COMPUTADOR', FIPComputador);
-  lib.cryptini.LerString(PChar(Secao),  'CLASSE_ERRO', FClasseErro);
-  lib.cryptini.LerString(PChar(Secao),  'UNIDADE_ERRO', FUnidadeErro);
-  lib.cryptini.LerString(PChar(Secao),  'NOME_FORM_ATIVO', FNomeFormAtivo);
-  lib.cryptini.LerString(PChar(Secao),  'TITULO_FORM_ATIVO', FTituloFormAtivo);
-  lib.cryptini.LerString(PChar(Secao),  'TITULO_FORM_ATIVO', FTituloFormAtivo);
-  lib.cryptini.LerString(PChar(Secao),  'UNIDADE_FORM_ATIVO', FUnidadeFormAtivo);
-  lib.cryptini.LerString(PChar(Secao),  'TITULO_OBJ_ATIVO', FTituloObjAtivo);
-  lib.cryptini.LerString(PChar(Secao),  'UNIDADE_OBJ_ATIVO', FUnidadeObjAtivo);
-  lib.cryptini.LerString(PChar(Secao),  'NOME_OBJ_ERRO', FNomeObjErro);
-  lib.cryptini.LerString(PChar(Secao),  'TITULO_OBJ_ERRO', FTituloObjErro);
-  lib.cryptini.LerString(PChar(Secao),  'UNIDADE_OBJ_ERRO', FUnidadeObjErro);
-  lib.cryptini.LerInteger(PChar(Secao), 'LINHA_ERRO', FLinhaErro);
-  lib.cryptini.LerString(PChar(Secao),  'FUNCAO_ERRO', FFuncaoErro);
-  lib.cryptini.LerString(PChar(Secao),  'VERSAO_EXE', FVersaoExe);
-  lib.cryptini.LerData(PChar(Secao),    'DATA_VERSAO_EXE', FDataVersaoExe);
-  lib.cryptini.LerString(PChar(Secao),  'ARQUITETURA_EXE', FArquiteturaExe);
-  lib.cryptini.LerString(PChar(Secao),  'DIRETORIO_EXE', FDiretorioExe);
-  lib.cryptini.LerString(PChar(Secao),  'SISTEMA_OPERACIONAL', FSistemaOperacional);
-  lib.cryptini.LerString(PChar(Secao),  'MODO_EXE', FModoExe);
-  lib.cryptini.LerString(PChar(Secao),  'USUARIO', FUsuario);
+  FData            := lib.cryptini.LerData(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),    'DATA', Now);
+  FHora            := lib.cryptini.LerHora(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),    'HORA', Now);
+  FMensagem        := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'MENSAGEM', '');
+  FMensagemTratada := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'MENSAGEM_TRATADA', '');
+  FNomeComputador  := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'NOME_COMPUTADOR', '');
+  FIPComputador    := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'IP_COMPUTADOR', '');
+  FClasseErro      := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'CLASSE_ERRO', '');
+  FUnidadeErro     := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'UNIDADE_ERRO', '');
+  FNomeFormAtivo   := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'NOME_FORM_ATIVO', '');
+  FTituloFormAtivo := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'TITULO_FORM_ATIVO', '');
+  FUnidadeFormAtivo:= lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'UNIDADE_FORM_ATIVO', '');
+  FTituloObjAtivo  := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'TITULO_OBJ_ATIVO', '');
+  FUnidadeObjAtivo := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'UNIDADE_OBJ_ATIVO', '');
+  FNomeObjAtivo    := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'NOME_OBJ_ERRO', '');
+  FTituloObjErro   := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'TITULO_OBJ_ERRO', '');
+  FUnidadeObjErro  := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'UNIDADE_OBJ_ERRO', '');
+  FLinhaErro       := lib.cryptini.LerInteger(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao), 'LINHA_ERRO', 0);
+  FFuncaoErro      := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'FUNCAO_ERRO', '');
+  FVersaoExe       := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'VERSAO_EXE', '');
+  FDataVersaoExe   := lib.cryptini.LerData(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),    'DATA_VERSAO_EXE', Now);
+  FArquiteturaExe  := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'ARQUITETURA_EXE', '');
+  FDiretorioExe    := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'DIRETORIO_EXE', '');
+  FSistemaOperacional := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao), 'SISTEMA_OPERACIONAL', '');
+  FModoExe         := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'MODO_EXE', '');
+  FUsuario         := lib.cryptini.LerString(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao),  'USUARIO', '');
 end;
 
 function TErroINI.ExisteSecaoIni(Secao: String): Boolean;
 begin
-  lib.cryptini.ExisteSecao(PChar(Secao), Result);
+  Result := lib.cryptini.ExisteSecao(PChar(FArquivoErr), PChar(FKEY), Pchar(FMD5), PChar(Secao));
 end;
 
 procedure TErroINI.SetMensagemTratada(AValue: String);
@@ -528,18 +529,14 @@ begin
 end;
 
 constructor TErroINI.Create;
-var
-  KEY, MD5: String;
 begin
   FArquivoErr := ExtractFilePath(ParamStr(0))+'Erro.err';
-  KEY := 'compras_laz_2025_KEY';
-  MD5 := 'compras_laz_2025_MD5';
-  lib.cryptini.inicializar(PChar(FArquivoErr), PChar(KEY), Pchar(MD5));
+  FKEY := 'compras_laz_2025_KEY';
+  FMD5 := 'compras_laz_2025_MD5';
 end;
 
 destructor TErroINI.Destroy;
 begin
-  lib.cryptini.finalizar;
   inherited Destroy;
 end;
 

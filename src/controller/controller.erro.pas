@@ -30,7 +30,7 @@ unit controller.erro;
 interface
 
 uses
-  Classes, SysUtils, Forms, model.ini.erro, lib.util, view.mensagem;
+  Classes, SysUtils, Forms, model.ini.erro, lib.util, view.mensagem, lib.version;
 
 type
 
@@ -106,8 +106,8 @@ procedure TErroController.gravarArquivoErro(ExNativo, ExTratado: String;
         Err.UnidadeErro    := Ex.UnitName;
       end;
 
-      Err.VersaoExe := '1.0.0.0';
-      Err.DataVersaoExe := StrToDate('12/12/2024');
+      Err.VersaoExe := NUMERO_VERSAO ;
+      Err.DataVersaoExe := StrToDate(DATA_VERSA0);
       Err.DiretorioExe := ExtractFilePath(ParamStr(0));
 
       {$IFDEF MSWINDOWS}

@@ -79,12 +79,12 @@ implementation
 procedure TConfiguracaoINI.Ler;
 begin
 
-  lib.cryptini.LerString('BACKUP', 'GBAK', FGBak);
-  lib.cryptini.LerString('BACKUP', 'PGDUMP', FPGDump);
-  lib.cryptini.LerString('BACKUP', 'MYSQLDUMP', FMySQLDump);
+  FGBak      := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'GBAK', '');
+  FPGDump    := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', '');
+  FMySQLDump := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', '');
 
-  lib.cryptini.LerInteger('DONO_CADASTRO', 'ID', FDCId);
-  lib.cryptini.LerBoolean('DONO_CADASTRO', 'NAOPERGUNTAR', FDCNaoPerguntar);
+  FDCId           := lib.cryptini.LerInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', 0);
+  FDCNaoPerguntar := lib.cryptini.LerBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', false);
 
 end;
 
@@ -93,12 +93,12 @@ begin
   if not FileExists(FArquivoINI) then
   begin
 
-    lib.cryptini.EscreverString('BACKUP', 'GBAK', 'C:\Program Files (x86)\Firebird\Firebird_5_0\gbak.exe');
-    lib.cryptini.EscreverString('BACKUP', 'PGDUMP', 'C:\Program Files\PostgreSQL\17\bin\pg_dump.exe');
-    lib.cryptini.EscreverString('BACKUP', 'MYSQLDUMP', 'D:\Projetos\Databases\Utilitarios\MySQL 5.7\bin\mysqldump.exe');
+    lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'GBAK', 'C:\Program Files (x86)\Firebird\Firebird_5_0\gbak.exe');
+    lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', 'C:\Program Files\PostgreSQL\17\bin\pg_dump.exe');
+    lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', 'D:\Projetos\Databases\Utilitarios\MySQL 5.7\bin\mysqldump.exe');
 
-    lib.cryptini.EscreverInteger('DONO_CADASTRO', 'ID', 1);
-    lib.cryptini.EscreverBoolean('DONO_CADASTRO', 'NAOPERGUNTAR', false);
+    lib.cryptini.EscreverInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', 1);
+    lib.cryptini.EscreverBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', false);
 
   end;
 end;
@@ -106,12 +106,12 @@ end;
 procedure TConfiguracaoINI.Escrever;
 begin
 
-  lib.cryptini.EscreverString('BACKUP', 'GBAK', PChar(FGBak));
-  lib.cryptini.EscreverString('BACKUP', 'PGDUMP', PChar(FPGDump));
-  lib.cryptini.EscreverString('BACKUP', 'MYSQLDUMP', PChar(FMySQLDump));
+  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'GBAK', PChar(FGBak));
+  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', PChar(FPGDump));
+  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', PChar(FMySQLDump));
 
-  lib.cryptini.EscreverInteger('DONO_CADASTRO', 'ID', FDCId);
-  lib.cryptini.EscreverBoolean('DONO_CADASTRO', 'NAOPERGUNTAR', FDCNaoPerguntar);
+  lib.cryptini.EscreverInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', FDCId);
+  lib.cryptini.EscreverBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', FDCNaoPerguntar);
 
 end;
 
@@ -120,14 +120,12 @@ begin
   FArquivoINI := ExtractFilePath(ParamStr(0))+'configuracao.ini';
   FMd5        := 'compras_laz_2025_MD5';
   FKey        := 'compras_laz_2025_KEY';
-  lib.cryptini.inicializar(PChar(FArquivoINI), PChar(FKey), PChar(FMd5));
   GravarDefault;
   ler;
 end;
 
 destructor TConfiguracaoINI.Destroy;
 begin
-  lib.cryptini.finalizar;
   inherited Destroy;
 end;
 
