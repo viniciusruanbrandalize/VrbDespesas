@@ -32,7 +32,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ActnList, ExtCtrls,
   view.relatoriopadrao, controller.relatoriorecebimento, view.relatorioparametro,
-  view.mensagem;
+  view.mensagem, view.carregamento;
 
 type
 
@@ -87,14 +87,18 @@ begin
     begin
       Ano   := frmRelatorioParametro.edtAno3.Value;
       TipoRece := frmRelatorioParametro.rgTipoRec3.ItemIndex;
-
-      if Controller.DeclaracaoDeRenda(frPreview, Ano, TipoRece, Erro) then
-      begin
-        pgc.ActivePage := tbsDesigner;
-        actFechar.ImageIndex := 1;
-      end
-      else
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.DeclaracaoDeRenda(frPreview, Ano, TipoRece, Erro) then
+        begin
+          pgc.ActivePage := tbsDesigner;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
     end;
   finally
     FreeAndNil(frmRelatorioParametro);

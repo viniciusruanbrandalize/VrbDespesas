@@ -104,6 +104,7 @@ type
     imgMenu: TImage;
     imgUsuario: TImage;
     imgList: TImageList;
+    lblInfoConexao: TLabel;
     lblTitulo: TLabel;
     lblNomeUsuario: TLabel;
     lblHora: TLabel;
@@ -213,6 +214,8 @@ begin
   lblNomeUsuario.Caption := Controller.RetornarNomeUsuario;
   self.Caption := 'VrbDespesas by Vinícius Ruan Brandalize v' +
                    Controller.RetornarVersao;
+  lblInfoConexao.Caption := '| ' + Controller.RetornarInfoConexao(1) + ' | ' +
+                                   Controller.RetornarInfoConexao(2) + ' |';
   AtribuirHintMenu();
 end;
 
@@ -468,6 +471,7 @@ begin
   pnlAtivo.Visible := Ativo;
   pnlMenuVazio.Visible := not Ativo;
   pnlMenuRetair.Visible := Ativo;
+  lblInfoConexao.Visible := Ativo;
 end;
 
 end.

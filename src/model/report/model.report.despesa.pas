@@ -89,7 +89,7 @@ begin
   try
 
     FSQL := 'select d.id, d.data, d.hora, d.descricao, f.nome as nome_fpgto, ' +
-            'd.total from despesa d ' +
+            'df.valor as total from despesa d ' +
             'left join participante p on p.id = d.id_fornecedor ' +
             'left join despesa_forma_pgto df on df.id_despesa = d.id ' +
             'left join forma_pgto f on f.id = df.id_forma_pgto ' +

@@ -35,15 +35,15 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  SysUtils,
-  Forms, datetimectrls, tachartlazaruspkg, lazreportpdfexport, view.principal,
-  view.mensagem, controller.banco, controller.principal, controller.erro,
-  model.entity.banco, model.entity.configuracao, model.entity.formapagamento,
-  model.entity.recebimento, model.entity.usuario, model.entity.subtipodespesa,
-  model.entity.tipodespesa, model.entity.participante, model.entity.pais,
-  model.entity.estado, model.entity.cidade, model.entity.contabancaria,
-  model.entity.bandeira, model.entity.usuariodonocadastro, model.entity.pix,
-  model.entity.login, model.entity.logbackup, model.entity.despesa,
+  SysUtils, Forms, datetimectrls, tachartlazaruspkg, lazreportpdfexport,
+  view.principal, view.mensagem, controller.banco, controller.principal,
+  controller.erro, model.entity.banco, model.entity.configuracao,
+  model.entity.formapagamento, model.entity.recebimento, model.entity.usuario,
+  model.entity.subtipodespesa, model.entity.tipodespesa,
+  model.entity.participante, model.entity.pais, model.entity.estado,
+  model.entity.cidade, model.entity.contabancaria, model.entity.bandeira,
+  model.entity.usuariodonocadastro, model.entity.pix, model.entity.login,
+  model.entity.logbackup, model.entity.despesa,
   model.entity.despesaformapagamento, model.entity.cartao, model.entity.arquivo,
   model.entity.uctela, model.entity.ucacao, model.entity.ucacesso,
   model.connection.conexao1, model.connection.conexao2, model.dao.banco,
@@ -67,7 +67,8 @@ uses
   controller.copiaseguranca, controller.configuracao,
   controller.selecionardonocadastro, controller.ajuda, controller.usuarioacesso,
   view.recebimento, view.relatoriorecebimento, view.copiaseguranca,
-  view.configuracao, view.selecionardonocadastro, view.ajuda, lib.version;
+  view.configuracao, view.selecionardonocadastro, view.ajuda, lib.version,
+  view.carregamento;
 
 {$R *.res}
 

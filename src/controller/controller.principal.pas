@@ -32,7 +32,8 @@ interface
 uses
   Classes, SysUtils, Forms, controls, controller.erro, lib.util, lib.types,
   model.connection.conexao1, view.participante, view.recebimento,
-  model.dao.configuracao, model.entity.configuracao, lib.version;
+  model.dao.configuracao, model.entity.configuracao, lib.version,
+  model.ini.conexao;
 
 type
 
@@ -48,6 +49,7 @@ type
     procedure AbrirTelaRecebimento(Formulario: TfrmRecebimento; AParent: TWinControl; FormularioPai: TForm; Tipo: TTelaRecebimento);
     function RetornarNomeUsuario: String;
     function RetornarVersao: String;
+    function RetornarInfoConexao(Conexao: Integer): String;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -122,6 +124,23 @@ begin
     end;
   finally
     FreeAndNil(Conf);
+  end;
+end;
+
+function TPrincipalController.RetornarInfoConexao(Conexao: Integer): String;
+var
+  ConexaoINI: TConexaoINI;
+begin
+  ConexaoINI := TConexaoINI.Create;
+  try
+    case Conexao of
+      1: Result := 'Conn 1: Driver=' + ConexaoINI.Driver1 + ';Server=' + ConexaoINI.Servidor1 +
+                   ';Port=' + IntToStr(ConexaoINI.Porta1) + ';Database=' + ConexaoINI.Banco1 + ';';
+      2: Result := 'Conn 2: Driver=' + ConexaoINI.Driver2 + ';Server=' + ConexaoINI.Servidor2 +
+                   ';Port=' + IntToStr(ConexaoINI.Porta2) + ';Database=' + ConexaoINI.Banco2 +';';
+    end;
+  finally
+    FreeAndNil(ConexaoINI);
   end;
 end;
 

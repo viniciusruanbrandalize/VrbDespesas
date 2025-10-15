@@ -6,6 +6,8 @@ inherited frmRelatorioDespesa: TfrmRelatorioDespesa
   OnShow = FormShow
   inherited pnlFundo: TPanel
     inherited pgc: TPageControl
+      ActivePage = tbsPrincipal
+      TabIndex = 0
       inherited tbsPrincipal: TTabSheet
         inherited pnlFundoTbs1: TPanel
           inherited pnlOpcoes: TPanel

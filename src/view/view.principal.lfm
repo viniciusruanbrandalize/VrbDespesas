@@ -615,14 +615,29 @@ object frmPrincipal: TfrmPrincipal
     object pnlAbreForms: TPanel
       Left = 545
       Height = 86
-      Top = 378
+      Top = 376
       Width = 241
       BevelOuter = bvNone
       Caption = 'Abre os formulario aqui dentro via codigo'
+      ClientHeight = 86
+      ClientWidth = 241
       Color = 15925228
       ParentBackground = False
       ParentColor = False
       TabOrder = 5
+      object lblInfoConexao: TLabel
+        Left = 5
+        Height = 12
+        Top = 69
+        Width = 231
+        Align = alBottom
+        BorderSpacing.Around = 5
+        Caption = 'Informações de conexão [...]'
+        Font.Color = 2977025
+        Font.Height = -9
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
     end
     object pnlMenuVazio: TPanel
       Left = 370

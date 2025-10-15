@@ -33,7 +33,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
   ActnList, view.relatoriopadrao, lib.visual, view.relatorioparametro,
   controller.relatoriodespesa, view.mensagem, TAGraph, TASeries, TACustomSource,
-  TAFuncSeries, TARadialSeries;
+  TAFuncSeries, TARadialSeries, view.carregamento;
 
 type
 
@@ -157,13 +157,18 @@ begin
       else
         Busca := frmRelatorioParametro.edtPesquisa0.Text;
 
-      if Controller.PorPeriodo(frPreview, Inicial, Final, Tipo, BuscaId, Busca, Erro) then
-      begin
-        pgc.ActivePage := tbsDesigner;
-        actFechar.ImageIndex := 1;
-      end
-      else
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.PorPeriodo(frPreview, Inicial, Final, Tipo, BuscaId, Busca, Erro) then
+        begin
+          pgc.ActivePage := tbsDesigner;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
     end;
   finally
     FreeAndNil(frmRelatorioParametro);
@@ -184,24 +189,28 @@ begin
       Inicial := frmRelatorioParametro.dtpInicial4.date;
       Final   := frmRelatorioParametro.dtpFinal4.date;
       Tipo    := frmRelatorioParametro.cbTipo4.ItemIndex;
-
-      if Controller.TotalPorFormaPgto(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
-      begin
-        if Tipo = 0 then
-          pgc.ActivePage := tbsDesigner
-        else
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.TotalPorFormaPgto(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
         begin
-          chGrafico.Title.Text.Clear;
-          chGrafico.Title.Text.Add('Total por forma de pagamento - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
-          chGrafico.AxisList.Axes[1].Title.Caption := 'Forma de Pagamento';
-          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
-          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
-          pgc.ActivePage := tbsGrafico;
-        end;
-        actFechar.ImageIndex := 1;
-      end
-      else
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+          if Tipo = 0 then
+            pgc.ActivePage := tbsDesigner
+          else
+          begin
+            chGrafico.Title.Text.Clear;
+            chGrafico.Title.Text.Add('Total por forma de pagamento - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
+            chGrafico.AxisList.Axes[1].Title.Caption := 'Forma de Pagamento';
+            chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
+            chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+            pgc.ActivePage := tbsGrafico;
+          end;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
     end;
   finally
     FreeAndNil(frmRelatorioParametro);
@@ -220,23 +229,28 @@ begin
     begin
       Ano := frmRelatorioParametro.edtAno3.Value;
       Tipo := frmRelatorioParametro.cbTipo3.ItemIndex;
-      if Controller.TotalPorMes(frPreview, chGrafico, Ano, Tipo, Erro) then
-      begin
-        if Tipo = 0 then
-          pgc.ActivePage := tbsDesigner
-        else
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.TotalPorMes(frPreview, chGrafico, Ano, Tipo, Erro) then
         begin
-          chGrafico.Title.Text.Clear;
-          chGrafico.Title.Text.Add('Total anual por mês - '+Ano.ToString);
-          chGrafico.AxisList.Axes[1].Title.Caption := 'Mês';
-          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
-          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
-          pgc.ActivePage := tbsGrafico;
-        end;
-        actFechar.ImageIndex := 1;
-      end
-      else
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+          if Tipo = 0 then
+            pgc.ActivePage := tbsDesigner
+          else
+          begin
+            chGrafico.Title.Text.Clear;
+            chGrafico.Title.Text.Add('Total anual por mês - '+Ano.ToString);
+            chGrafico.AxisList.Axes[1].Title.Caption := 'Mês';
+            chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
+            chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+            pgc.ActivePage := tbsGrafico;
+          end;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
     end;
   finally
     FreeAndNil(frmRelatorioParametro);
@@ -257,23 +271,28 @@ begin
       Inicial := frmRelatorioParametro.dtpInicial4.date;
       Final   := frmRelatorioParametro.dtpFinal4.date;
       Tipo    := frmRelatorioParametro.cbTipo4.ItemIndex;
-      if Controller.TotalPorSubtipo(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
-      begin
-        if Tipo = 0 then
-          pgc.ActivePage := tbsDesigner
-        else
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.TotalPorSubtipo(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
         begin
-          chGrafico.Title.Text.Clear;
-          chGrafico.Title.Text.Add('Total por subtipo - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
-          chGrafico.AxisList.Axes[1].Title.Caption := 'Subtipo';
-          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
-          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
-          pgc.ActivePage := tbsGrafico;
-        end;
-        actFechar.ImageIndex := 1;
-      end
-      else
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+          if Tipo = 0 then
+            pgc.ActivePage := tbsDesigner
+          else
+          begin
+            chGrafico.Title.Text.Clear;
+            chGrafico.Title.Text.Add('Total por subtipo - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
+            chGrafico.AxisList.Axes[1].Title.Caption := 'Subtipo';
+            chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
+            chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+            pgc.ActivePage := tbsGrafico;
+          end;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
     end;
   finally
     FreeAndNil(frmRelatorioParametro);
@@ -294,24 +313,28 @@ begin
       Inicial := frmRelatorioParametro.dtpInicial4.date;
       Final   := frmRelatorioParametro.dtpFinal4.date;
       Tipo    := frmRelatorioParametro.cbTipo4.ItemIndex;
-
-      if Controller.TotalPorTipo(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
-      begin
-        if Tipo = 0 then
-          pgc.ActivePage := tbsDesigner
-        else
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.TotalPorTipo(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
         begin
-          chGrafico.Title.Text.Clear;
-          chGrafico.Title.Text.Add('Total por tipo - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
-          chGrafico.AxisList.Axes[1].Title.Caption := 'Tipo';
-          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
-          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
-          pgc.ActivePage := tbsGrafico;
-        end;
-        actFechar.ImageIndex := 1;
-      end
-      else
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+          if Tipo = 0 then
+            pgc.ActivePage := tbsDesigner
+          else
+          begin
+            chGrafico.Title.Text.Clear;
+            chGrafico.Title.Text.Add('Total por tipo - Período: '+DateToStr(Inicial)+' à '+DateToStr(Final));
+            chGrafico.AxisList.Axes[1].Title.Caption := 'Tipo';
+            chGrafico.AxisList.Axes[0].Title.Caption := 'Total (%)';
+            chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+            pgc.ActivePage := tbsGrafico;
+          end;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
     end;
   finally
     FreeAndNil(frmRelatorioParametro);
@@ -333,24 +356,29 @@ begin
       Final   := frmRelatorioParametro.edtAnoFinal1.Value;
       Mes     := frmRelatorioParametro.cbMes1.ItemIndex+1;
       Tipo    := frmRelatorioParametro.cbTipo1.ItemIndex;
-      if Controller.ComparativoMensal(frPreview, chGrafico, Inicial, Final, Mes, Tipo, Erro) then
-      begin
-        if Tipo = 0 then
-          pgc.ActivePage := tbsDesigner
-        else
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.ComparativoMensal(frPreview, chGrafico, Inicial, Final, Mes, Tipo, Erro) then
         begin
-          chGrafico.Title.Text.Clear;
-          chGrafico.Title.Text.Add('Comparativo Mensal - '+FormatFloat('00', Mes)+'/'+Inicial.ToString+' à '+
-                                                           FormatFloat('00', Mes)+'/'+Final.ToString);
-          chGrafico.AxisList.Axes[1].Title.Caption := 'Ano';
-          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
-          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
-          pgc.ActivePage := tbsGrafico;
-        end;
-        actFechar.ImageIndex := 1;
-      end
-      else
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+          if Tipo = 0 then
+            pgc.ActivePage := tbsDesigner
+          else
+          begin
+            chGrafico.Title.Text.Clear;
+            chGrafico.Title.Text.Add('Comparativo Mensal - '+FormatFloat('00', Mes)+'/'+Inicial.ToString+' à '+
+                                                             FormatFloat('00', Mes)+'/'+Final.ToString);
+            chGrafico.AxisList.Axes[1].Title.Caption := 'Ano';
+            chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
+            chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+            pgc.ActivePage := tbsGrafico;
+          end;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
     end;
   finally
     FreeAndNil(frmRelatorioParametro);
@@ -381,23 +409,28 @@ begin
       Inicial := frmRelatorioParametro.edtAnoInicial2.Value;
       Final   := frmRelatorioParametro.edtAnoFinal2.Value;
       Tipo    := frmRelatorioParametro.cbTipo2.ItemIndex;
-      if Controller.ComparativoAnual(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
-      begin
-        if Tipo = 0 then
-          pgc.ActivePage := tbsDesigner
-        else
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.ComparativoAnual(frPreview, chGrafico, Inicial, Final, Tipo, Erro) then
         begin
-          chGrafico.Title.Text.Clear;
-          chGrafico.Title.Text.Add('Comparativo Anual de '+Inicial.ToString+' à '+Final.ToString);
-          chGrafico.AxisList.Axes[1].Title.Caption := 'Ano';
-          chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
-          chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
-          pgc.ActivePage := tbsGrafico;
-        end;
-        actFechar.ImageIndex := 1;
-      end
-      else
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+          if Tipo = 0 then
+            pgc.ActivePage := tbsDesigner
+          else
+          begin
+            chGrafico.Title.Text.Clear;
+            chGrafico.Title.Text.Add('Comparativo Anual de '+Inicial.ToString+' à '+Final.ToString);
+            chGrafico.AxisList.Axes[1].Title.Caption := 'Ano';
+            chGrafico.AxisList.Axes[0].Title.Caption := 'Total (R$)';
+            chGrafico.AxisList.Axes[1].Intervals.Options := [aipInteger, aipUseMaxLength, aipUseMinLength, aipUseNiceSteps];
+            pgc.ActivePage := tbsGrafico;
+          end;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
     end;
   finally
     FreeAndNil(frmRelatorioParametro);

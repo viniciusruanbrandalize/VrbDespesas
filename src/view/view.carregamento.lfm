@@ -1,0 +1,51 @@
+object frmCarregamento: TfrmCarregamento
+  Left = 388
+  Height = 68
+  Top = 250
+  Width = 336
+  BorderIcons = []
+  BorderStyle = bsSingle
+  Caption = 'Carregando...'
+  ClientHeight = 68
+  ClientWidth = 336
+  FormStyle = fsStayOnTop
+  Position = poScreenCenter
+  object pnlPrincipal: TPanel
+    Left = 0
+    Height = 68
+    Top = 0
+    Width = 336
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 68
+    ClientWidth = 336
+    Color = clWhite
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object pgb: TProgressBar
+      Left = 10
+      Height = 20
+      Top = 38
+      Width = 316
+      Align = alBottom
+      BorderSpacing.Around = 10
+      Style = pbstMarquee
+      TabOrder = 0
+    end
+    object lblCarregando: TLabel
+      Left = 10
+      Height = 21
+      Top = 10
+      Width = 316
+      Align = alTop
+      Alignment = taCenter
+      BorderSpacing.Around = 10
+      Caption = 'Carregando... Aguarde.'
+      Font.Color = clGreen
+      Font.Height = -16
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
+end
