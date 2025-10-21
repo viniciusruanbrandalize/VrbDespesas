@@ -40,13 +40,17 @@ type
 
   TfrmRelatorioRecebimento = class(TfrmRelatorioPadrao)
     actDeclaracaoRenda: TAction;
+    actPorPeriodo: TAction;
+    pnlPorPeriodo: TPanel;
     pnlDeclaracaoRenda: TPanel;
     procedure actDeclaracaoRendaExecute(Sender: TObject);
+    procedure actPorPeriodoExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pnlDeclaracaoRendaClick(Sender: TObject);
+    procedure pnlPorPeriodoClick(Sender: TObject);
   private
 
   public
@@ -105,6 +109,40 @@ begin
   end;
 end;
 
+procedure TfrmRelatorioRecebimento.actPorPeriodoExecute(Sender: TObject);
+var
+  Tipo, TipoRece: Integer;
+  DataInicial, DataFinal: TDate;
+  Erro, Busca: String;
+begin
+  frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
+  try
+    frmRelatorioParametro.IndiceTab := 5;
+    if frmRelatorioParametro.ShowModal = mrOK then
+    begin
+      DataInicial := frmRelatorioParametro.dtpInicial5.Date;
+      DataFinal   := frmRelatorioParametro.dtpFinal5.Date;
+      TipoRece    := frmRelatorioParametro.rgTipoRec5.ItemIndex;
+      Tipo        := frmRelatorioParametro.cbTipoPesquisa5.ItemIndex;
+      Busca       := frmRelatorioParametro.edtPesquisa5.Text;
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.PorPeriodo(frPreview, DataInicial, DataFinal, Busca, Tipo, TipoRece, Erro) then
+        begin
+          pgc.ActivePage := tbsDesigner;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
+    end;
+  finally
+    FreeAndNil(frmRelatorioParametro);
+  end;
+end;
+
 procedure TfrmRelatorioRecebimento.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -125,6 +163,11 @@ end;
 procedure TfrmRelatorioRecebimento.pnlDeclaracaoRendaClick(Sender: TObject);
 begin
   actDeclaracaoRenda.Execute;
+end;
+
+procedure TfrmRelatorioRecebimento.pnlPorPeriodoClick(Sender: TObject);
+begin
+  actPorPeriodo.Execute;
 end;
 
 end.

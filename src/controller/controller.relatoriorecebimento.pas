@@ -44,6 +44,8 @@ type
     {$Region 'Relatórios'}
     function DeclaracaoDeRenda(var Preview: TfrPreview; ano, TipoRece: Integer;
                           out Erro: String): Boolean;
+    function PorPeriodo(var Preview: TfrPreview; dInicial, dFinal: TDate; Busca: String;
+                          Tipo, TipoRece: Integer; out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -63,6 +65,13 @@ function TRelatorioRecebimentoController.DeclaracaoDeRenda(var Preview: TfrPrevi
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
   Result := Relatorio.DeclaracaoDeRenda(ano, TipoRece, Erro);
+end;
+
+function TRelatorioRecebimentoController.PorPeriodo(var Preview: TfrPreview;
+  dInicial, dFinal: TDate; Busca: String; Tipo, TipoRece: Integer; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.PorPeriodo(dInicial, dFinal, Busca, Tipo, TipoRece, Erro);
 end;
 
 constructor TRelatorioRecebimentoController.Create;

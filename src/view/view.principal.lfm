@@ -627,14 +627,14 @@ object frmPrincipal: TfrmPrincipal
       TabOrder = 5
       object lblInfoConexao: TLabel
         Left = 5
-        Height = 12
-        Top = 69
+        Height = 13
+        Top = 68
         Width = 231
         Align = alBottom
         BorderSpacing.Around = 5
         Caption = 'Informações de conexão [...]'
         Font.Color = 2977025
-        Font.Height = -9
+        Font.Height = -11
         Font.Style = [fsBold]
         ParentFont = False
       end

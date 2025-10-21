@@ -21,6 +21,11 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
                   Control = pnlDeclaracaoRenda
                   WrapAfter = waAuto
                   Index = 0
+                end              
+                item
+                  Control = pnlPorPeriodo
+                  WrapAfter = waAuto
+                  Index = 1
                 end>
               object pnlDeclaracaoRenda: TPanel[0]
                 Left = 5
@@ -37,6 +42,21 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
                 TabOrder = 0
                 OnClick = pnlDeclaracaoRendaClick
               end
+              object pnlPorPeriodo: TPanel[1]
+                Left = 185
+                Height = 50
+                Top = 5
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Por Período'
+                Color = 2977025
+                ParentBackground = False
+                ParentColor = False
+                TabOrder = 1
+                OnClick = pnlPorPeriodoClick
+              end
             end
           end
         end
@@ -52,6 +72,11 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
     inherited actPdfGrafico: TAction[9]
     end
     inherited actImagemGrafico: TAction[10]
+    end
+    object actPorPeriodo: TAction[11]
+      Tag = 1
+      Caption = 'Por Período'
+      OnExecute = actPorPeriodoExecute
     end
   end
 end

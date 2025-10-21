@@ -48,15 +48,22 @@ type
     cbTipo2: TComboBox;
     cbTipo3: TComboBox;
     cbTipo1: TComboBox;
+    cbTipoPesquisa5: TComboBox;
+    dtpFinal5: TDateTimePicker;
     dtpFinal4: TDateTimePicker;
     dtpInicial0: TDateTimePicker;
     dtpFinal0: TDateTimePicker;
+    dtpInicial5: TDateTimePicker;
     dtpInicial4: TDateTimePicker;
     edtAnoFinal2: TSpinEdit;
     edtAnoInicial2: TSpinEdit;
     edtAno3: TSpinEdit;
     edtPesquisa0: TEdit;
+    edtPesquisa5: TEdit;
     img: TImageList;
+    lblDataFinal5: TLabel;
+    lblDataInicial5: TLabel;
+    lblPesquisa5: TLabel;
     lblTipo2: TLabel;
     lblAnoFinal2: TLabel;
     lblAnoInicial2: TLabel;
@@ -73,6 +80,7 @@ type
     lblTipo1: TLabel;
     lblTipo4: TLabel;
     lbPesquisaId0: TListBox;
+    pnlFundo5: TPanel;
     pnlFundo3: TPanel;
     pnlFundo2: TPanel;
     pnlFundo1: TPanel;
@@ -87,6 +95,7 @@ type
     edtAnoInicial1: TSpinEdit;
     edtAnoFinal1: TSpinEdit;
     rgTipoRec3: TRadioGroup;
+    rgTipoRec5: TRadioGroup;
     tbs6: TTabSheet;
     tbs7: TTabSheet;
     tbs8: TTabSheet;
@@ -164,6 +173,14 @@ begin
       dtpInicial4.Date := Now;
       if dtpInicial4.CanFocus then
         dtpInicial4.SetFocus;
+    end;
+    5:
+    begin
+      dtpFinal5.Date   := Now;
+      dtpInicial5.Date := Now;
+      edtPesquisa5.Clear;
+      if dtpInicial5.CanFocus then
+        dtpInicial5.SetFocus;
     end;
   end;
 end;

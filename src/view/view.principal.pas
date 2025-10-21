@@ -214,8 +214,8 @@ begin
   lblNomeUsuario.Caption := Controller.RetornarNomeUsuario;
   self.Caption := 'VrbDespesas by Vinícius Ruan Brandalize v' +
                    Controller.RetornarVersao;
-  lblInfoConexao.Caption := '| ' + Controller.RetornarInfoConexao(1) + ' | ' +
-                                   Controller.RetornarInfoConexao(2) + ' |';
+  lblInfoConexao.Caption := '| ' + Controller.RetornarInfoConexao(1) + ' | ' + #13 +
+                            '| ' + Controller.RetornarInfoConexao(2) + ' |';
   AtribuirHintMenu();
 end;
 
