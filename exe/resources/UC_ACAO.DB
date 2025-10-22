@@ -92,3 +92,7 @@ id,nome,titulo,nome_uc_tela
 91,actExcluirDevedorAcesso,"Excluir Devedor",frmUsuario
 92,actPorPeriodo,"Por Período",frmRelatorioRecebimento
 93,actPorPeriodo,"Por Período",frmRelatorioFluxoCaixa
+94,actRelatorioFluxoCaixa,"Relatório de Fluxo de Caixa",frmPrincipal
+95,actRelatorioParticipante,"Relatório de Participante",frmPrincipal
+96,actTelemarketing,"Telemarketing",frmRelatorioParticipante
+97,actCompletoTodos,"Completo - Todos",frmRelatorioParticipante

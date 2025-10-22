@@ -1,0 +1,84 @@
+inherited frmRelatorioParticipante: TfrmRelatorioParticipante
+  Caption = 'Relatório de Participante'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  inherited pnlFundo: TPanel
+    inherited pgc: TPageControl
+      ActivePage = tbsPrincipal
+      TabIndex = 0
+      inherited tbsPrincipal: TTabSheet
+        inherited pnlFundoTbs1: TPanel
+          inherited pnlOpcoes: TPanel
+            inherited fpnlOpcoes: TFlowPanel
+              Left = 48
+              Height = 352
+              Top = 40
+              Width = 850
+              ControlList = <              
+                item
+                  Control = pnlTelemarketing
+                  WrapAfter = waAuto
+                  Index = 0
+                end              
+                item
+                  Control = pnlCompletoTodos
+                  WrapAfter = waAuto
+                  Index = 1
+                end>
+              object pnlTelemarketing: TPanel[0]
+                Left = 5
+                Height = 50
+                Top = 5
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Telemarketing'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 0
+                OnClick = pnlTelemarketingClick
+              end
+              object pnlCompletoTodos: TPanel[1]
+                Left = 185
+                Height = 50
+                Top = 5
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Completo - Todos'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 1
+                OnClick = pnlCompletoTodosClick
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  inherited actList: TActionList
+    object actTelemarketing: TAction[10]
+      Tag = 1
+      Caption = 'Telemarketing'
+      OnExecute = actTelemarketingExecute
+    end
+    object actCompletoTodos: TAction[11]
+      Tag = 1
+      Caption = 'Completo - Todos'
+      OnExecute = actCompletoTodosExecute
+    end
+  end
+end

@@ -36,7 +36,7 @@ uses
   view.logerro, view.loglogin, view.bandeira, view.contabancaria,
   view.participante, view.despesa, view.relatoriodespesa, view.recebimento,
   view.relatoriorecebimento, view.copiaseguranca, view.configuracao, view.ajuda,
-  view.mensagem, view.relatoriofluxocaixa;
+  view.mensagem, view.relatoriofluxocaixa, view.relatorioparticipante;
 
 type
 
@@ -55,6 +55,7 @@ type
     actFinanceiro: TAction;
     actBandeira: TAction;
     actContaBancaria: TAction;
+    actRelatorioParticipante: TAction;
     actRelatorioFluxoCaixa: TAction;
     actRelatorioRecebimento: TAction;
     actRecebimentoGeral: TAction;
@@ -85,6 +86,7 @@ type
     btnCopiaSeguranca: TSpeedButton;
     btnLoglogin: TSpeedButton;
     btnRecebimentoSalario: TSpeedButton;
+    btnRelParticipante: TSpeedButton;
     btnRelRecebimento: TSpeedButton;
     btnRelFluxoCaixa: TSpeedButton;
     btnSubtipo: TSpeedButton;
@@ -144,6 +146,7 @@ type
     procedure actRelatorioDespesaExecute(Sender: TObject);
     procedure actRelatorioExecute(Sender: TObject);
     procedure actRelatorioFluxoCaixaExecute(Sender: TObject);
+    procedure actRelatorioParticipanteExecute(Sender: TObject);
     procedure actRelatorioRecebimentoExecute(Sender: TObject);
     procedure actSubtipoDespesaExecute(Sender: TObject);
     procedure actTipoDespesaExecute(Sender: TObject);
@@ -340,6 +343,12 @@ end;
 procedure TfrmPrincipal.actRelatorioFluxoCaixaExecute(Sender: TObject);
 begin
   Controller.AbrirTela(frmRelatorioFluxoCaixa, TfrmRelatorioFluxoCaixa, false, pnlAbreForms, Self);
+  BarraLateralVazia(pnlMenuRelatorio, false);
+end;
+
+procedure TfrmPrincipal.actRelatorioParticipanteExecute(Sender: TObject);
+begin
+  Controller.AbrirTela(frmRelatorioParticipante, TfrmRelatorioParticipante, false, pnlAbreForms, Self);
   BarraLateralVazia(pnlMenuRelatorio, false);
 end;
 

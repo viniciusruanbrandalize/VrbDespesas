@@ -681,6 +681,21 @@
         <Filename Value="..\src\controller\controller.relatoriofluxocaixa.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\model\report\model.report.participante.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRelatorioParticipante"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -817,6 +817,23 @@ object frmPrincipal: TfrmPrincipal
         Margin = 7
         ParentFont = False
       end
+      object btnRelParticipante: TSpeedButton
+        Left = 0
+        Height = 32
+        Top = 96
+        Width = 40
+        Action = actRelatorioParticipante
+        Align = alTop
+        Flat = True
+        Font.Color = clWhite
+        Font.Height = -12
+        Font.Style = [fsBold]
+        Images = imgList
+        ImageIndex = 25
+        ImageWidth = 32
+        Margin = 7
+        ParentFont = False
+      end
     end
   end
   object Timer: TTimer
@@ -1017,6 +1034,13 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Relatório de Fluxo de Caixa'
       ImageIndex = 25
       OnExecute = actRelatorioFluxoCaixaExecute
+    end
+    object actRelatorioParticipante: TAction
+      Tag = 1
+      Category = 'Relatorio'
+      Caption = 'Relatório de Participante'
+      ImageIndex = 25
+      OnExecute = actRelatorioParticipanteExecute
     end
   end
   object imgList: TImageList

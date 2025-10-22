@@ -69,7 +69,8 @@ uses
   view.recebimento, view.relatoriorecebimento, view.copiaseguranca,
   view.configuracao, view.selecionardonocadastro, view.ajuda, lib.version,
   view.carregamento, view.relatoriofluxocaixa, model.report.fluxocaixa, 
-controller.relatoriofluxocaixa;
+controller.relatoriofluxocaixa, model.report.participante, 
+controller.relatorioparticipante, view.relatorioparticipante;
 
 {$R *.res}
 
