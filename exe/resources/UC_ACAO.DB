@@ -91,3 +91,4 @@ id,nome,titulo,nome_uc_tela
 90,actIncluirDevedorAcesso,"Incluir Devedor",frmUsuario
 91,actExcluirDevedorAcesso,"Excluir Devedor",frmUsuario
 92,actPorPeriodo,"Por Período",frmRelatorioRecebimento
+93,actPorPeriodo,"Por Período",frmRelatorioFluxoCaixa

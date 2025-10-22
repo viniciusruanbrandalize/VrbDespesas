@@ -24,11 +24,6 @@ object dmConexaoReport: TdmConexaoReport
     MaxIndexesCount = 4
     FieldDefs = <    
       item
-        Name = 'ID'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'DATA'
         DataType = ftDate
         Precision = -1
@@ -40,37 +35,39 @@ object dmConexaoReport: TdmConexaoReport
         Size = 100
       end    
       item
-        Name = 'TIPO'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'TOTAL'
-        DataType = ftBCD
-        Precision = 9
-        Size = 2
-      end    
-      item
-        Name = 'NOME_PAGADOR'
+        Name = 'NOME_PARTICIPANTE'
         DataType = ftString
         Precision = -1
         Size = 100
       end    
       item
-        Name = 'NOME_FPGTO'
-        DataType = ftString
+        Name = 'TOTAL'
+        DataType = ftBCD
+        Precision = 18
+        Size = 2
+      end    
+      item
+        Name = 'TIPO_SALDO'
+        DataType = ftFixedChar
         Precision = -1
-        Size = 60
+        Size = 1
+      end    
+      item
+        Name = 'ID_DONO_CADASTRO'
+        DataType = ftInteger
+        Precision = -1
       end>
     Database = SQLConnector
     Transaction = SQLTransaction
     SQL.Strings = (
-      'select r.id, r.data, r.descricao, r.tipo, r.valor_total as total,'
-      'p.nome as nome_pagador, fp.nome as nome_fpgto'
-      'from recebimento r'
-      'left join participante p on p.id = r.id_pagador'
-      'left join forma_pgto fp on fp.id = r.id_forma_pgto'
-      'order by r.data desc'
+      'select data, descricao, nome_participante, total, tipo_saldo, id_dono_cadastro from ('
+      '  select d.data, d.descricao, p.nome as nome_participante, d.total*(-1) as total, ''D'' as tipo_saldo, d.id_dono_cadastro from despesa d'
+      '  left join participante p on p.id = d.id_fornecedor'
+      '  union all'
+      '  select r.data, r.descricao, p.nome as nome_participante, r.valor_total as total, ''R'' as tipo_saldo, r.id_dono_cadastro from recebimento r'
+      '  left join participante p on p.id = r.id_pagador ) s1'
+      'where data between ''2025-01-01'' and ''2025-10-22'' and id_dono_cadastro = 1'
+      'order by data desc'
     )
     Params = <>
     Macros = <>

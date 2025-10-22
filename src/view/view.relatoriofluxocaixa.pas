@@ -30,7 +30,7 @@ unit view.relatoriofluxocaixa;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ActnList,
   view.relatoriopadrao, view.relatorioparametro, view.mensagem,
   view.carregamento, controller.relatoriofluxocaixa;
 
@@ -39,11 +39,14 @@ type
   { TfrmRelatorioFluxoCaixa }
 
   TfrmRelatorioFluxoCaixa = class(TfrmRelatorioPadrao)
-    pnlMensal: TPanel;
+    actPorPeriodo: TAction;
+    pnlPorPeriodo: TPanel;
+    procedure actPorPeriodoExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure pnlPorPeriodoClick(Sender: TObject);
   private
 
   public
@@ -69,6 +72,38 @@ begin
   CloseAction := caFree;
 end;
 
+procedure TfrmRelatorioFluxoCaixa.actPorPeriodoExecute(Sender: TObject);
+var
+  DataInicial, DataFinal: TDate;
+  Erro: String;
+begin
+  frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
+  try
+    frmRelatorioParametro.IndiceTab := 4;
+    frmRelatorioParametro.cbTipo4.Visible  := False;
+    frmRelatorioParametro.lblTipo4.Visible := False;
+    if frmRelatorioParametro.ShowModal = mrOK then
+    begin
+      DataInicial := frmRelatorioParametro.dtpInicial4.Date;
+      DataFinal   := frmRelatorioParametro.dtpFinal4.Date;
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.PorPeriodo(frPreview, DataInicial, DataFinal, Erro) then
+        begin
+          pgc.ActivePage := tbsDesigner;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
+    end;
+  finally
+    FreeAndNil(frmRelatorioParametro);
+  end;
+end;
+
 procedure TfrmRelatorioFluxoCaixa.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -84,6 +119,11 @@ procedure TfrmRelatorioFluxoCaixa.FormShow(Sender: TObject);
 begin
   LiberarBloquearAcessos(Self.actList, Self.Name);
   inherited;
+end;
+
+procedure TfrmRelatorioFluxoCaixa.pnlPorPeriodoClick(Sender: TObject);
+begin
+  actPorPeriodo.Execute;
 end;
 
 end.

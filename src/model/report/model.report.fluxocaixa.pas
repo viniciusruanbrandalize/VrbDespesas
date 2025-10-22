@@ -48,7 +48,7 @@ type
     dmRelatorio: TdmConexaoReport;
 
     {$Region 'Relatorios'}
-
+    function PorPeriodo(dInicial, dFinal: TDate; out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -63,6 +63,50 @@ end;
 implementation
 
 { TFluxoCaixaReport }
+
+function TFluxoCaixaReport.PorPeriodo(dInicial, dFinal: TDate; out Erro: String): Boolean;
+begin
+  try
+
+    FSQL := 'select data, descricao, nome_participante, total, tipo_saldo, id_dono_cadastro from (' +
+            'select d.data, d.descricao, p.nome as nome_participante, d.total*(-1) as total, ' +
+            QuotedStr('D')+' as tipo_saldo, d.id_dono_cadastro ' +
+            'from despesa d ' +
+            'left join participante p on p.id = d.id_fornecedor ' +
+            'union all ' +
+            'select r.data, r.descricao, p.nome as nome_participante, r.valor_total as total, ' +
+            QuotedStr('R')+' as tipo_saldo, r.id_dono_cadastro ' +
+            'from recebimento r ' +
+            'left join participante p on p.id = r.id_pagador ) s1 ' +
+            'where data between :inicial and :final and id_dono_cadastro = :id_dono_cadastro ' +
+            'order by data desc';
+
+    dmConexaoReport.qryPadrao.Close;
+    dmConexaoReport.qryPadrao.SQL.Clear;
+    dmConexaoReport.qryPadrao.SQL.Add(FSQL);
+    dmConexaoReport.qryPadrao.ParamByName('inicial').AsDateTime  := dInicial;
+    dmConexaoReport.qryPadrao.ParamByName('final').AsDateTime    := dFinal;
+    dmConexaoReport.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmConexaoReport.IDDonoCadastro;
+    dmConexaoReport.qryPadrao.Open;
+
+    dmConexaoReport.frReport.LoadFromFile(dmConexaoReport.DiretorioRelatorios +
+                                         'dfc_periodo.lrf');
+
+    dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
+                                                   DateToStr(dInicial)+' à '+DateToStr(dFinal);
+    dmConexaoReport.CarregarLogo();
+    dmConexaoReport.frReport.ShowReport;
+
+    Result := True;
+
+  except
+    on e: Exception do
+    begin
+      Erro := 'Erro ao gerar o relatório: ' + e.Message;
+      Result := False;
+    end;
+  end;
+end;
 
 procedure TFluxoCaixaReport.PesquisaGenerica(Tabela: TTabela; objNome: TObject;
   lbId: TListBox; busca: String; Limitacao: Integer; out QtdRegistro: Integer);

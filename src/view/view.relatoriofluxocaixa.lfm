@@ -16,18 +16,19 @@ inherited frmRelatorioFluxoCaixa: TfrmRelatorioFluxoCaixa
               Width = 802
               ControlList = <              
                 item
-                  Control = pnlMensal
+                  Control = pnlPorPeriodo
                   WrapAfter = waAuto
                   Index = 0
                 end>
-              object pnlMensal: TPanel[0]
-                Left = 0
+              object pnlPorPeriodo: TPanel[0]
+                Left = 5
                 Height = 50
-                Top = 0
+                Top = 5
                 Width = 170
                 Anchors = []
+                BorderSpacing.Around = 5
                 BevelOuter = bvNone
-                Caption = 'pnlMensal'
+                Caption = 'Por Período'
                 Color = 2977025
                 Font.Color = clWhite
                 Font.Style = [fsBold]
@@ -35,11 +36,18 @@ inherited frmRelatorioFluxoCaixa: TfrmRelatorioFluxoCaixa
                 ParentColor = False
                 ParentFont = False
                 TabOrder = 0
+                OnClick = pnlPorPeriodoClick
               end
             end
           end
         end
       end
+    end
+  end
+  inherited actList: TActionList
+    object actPorPeriodo: TAction[10]
+      Caption = 'actPorPeriodo'
+      OnExecute = actPorPeriodoExecute
     end
   end
 end

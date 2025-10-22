@@ -42,7 +42,8 @@ type
     Relatorio: TFluxoCaixaReport;
   public
     {$Region 'Relatórios'}
-
+    function PorPeriodo(var Preview: TfrPreview; dInicial, dFinal: TDate;
+                          out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -56,6 +57,13 @@ type
 implementation
 
 { TRelatorioFluxoCaixaController }
+
+function TRelatorioFluxoCaixaController.PorPeriodo(var Preview: TfrPreview;
+  dInicial, dFinal: TDate; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.PorPeriodo(dInicial, dFinal, Erro);
+end;
 
 constructor TRelatorioFluxoCaixaController.Create;
 begin
