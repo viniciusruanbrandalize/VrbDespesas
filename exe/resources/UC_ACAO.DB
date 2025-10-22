@@ -90,3 +90,4 @@ id,nome,titulo,nome_uc_tela
 89,actDevedor,"Gerenciar Devedores",frmUsuario
 90,actIncluirDevedorAcesso,"Incluir Devedor",frmUsuario
 91,actExcluirDevedorAcesso,"Excluir Devedor",frmUsuario
+92,actPorPeriodo,"Por Período",frmRelatorioRecebimento

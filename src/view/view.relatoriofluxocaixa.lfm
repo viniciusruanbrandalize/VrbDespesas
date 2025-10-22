@@ -1,0 +1,45 @@
+inherited frmRelatorioFluxoCaixa: TfrmRelatorioFluxoCaixa
+  Caption = 'Relatório de Fluxo de Caixa'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  inherited pnlFundo: TPanel
+    inherited pgc: TPageControl
+      ActivePage = tbsPrincipal
+      TabIndex = 0
+      inherited tbsPrincipal: TTabSheet
+        inherited pnlFundoTbs1: TPanel
+          inherited pnlOpcoes: TPanel
+            inherited fpnlOpcoes: TFlowPanel
+              Height = 226
+              Width = 802
+              ControlList = <              
+                item
+                  Control = pnlMensal
+                  WrapAfter = waAuto
+                  Index = 0
+                end>
+              object pnlMensal: TPanel[0]
+                Left = 0
+                Height = 50
+                Top = 0
+                Width = 170
+                Anchors = []
+                BevelOuter = bvNone
+                Caption = 'pnlMensal'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 0
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+end

@@ -666,6 +666,21 @@
         <ComponentName Value="frmCarregamento"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\view\view.relatoriofluxocaixa.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRelatorioFluxoCaixa"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\model\report\model.report.fluxocaixa.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\controller\controller.relatoriofluxocaixa.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
