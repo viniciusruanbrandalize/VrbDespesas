@@ -26,6 +26,11 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
                   Control = pnlPorPeriodo
                   WrapAfter = waAuto
                   Index = 1
+                end              
+                item
+                  Control = pnlPorPeriodoSalario
+                  WrapAfter = waAuto
+                  Index = 2
                 end>
               object pnlDeclaracaoRenda: TPanel[0]
                 Left = 5
@@ -57,6 +62,21 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
                 TabOrder = 1
                 OnClick = pnlPorPeriodoClick
               end
+              object pnlPorPeriodoSalario: TPanel[2]
+                Left = 365
+                Height = 50
+                Top = 5
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Por Período - Salário'
+                Color = 2977025
+                ParentBackground = False
+                ParentColor = False
+                TabOrder = 2
+                OnClick = pnlPorPeriodoSalarioClick
+              end
             end
           end
         end
@@ -77,6 +97,11 @@ inherited frmRelatorioRecebimento: TfrmRelatorioRecebimento
       Tag = 1
       Caption = 'Por Período'
       OnExecute = actPorPeriodoExecute
+    end
+    object actPorPeriodoSalario: TAction[12]
+      Tag = 1
+      Caption = 'Por Periodo - Salario'
+      OnExecute = actPorPeriodoSalarioExecute
     end
   end
 end

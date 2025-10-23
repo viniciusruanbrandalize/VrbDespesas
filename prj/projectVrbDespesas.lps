@@ -642,7 +642,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="62"/>
+        <TopLine Value="35"/>
         <CursorPos X="3" Y="40"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -669,7 +669,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="26" Y="18"/>
+        <TopLine Value="58"/>
+        <CursorPos X="18" Y="72"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -704,17 +705,20 @@
       <Unit>
         <Filename Value="..\src\model\report\model.report.recebimento.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="148"/>
-        <CursorPos X="31" Y="197"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="28"/>
+        <CursorPos X="20" Y="200"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatoriorecebimento.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="59" Y="21"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="56"/>
+        <CursorPos X="40" Y="79"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatoriorecebimento.pas"/>
@@ -722,10 +726,12 @@
         <ComponentName Value="frmRelatorioRecebimento"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="70"/>
-        <CursorPos X="30" Y="88"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="175"/>
+        <CursorPos X="62" Y="195"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.copiaseguranca.pas"/>
@@ -859,7 +865,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5" Y="56"/>
-        <UsageCount Value="180"/>
+        <UsageCount Value="182"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.carregamento.pas"/>
@@ -869,7 +875,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="39"/>
         <CursorPos X="33" Y="57"/>
-        <UsageCount Value="47"/>
+        <UsageCount Value="49"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatoriofluxocaixa.pas"/>
@@ -880,15 +886,15 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="65"/>
         <CursorPos X="30" Y="72"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="36"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.fluxocaixa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="55"/>
-        <CursorPos X="31" Y="65"/>
-        <UsageCount Value="33"/>
+        <TopLine Value="57"/>
+        <CursorPos X="17" Y="68"/>
+        <UsageCount Value="35"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatoriofluxocaixa.pas"/>
@@ -896,25 +902,23 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="38"/>
         <CursorPos X="45" Y="61"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="35"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.participante.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="89"/>
         <CursorPos X="27" Y="104"/>
-        <UsageCount Value="27"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="29"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="18" Y="85"/>
-        <UsageCount Value="27"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="29"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
@@ -922,12 +926,10 @@
         <ComponentName Value="frmRelatorioParticipante"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="39" Y="113"/>
-        <UsageCount Value="27"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="29"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.padrao.pas"/>
@@ -1377,78 +1379,34 @@
         <UsageCount Value="8"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="17">
+    <JumpHistory HistoryIndex="6">
       <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="28" Column="57" TopLine="15"/>
+        <Filename Value="..\src\view\view.relatoriorecebimento.pas"/>
+        <Caret Line="174" Column="6" TopLine="134"/>
       </Position>
       <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="51" Column="28" TopLine="28"/>
+        <Filename Value="..\src\view\view.relatoriorecebimento.pas"/>
+        <Caret Line="175" Column="6" TopLine="135"/>
       </Position>
       <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="80" Column="27" TopLine="40"/>
+        <Filename Value="..\src\view\view.relatoriorecebimento.pas"/>
+        <Caret Line="182" Column="6" TopLine="142"/>
       </Position>
       <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="56" Column="45" TopLine="41"/>
+        <Filename Value="..\src\model\report\model.report.recebimento.pas"/>
+        <Caret Line="53" Column="24" TopLine="31"/>
       </Position>
       <Position>
-        <Filename Value="..\src\model\report\model.report.participante.pas"/>
-        <Caret Line="47" Column="23" TopLine="33"/>
+        <Filename Value="..\src\controller\controller.relatoriorecebimento.pas"/>
+        <Caret Line="49" Column="22" TopLine="22"/>
       </Position>
       <Position>
-        <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
-        <Caret Line="45" Column="21" TopLine="30"/>
+        <Filename Value="..\src\view\view.relatoriorecebimento.pas"/>
+        <Caret Line="154" Column="17" TopLine="143"/>
       </Position>
       <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="73" Column="19" TopLine="49"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="80" Column="19" TopLine="51"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="75" Column="5" TopLine="56"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="77" Column="5" TopLine="58"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="115" Column="13" TopLine="76"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="116" Column="13" TopLine="77"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="123" Column="13" TopLine="83"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="130" Column="24" TopLine="90"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\report\model.report.participante.pas"/>
-        <Caret Line="48" Column="19" TopLine="34"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
-        <Caret Line="46" Column="19" TopLine="22"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
-        <Caret Line="72" Column="23" TopLine="44"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
-        <Caret Line="105" Column="24" TopLine="104"/>
+        <Filename Value="..\src\view\view.relatoriorecebimento.pas"/>
+        <Caret Line="166" Column="36" TopLine="142"/>
       </Position>
     </JumpHistory>
     <RunParams>

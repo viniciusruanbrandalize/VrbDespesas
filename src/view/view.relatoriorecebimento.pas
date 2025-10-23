@@ -40,17 +40,21 @@ type
 
   TfrmRelatorioRecebimento = class(TfrmRelatorioPadrao)
     actDeclaracaoRenda: TAction;
+    actPorPeriodoSalario: TAction;
     actPorPeriodo: TAction;
     pnlPorPeriodo: TPanel;
     pnlDeclaracaoRenda: TPanel;
+    pnlPorPeriodoSalario: TPanel;
     procedure actDeclaracaoRendaExecute(Sender: TObject);
     procedure actPorPeriodoExecute(Sender: TObject);
+    procedure actPorPeriodoSalarioExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pnlDeclaracaoRendaClick(Sender: TObject);
     procedure pnlPorPeriodoClick(Sender: TObject);
+    procedure pnlPorPeriodoSalarioClick(Sender: TObject);
   private
 
   public
@@ -143,6 +147,38 @@ begin
   end;
 end;
 
+procedure TfrmRelatorioRecebimento.actPorPeriodoSalarioExecute(Sender: TObject);
+var
+  DataInicial, DataFinal: TDate;
+  Erro: String;
+begin
+  frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
+  try
+    frmRelatorioParametro.IndiceTab := 4;
+    frmRelatorioParametro.lblTipo4.Visible := False;
+    frmRelatorioParametro.cbTipo4.Visible  := False;
+    if frmRelatorioParametro.ShowModal = mrOK then
+    begin
+      DataInicial := frmRelatorioParametro.dtpInicial4.Date;
+      DataFinal   := frmRelatorioParametro.dtpFinal4.Date;
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.PorPeriodoSalario(frPreview, DataInicial, DataFinal, Erro) then
+        begin
+          pgc.ActivePage := tbsDesigner;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
+    end;
+  finally
+    FreeAndNil(frmRelatorioParametro);
+  end;
+end;
+
 procedure TfrmRelatorioRecebimento.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -168,6 +204,11 @@ end;
 procedure TfrmRelatorioRecebimento.pnlPorPeriodoClick(Sender: TObject);
 begin
   actPorPeriodo.Execute;
+end;
+
+procedure TfrmRelatorioRecebimento.pnlPorPeriodoSalarioClick(Sender: TObject);
+begin
+  actPorPeriodoSalario.Execute;
 end;
 
 end.

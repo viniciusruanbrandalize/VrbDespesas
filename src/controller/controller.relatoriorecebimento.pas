@@ -46,6 +46,8 @@ type
                           out Erro: String): Boolean;
     function PorPeriodo(var Preview: TfrPreview; dInicial, dFinal: TDate; Busca: String;
                           Tipo, TipoRece: Integer; out Erro: String): Boolean;
+    function PorPeriodoSalario(var Preview: TfrPreview; dInicial, dFinal: TDate;
+                          out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -72,6 +74,13 @@ function TRelatorioRecebimentoController.PorPeriodo(var Preview: TfrPreview;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
   Result := Relatorio.PorPeriodo(dInicial, dFinal, Busca, Tipo, TipoRece, Erro);
+end;
+
+function TRelatorioRecebimentoController.PorPeriodoSalario(
+  var Preview: TfrPreview; dInicial, dFinal: TDate; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.PorPeriodoSalario(dInicial, dFinal, Erro);
 end;
 
 constructor TRelatorioRecebimentoController.Create;

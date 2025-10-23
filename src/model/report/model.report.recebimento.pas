@@ -50,6 +50,7 @@ type
     {$Region 'Relatorios'}
     function DeclaracaoDeRenda(ano, tipoRece: Integer; out Erro: String): Boolean;
     function PorPeriodo(dInicial, dFinal: TDate; Busca: String; Tipo, tipoRece: Integer; out Erro: String): Boolean;
+    function PorPeriodoSalario(dInicial, dFinal: TDate; out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -180,6 +181,49 @@ begin
     dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
                                                    DateToStr(dInicial)+' à '+DateToStr(dFinal)+
                                                    '     busca por '+TipoDeBusca+': '+Busca;
+    dmConexaoReport.CarregarLogo();
+    dmConexaoReport.frReport.ShowReport;
+
+    Result := True;
+
+  except
+    on e: Exception do
+    begin
+      Erro := 'Erro ao gerar o relatório: ' + e.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TRecebimentoReport.PorPeriodoSalario(dInicial, dFinal: TDate;
+  out Erro: String): Boolean;
+begin
+  try
+
+    FSQL := 'select r.id, r.data, r.valor_base, r.hora_extra, r.ir*(-1) as ir, r.inss*(-1) as inss, r.antecipacao, ' +
+            'r.valor_total as total, p.nome as nome_pagador, fp.nome as nome_fpgto ' +
+            'from recebimento r ' +
+            'left join participante p on p.id = r.id_pagador ' +
+            'left join forma_pgto fp on fp.id = r.id_forma_pgto '+
+            'where r.data between :inicial and :final and ' +
+            'r.id_dono_cadastro = :id_dono_cadastro ' +
+            'and r.tipo = :tipo ' +
+            'order by r.data desc';
+
+    dmConexaoReport.qryPadrao.Close;
+    dmConexaoReport.qryPadrao.SQL.Clear;
+    dmConexaoReport.qryPadrao.SQL.Add(FSQL);
+    dmConexaoReport.qryPadrao.ParamByName('inicial').AsDateTime  := dInicial;
+    dmConexaoReport.qryPadrao.ParamByName('final').AsDateTime    := dFinal;
+    dmConexaoReport.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmConexaoReport.IDDonoCadastro;
+    dmConexaoReport.qryPadrao.ParamByName('tipo').AsInteger := 0;
+    dmConexaoReport.qryPadrao.Open;
+
+    dmConexaoReport.frReport.LoadFromFile(dmConexaoReport.DiretorioRelatorios +
+                                         'recebimento_periodo_salario.lrf');
+
+    dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
+                                                   DateToStr(dInicial)+' à '+DateToStr(dFinal);
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 

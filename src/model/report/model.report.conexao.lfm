@@ -29,142 +29,65 @@ object dmConexaoReport: TdmConexaoReport
         Precision = -1
       end    
       item
-        Name = 'PESSOA'
-        DataType = ftFixedChar
-        Precision = -1
-        Size = 1
-      end    
-      item
-        Name = 'NOME'
-        DataType = ftString
-        Precision = -1
-        Size = 100
-      end    
-      item
-        Name = 'FANTASIA'
-        DataType = ftString
-        Precision = -1
-        Size = 100
-      end    
-      item
-        Name = 'CNPJ'
-        DataType = ftString
-        Precision = -1
-        Size = 14
-      end    
-      item
-        Name = 'IE'
-        DataType = ftInteger
+        Name = 'DATA'
+        DataType = ftDate
         Precision = -1
       end    
       item
-        Name = 'TELEFONE'
-        DataType = ftString
-        Precision = -1
-        Size = 20
-      end    
-      item
-        Name = 'CELULAR'
-        DataType = ftString
-        Precision = -1
-        Size = 20
-      end    
-      item
-        Name = 'EMAIL'
-        DataType = ftString
-        Precision = -1
-        Size = 200
-      end    
-      item
-        Name = 'CEP'
-        DataType = ftString
-        Precision = -1
-        Size = 9
-      end    
-      item
-        Name = 'RUA'
-        DataType = ftString
-        Precision = -1
-        Size = 300
-      end    
-      item
-        Name = 'NUMERO'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'COMPLEMENTO'
-        DataType = ftString
-        Precision = -1
-        Size = 50
-      end    
-      item
-        Name = 'BAIRRO'
-        DataType = ftString
-        Precision = -1
-        Size = 80
-      end    
-      item
-        Name = 'OBS'
-        DataType = ftString
-        Precision = -1
-        Size = 300
-      end    
-      item
-        Name = 'CADASTRO'
-        DataType = ftDateTime
-        Precision = -1
-      end    
-      item
-        Name = 'ALTERACAO'
-        DataType = ftDateTime
-        Precision = -1
-      end    
-      item
-        Name = 'EXCLUIDO'
-        DataType = ftBoolean
-        Precision = -1
-      end    
-      item
-        Name = 'DONO_CADASTRO'
-        DataType = ftBoolean
-        Precision = -1
-      end    
-      item
-        Name = 'ID_CIDADE'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'ID_USUARIO_CADASTRO'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'ID_DONO_CADASTRO'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'NOME_CIDADE'
-        DataType = ftString
-        Precision = -1
-        Size = 50
-      end    
-      item
-        Name = 'UF'
-        DataType = ftFixedChar
-        Precision = -1
+        Name = 'VALOR_BASE'
+        DataType = ftBCD
+        Precision = 9
         Size = 2
+      end    
+      item
+        Name = 'HORA_EXTRA'
+        DataType = ftBCD
+        Precision = 9
+        Size = 2
+      end    
+      item
+        Name = 'IR'
+        DataType = ftBCD
+        Precision = 9
+        Size = 2
+      end    
+      item
+        Name = 'INSS'
+        DataType = ftBCD
+        Precision = 9
+        Size = 2
+      end    
+      item
+        Name = 'ANTECIPACAO'
+        DataType = ftBCD
+        Precision = 9
+        Size = 2
+      end    
+      item
+        Name = 'TOTAL'
+        DataType = ftBCD
+        Precision = 9
+        Size = 2
+      end    
+      item
+        Name = 'NOME_PAGADOR'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'NOME_FPGTO'
+        DataType = ftString
+        Precision = -1
+        Size = 60
       end>
     Database = SQLConnector
     Transaction = SQLTransaction
     SQL.Strings = (
-      'select p.*, c.nome as nome_cidade, c.uf as uf from participante p'
-      'left join cidade c on c.id = p.id_cidade'
-      'where p.dono_cadastro = false and p.id_dono_cadastro = 1'
-      'and p.excluido = false'
-      'order by p.nome, p.fantasia'
+      'select r.id, r.data, r.VALOR_BASE, r.HORA_EXTRA, r.IR, r.INSS, r.ANTECIPACAO, r.valor_total as total, p.nome as nome_pagador, fp.nome as nome_fpgto'
+      'from recebimento r'
+      'left join participante p on p.id = r.id_pagador'
+      'left join forma_pgto fp on fp.id = r.id_forma_pgto'
     )
     Params = <>
     Macros = <>

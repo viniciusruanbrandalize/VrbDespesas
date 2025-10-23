@@ -73,6 +73,7 @@ begin
             QuotedStr('D')+' as tipo_saldo, d.id_dono_cadastro ' +
             'from despesa d ' +
             'left join participante p on p.id = d.id_fornecedor ' +
+            'where d.paga ' +
             'union all ' +
             'select r.data, r.descricao, p.nome as nome_participante, r.valor_total as total, ' +
             QuotedStr('R')+' as tipo_saldo, r.id_dono_cadastro ' +
