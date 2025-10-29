@@ -648,9 +648,10 @@
       <Unit>
         <Filename Value="..\src\model\report\model.report.despesa.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="391"/>
-        <CursorPos X="36" Y="420"/>
+        <CursorPos X="40" Y="411"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -858,11 +859,9 @@
       <Unit>
         <Filename Value="..\src\lib\lib.version.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="26" Y="17"/>
-        <UsageCount Value="187"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3"/>
+        <UsageCount Value="188"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.carregamento.pas"/>
@@ -872,7 +871,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="39"/>
         <CursorPos X="33" Y="57"/>
-        <UsageCount Value="54"/>
+        <UsageCount Value="55"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatoriofluxocaixa.pas"/>
@@ -883,7 +882,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="105"/>
         <CursorPos X="23" Y="111"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -892,16 +891,16 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="33" Y="26"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="41"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatoriofluxocaixa.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="46"/>
         <CursorPos X="26" Y="73"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="41"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -910,7 +909,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="89"/>
         <CursorPos X="27" Y="104"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="35"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
@@ -918,7 +917,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="18" Y="85"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="35"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
@@ -929,7 +928,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="39" Y="113"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="35"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.padrao.pas"/>
