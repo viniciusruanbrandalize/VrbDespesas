@@ -39,14 +39,18 @@ type
   { TfrmRelatorioFluxoCaixa }
 
   TfrmRelatorioFluxoCaixa = class(TfrmRelatorioPadrao)
+    actTotalMensal: TAction;
     actPorPeriodo: TAction;
     pnlPorPeriodo: TPanel;
+    pnlTotalMensal: TPanel;
     procedure actPorPeriodoExecute(Sender: TObject);
+    procedure actTotalMensalExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pnlPorPeriodoClick(Sender: TObject);
+    procedure pnlTotalMensalClick(Sender: TObject);
   private
 
   public
@@ -104,6 +108,38 @@ begin
   end;
 end;
 
+procedure TfrmRelatorioFluxoCaixa.actTotalMensalExecute(Sender: TObject);
+var
+  Ano: Integer;
+  Erro: String;
+begin
+  frmRelatorioParametro := TfrmRelatorioParametro.Create(Self);
+  try
+    frmRelatorioParametro.IndiceTab := 3;
+    frmRelatorioParametro.cbTipo3.Visible    := False;
+    frmRelatorioParametro.lblTipo3.Visible   := False;
+    frmRelatorioParametro.rgTipoRec3.Visible := False;
+    if frmRelatorioParametro.ShowModal = mrOK then
+    begin
+      Ano := frmRelatorioParametro.edtAno3.Value;
+      TfrmCarregamento.Carregar('Gerando relatório...', 'Gerando Relatório');
+      try
+        if Controller.TotalMensal(frPreview, chGrafico, Ano, 0, Erro) then
+        begin
+          pgc.ActivePage := tbsDesigner;
+          actFechar.ImageIndex := 1;
+        end
+        else
+          TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOk]);
+      finally
+        TfrmCarregamento.Destruir();
+      end;
+    end;
+  finally
+    FreeAndNil(frmRelatorioParametro);
+  end;
+end;
+
 procedure TfrmRelatorioFluxoCaixa.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -124,6 +160,11 @@ end;
 procedure TfrmRelatorioFluxoCaixa.pnlPorPeriodoClick(Sender: TObject);
 begin
   actPorPeriodo.Execute;
+end;
+
+procedure TfrmRelatorioFluxoCaixa.pnlTotalMensalClick(Sender: TObject);
+begin
+  actTotalMensal.Execute;
 end;
 
 end.

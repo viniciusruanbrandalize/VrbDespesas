@@ -96,3 +96,5 @@ id,nome,titulo,nome_uc_tela
 95,actRelatorioParticipante,"Relatório de Participante",frmPrincipal
 96,actTelemarketing,"Telemarketing",frmRelatorioParticipante
 97,actCompletoTodos,"Completo - Todos",frmRelatorioParticipante
+98,actTotalMensal,"Total Mensal",frmRelatorioFluxoCaixa
+99,actPorPeriodoSalario,"Por Periodo - Salario",frmRelatorioRecebimento

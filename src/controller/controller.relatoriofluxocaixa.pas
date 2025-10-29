@@ -31,7 +31,7 @@ interface
 
 uses
   Classes, SysUtils, LR_View, ComCtrls, StdCtrls, model.report.fluxocaixa,
-  model.dao.padrao;
+  model.dao.padrao, TAGraph;
 
 type
 
@@ -44,6 +44,7 @@ type
     {$Region 'Relatórios'}
     function PorPeriodo(var Preview: TfrPreview; dInicial, dFinal: TDate;
                           out Erro: String): Boolean;
+    function TotalMensal(var Preview: TfrPreview; var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -63,6 +64,13 @@ function TRelatorioFluxoCaixaController.PorPeriodo(var Preview: TfrPreview;
 begin
   Relatorio.dmRelatorio.frReport.Preview := Preview;
   Result := Relatorio.PorPeriodo(dInicial, dFinal, Erro);
+end;
+
+function TRelatorioFluxoCaixaController.TotalMensal(var Preview: TfrPreview;
+  var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
+begin
+  Relatorio.dmRelatorio.frReport.Preview := Preview;
+  Result := Relatorio.TotalMensal(Grafico, ano, Tipo, Erro);
 end;
 
 constructor TRelatorioFluxoCaixaController.Create;

@@ -30,7 +30,8 @@ unit model.report.fluxocaixa;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, StdCtrls, model.report.conexao, model.dao.padrao;
+  Classes, SysUtils, StrUtils, StdCtrls, model.report.conexao, model.dao.padrao,
+  TAGraph, TASeries, TAFuncSeries;
 
 type
 
@@ -49,6 +50,7 @@ type
 
     {$Region 'Relatorios'}
     function PorPeriodo(dInicial, dFinal: TDate; out Erro: String): Boolean;
+    function TotalMensal(var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
     {$EndRegion}
 
     {$Region 'Buscas Filtros'}
@@ -95,6 +97,72 @@ begin
 
     dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Período: '+
                                                    DateToStr(dInicial)+' à '+DateToStr(dFinal);
+    dmConexaoReport.CarregarLogo();
+    dmConexaoReport.frReport.ShowReport;
+
+    Result := True;
+
+  except
+    on e: Exception do
+    begin
+      Erro := 'Erro ao gerar o relatório: ' + e.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TFluxoCaixaReport.TotalMensal(var Grafico: TChart; ano, Tipo: Integer;
+  out Erro: String): Boolean;
+var
+  i: Double;
+begin
+  try
+
+    FSQL := 'select sum(total_despesa) as total_despesa, sum(total_recebimento) as total_recebimento, mes, ano, id_dono_cadastro, ' +
+            '(case when mes = 1 then ''Janeiro'' else '+
+            '(case when mes = 2 then ''Fevereiro'' else '+
+            '(case when mes = 3 then ''Março'' else '+
+            '(case when mes = 4 then ''Abril'' else '+
+            '(case when mes = 5 then ''Maio'' else '+
+            '(case when mes = 6 then ''Junho'' else '+
+            '(case when mes = 7 then ''Julho'' else '+
+            '(case when mes = 8 then ''Agosto'' else '+
+            '(case when mes = 9 then ''Setembro'' else '+
+            '(case when mes = 10 then ''Outubro'' else '+
+            '(case when mes = 11 then ''Novembro'' else '+
+            '(case when mes = 12 then ''Dezembro'' '+
+            'end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from ' +
+            '(select sum(total) as total_despesa, 0 AS total_recebimento, extract(month from data) as mes, ' +
+            'extract(year from data) as ano, id_dono_cadastro from despesa ' +
+            'where paga ' +
+            'group by mes, ano, id_dono_cadastro ' +
+            'union all ' +
+            'select 0 as total_despesa, sum(valor_total) AS total_recebimento, extract(month from data) as mes, ' +
+            'extract(year from data) as ano, id_dono_cadastro from recebimento ' +
+            'group by mes, ano, id_dono_cadastro ) s1 ' +
+            'group by mes, ano, nome_mes, id_dono_cadastro ' +
+            'having ano = :ano_informado and id_dono_cadastro = :id_dono_cadastro ' +
+            'order by mes asc';
+
+    dmConexaoReport.qryPadrao.Close;
+    dmConexaoReport.qryPadrao.SQL.Clear;
+    dmConexaoReport.qryPadrao.SQL.Add(FSQL);
+    dmConexaoReport.qryPadrao.ParamByName('ano_informado').AsInteger := ano;
+    dmConexaoReport.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmConexaoReport.IDDonoCadastro;
+    dmConexaoReport.qryPadrao.Open;
+    dmConexaoReport.qryPadrao.First;
+
+    while not dmConexaoReport.qryPadrao.EOF do
+    begin
+      i:=dmConexaoReport.qryPadrao.FieldByName('total_despesa').AsFloat;
+      i:=dmConexaoReport.qryPadrao.FieldByName('total_recebimento').AsFloat;
+      dmConexaoReport.qryPadrao.Next;
+    end;
+
+    dmConexaoReport.frReport.LoadFromFile(dmConexaoReport.DiretorioRelatorios +
+                                         'dfc_total_mensal.lrf');
+
+    dmRelatorio.frReport.FindObject('mInformacao').Memo.Text := 'Ano: '+ano.ToString;
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 

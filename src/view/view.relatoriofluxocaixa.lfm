@@ -19,6 +19,11 @@ inherited frmRelatorioFluxoCaixa: TfrmRelatorioFluxoCaixa
                   Control = pnlPorPeriodo
                   WrapAfter = waAuto
                   Index = 0
+                end              
+                item
+                  Control = pnlTotalMensal
+                  WrapAfter = waAuto
+                  Index = 1
                 end>
               object pnlPorPeriodo: TPanel[0]
                 Left = 5
@@ -38,6 +43,24 @@ inherited frmRelatorioFluxoCaixa: TfrmRelatorioFluxoCaixa
                 TabOrder = 0
                 OnClick = pnlPorPeriodoClick
               end
+              object pnlTotalMensal: TPanel[1]
+                Left = 185
+                Height = 50
+                Top = 5
+                Width = 170
+                Anchors = []
+                BorderSpacing.Around = 5
+                BevelOuter = bvNone
+                Caption = 'Total Mensal'
+                Color = 2977025
+                Font.Color = clWhite
+                Font.Style = [fsBold]
+                ParentBackground = False
+                ParentColor = False
+                ParentFont = False
+                TabOrder = 1
+                OnClick = pnlTotalMensalClick
+              end
             end
           end
         end
@@ -46,8 +69,14 @@ inherited frmRelatorioFluxoCaixa: TfrmRelatorioFluxoCaixa
   end
   inherited actList: TActionList
     object actPorPeriodo: TAction[10]
-      Caption = 'actPorPeriodo'
+      Tag = 1
+      Caption = 'Por Período'
       OnExecute = actPorPeriodoExecute
+    end
+    object actTotalMensal: TAction[11]
+      Tag = 1
+      Caption = 'Total Mensal'
+      OnExecute = actTotalMensalExecute
     end
   end
 end
