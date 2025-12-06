@@ -22,6 +22,10 @@
 * <a href="https://github.com/viniciusruanbrandalize/libVrbBCrypt">libVrbBCrypt (.dll/.so)</a>
 * <a href="https://github.com/viniciusruanbrandalize/libVrbCryptIni">libVrbCryptIni (.dll/.so)</a>
 
+## Instalação
+Execute o arquivo vrbdespesas-setup-fb-x86.exe da versão mais recente.
+Logo após, podes entrar com o usuário admin e a senha 123.
+
 ## Como Contribuir
 
 Agradecemos seu interesse em contribuir para este projeto! Sua doação é importante!

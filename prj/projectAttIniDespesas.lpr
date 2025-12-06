@@ -23,34 +23,77 @@
 *******************************************************************************
 }
 
-unit lib.version;
+program projectAttIniDespesas;
 
-{
-   Essa unit usa o Versionamento Semântico
-
-   Em Resumo:
-   Dado um número de versão MAJOR.MINOR.PATCH, incremente:
-
-   Versão MAJOR quando você faz alterações de API incompatíveis.
-   Versão MINOR quando você adiciona funcionalidade de maneira compatível
-   com versões anteriores.
-   Versão PATCH quando você faz correções de bugs compatíveis com versões
-   anteriores.
-
-}
-
-{$mode ObjFPC}{$H+}
-
-interface
+{$mode objfpc}{$H+}
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, controller.principal;
 
-const
-  NUMERO_VERSAO = '0.5.1-alpha';
-const
-  DATA_VERSA0   = '06/12/2025';
+var
+  Ctrl: TPrincipalController;
 
-implementation
+  ParDriver1:   String;
+  ParServidor1: String;
+  ParPorta1:    Integer;
+  ParBanco1:    String;
+  ParUsuario1:  String;
+  ParSenha1:    String;
+  ParNomeDLL1:  String;
+
+  ParDriver2:   String;
+  ParServidor2: String;
+  ParPorta2:    Integer;
+  ParBanco2:    String;
+  ParUsuario2:  String;
+  ParSenha2:    String;
+  ParNomeDLL2:  String;
+
+begin
+
+  ParDriver1      := ParamStr(1);
+  ParServidor1    := ParamStr(2);
+  ParPorta1       := StrToIntDef(ParamStr(3), 0);
+  ParBanco1       := ParamStr(4);
+  ParUsuario1     := ParamStr(5);
+  ParSenha1       := ParamStr(6);
+  ParNomeDLL1     := ParamStr(7);
+
+  ParDriver2      := ParamStr(8);
+  ParServidor2    := ParamStr(9);
+  ParPorta2       := StrToIntDef(ParamStr(10), 0);
+  ParBanco2       := ParamStr(11);
+  ParUsuario2     := ParamStr(12);
+  ParSenha2       := ParamStr(13);
+  ParNomeDLL2     := ParamStr(14);
+
+  Ctrl := TPrincipalController.Create;
+  try
+    if ParDriver1 <> '' then
+    begin
+
+      Ctrl.INI.Driver1   := ParDriver1;
+      Ctrl.INI.Servidor1 := ParServidor1;
+      Ctrl.INI.Porta1    := ParPorta1;
+      Ctrl.INI.Banco1    := ParBanco1;
+      Ctrl.INI.Usuario1  := ParUsuario1;
+      Ctrl.INI.Senha1    := ParSenha1;
+      Ctrl.INI.NomeDLL1  := ParNomeDLL1;
+
+      Ctrl.INI.Driver2   := ParDriver2;
+      Ctrl.INI.Servidor2 := ParServidor2;
+      Ctrl.INI.Porta2    := ParPorta2;
+      Ctrl.INI.Banco2    := ParBanco2;
+      Ctrl.INI.Usuario2  := ParUsuario2;
+      Ctrl.INI.Senha2    := ParSenha2;
+      Ctrl.INI.NomeDLL2  := ParNomeDLL2;
+
+      Ctrl.INI.Escrever;
+
+    end;
+  finally
+    Ctrl.Free;
+  end;
 
 end.
+

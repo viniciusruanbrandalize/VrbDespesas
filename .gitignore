@@ -51,6 +51,7 @@ configurador/backup/
 configurador/compile/
 database/conversao/
 prj/backup/
+attIni/compile/
 *.dbg
 *.err
 *.log
