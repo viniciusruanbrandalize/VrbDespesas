@@ -666,6 +666,7 @@ inherited frmContaBancaria: TfrmContaBancaria
                       'CNPJ'
                       'E-MAIL'
                       'ALEATÓRIA'
+                      'CELULAR'
                     )
                     Style = csDropDownList
                     TabOrder = 1
