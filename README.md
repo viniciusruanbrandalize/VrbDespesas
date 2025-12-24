@@ -27,6 +27,13 @@
   <img src="img/telas/grafico1.png" width="180" alt="Grafico 1" style="margin-right: 10px"/>
   <img src="img/telas/grafico2.png" width="180" alt="Grafico 2" style="margin-right: 10px"/>
   <img src="img/telas/grafico3.png" width="180" alt="Grafico 3" style="margin-right: 10px"/>
+  <img src="img/telas/grafico4.png" width="180" alt="Grafico 3" style="margin-right: 10px"/>
+</p>
+<p align="center">
+  <img src="img/telas/grafico5.png" width="180" alt="Grafico 1" style="margin-right: 10px"/>
+  <img src="img/telas/relatorio1.png" width="180" alt="Relatorio 1" style="margin-right: 10px"/>
+  <img src="img/telas/relatorio2.png" width="180" alt="Relatorio 2" style="margin-right: 10px"/>
+  <img src="img/telas/despesa1.png" width="180" alt="Despesa 1" style="margin-right: 10px"/>
 </p>
 
 ## Instalação
