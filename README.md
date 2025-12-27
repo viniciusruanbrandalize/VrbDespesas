@@ -25,6 +25,18 @@
 
 ## Demonstração de telas
 <p align="center">
+  <img src="img/telas/despesa1.png" width="180" alt="Despesa 1" style="margin-right: 10px"/>
+  <img src="img/telas/despesa2.png" width="180" alt="Despesa 2" style="margin-right: 10px"/>
+  <img src="img/telas/recebimento1.png" width="180" alt="Recebimento 1" style="margin-right: 10px"/>
+  <img src="img/telas/recebimento2.png" width="180" alt="Recebimento 2" style="margin-right: 10px"/>
+</p>
+<p align="center">
+  <img src="img/telas/subtipo_despesa_editar.png" width="180" alt="Subtipo de despesa" style="margin-right: 10px"/>
+  <img src="img/telas/mensagem_excluir.png" width="180" alt="Mensagem excluir" style="margin-right: 10px"/>
+  <img src="img/telas/usuario.png" width="180" alt="Usuario" style="margin-right: 10px"/>
+  <img src="img/telas/backup.png" width="180" alt="Backup" style="margin-right: 10px"/>
+</p>
+<p align="center">
   <img src="img/telas/grafico1.png" width="180" alt="Grafico 1" style="margin-right: 10px"/>
   <img src="img/telas/grafico2.png" width="180" alt="Grafico 2" style="margin-right: 10px"/>
   <img src="img/telas/grafico3.png" width="180" alt="Grafico 3" style="margin-right: 10px"/>
@@ -34,7 +46,7 @@
   <img src="img/telas/grafico5.png" width="180" alt="Grafico 1" style="margin-right: 10px"/>
   <img src="img/telas/relatorio1.png" width="180" alt="Relatorio 1" style="margin-right: 10px"/>
   <img src="img/telas/relatorio2.png" width="180" alt="Relatorio 2" style="margin-right: 10px"/>
-  <img src="img/telas/despesa1.png" width="180" alt="Despesa 1" style="margin-right: 10px"/>
+  <img src="img/telas/login.png" width="180" alt="Login" style="margin-right: 10px"/>
 </p>
 
 ## Instalação
