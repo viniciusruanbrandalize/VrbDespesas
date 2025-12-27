@@ -31,7 +31,7 @@ interface
 
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, SQLDB, model.connection.conexao1,
-  model.connection.conexao2;
+  model.connection.conexao2, StrUtils, model.ini.conexao, lib.util;
 
 type
 
@@ -72,6 +72,8 @@ type
                                 Limitacao: Integer; out QtdRegistro: Integer);
     function GerarId(Sequencia: TSequencia; Incremento: Integer=1; Conector: TSQLConnector = nil): Integer;
     function UltimoIdInserido(): Integer;
+    function ILikeSQL(Campo: String = ''; Param: String = ''): String;
+    function Collate(): String;
     procedure CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);
     procedure Commit(Conexao: Integer = 1);
     procedure Roolback(Conexao: Integer = 1);
@@ -240,8 +242,8 @@ begin
         CmdLimit := 'first '+Limitacao.ToString;
 
       sql := 'select '+CmdLimit+' id, nome from '+NomeTabela+' '+
-             'where UPPER(nome) like :busca '+WhereExcluido+
-             'order by nome';
+             'where '+ILikeSQL('nome', 'busca')+' '+WhereExcluido+
+             'order by nome '+Collate();
     end
     else
     if FDriver in [DRV_POSTGRESQL, DRV_MYSQL, DRV_MARIADB] then
@@ -250,7 +252,7 @@ begin
         CmdLimit := 'limit '+Limitacao.ToString;
 
       sql := 'select id, nome from '+NomeTabela+' '+
-             'where UPPER(nome) like :busca '+WhereExcluido+
+             'where '+ILikeSQL('nome', 'busca')+' '+WhereExcluido+
              'order by nome ' +CmdLimit;
     end;
 
@@ -367,6 +369,36 @@ begin
 
   finally
     Qry.Close;
+  end;
+end;
+
+function TPadraoDAO.ILikeSQL(Campo: String = ''; Param: String = ''): String;
+begin
+  if Param = '' then
+    Param := Campo;
+  case FDriver of
+    DRV_FIREBIRD: Result := IfThen(Campo = '', IfThen(Collate() = '', 'like', Collate()+' like'),
+                                               IfThen(Collate() = '', 'upper('+Campo+') like upper(:'+Param+')', 'upper('+Campo+')'+Collate()+' like upper(:'+Param+')'));
+    DRV_MYSQL, DRV_MARIADB: Result := IfThen(Campo = '', 'like', 'upper('+Campo+') like upper(:'+Param+')');
+    DRV_POSTGRESQL:         Result := IfThen(Campo = '', 'ilike', 'unaccent('+Campo+') ilike unaccent(:'+Param+')');
+    else
+      Result := IfThen(Campo = '', 'like', 'upper('+Campo+') like upper(:'+Param+')');
+  end;
+end;
+
+function TPadraoDAO.Collate(): String;
+var
+  INI: TConexaoINI;
+begin
+  INI := TConexaoINI.Create;
+  try
+    case FDriver of
+      DRV_FIREBIRD: Result := IfThen(Trim(INI.Collate1) = '', '', 'collate '+Trim(INI.Collate1));
+      else
+        Result := '';
+    end;
+  finally
+    INI.Free;
   end;
 end;
 

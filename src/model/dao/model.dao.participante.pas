@@ -67,7 +67,7 @@ begin
     sql := 'select p.* from participante p ' +
            'where p.dono_cadastro = :dono_cadastro and excluido = false and ' +
            'p.id_dono_cadastro = :id_dono_cadastro ' +
-           'order by p.nome';
+           'order by p.nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -108,7 +108,7 @@ begin
              'where '+campo+' = :busca and ' +
              'p.dono_cadastro = :dono_cadastro and excluido = false and ' +
              'p.id_dono_cadastro = :id_dono_cadastro '+
-             'order by p.nome';
+             'order by p.nome '+Collate();
     end
     else
     begin
@@ -116,7 +116,7 @@ begin
              'where UPPER('+campo+') like :busca and '+
              'p.dono_cadastro = :dono_cadastro and excluido = false and ' +
              'p.id_dono_cadastro = :id_dono_cadastro '+
-             'order by p.nome';
+             'order by p.nome '+Collate();
     end;
 
     Qry.Close;
@@ -156,7 +156,7 @@ begin
     begin
       sql := 'select first 10 id, nome, uf from cidade ' +
              'where UPPER(nome) like :busca '+
-             'order by nome';
+             'order by nome '+Collate();
     end
     else
     if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL] then

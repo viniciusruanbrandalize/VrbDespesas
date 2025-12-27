@@ -9,7 +9,7 @@
 
 ### Bancos de dados compatíveis
 * <a href="https://www.firebirdsql.org/"> Firebird 3.0 ou superior </a>
-* <a href="https://www.postgresql.org/"> Postgresql </a>
+* <a href="https://www.postgresql.org/"> Postgresql 10 ou superior </a>
 * <a href="https://mariadb.org/"> MariaDB </a>
 * <a href="https://www.mysql.com/"> MySQL </a>
 

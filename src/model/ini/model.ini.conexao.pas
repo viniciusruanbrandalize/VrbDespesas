@@ -48,6 +48,7 @@ type
     FSenha1:    String;
     FNomeDLL1:  String;
     FCharSet1:  String;
+    FCollate1:  String;
     FLogSQL1:   Boolean;
     FEsquema1:  String;
     FInatividade1: Integer;
@@ -61,6 +62,7 @@ type
     FSenha2:    String;
     FNomeDLL2:  String;
     FCharSet2:  String;
+    FCollate2:  String;
     FLogSQL2:   Boolean;
     FEsquema2:  String;
     FInatividade2: Integer;
@@ -87,6 +89,7 @@ type
     property Senha1: String read FSenha1 write FSenha1;
     property NomeDLL1: String read FNomeDLL1 write FNomeDLL1;
     property CharSet1: String read FCharSet1 write FCharSet1;
+    property Collate1: String read FCollate1 write FCollate1;
     property LogSQL1: Boolean read FLogSQL1 write FLogSQL1;
     property Esquema1: String read FEsquema1 write FEsquema1;
     property Inatividade1: Integer read FInatividade1 write FInatividade1;
@@ -100,6 +103,7 @@ type
     property Senha2: String read FSenha2 write FSenha2;
     property NomeDLL2: String read FNomeDLL2 write FNomeDLL2;
     property CharSet2: String read FCharSet2 write FCharSet2;
+    property Collate2: String read FCollate2 write FCollate2;
     property LogSQL2: Boolean read FLogSQL2 write FLogSQL2;
     property Esquema2: String read FEsquema2 write FEsquema2;
     property Inatividade2: Integer read FInatividade2 write FInatividade2;
@@ -121,6 +125,7 @@ begin
   FSenha1       := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SENHA', '');
   FNomeDLL1     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BIBLIOTECA', '');
   FCharSet1     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'CHARSET', '');
+  FCollate1     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'COLLATE', '');
   FLogSQL1      := lib.cryptini.LerBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'LOG', false);
   FEsquema1     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'ESQUEMA', '');
   FInatividade1 := lib.cryptini.LerInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'INATIVIDADE', 0);
@@ -133,6 +138,7 @@ begin
   FSenha2       := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SENHA', '');
   FNomeDLL2     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BIBLIOTECA', '');
   FCharSet2     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'CHARSET', '');
+  FCollate2     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'COLLATE', '');
   FLogSQL2      := lib.cryptini.LerBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'LOG', false);
   FEsquema2     := lib.cryptini.LerString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'ESQUEMA', '');
   FInatividade2 := lib.cryptini.LerInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'INATIVIDADE', 0);
@@ -152,6 +158,7 @@ begin
     lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SENHA', 'masterkey');
     lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BIBLIOTECA', 'fbclient.dll');
     lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'CHARSET', 'UTF8');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'COLLATE', 'UNICODE_CI_AI');
     lib.cryptini.EscreverBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'LOG', false);
     lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'ESQUEMA', '');
     lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'INATIVIDADE', 43200);
@@ -164,6 +171,7 @@ begin
     lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SENHA', 'senha');
     lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BIBLIOTECA', 'SQLite.dll');
     lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'CHARSET', 'UTF8');
+    lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'COLLATE', 'UNICODE_CI_AI');
     lib.cryptini.EscreverBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'LOG', false);
     lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'ESQUEMA', '');
     lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'INATIVIDADE', 43200);
@@ -182,6 +190,7 @@ begin
   lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'SENHA',  PChar(FSenha1));
   lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'BIBLIOTECA',  PChar(FNomeDLL1));
   lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'CHARSET', PChar(FCharSet1));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'COLLATE', PChar(FCollate1));
   lib.cryptini.EscreverBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'LOG', FLogSQL1);
   lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'ESQUEMA', PChar(FEsquema1));
   lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_1', 'INATIVIDADE', FInatividade1);
@@ -194,6 +203,7 @@ begin
   lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'SENHA',  PChar(FSenha2));
   lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'BIBLIOTECA',  PChar(FNomeDLL2));
   lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'CHARSET', PChar(FCharSet2));
+  lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'COLLATE', PChar(FCollate2));
   lib.cryptini.EscreverBoolean(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'LOG', FLogSQL2);
   lib.cryptini.EscreverString(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'ESQUEMA', PChar(FEsquema2));
   lib.cryptini.EscreverInteger(PChar(FArq), PChar(FKey), Pchar(FMD5), 'CONEXAO_2', 'INATIVIDADE', FInatividade2);

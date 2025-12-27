@@ -50,6 +50,8 @@ type
     ckbLogSql1: TCheckBox;
     ckbLogSql2: TCheckBox;
     edtBanco2: TEdit;
+    edtCollate2: TEdit;
+    edtCollate1: TEdit;
     edtInatividade1: TEdit;
     edtEsquema1: TEdit;
     edtCharset2: TEdit;
@@ -76,7 +78,9 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
+    Label19: TLabel;
     Label2: TLabel;
+    Label20: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
@@ -345,6 +349,7 @@ begin
   edtUsuario1.Text    := Controller.INI.Usuario1;
   edtSenha1.Text      := Controller.INI.Senha1;
   edtCharset1.Text    := Controller.INI.CharSet1;
+  edtCollate1.Text    := Controller.INI.Collate1;
   ckbLogSql1.Checked  := Controller.INI.LogSQL1;
   edtEsquema1.Text    := Controller.INI.Esquema1;
   edtInatividade1.Text:= Controller.INI.Inatividade1.ToString;
@@ -356,6 +361,7 @@ begin
   edtUsuario2.Text    := Controller.INI.Usuario2;
   edtSenha2.Text      := Controller.INI.Senha2;
   edtCharset2.Text    := Controller.INI.CharSet2;
+  edtCollate2.Text    := Controller.INI.Collate2;
   ckbLogSql2.Checked  := Controller.INI.LogSQL2;
   edtEsquema2.Text    := Controller.INI.Esquema2;
   edtInatividade2.Text:= Controller.INI.Inatividade2.ToString;
@@ -375,6 +381,7 @@ begin
   Controller.INI.Usuario1  := edtUsuario1.Text;
   Controller.INI.Senha1    := edtSenha1.Text;
   Controller.INI.CharSet1  := edtCharset1.Text;
+  Controller.INI.Collate1  := edtCollate1.Text;
   Controller.INI.LogSQL1   := ckbLogSql1.Checked;
   Controller.INI.Esquema1  := edtEsquema1.Text;
   Controller.INI.Inatividade1 := StrToInt(edtInatividade1.Text);
@@ -386,6 +393,7 @@ begin
   Controller.INI.Usuario2  := edtUsuario2.Text;
   Controller.INI.Senha2    := edtSenha2.Text;
   Controller.INI.CharSet2  := edtCharset2.Text;
+  Controller.INI.Collate2  := edtCollate2.Text;
   Controller.INI.LogSQL2   := ckbLogSql2.Checked;
   Controller.INI.Esquema2  := edtEsquema2.Text;
   Controller.INI.Inatividade2 := StrToInt(edtInatividade2.Text);

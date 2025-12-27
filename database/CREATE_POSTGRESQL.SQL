@@ -1,5 +1,12 @@
 --db despesa postgresql
 
+create collation general_ci_ai (
+    PROVIDER = icu,
+    LOCALE = 'pt-u-ks-level1'
+);
+
+create extension unaccent;
+
 create sequence public.seq_id_banco
 	increment by 1
 	minvalue 1
@@ -506,6 +513,13 @@ alter table public.recebimento add cadastro timestamp;
 alter table public.recebimento add alteracao timestamp;
 
 --db arquivo postgresql
+
+create collation general_ci_ai (
+    PROVIDER = icu,
+    LOCALE = 'pt-u-ks-level1'
+);
+
+create extension unaccent;
 
 create sequence public.seq_id_arquivo
 	increment by 1

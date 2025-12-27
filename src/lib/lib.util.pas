@@ -49,6 +49,7 @@ uses
                        AParent: TWinControl=nil; FormularioPai: TForm=nil); overload;
   procedure CriarForm(Formulario: TForm; ClasseForm: TFormClass;
                        FormularioPai: TForm; out mr: TModalResult); overload;
+  function removerAcentos(Texto: String): String;
 
 implementation
 
@@ -171,6 +172,20 @@ begin
   finally
     FreeAndNil(Formulario);
   end;
+end;
+
+function removerAcentos(Texto: String): String;
+const
+  ComAcento = 'áàãâéèêíìóòõôúùüçÁÀÃÂÉÈÊÍÌÓÒÕÔÚÙÜÇ';
+  SemAcento = 'aaaaeeeiioooouuucAAAAEEEIIOOOOUUUC';
+var
+  I: Integer;
+begin
+  for I := 1 to Length(ComAcento) do
+  begin
+    Texto := StringReplace(Texto, ComAcento[I], SemAcento[I], [rfReplaceAll]);
+  end;
+  Result := Texto;
 end;
 
 end.
