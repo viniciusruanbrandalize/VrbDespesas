@@ -159,7 +159,7 @@ begin
              'order by nome '+Collate();
     end
     else
-    if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL] then
+    if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL, DRV_SQLITE3] then
     begin
       sql := 'select id, nome, uf from cidade ' +
              'where '+ILikeSQL('nome', 'busca')+' '+

@@ -246,7 +246,7 @@ begin
              'order by nome '+Collate();
     end
     else
-    if FDriver in [DRV_POSTGRESQL, DRV_MYSQL, DRV_MARIADB] then
+    if FDriver in [DRV_POSTGRESQL, DRV_MYSQL, DRV_MARIADB, DRV_SQLITE3] then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'limit '+Limitacao.ToString;
@@ -354,7 +354,10 @@ begin
   try
 
     if (FDriver = DRV_MYSQL) or (FDriver = DRV_MARIADB) then
-      sql := 'select last_insert_id() as id';
+      sql := 'select last_insert_id() as id'
+    else
+    if (FDriver = DRV_SQLITE3) then
+      sql := 'select last_insert_rowid() as id';
 
     if sql <> EmptyStr then
     begin
@@ -379,7 +382,7 @@ begin
   case FDriver of
     DRV_FIREBIRD: Result := IfThen(Campo = '', IfThen(Collate() = '', 'like', Collate()+' like'),
                                                IfThen(Collate() = '', 'coalesce(upper('+Campo+'), '''') like upper(:'+Param+')', 'coalesce(upper('+Campo+'), '''') '+Collate()+' like upper(:'+Param+')'));
-    DRV_MYSQL, DRV_MARIADB: Result := IfThen(Campo = '', 'like', 'coalesce(upper('+Campo+'), '''') like upper(:'+Param+')');
+    DRV_MYSQL, DRV_MARIADB, DRV_SQLITE3: Result := IfThen(Campo = '', 'like', 'coalesce(upper('+Campo+'), '''') like upper(:'+Param+')');
     DRV_POSTGRESQL:         Result := IfThen(Campo = '', 'ilike', 'coalesce(unaccent('+Campo+'), '''') ilike unaccent(:'+Param+')');
     else
       Result := IfThen(Campo = '', 'like', 'coalesce(upper('+Campo+'), '''') like upper(:'+Param+')');
@@ -428,7 +431,7 @@ constructor TPadraoDAO.Create;
 begin
   FConectorPadrao := dmConexao1.SQLConnector;
   FDriver := StrToDriverDB(Trim(UpperCase(dmConexao1.SQLConnector.ConnectorType)));
-  FAutoInc := (FDriver in [DRV_MYSQL, DRV_MARIADB]);
+  FAutoInc := (FDriver in [DRV_MYSQL, DRV_MARIADB, DRV_SQLITE3]);
   CriarQuery(Qry, FConectorPadrao);
 end;
 

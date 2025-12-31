@@ -713,7 +713,7 @@ begin
              'order by chave '+Collate();
     end
     else
-    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL, DRV_SQLITE3] then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'limit '+Limitacao.ToString;
@@ -779,7 +779,7 @@ begin
              'order by c.numero '+Collate();
     end
     else
-    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL, DRV_SQLITE3] then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'limit '+Limitacao.ToString;
@@ -850,7 +850,7 @@ begin
              'order by cb.numero '+Collate();
     end
     else
-    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL, DRV_SQLITE3] then
     begin
       if Limitacao <> -1 then
         CmdLimit := 'limit '+Limitacao.ToString;
