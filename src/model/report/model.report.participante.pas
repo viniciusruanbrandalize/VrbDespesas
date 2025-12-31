@@ -68,7 +68,7 @@ begin
     FSQL := 'select nome, fantasia, telefone, celular, email, cadastro from participante ' +
             'where dono_cadastro = :dono_cadastro and id_dono_cadastro = :id_dono_cadastro ' +
             'and excluido = :excluido ' +
-            'order by nome, fantasia';
+            'order by nome '+DAO.Collate()+', fantasia '+DAO.Collate();
 
     dmConexaoReport.qryPadrao.Close;
     dmConexaoReport.qryPadrao.SQL.Clear;
@@ -102,7 +102,7 @@ begin
             'left join cidade c on c.id = p.id_cidade ' +
             'where p.dono_cadastro = :dono_cadastro and p.id_dono_cadastro = :id_dono_cadastro ' +
             'and p.excluido = :excluido ' +
-            'order by p.nome, p.fantasia';
+            'order by p.nome '+DAO.Collate()+', p.fantasia '+DAO.Collate();
 
     dmConexaoReport.qryPadrao.Close;
     dmConexaoReport.qryPadrao.SQL.Clear;

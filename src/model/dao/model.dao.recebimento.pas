@@ -141,7 +141,7 @@ begin
     else
     begin
       sql := 'select * from recebimento ' +
-             'where UPPER('+campo+') like :busca ' +
+             'where '+ILikeSQL(Campo, 'busca')+' ' +
              'id_dono_cadastro = :id_dono_cadastro '+
              'order by data desc';
     end;
@@ -190,7 +190,7 @@ begin
     begin
       sql := 'select r.*, p.nome as nome_pagador from recebimento r ' +
              'left join participante p on p.id = r.id_pagador ' +
-             'where UPPER('+campo+') like :busca and r.tipo = :tipo and ' +
+             'where '+ILikeSQL(Campo, 'busca')+' and r.tipo = :tipo and ' +
              'r.id_dono_cadastro = :id_dono_cadastro and '+
              'r.data between :data_inicial and :data_final ' +
              'order by r.data desc';
@@ -459,9 +459,9 @@ begin
       sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(cb.numero) like :busca and cb.excluido = false and ' +
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = false and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
-             'order by cb.numero';
+             'order by cb.numero '+Collate();
     end
     else
     if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL] then
@@ -472,7 +472,7 @@ begin
       sql := 'select cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(cb.numero) like :busca and cb.excluido = false and ' +
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = false and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
              'order by cb.numero '+CmdLimit;
     end;

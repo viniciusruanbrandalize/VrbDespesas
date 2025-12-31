@@ -83,7 +83,7 @@ begin
   try
 
     sql := 'select * from uc_tela ' +
-           'order by titulo';
+           'order by titulo '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -116,7 +116,7 @@ begin
 
     sql := 'select * from uc_acao ' +
            'where nome_uc_tela = :nome_uc_tela ' +
-           'order by nome_uc_tela, titulo';
+           'order by nome_uc_tela '+Collate()+', titulo '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -205,7 +205,7 @@ begin
 
     sql := 'select * from uc_tela ' +
            'where nome = :nome ' +
-           'order by titulo';
+           'order by titulo '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;

@@ -70,7 +70,7 @@ begin
 
     sql := 'select * from usuario ' +
            'where excluido = false ' +
-           'order by nome';
+           'order by nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -105,13 +105,13 @@ begin
     begin
       sql := 'select * from usuario ' +
              'where '+campo+' = :busca and excluido = :excluido '+
-             'order by nome';
+             'order by nome '+Collate();
     end
     else
     begin
       sql := 'select * from usuario ' +
-             'where UPPER('+campo+') like :busca and excluido = :excluido '+
-             'order by nome';
+             'where '+ILikeSQL(Campo, 'busca')+' and excluido = :excluido '+
+             'order by nome '+Collate();
     end;
 
     Qry.Close;
@@ -145,7 +145,7 @@ begin
 
     sql := 'select id, nome, fantasia from participante ' +
            'where excluido = false and dono_cadastro ' +
-           'order by nome asc';
+           'order by nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -179,8 +179,8 @@ begin
     sql := 'select p.id, p.nome, p.fantasia from participante p ' +
            'left join usuario_dono_cadastro usd on usd.id_dono_cadastro = p.id ' +
            'where usd.id_usuario = :id_usuario and p.excluido = false and ' +
-           'p.dono_cadastro = true ' +
-           'order by p.nome asc';
+           'p.dono_cadastro ' +
+           'order by p.nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;

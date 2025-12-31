@@ -65,7 +65,7 @@ begin
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
            'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
            'where sd.excluido = false ' +
-           'order by sd.nome';
+           'order by sd.nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -101,14 +101,14 @@ begin
       sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
            'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
            'where '+campo+' = :busca and sd.excluido = false '+
-           'order by sd.nome';
+           'order by sd.nome '+Collate();
     end
     else
     begin
       sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
              'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-             'where UPPER('+campo+') like :busca and sd.excluido = false '+
-             'order by sd.nome';
+             'where '+ILikeSQL(Campo, 'busca')+' and sd.excluido = false '+
+             'order by sd.nome '+Collate();
     end;
 
     Qry.Close;

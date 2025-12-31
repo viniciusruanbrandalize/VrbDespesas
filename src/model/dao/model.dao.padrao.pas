@@ -378,11 +378,11 @@ begin
     Param := Campo;
   case FDriver of
     DRV_FIREBIRD: Result := IfThen(Campo = '', IfThen(Collate() = '', 'like', Collate()+' like'),
-                                               IfThen(Collate() = '', 'upper('+Campo+') like upper(:'+Param+')', 'upper('+Campo+')'+Collate()+' like upper(:'+Param+')'));
-    DRV_MYSQL, DRV_MARIADB: Result := IfThen(Campo = '', 'like', 'upper('+Campo+') like upper(:'+Param+')');
-    DRV_POSTGRESQL:         Result := IfThen(Campo = '', 'ilike', 'unaccent('+Campo+') ilike unaccent(:'+Param+')');
+                                               IfThen(Collate() = '', 'coalesce(upper('+Campo+'), '''') like upper(:'+Param+')', 'coalesce(upper('+Campo+'), '''') '+Collate()+' like upper(:'+Param+')'));
+    DRV_MYSQL, DRV_MARIADB: Result := IfThen(Campo = '', 'like', 'coalesce(upper('+Campo+'), '''') like upper(:'+Param+')');
+    DRV_POSTGRESQL:         Result := IfThen(Campo = '', 'ilike', 'coalesce(unaccent('+Campo+'), '''') ilike unaccent(:'+Param+')');
     else
-      Result := IfThen(Campo = '', 'like', 'upper('+Campo+') like upper(:'+Param+')');
+      Result := IfThen(Campo = '', 'like', 'coalesce(upper('+Campo+'), '''') like upper(:'+Param+')');
   end;
 end;
 

@@ -83,7 +83,7 @@ begin
     sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
            'left join banco b on b.id = cb.id_banco ' +
            'where cb.excluido = false and id_dono_cadastro = :id_dono_cadastro ' +
-           'order by b.nome';
+           'order by b.nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -122,15 +122,15 @@ begin
              'left join banco b on b.id = cb.id_banco ' +
              'where '+campo+' = :busca and cb.excluido = false and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
-             'order by b.nome';
+             'order by b.nome '+Collate();
     end
     else
     begin
       sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
              'left join banco b on b.id = cb.id_banco ' +
-             'where UPPER('+campo+') like :busca and cb.excluido = false and ' +
+             'where '+ILikeSQL(Campo, 'busca')+' and cb.excluido = false and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
-             'order by b.nome';
+             'order by b.nome '+Collate();
     end;
 
     Qry.Close;

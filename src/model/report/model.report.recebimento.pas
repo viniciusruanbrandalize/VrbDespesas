@@ -143,17 +143,17 @@ begin
     case Tipo of
       0:
       begin
-        FSQL := FSQL + 'and upper(r.descricao) like :busca ';
+        FSQL := FSQL + 'and '+DAO.ILikeSQL('r.descricao', 'busca')+' ';
         TipoDeBusca := 'Descrição';
       end;
       1:
       begin
-        FSQL := FSQL + 'and upper(p.nome) like :busca ';
+        FSQL := FSQL + 'and '+DAO.ILikeSQL('p.nome', 'busca')+' ';
         TipoDeBusca := 'Pagador';
       end;
       2:
       begin
-        FSQL := FSQL + 'and upper(fp.nome) like :busca ';
+        FSQL := FSQL + 'and '+DAO.ILikeSQL('fp.nome', 'busca')+' ';
         TipoDeBusca := 'Forma de Pagamento';
       end;
     end;

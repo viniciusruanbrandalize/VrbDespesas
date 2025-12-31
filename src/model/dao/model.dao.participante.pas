@@ -113,7 +113,7 @@ begin
     else
     begin
       sql := 'select p.* from participante p ' +
-             'where UPPER('+campo+') like :busca and '+
+             'where '+ILikeSQL(Campo, 'busca')+' and '+
              'p.dono_cadastro = :dono_cadastro and excluido = false and ' +
              'p.id_dono_cadastro = :id_dono_cadastro '+
              'order by p.nome '+Collate();
@@ -155,14 +155,14 @@ begin
     if Driver = DRV_FIREBIRD then
     begin
       sql := 'select first 10 id, nome, uf from cidade ' +
-             'where UPPER(nome) like :busca '+
+             'where '+ILikeSQL('nome', 'busca')+' '+
              'order by nome '+Collate();
     end
     else
     if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL] then
     begin
       sql := 'select id, nome, uf from cidade ' +
-             'where UPPER(nome) like :busca '+
+             'where '+ILikeSQL('nome', 'busca')+' '+
              'order by nome ' +
              'limit 10';
     end;

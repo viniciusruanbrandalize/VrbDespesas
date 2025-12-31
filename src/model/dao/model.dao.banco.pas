@@ -62,7 +62,7 @@ var
 begin
   try
 
-    sql := 'select * from banco where excluido = false order by nome';
+    sql := 'select * from banco where excluido = false order by nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
@@ -96,13 +96,13 @@ begin
     begin
       sql := 'select * from banco ' +
              'where '+campo+' = :busca and excluido = false '+
-             'order by nome';
+             'order by nome '+Collate();
     end
     else
     begin
       sql := 'select * from banco ' +
-             'where UPPER('+campo+') like :busca and excluido = false '+
-             'order by nome';
+             'where '+ILikeSQL(Campo, 'busca')+' and excluido = false '+
+             'order by nome '+Collate();
     end;
 
     Qry.Close;

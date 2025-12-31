@@ -214,7 +214,7 @@ begin
            'left join usuario u on u.id = udc.id_usuario ' +
            'left join participante dc on dc.id = udc.id_dono_cadastro ' +
            'where udc.id_usuario = :busca ' +
-           'order by dc.nome asc';
+           'order by dc.nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;

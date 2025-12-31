@@ -113,12 +113,12 @@ begin
       end;
       1:
       begin
-        FSQL := FSQL + 'and Upper(d.descricao) like :busca ';
+        FSQL := FSQL + 'and '+DAO.ILikeSQL('d.descricao', 'busca')+' ';
         TipoDeBusca := 'Descrição';
       end;
       2:
       begin
-        FSQL := FSQL + 'and Upper(p.nome) like :busca ';
+        FSQL := FSQL + 'and '+DAO.ILikeSQL('p.nome', 'busca')+' ';
         TipoDeBusca := 'Fornecedor';
       end;
       3:
@@ -128,17 +128,17 @@ begin
       end;
       4:
       begin
-        FSQL := FSQL + 'and Upper(ban.nome) like :busca ';
+        FSQL := FSQL + 'and '+DAO.ILikeSQL('ban.nome', 'busca')+' ';
         TipoDeBusca := 'Bandeira';
       end;
       5:
       begin
-        FSQL := FSQL + 'and Upper(bco.nome) like :busca ';
+        FSQL := FSQL + 'and '+DAO.ILikeSQL('bco.nome', 'busca')+' ';
         TipoDeBusca := 'Banco';
       end;
       6:
       begin
-        FSQL := FSQL + 'and Upper(df.chave_pix) like :busca ';
+        FSQL := FSQL + 'and '+DAO.ILikeSQL('df.chave_pix', 'busca')+' ';
         TipoDeBusca := 'Chave PIX';
       end;
       7:
@@ -561,7 +561,7 @@ begin
               'd.data between :data_inicial and :data_final and ' +
               'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa ' +
               'from subtipo_despesa sd ' +
-              'order by sd.nome';
+              'order by sd.nome '+DAO.Collate();
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
@@ -638,7 +638,7 @@ begin
             'd.data between :data_inicial and :data_final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa '+
             'from tipo_despesa td '+
-            'order by td.nome';
+            'order by td.nome '+DAO.Collate();
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
@@ -715,7 +715,7 @@ begin
             'd.data between :data_inicial and :data_final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa '+
             'from forma_pgto fp '+
-            'order by fp.nome';
+            'order by fp.nome '+DAO.Collate();
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;

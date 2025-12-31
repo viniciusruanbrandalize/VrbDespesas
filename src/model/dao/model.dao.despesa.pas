@@ -82,7 +82,7 @@ begin
     begin
       sql := 'select first 100 d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where d.paga = true and d.id_dono_cadastro = :id_dono_cadastro and ' +
+             'where d.paga and d.id_dono_cadastro = :id_dono_cadastro and ' +
              'd.data between :data_inicial and :data_final ' +
              'order by d.data desc, d.hora desc';
     end
@@ -91,7 +91,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where d.paga = true and d.id_dono_cadastro = :id_dono_cadastro and ' +
+             'where d.paga and d.id_dono_cadastro = :id_dono_cadastro and ' +
              'd.data between :data_inicial and :data_final ' +
              'order by d.data desc, d.hora desc ' +
              'limit 100';
@@ -144,7 +144,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where UPPER('+campo+') like :busca and d.paga = true and ' +
+             'where '+ILikeSQL(Campo, 'busca')+' and d.paga = true and ' +
              'd.id_dono_cadastro = :id_dono_cadastro '+
              'order by d.data desc, d.hora desc';
     end;
@@ -188,7 +188,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where '+campo+' = :busca and d.paga = true and ' +
+             'where '+campo+' = :busca and d.paga and ' +
              'd.id_dono_cadastro = :id_dono_cadastro and '+
              'd.data between :data_inicial and :data_final '+
              'order by d.data desc, d.hora desc';
@@ -197,7 +197,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where UPPER('+campo+') like :busca and d.paga = true and ' +
+             'where '+ILikeSQL(Campo, 'busca')+' and d.paga and ' +
              'd.id_dono_cadastro = :id_dono_cadastro and ' +
              'd.data between :data_inicial and :data_final '+
              'order by d.data desc, d.hora desc';
@@ -708,9 +708,9 @@ begin
         CmdLimit := 'first '+Limitacao.ToString;
 
       sql := 'select '+CmdLimit+' chave from pix '+
-             'where UPPER(chave) like :busca and ' +
+             'where '+ILikeSQL('chave', 'busca')+' and ' +
              'id_dono_cadastro = :id_dono_cadastro '+
-             'order by chave';
+             'order by chave '+Collate();
     end
     else
     if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
@@ -719,7 +719,7 @@ begin
         CmdLimit := 'limit '+Limitacao.ToString;
 
       sql := 'select chave from pix '+
-             'where UPPER(chave) like :busca and ' +
+             'where '+ILikeSQL('chave', 'busca')+' and ' +
              'id_dono_cadastro = :id_dono_cadastro '+
              'order by chave '+CmdLimit;
     end;
@@ -773,9 +773,10 @@ begin
              'left join bandeira b on b.id = c.id_bandeira ' +
              'left join conta_bancaria cb on cb.id = c.id_conta_bancaria ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(c.numero) like :busca and ' +
-             'c.id_dono_cadastro = :id_dono_cadastro '+
-             'order by c.numero';
+             'where '+ILikeSQL('c.numero', 'busca')+' and ' +
+             'c.id_dono_cadastro = :id_dono_cadastro and ' +
+             'c.validade >= :data_atual '+
+             'order by c.numero '+Collate();
     end
     else
     if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
@@ -789,8 +790,9 @@ begin
              'left join bandeira b on b.id = c.id_bandeira ' +
              'left join conta_bancaria cb on cb.id = c.id_conta_bancaria ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(c.numero) like :busca and ' +
-             'c.id_dono_cadastro = :id_dono_cadastro '+
+             'where '+ILikeSQL('c.numero', 'busca')+' and ' +
+             'c.id_dono_cadastro = :id_dono_cadastro and ' +
+             'c.validade >= :data_atual '+
              'order by c.numero '+CmdLimit;
     end;
 
@@ -799,6 +801,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('data_atual').AsDate := Now;
     Qry.Open;
 
     Qry.First;
@@ -842,9 +845,9 @@ begin
       sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(cb.numero) like :busca and cb.excluido = false and ' +
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = false and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
-             'order by cb.numero';
+             'order by cb.numero '+Collate();
     end
     else
     if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
@@ -855,7 +858,7 @@ begin
       sql := 'select cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where UPPER(cb.numero) like :busca and cb.excluido = false and ' +
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = false and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
              'order by cb.numero '+CmdLimit;
     end;
