@@ -53,6 +53,8 @@ type
                 SEQ_ID_USUARIO_DONO_CADASTRO, SEQ_ID_ARQUIVO, SEQ_ID_UC_ACAO,
                 SEQ_ID_UC_ACESSO);
 
+  TExtractData = (EXT_ANO, EXT_MES, EXT_DIA);
+
   { TPadraoDAO }
 
   TPadraoDAO = class
@@ -74,6 +76,7 @@ type
     function UltimoIdInserido(): Integer;
     function ILikeSQL(Campo: String = ''; Param: String = ''): String;
     function Collate(): String;
+    function ExtractData(Param: TExtractData; Campo: String): String;
     procedure CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);
     procedure Commit(Conexao: Integer = 1);
     procedure Roolback(Conexao: Integer = 1);
@@ -403,6 +406,16 @@ begin
   finally
     INI.Free;
   end;
+end;
+
+function TPadraoDAO.ExtractData(Param: TExtractData; Campo: String): String;
+const
+  strftime: Array [0..2] of String = ('''%Y,''', '''%M,''', '''%D,''');
+  extract: Array [0..2] of String = ('year from', 'month from', 'day from');
+  pStr: Array [0..7] of String = ('extract', 'extract', 'extract', 'extract',
+                                  'extract', 'extract', 'extract', 'strftime');
+begin
+  Result := pStr[Integer(FDriver)] + '(' + IfThen(pStr[Integer(Param)] = 'extract', extract[Integer(Param)], strftime[Integer(Param)]) + ' ' + Campo + ')';
 end;
 
 procedure TPadraoDAO.CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);

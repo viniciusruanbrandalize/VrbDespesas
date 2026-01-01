@@ -91,20 +91,18 @@ begin
 
   {$IFOPT D+}
   {$ELSE}
+    frmLogin := TfrmLogin.Create(nil);
     try
-      frmLogin := TfrmLogin.Create(nil);
       if not (frmLogin.ShowModal = mrOK) then
         Application.Terminate
       else
       begin
-        if dmConexao1.UsuarioDC.Count > 1 then
-        begin
-          frmSelecionarDonoCadastro := TfrmSelecionarDonoCadastro.Create(nil);
-          try
+        frmSelecionarDonoCadastro := TfrmSelecionarDonoCadastro.Create(nil);
+        try
+          if dmConexao1.UsuarioDC.Count > 1 then
             frmSelecionarDonoCadastro.ShowModal;
-          finally
-            frmSelecionarDonoCadastro.Free;
-          end;
+        finally
+          frmSelecionarDonoCadastro.Free;
         end;
       end;
     finally

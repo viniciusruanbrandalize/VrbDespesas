@@ -346,8 +346,28 @@ begin
     Qry.ParamByName('excluido').AsBoolean      := Participante.Excluido;
     Qry.ParamByName('id_cidade').AsInteger     := Participante.Cidade.Id;
     Qry.ParamByName('id_usuario_cadastro').AsInteger := Participante.UsuarioCadastro.Id;
-    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    if not Participante.EhDonoCadastro then
+      Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.ExecSQL;
+
+    if Participante.EhDonoCadastro then
+    begin
+
+      if AutoInc then
+        Participante.Id := UltimoIdInserido();
+
+      sql := 'update participante set id_dono_cadastro = :id_dono_cadastro ' +
+             'where id = :id';
+
+      Qry.Close;
+      Qry.SQL.Clear;
+      Qry.SQL.Add(sql);
+      Qry.ParamByName('id_dono_cadastro').AsInteger := Participante.Id;
+      Qry.ParamByName('id').AsInteger := Participante.Id;
+      Qry.ExecSQL;
+
+    end;
+
     dmConexao1.SQLTransaction.Commit;
 
     Result := True;

@@ -68,7 +68,7 @@ begin
              'order by data desc, hora desc';
     end
     else
-    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL, DRV_SQLITE3] then
     begin
       sql := 'select l.*, u.nome as nome_usuario from login l ' +
              'left join usuario u on l.id_usuario = u.id ' +

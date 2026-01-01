@@ -142,7 +142,13 @@ begin
       begin
         Controller.Participante.Cadastro := Now;
         if not Controller.Inserir(Controller.Participante, erro) then
-          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk]);
+          TfrmMessage.Mensagem(erro, 'Erro', 'E', [mbOk])
+        else
+        begin
+          if FEhDonoCadastro then
+            TfrmMessage.Mensagem('Cadastro do devedor foi salvo. ' +
+                                 'Vincule-o no acesso usuário para permitir o uso / modificação!', 'Aviso', 'I', [mbOk]);
+        end;
       end;
       if Operacao = opEditar then
       begin

@@ -83,6 +83,7 @@ end;
 constructor TSelecionarDonoCadastroController.Create;
 begin
   ConfiguracaoINI := TConfiguracaoINI.Create;
+  SelecionarDonoCadastroPadrao();
 end;
 
 destructor TSelecionarDonoCadastroController.Destroy;

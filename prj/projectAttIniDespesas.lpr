@@ -72,6 +72,30 @@ begin
     if ParDriver1 <> '' then
     begin
 
+      if UpperCase(ParDriver1) = 'FIREBIRD' then
+      begin
+        Ctrl.INI.CharSet1 := 'UTF8';
+        Ctrl.INI.Collate1 := 'UNICODE_CI_AI';
+      end
+      else
+      if UpperCase(ParDriver1) = 'SQLITE3' then
+      begin
+        Ctrl.INI.CharSet1 := 'UTF8';
+        Ctrl.INI.Collate1 := 'NOACCENTS';
+      end
+      else
+      if Pos('MYSQL', UpperCase(ParDriver1)) <> 0 then
+      begin
+        Ctrl.INI.CharSet1 := 'UTF8';
+        Ctrl.INI.Collate1 := 'utf8mb4_general_ci';
+      end
+      else
+      if UpperCase(ParDriver1) = 'POSTGRESQL' then
+      begin
+        Ctrl.INI.CharSet1 := 'UTF8';
+        Ctrl.INI.Collate1 := 'general_ci_ai';
+      end;
+
       Ctrl.INI.Driver1   := ParDriver1;
       Ctrl.INI.Servidor1 := ParServidor1;
       Ctrl.INI.Porta1    := ParPorta1;
@@ -79,6 +103,30 @@ begin
       Ctrl.INI.Usuario1  := ParUsuario1;
       Ctrl.INI.Senha1    := ParSenha1;
       Ctrl.INI.NomeDLL1  := ParNomeDLL1;
+
+      if UpperCase(ParDriver2) = 'FIREBIRD' then
+      begin
+        Ctrl.INI.CharSet2 := 'UTF8';
+        Ctrl.INI.Collate2 := 'UNICODE_CI_AI';
+      end
+      else
+      if UpperCase(ParDriver2) = 'SQLITE3' then
+      begin
+        Ctrl.INI.CharSet2 := 'UTF8';
+        Ctrl.INI.Collate2 := 'NOACCENTS';
+      end
+      else
+      if Pos('MYSQL', UpperCase(ParDriver2)) <> 0 then
+      begin
+        Ctrl.INI.CharSet2 := 'UTF8';
+        Ctrl.INI.Collate2 := 'utf8mb4_general_ci';
+      end
+      else
+      if UpperCase(ParDriver2) = 'POSTGRESQL' then
+      begin
+        Ctrl.INI.CharSet2 := 'UTF8';
+        Ctrl.INI.Collate2 := 'general_ci_ai';
+      end;
 
       Ctrl.INI.Driver2   := ParDriver2;
       Ctrl.INI.Servidor2 := ParServidor2;

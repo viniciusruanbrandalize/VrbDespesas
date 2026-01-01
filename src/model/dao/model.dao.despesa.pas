@@ -87,7 +87,7 @@ begin
              'order by d.data desc, d.hora desc';
     end
     else
-    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
+    if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL, DRV_SQLITE3] then
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
