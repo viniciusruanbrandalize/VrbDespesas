@@ -322,6 +322,7 @@ var
   gbak,
   pgdump,
   mysqldump,
+  sqlite3,
   ArqTemp,
   ArqBackupFinal,
   Erro: String;
@@ -338,6 +339,7 @@ begin
       gbak      := ConfigINI.GBak;
       pgdump    := ConfigINI.PGDump;
       mysqldump := ConfigINI.MySQLDump;
+      sqlite3   := ConfigINI.SQLite3;
     finally
       ConfigINI.Free;
     end;
@@ -413,6 +415,11 @@ begin
 
       aProcess.Executable := ExtractFilePath(ParamStr(0))+'bkp_pg.bat';
 
+    end
+    else
+    if DAO.Driver = DRV_SQLITE3 then
+    begin
+      //a implementar...
     end;
 
     aprocess.ShowWindow := swoHIDE;

@@ -31,11 +31,11 @@ object frmConfiguracao: TfrmConfiguracao
       Height = 366
       Top = 5
       Width = 732
-      ActivePage = tbsGeral
+      ActivePage = tbsLocal
       Align = alClient
       BorderSpacing.Around = 5
       Images = imgList
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 0
       object tbsGeral: TTabSheet
         Hint = 'Configurações gerais'
@@ -105,11 +105,11 @@ object frmConfiguracao: TfrmConfiguracao
           TabOrder = 0
           object gbBackup: TGroupBox
             Left = 8
-            Height = 208
+            Height = 232
             Top = 8
             Width = 697
             Caption = 'Backup'
-            ClientHeight = 188
+            ClientHeight = 212
             ClientWidth = 693
             ParentBackground = False
             TabOrder = 0
@@ -178,6 +178,28 @@ object frmConfiguracao: TfrmConfiguracao
               ImageIndex = 0
               ImageWidth = 16
               OnClick = btnSelDirMysqlDumpBkpClick
+            end
+            object edtSQLite3: TLabeledEdit
+              Left = 8
+              Height = 23
+              Top = 168
+              Width = 632
+              EditLabel.Height = 15
+              EditLabel.Width = 632
+              EditLabel.Caption = 'SQLite3 (SQLite) :'
+              ReadOnly = True
+              TabOrder = 3
+              Text = 'edtSQLite3'
+            end
+            object btnSelDirSQLite3Bkp: TSpeedButton
+              Left = 648
+              Height = 23
+              Top = 168
+              Width = 31
+              Images = imgList
+              ImageIndex = 0
+              ImageWidth = 16
+              OnClick = btnSelDirSQLite3BkpClick
             end
           end
         end

@@ -38,8 +38,10 @@ type
   { TfrmConfiguracao }
 
   TfrmConfiguracao = class(TForm)
+    btnSelDirSQLite3Bkp: TSpeedButton;
     btnSelDirPgDumpBkp: TSpeedButton;
     btnSelDirMysqlDumpBkp: TSpeedButton;
+    edtSQLite3: TLabeledEdit;
     edtPesquisa: TEdit;
     edtPgDump: TLabeledEdit;
     edtMySQLDump: TLabeledEdit;
@@ -64,6 +66,7 @@ type
     procedure btnSelDirGbakBkpClick(Sender: TObject);
     procedure btnSelDirMysqlDumpBkpClick(Sender: TObject);
     procedure btnSelDirPgDumpBkpClick(Sender: TObject);
+    procedure btnSelDirSQLite3BkpClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -115,6 +118,12 @@ begin
     edtPgDump.Text := openDlg.FileName;
 end;
 
+procedure TfrmConfiguracao.btnSelDirSQLite3BkpClick(Sender: TObject);
+begin
+  if openDlg.Execute then
+    edtSQLite3.Text := openDlg.FileName;
+end;
+
 procedure TfrmConfiguracao.FormCreate(Sender: TObject);
 begin
   pgc.Style := tsButtons;
@@ -150,6 +159,7 @@ begin
   edtGbak.Text      := Controller.ConfiguracaoINI.GBak;
   edtMySQLDump.Text := Controller.ConfiguracaoINI.MySQLDump;
   edtPgDump.Text    := Controller.ConfiguracaoINI.PGDump;
+  edtSQLite3.Text   := Controller.ConfiguracaoINI.SQLite3;
 end;
 
 procedure TfrmConfiguracao.Salvar();
@@ -158,6 +168,7 @@ begin
   Controller.ConfiguracaoINI.GBak      := edtGbak.Text;
   Controller.ConfiguracaoINI.MySQLDump := edtMySQLDump.Text;
   Controller.ConfiguracaoINI.PGDump    := edtPgDump.Text;
+  Controller.ConfiguracaoINI.SQLite3   := edtSQLite3.Text;
   Controller.ConfiguracaoINI.Escrever;
 end;
 

@@ -1,3 +1,6 @@
 +IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+
 +DAO.ExtractData(EXT_MES, 'data')+
 +DAO.ExtractData(EXT_ANO, 'data')+
+
+
+D:\Temp\sqlite3\sqlite3.exe DESPESA.db3 ".backup backup_file.db3"
