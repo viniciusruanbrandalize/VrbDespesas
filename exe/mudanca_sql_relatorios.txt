@@ -1,0 +1,3 @@
++IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+
++DAO.ExtractData(EXT_MES, 'data')+
++DAO.ExtractData(EXT_ANO, 'data')+

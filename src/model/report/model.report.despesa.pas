@@ -31,7 +31,7 @@ interface
 
 uses
   Classes, SysUtils, StdCtrls, TAGraph, TASeries, TAFuncSeries,
-  model.report.conexao, model.dao.padrao;
+  model.report.conexao, model.dao.padrao, StrUtils;
 
 type
 
@@ -197,55 +197,27 @@ function TDespesaReport.ComparativoMensal(var Grafico: TChart; anoInicial, anoFi
 begin
   try
 
-    if DAO.Driver = DRV_FIREBIRD then
-    begin
-      FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
-              'sum(total) as total, extract(month from data) as mes, '+
-              'extract(year from data) as ano, count(id) as qtd_despesa, '+
-              '(case when extract(month from data) = ''1'' then ''Janeiro'' else '+
-              '(case when extract(month from data) = ''2'' then ''Fevereiro'' else '+
-              '(case when extract(month from data) = ''3'' then ''Março'' else '+
-              '(case when extract(month from data) = ''4'' then ''Abril'' else '+
-              '(case when extract(month from data) = ''5'' then ''Maio'' else '+
-              '(case when extract(month from data) = ''6'' then ''Junho'' else '+
-              '(case when extract(month from data) = ''7'' then ''Julho'' else '+
-              '(case when extract(month from data) = ''8'' then ''Agosto'' else '+
-              '(case when extract(month from data) = ''9'' then ''Setembro'' else '+
-              '(case when extract(month from data) = ''10'' then ''Outubro'' else '+
-              '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
-              '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
-              ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-              'group by mes, ano, paga, id_dono_cadastro '+
-              'having extract(year from data) between :ano_inicial and :ano_final ' +
-              'and extract(month from data) = :mes_informado and ' +
-              'paga = true and id_dono_cadastro = :id_dono_cadastro '+
-              'order by ano desc, mes desc';
-    end
-    else
-    if DAO.Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
-    begin
-      FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
-              'sum(total) as total, extract(month from data) as mes, '+
-              'extract(year from data) as ano, count(id) as qtd_despesa, '+
-              '(case when extract(month from data) = ''1'' then ''Janeiro'' else '+
-              '(case when extract(month from data) = ''2'' then ''Fevereiro'' else '+
-              '(case when extract(month from data) = ''3'' then ''Março'' else '+
-              '(case when extract(month from data) = ''4'' then ''Abril'' else '+
-              '(case when extract(month from data) = ''5'' then ''Maio'' else '+
-              '(case when extract(month from data) = ''6'' then ''Junho'' else '+
-              '(case when extract(month from data) = ''7'' then ''Julho'' else '+
-              '(case when extract(month from data) = ''8'' then ''Agosto'' else '+
-              '(case when extract(month from data) = ''9'' then ''Setembro'' else '+
-              '(case when extract(month from data) = ''10'' then ''Outubro'' else '+
-              '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
-              '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
-              ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-              'group by mes, ano, paga, id_dono_cadastro '+
-              'having ano between :ano_inicial and :ano_final ' +
-              'and mes = :mes_informado and ' +
-              'paga = true and id_dono_cadastro = :id_dono_cadastro '+
-              'order by ano desc, mes desc';
-    end;
+    FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
+            'sum(total) as total, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, '+
+            DAO.ExtractData(EXT_ANO, 'data')+' as ano, count(id) as qtd_despesa, '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''1'' then ''Janeiro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''2'' then ''Fevereiro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''3'' then ''Março'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''4'' then ''Abril'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''5'' then ''Maio'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''6'' then ''Junho'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''7'' then ''Julho'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''8'' then ''Agosto'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''9'' then ''Setembro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''10'' then ''Outubro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''11'' then ''Novembro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''12'' then ''Dezembro'' '+
+            ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
+            'group by mes, ano, paga, id_dono_cadastro '+
+            'having '+IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' between :ano_inicial and :ano_final ' +
+            'and '+IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_MES, 'data'), 'mes')+' = :mes_informado and ' +
+            'paga and id_dono_cadastro = :id_dono_cadastro '+
+            'order by ano desc, mes desc';
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
@@ -326,27 +298,15 @@ function TDespesaReport.ComparativoAnual(var Grafico: TChart; anoInicial, anoFin
   Erro: String): Boolean;
 begin
   try
-    if DAO.Driver = DRV_FIREBIRD then
-    begin
-      FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
-              'sum(total) as total, extract(year from data) as ano, ' +
-              'count(id) as qtd_despesa from despesa '+
-              'group by ano, paga, id_dono_cadastro '+
-              'having extract(year from data) between :ano_inicial and :ano_final ' +
-              'and paga = true and id_dono_cadastro = :id_dono_cadastro ' +
-              'order by ano desc';
-    end
-    else
-    if DAO.Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
-    begin
-      FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
-              'sum(total) as total, extract(year from data) as ano, ' +
-              'count(id) as qtd_despesa from despesa '+
-              'group by ano, paga, id_dono_cadastro '+
-              'having ano between :ano_inicial and :ano_final ' +
-              'and paga = true and id_dono_cadastro = :id_dono_cadastro ' +
-              'order by ano desc';
-    end;
+
+    FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
+            'sum(total) as total, '+DAO.ExtractData(EXT_ANO, 'data')+' as ano, ' +
+            'count(id) as qtd_despesa from despesa '+
+            'group by ano, paga, id_dono_cadastro '+
+            'having '+IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' '+
+            'between :ano_inicial and :ano_final ' +
+            'and paga and id_dono_cadastro = :id_dono_cadastro ' +
+            'order by ano desc';
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
@@ -424,53 +384,26 @@ function TDespesaReport.TotalPorMes(var Grafico: TChart; ano, Tipo: Integer; out
 begin
   try
 
-    if DAO.Driver = DRV_FIREBIRD then
-    begin
-      FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
-              'sum(total) as total, extract(month from data) as mes, '+
-              'extract(year from data) as ano, count(id) as qtd_despesa, '+
-              '(case when extract(month from data) = ''1'' then ''Janeiro'' else '+
-              '(case when extract(month from data) = ''2'' then ''Fevereiro'' else '+
-              '(case when extract(month from data) = ''3'' then ''Março'' else '+
-              '(case when extract(month from data) = ''4'' then ''Abril'' else '+
-              '(case when extract(month from data) = ''5'' then ''Maio'' else '+
-              '(case when extract(month from data) = ''6'' then ''Junho'' else '+
-              '(case when extract(month from data) = ''7'' then ''Julho'' else '+
-              '(case when extract(month from data) = ''8'' then ''Agosto'' else '+
-              '(case when extract(month from data) = ''9'' then ''Setembro'' else '+
-              '(case when extract(month from data) = ''10'' then ''Outubro'' else '+
-              '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
-              '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
-              ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-              'group by mes, ano, paga, id_dono_cadastro '+
-              'having extract(year from data) = :ano_informado and ' +
-              'paga = true and id_dono_cadastro = :id_dono_cadastro ' +
-              'order by mes asc';
-    end
-    else
-    if DAO.Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL] then
-    begin
-      FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
-              'sum(total) as total, extract(month from data) as mes, '+
-              'extract(year from data) as ano, count(id) as qtd_despesa, '+
-              '(case when extract(month from data) = ''1'' then ''Janeiro'' else '+
-              '(case when extract(month from data) = ''2'' then ''Fevereiro'' else '+
-              '(case when extract(month from data) = ''3'' then ''Março'' else '+
-              '(case when extract(month from data) = ''4'' then ''Abril'' else '+
-              '(case when extract(month from data) = ''5'' then ''Maio'' else '+
-              '(case when extract(month from data) = ''6'' then ''Junho'' else '+
-              '(case when extract(month from data) = ''7'' then ''Julho'' else '+
-              '(case when extract(month from data) = ''8'' then ''Agosto'' else '+
-              '(case when extract(month from data) = ''9'' then ''Setembro'' else '+
-              '(case when extract(month from data) = ''10'' then ''Outubro'' else '+
-              '(case when extract(month from data) = ''11'' then ''Novembro'' else '+
-              '(case when extract(month from data) = ''12'' then ''Dezembro'' '+
-              ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-              'group by mes, ano, paga, id_dono_cadastro '+
-              'having ano = :ano_informado and ' +
-              'paga = true and id_dono_cadastro = :id_dono_cadastro ' +
-              'order by mes asc';
-    end;
+    FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
+            'sum(total) as total, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, '+
+            DAO.ExtractData(EXT_ANO, 'data')+' as ano, count(id) as qtd_despesa, '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''1'' then ''Janeiro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''2'' then ''Fevereiro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''3'' then ''Março'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''4'' then ''Abril'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''5'' then ''Maio'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''6'' then ''Junho'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''7'' then ''Julho'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''8'' then ''Agosto'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''9'' then ''Setembro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''10'' then ''Outubro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''11'' then ''Novembro'' else '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''12'' then ''Dezembro'' '+
+            ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
+            'group by mes, ano, paga, id_dono_cadastro '+
+            'having '+IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' = :ano_informado and ' +
+            'paga and id_dono_cadastro = :id_dono_cadastro ' +
+            'order by mes asc';
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;

@@ -132,13 +132,13 @@ begin
             '(case when mes = 11 then ''Novembro'' else '+
             '(case when mes = 12 then ''Dezembro'' '+
             'end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from ' +
-            '(select sum(total) as total_despesa, 0 AS total_recebimento, extract(month from data) as mes, ' +
-            'extract(year from data) as ano, id_dono_cadastro from despesa ' +
+            '(select sum(total) as total_despesa, 0 AS total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
+            DAO.ExtractData(EXT_ANO, 'data')+' as ano, id_dono_cadastro from despesa ' +
             'where paga ' +
             'group by mes, ano, id_dono_cadastro ' +
             'union all ' +
-            'select 0 as total_despesa, sum(valor_total) AS total_recebimento, extract(month from data) as mes, ' +
-            'extract(year from data) as ano, id_dono_cadastro from recebimento ' +
+            'select 0 as total_despesa, sum(valor_total) AS total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
+            DAO.ExtractData(EXT_ANO, 'data')+' as ano, id_dono_cadastro from recebimento ' +
             'group by mes, ano, id_dono_cadastro ) s1 ' +
             'group by mes, ano, nome_mes, id_dono_cadastro ' +
             'having ano = :ano_informado and id_dono_cadastro = :id_dono_cadastro ' +
