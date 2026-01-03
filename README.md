@@ -12,6 +12,7 @@
 * <a href="https://www.postgresql.org/"> Postgresql 10 ou superior </a>
 * <a href="https://mariadb.org/"> MariaDB </a>
 * <a href="https://www.mysql.com/"> MySQL </a>
+* <a href="https://sqlite.org/"> SQLite </a>
 
 ## Arquitetura
 * Padrão MVC
