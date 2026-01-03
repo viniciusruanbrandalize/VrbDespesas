@@ -50,8 +50,8 @@
   <img src="img/telas/login.png" width="180" alt="Login" style="margin-right: 10px"/>
 </p>
 
-## Instalação
-Execute o arquivo vrbdespesas-setup-fb-x86.exe da versão mais recente.
+## Instalação (Somente para Windows)
+Execute o arquivo vrbdespesas-setup-fb-x86.exe ou vrbdespesas-setup-sqlite3-x86.exe da versão mais recente.
 Logo após, podes entrar com o usuário admin e a senha 123.
 
 ## Como contribuir
