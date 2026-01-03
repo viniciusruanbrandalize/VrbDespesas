@@ -419,7 +419,10 @@ begin
     else
     if DAO.Driver = DRV_SQLITE3 then
     begin
-      //a implementar...
+      ArqBackupFinal := Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.sql3';
+      aProcess.Executable := sqlite3;
+      aProcess.Parameters.Add(NomeBanco1);
+      aProcess.Parameters.Add('.backup '+ArqBackupFinal);
     end;
 
     aprocess.ShowWindow := swoHIDE;

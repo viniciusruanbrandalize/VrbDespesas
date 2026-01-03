@@ -19,9 +19,8 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="456"/>
-        <CursorPos X="42" Y="466"/>
+        <TopLine Value="455"/>
+        <CursorPos X="33" Y="472"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -743,9 +742,10 @@
         <ComponentName Value="frmCopiaSeguranca"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="75"/>
-        <CursorPos X="3" Y="94"/>
+        <TopLine Value="74"/>
+        <CursorPos X="39" Y="97"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -753,20 +753,18 @@
       <Unit>
         <Filename Value="..\src\controller\controller.copiaseguranca.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="27"/>
         <CursorPos X="3" Y="55"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.copiaseguranca.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="405"/>
-        <CursorPos X="21" Y="425"/>
+        <CursorPos X="37" Y="482"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.configuracao.pas"/>
@@ -1393,7 +1391,7 @@
         <UsageCount Value="4"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="4">
+    <JumpHistory HistoryIndex="2">
       <Position>
         <Filename Value="..\src\view\view.principal.pas"/>
         <Caret Line="478" Column="47" TopLine="455"/>
@@ -1405,14 +1403,6 @@
       <Position>
         <Filename Value="..\src\view\view.copiaseguranca.pas"/>
         <Caret Line="94" Column="3" TopLine="75"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\controller\controller.copiaseguranca.pas"/>
-        <Caret Line="55" Column="3" TopLine="27"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.copiaseguranca.pas"/>
-        <Caret Line="514" Column="3" TopLine="505"/>
       </Position>
     </JumpHistory>
     <RunParams>
