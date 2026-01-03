@@ -1,5 +1,5 @@
 #define MyAppName "VrbDespesas"
-#define MyAppVersion "0.5.1"
+#define MyAppVersion "0.6.0"
 #define MyAppPublisher "Vinicius Ruan Brandalize"
 #define MyAppExeName "vrbDespesas32.exe"
 
@@ -20,13 +20,13 @@ WizardStyle=modern
 WizardSmallImageFile=img\logo_pequena.bmp
 WizardImageFile=img\logo_grande.bmp
 WizardImageBackColor=clWhite
-VersionInfoVersion=0.5.1
+VersionInfoVersion=0.6.0
 VersionInfoCompany=vrb
 VersionInfoDescription=vrbDespesas
-VersionInfoTextVersion=0.5.1
-VersionInfoCopyright=Copyright (c) 2025 Vinícius Ruan Brandalize
+VersionInfoTextVersion=0.6.0
+VersionInfoCopyright=Copyright (c) 2026 Vinícius Ruan Brandalize
 VersionInfoProductName=vrbDespesas
-VersionInfoProductVersion=0.5.1
+VersionInfoProductVersion=0.6.0
 LicenseFile=..\LICENSE
 DisableWelcomePage=no
 ShowLanguageDialog=no
