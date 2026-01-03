@@ -56,7 +56,7 @@ Source: ..\database\DESPESA_INSTALACAO.db3; DestDir: {app}\database; DestName: D
 Source: ..\exe\reports\*.lrf; DestDir: {app}\reports; Flags: ignoreversion
 Source: ..\exe\reports\*.png; DestDir: {app}\reports; Flags: ignoreversion
 Source: ..\exe\resources\*.*; DestDir: {app}\resources; Flags: ignoreversion
-Source: ..\license-cpts\*.*; DestDir: {app}\license-cpts; Flags: ignoreversion
+Source: ..\license-third-party\*.*; DestDir: {app}\license-third-party; Flags: ignoreversion
 
 [Icons]
 Name: {group}\{#MyAppName}; Filename: {app}\{#MyAppExeName}
@@ -71,5 +71,5 @@ Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(M
 Name: {app}\database
 Name: {app}\reports
 Name: {app}\resources
-Name: {app}\license-cpts
+Name: {app}\license-third-party
 Name: {app}\vrb_temp; Flags: deleteafterinstall

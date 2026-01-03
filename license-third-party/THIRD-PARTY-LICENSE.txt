@@ -1,0 +1,195 @@
+THIRD-PARTY SOFTWARE NOTICES
+===========================
+
+Este produto inclui softwares de terceiros, distribuídos sob as
+respectivas licenças descritas abaixo.
+
+============================================================
+LazReport Project
+============================================================
+
+The LazReport Project files are distributed under the
+GNU Library General Public License (LGPL), version 2,
+with a special linking exception.
+
+As a special exception, the copyright holders of this
+library give permission to link this library with independent
+modules to produce an executable, regardless of the license
+terms of these independent modules, and to copy and distribute
+the resulting executable under terms of your choice, provided
+that you also meet, for each linked independent module, the
+terms and conditions of the license of that module.
+
+An independent module is a module which is not derived from
+or based on this library.
+
+If you modify this library, you may extend this exception to
+your version of the library, but you are not obligated to do so.
+If you do not wish to do so, you may delete this exception
+statement from your version.
+
+The full text of the LGPL v2 license can be found in the file:
+license-lgpl-v2.txt
+
+If you did not receive a copy of the LGPL license, contact:
+
+Free Software Foundation, Inc.  
+675 Mass Ave  
+Cambridge, MA 02139  
+USA
+
+
+============================================================
+TAChart
+============================================================
+
+TAChart is a charting component for Lazarus, similar to TeeChart.
+
+TAChart is distributed under the GNU Library General Public License
+(LGPL), version 2.
+
+It contains functions developed by Philippe Martinole for the
+TeleAuto project, as well as modifications introduced by
+Luis Rodrigues during the porting of the Epanet application
+from Delphi to Lazarus.
+
+The full text of the LGPL v2 license can be found in the file:
+license-lgpl-v2.txt
+
+
+============================================================
+VrbLibCep
+============================================================
+
+VrbLibCep is distributed under the MIT License.
+
+The full text of the MIT License can be found in the file:
+license-mit.txt
+
+
+============================================================
+libVrbBCrypt
+============================================================
+
+libVrbBCrypt is distributed under the MIT License.
+
+The full text of the MIT License can be found in the file:
+license-mit.txt
+
+
+============================================================
+libVrbCryptIni
+============================================================
+
+libVrbCryptIni is distributed under the MIT License.
+
+The full text of the MIT License can be found in the file:
+license-mit.txt
+
+
+============================================================
+Firebird Database Client (fbclient.dll)
+============================================================
+
+Copyright © Firebird Project
+
+Este software utiliza o Firebird Database Client (`fbclient.dll`),
+distribuído sob a InterBase Public License (IDPL).
+
+A licença permite o uso, modificação e redistribuição, inclusive para
+fins comerciais, desde que os avisos de copyright e o texto da licença
+sejam mantidos.
+
+Mais informações sobre a licença:
+https://www.firebirdsql.org/en/licensing/
+
+
+============================================================
+SQLite (sqlite3.dll)
+============================================================
+
+SQLite é software de Domínio Público.
+
+O autor ou autores dedicaram o SQLite ao domínio público.
+Qualquer pessoa pode copiar, modificar, publicar, usar, compilar,
+vender ou distribuir este software, para qualquer finalidade,
+comercial ou não, e por qualquer meio.
+
+Mais informações:
+https://www.sqlite.org/copyright.html
+
+
+============================================================
+OpenSSL Cryptographic Library
+(libcrypto-1_1.dll, libssl-1_1.dll)
+============================================================
+
+This product includes cryptographic software written by
+Eric Young (eay@cryptsoft.com).
+
+This product includes software developed by the OpenSSL Project
+for use in the OpenSSL Toolkit (https://www.openssl.org/).
+
+Copyright © The OpenSSL Project
+Copyright © Eric Young
+
+OpenSSL is licensed under the OpenSSL License and the SSLeay License.
+
+The licenses permit use, modification, and redistribution, including
+for commercial purposes, provided that the copyright notices and
+license texts are retained and proper attribution is given.
+
+More information:
+https://www.openssl.org/source/license.html
+
+
+============================================================
+GNU libiconv (libiconv-2.dll)
+============================================================
+
+Copyright © Free Software Foundation, Inc.
+
+GNU libiconv é uma biblioteca para conversão de codificações de
+caracteres.
+
+Este software é licenciado sob a GNU Lesser General Public License
+(LGPL), versão 2.1 ou posterior.
+
+A LGPL permite o uso e redistribuição deste software, inclusive em
+aplicações comerciais e proprietárias, desde que a biblioteca seja
+distribuída separadamente (por exemplo, como DLL), permitindo sua
+substituição pelo usuário, e que o texto da licença seja mantido.
+
+Texto completo da licença:
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
+
+============================================================
+GNU gettext / libintl (libintl-8.dll)
+============================================================
+
+Copyright © Free Software Foundation, Inc.
+
+libintl faz parte do projeto GNU gettext e fornece suporte à
+internacionalização e localização de aplicações.
+
+Este software é licenciado sob a GNU Lesser General Public License
+(LGPL), versão 2.1 ou posterior.
+
+A LGPL permite o uso e redistribuição deste software, inclusive em
+aplicações comerciais e proprietárias, desde que a biblioteca seja
+distribuída separadamente (por exemplo, como DLL), permitindo sua
+substituição pelo usuário, e que o texto da licença seja mantido.
+
+Texto completo da licença:
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
+
+============================================================
+DISCLAIMER
+============================================================
+
+All third-party software is provided "AS IS", without warranty of any
+kind, express or implied. In no event shall the authors or copyright
+holders be liable for any claim, damages or other liability arising
+from the use of this software.

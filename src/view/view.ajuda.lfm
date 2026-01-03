@@ -1,26 +1,25 @@
 object frmAjuda: TfrmAjuda
   Left = 349
-  Height = 365
+  Height = 400
   Top = 250
   Width = 571
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Ajuda'
-  ClientHeight = 365
+  ClientHeight = 400
   ClientWidth = 571
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '3.4.0.0'
   object pnlFundo: TPanel
     Left = 0
-    Height = 365
+    Height = 400
     Top = 0
     Width = 571
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 365
+    ClientHeight = 400
     ClientWidth = 571
     Color = clWhite
     ParentBackground = False
@@ -29,7 +28,7 @@ object frmAjuda: TfrmAjuda
     object pgc: TPageControl
       Cursor = crHandPoint
       Left = 5
-      Height = 355
+      Height = 390
       Top = 5
       Width = 561
       ActivePage = tbsSobre
@@ -39,22 +38,22 @@ object frmAjuda: TfrmAjuda
       TabOrder = 0
       object tbsSobre: TTabSheet
         Caption = 'Sobre'
-        ClientHeight = 327
+        ClientHeight = 362
         ClientWidth = 553
         object pnlFundoSobre: TPanel
           Left = 0
-          Height = 327
+          Height = 362
           Top = 0
           Width = 553
           Align = alClient
           BevelOuter = bvNone
-          ClientHeight = 327
+          ClientHeight = 362
           ClientWidth = 553
           ParentBackground = False
           TabOrder = 0
           object imgLogoSobre: TImage
             Left = 0
-            Height = 142
+            Height = 126
             Top = 42
             Width = 553
             Align = alClient
@@ -1913,19 +1912,19 @@ object frmAjuda: TfrmAjuda
           end
           object pnlBottomSobre: TPanel
             Left = 0
-            Height = 143
-            Top = 184
+            Height = 194
+            Top = 168
             Width = 553
             Align = alBottom
             BevelOuter = bvNone
-            ClientHeight = 143
+            ClientHeight = 194
             ClientWidth = 553
             ParentBackground = False
             TabOrder = 0
             object lblVersao: TLabel
               Left = 5
               Height = 15
-              Top = 85
+              Top = 136
               Width = 543
               Align = alBottom
               Alignment = taCenter
@@ -1935,7 +1934,7 @@ object frmAjuda: TfrmAjuda
             object lblDataVersao: TLabel
               Left = 0
               Height = 15
-              Top = 105
+              Top = 156
               Width = 553
               Align = alBottom
               Alignment = taCenter
@@ -1943,23 +1942,23 @@ object frmAjuda: TfrmAjuda
             end
             object lblInfoSoftware: TLabel
               Left = 0
-              Height = 75
+              Height = 126
               Top = 5
               Width = 553
               Align = alClient
               BorderSpacing.Top = 5
-              Caption = #13#10'Este programa é um software livre, você pode redistribuí-lo e/ou modificá-lo sob os termos da Licença Pública Geral GNU, conforme publicada pela Free Software Foundation.'
+              Caption = #13#10'Este programa é um software livre, você pode redistribuí-lo e/ou modificá-lo sob os termos da Licença Pública Geral GNU, conforme publicada pela Free Software Foundation.'#13#10#13#10'Este programa utiliza componentes de terceiros, incluindo LazReport, TAChart, VrbLibCep, libVrbBCrypt, libVrbCryptIni, Firebird, SQLite, OpenSSL, libiconv e libintl.'#13#10'Consulte o arquivo license-third-party/THIRD-PARTY-LICENSE.txt na pasta de instalação para mais informações sobre licenças.'
               WordWrap = True
             end
             object lblCopySobre: TLabel
               Left = 0
               Height = 13
-              Top = 130
+              Top = 181
               Width = 553
               Align = alBottom
               Alignment = taCenter
               BorderSpacing.Top = 10
-              Caption = 'Copyright © 2025 Vinícius Ruan Brandalize.'
+              Caption = 'Copyright © 2026 Vinícius Ruan Brandalize.'
               Font.Height = -11
               Font.Style = [fsBold]
               ParentFont = False
@@ -1969,16 +1968,16 @@ object frmAjuda: TfrmAjuda
       end
       object tbsApoio: TTabSheet
         Caption = 'Apoie o projeto'
-        ClientHeight = 327
+        ClientHeight = 362
         ClientWidth = 553
         object pnlFundoApoio: TPanel
           Left = 0
-          Height = 327
+          Height = 362
           Top = 0
           Width = 553
           Align = alClient
           BevelOuter = bvNone
-          ClientHeight = 327
+          ClientHeight = 362
           ClientWidth = 553
           ParentBackground = False
           TabOrder = 0
@@ -2020,7 +2019,7 @@ object frmAjuda: TfrmAjuda
           end
           object imgApoio: TImage
             Left = 20
-            Height = 197
+            Height = 232
             Top = 97
             Width = 513
             Align = alClient
@@ -2535,12 +2534,12 @@ object frmAjuda: TfrmAjuda
           object lblCopyApoio: TLabel
             Left = 0
             Height = 13
-            Top = 314
+            Top = 349
             Width = 553
             Align = alBottom
             Alignment = taCenter
             BorderSpacing.Top = 10
-            Caption = 'Copyright © 2025 Vinícius Ruan Brandalize.'
+            Caption = 'Copyright © 2026 Vinícius Ruan Brandalize.'
             Font.Height = -11
             Font.Style = [fsBold]
             ParentFont = False
