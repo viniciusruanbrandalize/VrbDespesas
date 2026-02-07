@@ -70,7 +70,7 @@ uses
   view.configuracao, view.selecionardonocadastro, view.ajuda, lib.version,
   view.carregamento, view.relatoriofluxocaixa, model.report.fluxocaixa, 
 controller.relatoriofluxocaixa, model.report.participante, 
-controller.relatorioparticipante, view.relatorioparticipante;
+controller.relatorioparticipante, view.relatorioparticipante, lib.acbrnfe;
 
 {$R *.res}
 

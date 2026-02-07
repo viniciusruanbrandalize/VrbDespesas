@@ -255,9 +255,9 @@ inherited frmDespesa: TfrmDespesa
               Left = 8
               Height = 23
               Top = 128
-              Width = 384
+              Width = 344
               EditLabel.Height = 15
-              EditLabel.Width = 384
+              EditLabel.Width = 344
               EditLabel.Caption = 'Chave NF-e:'
               MaxLength = 44
               NumbersOnly = True
@@ -672,6 +672,18 @@ inherited frmDespesa: TfrmDespesa
               Caption = '"Ctrl+Enter" para quebra de linhas'
               Visible = False
             end
+            object btnPegarChave: TSpeedButton[26]
+              Left = 358
+              Height = 23
+              Top = 128
+              Width = 34
+              Action = actPegarChaveNf
+              Images = img
+              ImageIndex = 15
+              ShowCaption = False
+              ShowHint = True
+              ParentShowHint = False
+            end
           end
         end
       end
@@ -730,6 +742,12 @@ inherited frmDespesa: TfrmDespesa
       Caption = 'Exportar'
       ImageIndex = 12
       OnExecute = actExportarArquivoExecute
+    end
+    object actPegarChaveNf: TAction[15]
+      Caption = 'actPegarChaveNf'
+      Hint = 'Buscar chave pelo XML da nota fiscal'
+      ImageIndex = 15
+      OnExecute = actPegarChaveNfExecute
     end
   end
   object pMenuFpgto: TPopupMenu[4]

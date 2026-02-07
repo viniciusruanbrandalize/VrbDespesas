@@ -33,7 +33,7 @@ uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.despesa, model.dao.padrao,
   model.dao.despesa, model.entity.despesaformapagamento, model.entity.arquivo,
   model.connection.conexao1, Dialogs, model.dao.configuracao,
-  model.entity.configuracao;
+  model.entity.configuracao, lib.acbrnfe;
 
 type
 
@@ -42,6 +42,7 @@ type
   TDespesaController = class
   private
     DespesaDAO: TDespesaDAO;
+    LibAcbrNfe: TLibAcbrNfe;
   public
     Despesa: TDespesa;
     procedure Listar(lv: TListView);
@@ -70,6 +71,8 @@ type
     procedure AdicionarArquivo(objDespesa: TDespesa);
     function ExcluirArquivo(objDespesa: TDespesa; Id, Index: Integer; out Erro: String): Boolean;
     procedure CancelarAtualizacaoArquivo();
+
+    function BuscarChaveDaNota(ArquivoXml: String): String;
 
     constructor Create;
     destructor Destroy; override;
@@ -250,16 +253,24 @@ begin
   DespesaDAO.Roolback(2);
 end;
 
+function TDespesaController.BuscarChaveDaNota(ArquivoXml: String): String;
+begin
+  LibAcbrNfe.CarregarXml(ArquivoXml);
+  Result := LibAcbrNfe.XML.NFe.procNFe.chNFe;
+end;
+
 constructor TDespesaController.Create;
 begin
   Despesa    := TDespesa.Create;
   DespesaDAO := TDespesaDAO.Create;
+  LibAcbrNfe := TLibAcbrNfe.Create;
 end;
 
 destructor TDespesaController.Destroy;
 begin
   Despesa.Free;
   DespesaDAO.Free;
+  LibAcbrNfe.Free;
   inherited Destroy;
 end;
 

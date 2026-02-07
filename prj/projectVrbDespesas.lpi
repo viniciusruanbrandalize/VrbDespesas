@@ -147,6 +147,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="ACBr_NFe"/>
+      </Item>
+      <Item>
         <PackageName Value="TAChartLazarusPkg"/>
       </Item>
       <Item>
@@ -698,6 +701,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.tokenapi.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\lib\lib.acbrnfe.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

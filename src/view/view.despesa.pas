@@ -44,6 +44,7 @@ type
     actIncluirArquivo: TAction;
     actExcluirArquivo: TAction;
     actExportarArquivo: TAction;
+    actPegarChaveNf: TAction;
     actSalvarFpgto: TAction;
     actCancelarFpgto: TAction;
     btnExportarArquivo: TSpeedButton;
@@ -98,6 +99,7 @@ type
     pMenuFpgto: TPopupMenu;
     pMenuArquivo: TPopupMenu;
     saveDlg: TSaveDialog;
+    btnPegarChave: TSpeedButton;
     tbsPagamento: TTabSheet;
     tbsArquivo: TTabSheet;
     trbNivelPrecisao: TTrackBar;
@@ -111,6 +113,7 @@ type
     procedure actIncluirArquivoExecute(Sender: TObject);
     procedure actIncluirExecute(Sender: TObject);
     procedure actIncluirFpgtoExecute(Sender: TObject);
+    procedure actPegarChaveNfExecute(Sender: TObject);
     procedure actPesquisarExecute(Sender: TObject);
     procedure actSalvarExecute(Sender: TObject);
     procedure actSalvarFpgtoExecute(Sender: TObject);
@@ -511,6 +514,20 @@ begin
   end
   else
     TfrmMessage.Mensagem('Valor pago já foi alcançado!', 'Aviso', 'C', [mbOK], mbOK);
+end;
+
+procedure TfrmDespesa.actPegarChaveNfExecute(Sender: TObject);
+begin
+  try
+    openDlg.Filter := 'Arquivo XML|*.xml';
+    if openDlg.Execute then
+    begin
+      edtChaveNfe.Clear;
+      edtChaveNfe.Text := Controller.BuscarChaveDaNota(openDlg.FileName);
+    end;
+  finally
+    openDlg.Filter := '';
+  end;
 end;
 
 procedure TfrmDespesa.actPesquisarExecute(Sender: TObject);
