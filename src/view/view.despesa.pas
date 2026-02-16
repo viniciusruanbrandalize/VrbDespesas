@@ -44,6 +44,7 @@ type
     actIncluirArquivo: TAction;
     actExcluirArquivo: TAction;
     actExportarArquivo: TAction;
+    actImportarNf: TAction;
     actPegarChaveNf: TAction;
     actSalvarFpgto: TAction;
     actCancelarFpgto: TAction;
@@ -54,6 +55,7 @@ type
     btnIncluirFormaPgto: TSpeedButton;
     btnIncluirArquivo: TSpeedButton;
     btnSalvarFormaPgto: TSpeedButton;
+    btnImportarNf: TToolButton;
     cbFormaPagamento: TComboBox;
     cbSubtipo: TComboBox;
     cbPesquisaGenerica: TComboBox;
@@ -110,6 +112,7 @@ type
     procedure actExcluirExecute(Sender: TObject);
     procedure actExcluirFpgtoExecute(Sender: TObject);
     procedure actExportarArquivoExecute(Sender: TObject);
+    procedure actImportarNfExecute(Sender: TObject);
     procedure actIncluirArquivoExecute(Sender: TObject);
     procedure actIncluirExecute(Sender: TObject);
     procedure actIncluirFpgtoExecute(Sender: TObject);
@@ -137,8 +140,8 @@ type
   private
     Controller: TDespesaController;
     procedure AjustarTelaPagamento(Inserindo: boolean);
-    procedure IncluirPagamento();
-    procedure IncluirArquivo();
+    procedure IncluirPagamento(i: Integer = -1);
+    procedure IncluirArquivo(i: Integer = -1);
     procedure LimparCamposPagamento();
     procedure HabilitarCampos(Hab: boolean);
     procedure PrepararPesquisaGenerica(i: Integer);
@@ -423,6 +426,52 @@ begin
     TfrmMessage.Mensagem('Nenhum registro foi selecionado!', 'Aviso', 'C', [mbOk]);
 end;
 
+procedure TfrmDespesa.actImportarNfExecute(Sender: TObject);
+var
+  Erro: String;
+  i: Integer;
+begin
+  try
+    openDlg.Filter := 'Arquivo XML|*.xml';
+    if openDlg.Execute then
+    begin
+
+      if ExtractFileExt(openDlg.FileName) = EmptyStr then
+      begin
+        TfrmMessage.Mensagem('Não é permitido importar um arquivo sem extensão!', 'Aviso', 'C', [mbOK], mbOK);
+        Exit;
+      end;
+
+      actIncluirExecute(actIncluir);
+
+      if Controller.ImportarDadosNF(openDlg.FileName, Controller.Despesa, Erro) then
+      begin
+        dtpData.Date := Controller.Despesa.Data;
+        dtpHora.Time := Controller.Despesa.Hora;
+        edtDescricao.Text := Controller.Despesa.Descricao;
+        edtValor.Text := FormatFloat(',#0.00', Controller.Despesa.Valor);
+        edtDesconto.Text := FormatFloat(',#0.00', Controller.Despesa.Desconto);
+        edtFrete.Text := FormatFloat(',#0.00', Controller.Despesa.Frete);
+        edtOutros.Text := FormatFloat(',#0.00', Controller.Despesa.Outros);
+        edtTotal.Text := FormatFloat(',#0.00', Controller.Despesa.Total);
+        edtChaveNfe.Text := Controller.Despesa.ChaveNFE;
+        mObs.Lines.Text := Controller.Despesa.Observacao;
+
+        for i := 0 to Pred( Controller.Despesa.DespesaFormaPagamento.Count ) do
+          IncluirPagamento(i);
+
+        IncluirArquivo(0);
+
+      end
+      else
+        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOK]);
+
+    end;
+  finally
+    openDlg.Filter := '';
+  end;
+end;
+
 procedure TfrmDespesa.actIncluirArquivoExecute(Sender: TObject);
 var
   i: Integer;
@@ -590,12 +639,12 @@ begin
   end;
 end;
 
-procedure TfrmDespesa.IncluirPagamento();
+procedure TfrmDespesa.IncluirPagamento(i: Integer = -1);
 var
   item: TListItem;
-  i: integer;
 begin
-  i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
+  if i = -1 then
+    i := Controller.Despesa.DespesaFormaPagamento.Count - 1;
   item := lvPagamento.Items.Add;
   item.Caption := '0';
   item.SubItems.Add(controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Nome);
@@ -603,12 +652,12 @@ begin
     controller.Despesa.DespesaFormaPagamento[i].Valor));
 end;
 
-procedure TfrmDespesa.IncluirArquivo();
+procedure TfrmDespesa.IncluirArquivo(i: Integer = -1);
 var
   item: TListItem;
-  i: integer;
 begin
-  i := Controller.Despesa.Arquivo.Count - 1;
+  if i = -1 then
+    i := Controller.Despesa.Arquivo.Count - 1;
   item := lvArquivo.Items.Add;
   item.Caption := controller.Despesa.Arquivo[i].Id.ToString;
   item.SubItems.Add(controller.Despesa.Arquivo[i].Nome);

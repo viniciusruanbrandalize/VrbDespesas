@@ -73,12 +73,16 @@ type
     procedure CancelarAtualizacaoArquivo();
 
     function BuscarChaveDaNota(ArquivoXml: String): String;
+    function ImportarDadosNF(ArquivoXml: String; objDespesa : TDespesa; out Erro: string): Boolean;
 
     constructor Create;
     destructor Destroy; override;
   end;
 
 implementation
+
+uses
+  pcnConversaoNFe;
 
 { TDespesaController }
 
@@ -257,6 +261,75 @@ function TDespesaController.BuscarChaveDaNota(ArquivoXml: String): String;
 begin
   LibAcbrNfe.CarregarXml(ArquivoXml);
   Result := LibAcbrNfe.XML.NFe.procNFe.chNFe;
+end;
+
+function TDespesaController.ImportarDadosNF(ArquivoXml: String;
+  objDespesa: TDespesa; out Erro: string): Boolean;
+var
+  i, j: Integer;
+begin
+  if LibAcbrNfe.CarregarXml(ArquivoXml) then
+  begin
+
+    with LibAcbrNfe.XML do
+    begin
+
+      objDespesa.ChaveNFE  := NFe.procNFe.chNFe;
+      objDespesa.Data      := NFe.Ide.dEmi;
+      objDespesa.Hora      := NFe.Ide.dEmi;
+
+      if LibAcbrNfe.XML.NFe.Det.Count = 1 then
+        objDespesa.Descricao := 'Compra de ' + NFe.Det[0].Prod.xProd;
+
+      for i := 0 to Pred( LibAcbrNfe.XML.NFe.Det.Count ) do
+        objDespesa.Observacao := NFe.Det[i].Prod.xProd + #13;
+
+      objDespesa.Valor      := NFe.Total.ICMSTot.vProd;
+      objDespesa.Desconto   := NFe.Total.ICMSTot.vDesc;
+      objDespesa.Frete      := NFe.Total.ICMSTot.vFrete;
+      objDespesa.Desconto   := NFe.Total.ICMSTot.vDesc;
+      objDespesa.Outros     := NFe.Total.ICMSTot.vOutro;
+      objDespesa.Total      := NFe.Total.ICMSTot.vNF;
+
+      for i := 0 to Pred( NFe.pag.Count ) do
+      begin
+        AdicionarPagamento();
+        j := objDespesa.DespesaFormaPagamento.Count - 1;
+
+        case NFe.pag[i].tPag of
+          fpDinheiro:
+          begin
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 1;
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Dinheiro';
+          end;
+          fpPagamentoInstantaneo,
+          fpPagamentoInstantaneoEstatico:
+          begin
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 4;
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Pix';
+          end;
+        end;
+
+        objDespesa.DespesaFormaPagamento[j].Valor := NFe.pag[i].vPag;
+      end;
+
+      AdicionarArquivo(objDespesa);
+
+      objDespesa.Arquivo[0].Nome           := ChangeFileExt(ExtractFileName(ArquivoXml), EmptyStr);
+      objDespesa.Arquivo[0].Extensao       := ExtractFileExt(ArquivoXml);
+      objDespesa.Arquivo[0].DataHoraUpload := Now;
+      objDespesa.Arquivo[0].Binario.LoadFromFile(ArquivoXml);
+
+    end;
+
+    Result := True;
+
+  end
+  else
+  begin
+    Erro := 'Falha ao carregar o arquivo XML!';
+    Result := False;
+  end;
 end;
 
 constructor TDespesaController.Create;

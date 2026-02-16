@@ -7,10 +7,17 @@ inherited frmDespesa: TfrmDespesa
   inherited pnlFundo: TPanel
     inherited pnlPrincipal: TPanel
       inherited pgcPadrao: TPageControl
-        ActivePage = tbsCadastro
-        TabIndex = 1
         inherited tbsLista: TTabSheet
           inherited pnlFundoLista: TPanel
+            inherited pnlBotaoLista: TPanel
+              inherited ToolBarLista: TToolBar
+                object btnImportarNf: TToolButton[4]
+                  Left = 321
+                  Top = 0
+                  Action = actImportarNf
+                end
+              end
+            end
             inherited lvPadrao: TListView
               Columns = <              
                 item
@@ -748,6 +755,11 @@ inherited frmDespesa: TfrmDespesa
       Hint = 'Buscar chave pelo XML da nota fiscal'
       ImageIndex = 15
       OnExecute = actPegarChaveNfExecute
+    end
+    object actImportarNf: TAction[16]
+      Caption = 'Importar NF'
+      ImageIndex = 15
+      OnExecute = actImportarNfExecute
     end
   end
   object pMenuFpgto: TPopupMenu[4]

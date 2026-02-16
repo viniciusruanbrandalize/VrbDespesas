@@ -68,9 +68,9 @@ uses
   controller.selecionardonocadastro, controller.ajuda, controller.usuarioacesso,
   view.recebimento, view.relatoriorecebimento, view.copiaseguranca,
   view.configuracao, view.selecionardonocadastro, view.ajuda, lib.version,
-  view.carregamento, view.relatoriofluxocaixa, model.report.fluxocaixa, 
-controller.relatoriofluxocaixa, model.report.participante, 
-controller.relatorioparticipante, view.relatorioparticipante, lib.acbrnfe;
+  view.carregamento, view.relatoriofluxocaixa, model.report.fluxocaixa,
+  controller.relatoriofluxocaixa, model.report.participante,
+  controller.relatorioparticipante, view.relatorioparticipante, lib.acbrnfe;
 
 {$R *.res}
 
