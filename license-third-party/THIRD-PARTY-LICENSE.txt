@@ -86,6 +86,28 @@ libVrbCryptIni is distributed under the MIT License.
 The full text of the MIT License can be found in the file:
 license-mit.txt
 
+============================================================
+ACBr (Projeto ACBr)
+============================================================
+
+Website:
+https://www.projetoacbr.com.br
+
+License:
+GNU Lesser General Public License (LGPL) version 2.1
+
+Copyright:
+© Projeto ACBr and contributors
+
+The ACBr components are licensed under the LGPL v2.1.
+You may obtain a copy of the license at:
+
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html 
+or in the file license-lgpl-v2.1.txt.
+
+Modifications:
+No modifications were made to the original ACBr source code.
+
 
 ============================================================
 Firebird Database Client (fbclient.dll)

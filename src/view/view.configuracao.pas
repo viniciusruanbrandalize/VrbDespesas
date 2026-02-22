@@ -229,8 +229,7 @@ begin
             ckb.Left     := esquerda;
             ckb.Checked  := Valor = '1';
           end;
-          topo     := topo + 10;
-          esquerda := esquerda + 10;
+          topo     := topo + 20;
         end;
       end;
     end;

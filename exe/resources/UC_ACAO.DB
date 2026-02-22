@@ -98,3 +98,4 @@ id,nome,titulo,nome_uc_tela
 97,actCompletoTodos,"Completo - Todos",frmRelatorioParticipante
 98,actTotalMensal,"Total Mensal",frmRelatorioFluxoCaixa
 99,actPorPeriodoSalario,"Por Periodo - Salario",frmRelatorioRecebimento
+100,actImportarNf,"Importar NF",frmDespesa

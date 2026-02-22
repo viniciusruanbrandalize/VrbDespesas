@@ -757,6 +757,7 @@ inherited frmDespesa: TfrmDespesa
       OnExecute = actPegarChaveNfExecute
     end
     object actImportarNf: TAction[16]
+      Tag = 1
       Caption = 'Importar NF'
       ImageIndex = 15
       OnExecute = actImportarNfExecute

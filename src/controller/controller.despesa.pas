@@ -320,6 +320,12 @@ begin
       objDespesa.Arquivo[0].DataHoraUpload := Now;
       objDespesa.Arquivo[0].Binario.LoadFromFile(ArquivoXml);
 
+      if BuscarConfiguracaoPorNome('INSERIR_FORNECEDOR_XML', Erro) = '1' then
+      begin
+        //buscar por cnpj/cpf
+
+      end;
+
     end;
 
     Result := True;
