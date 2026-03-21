@@ -110,6 +110,39 @@ No modifications were made to the original ACBr source code.
 
 
 ============================================================
+libxml2 (libxml2.dll)
+============================================================
+Copyright (C) 1998-2012 Daniel Veillard
+
+Licensed under the MIT License.
+
+Permission is hereby granted, free of charge, to use, copy, modify, and
+distribute this software, provided that the above copyright notice and
+this permission notice are included in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+END OF FILE
+
+
+============================================================
+libexslt (libexslt.dll) / libxslt (libxslt.dll)
+============================================================
+
+Copyright (C) 2001-2002 Daniel Veillard
+
+Licensed under the MIT License.
+
+Permission is hereby granted, free of charge, to use, copy, modify, and
+distribute this software, provided that the above copyright notice and
+this permission notice are included in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+
+============================================================
+
+============================================================
 Firebird Database Client (fbclient.dll)
 ============================================================
 
@@ -166,7 +199,7 @@ https://www.openssl.org/source/license.html
 
 
 ============================================================
-GNU libiconv (libiconv-2.dll)
+GNU libiconv (libiconv-2.dll) / libiconv (libiconv.dll)
 ============================================================
 
 Copyright © Free Software Foundation, Inc.

@@ -1,8 +1,9 @@
 INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES (1, 'NUMERO_VERSAO','Número da versão do sistema','Número da versão do sistema','1.0.0.0',false);
 INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES (2, 'DATA_VERSAO','Data da versão do sistema','Data da versão do sistema','26/04/2025',false);
 INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO, COMPONENTE) VALUES (3,'USAR_CARTAO_VALE','Usar o cartão quando for informado pagamento como Vale','Pede as informações do cartão na forma de pagamento Vale','1',false,'TCheckBox');
+INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,COMPONENTE,EXCLUIDO) VALUES(4, 'INSERIR_FORNECEDOR_XML', 'Cadastrar fornecedor ao importar NF', 'Cadastra o fornecedor, se não existir, ao importar o arquivo XML de uma NF-e', '1', 'TCheckBox', false);
 
-SET GENERATOR gen_id_configuracao TO 2;
+SET GENERATOR gen_id_configuracao TO 4;
 
 INSERT INTO BANCO (ID,NUMERO,NOME,EXCLUIDO) VALUES (1, 748,'Sicredi',false);
 INSERT INTO BANCO (ID,NUMERO,NOME,EXCLUIDO) VALUES (2, 1,'Banco Do Brasil',false);

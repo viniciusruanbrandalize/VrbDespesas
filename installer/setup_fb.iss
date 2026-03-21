@@ -1,5 +1,5 @@
 #define MyAppName "VrbDespesas"
-#define MyAppVersion "0.6.0"
+#define MyAppVersion "0.7.0"
 #define MyAppPublisher "Vinicius Ruan Brandalize"
 #define MyAppExeName "vrbDespesas32.exe"
 
@@ -20,13 +20,13 @@ WizardStyle=modern
 WizardSmallImageFile=img\logo_pequena.bmp
 WizardImageFile=img\logo_grande.bmp
 WizardImageBackColor=clWhite
-VersionInfoVersion=0.6.0
+VersionInfoVersion=0.7.0
 VersionInfoCompany=vrb
 VersionInfoDescription=vrbDespesas
-VersionInfoTextVersion=0.6.0
+VersionInfoTextVersion=0.7.0
 VersionInfoCopyright=Copyright (c) 2026 Vinícius Ruan Brandalize
 VersionInfoProductName=vrbDespesas
-VersionInfoProductVersion=0.6.0
+VersionInfoProductVersion=0.7.0
 LicenseFile=..\LICENSE
 DisableWelcomePage=no
 ShowLanguageDialog=no
@@ -50,6 +50,10 @@ Source: ..\exe\libintl-8.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\exe\libssl-1_1.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\exe\libvrbbcrypt32.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\exe\libvrbcryptini32.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\exe\libexslt.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\exe\libiconv.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\exe\libxml2.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\exe\libxslt.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\LICENSE; DestDir: {app}; DestName: LICENSE.txt; Flags: ignoreversion
 Source: ..\database\ARQUIVO_INSTALACAO.FDB; DestDir: {app}\database; DestName: ARQUIVO.FDB; Flags: ignoreversion
 Source: ..\database\DESPESA_INSTALACAO.FDB; DestDir: {app}\database; DestName: DESPESA.FDB; Flags: ignoreversion

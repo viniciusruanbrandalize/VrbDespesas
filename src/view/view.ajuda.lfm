@@ -1947,7 +1947,7 @@ object frmAjuda: TfrmAjuda
               Width = 553
               Align = alClient
               BorderSpacing.Top = 5
-              Caption = #13#10'Este programa é um software livre, você pode redistribuí-lo e/ou modificá-lo sob os termos da Licença Pública Geral GNU, conforme publicada pela Free Software Foundation.'#13#10#13#10'Este programa utiliza componentes de terceiros, incluindo LazReport, TAChart, VrbLibCep, libVrbBCrypt, libVrbCryptIni, Firebird, SQLite, OpenSSL, libiconv e libintl.'#13#10'Consulte o arquivo license-third-party/THIRD-PARTY-LICENSE.txt na pasta de instalação para mais informações sobre licenças.'
+              Caption = #13#10'Este programa é um software livre, você pode redistribuí-lo e/ou modificá-lo sob os termos da Licença Pública Geral GNU, conforme publicada pela Free Software Foundation.'#13#10#13#10'Este programa utiliza componentes de terceiros, incluindo LazReport, TAChart, Projeto ACBr, VrbLibCep, libVrbBCrypt, libVrbCryptIni, Firebird, SQLite, OpenSSL, libiconv, libintl, libxml2, libexslt e libxslt.'#13#10'Consulte o arquivo license-third-party/THIRD-PARTY-LICENSE.txt na pasta de instalação para mais informações sobre licenças.'
               WordWrap = True
             end
             object lblCopySobre: TLabel
