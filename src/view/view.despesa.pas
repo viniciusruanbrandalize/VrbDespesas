@@ -446,6 +446,7 @@ begin
 
       if Controller.ImportarDadosNF(openDlg.FileName, Controller.Despesa, Erro) then
       begin
+
         dtpData.Date := Controller.Despesa.Data;
         dtpHora.Time := Controller.Despesa.Hora;
         edtDescricao.Text := Controller.Despesa.Descricao;
@@ -464,7 +465,10 @@ begin
 
       end
       else
+      begin
+        actCancelarExecute(actCancelar);
         TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOK]);
+      end;
 
     end;
   finally

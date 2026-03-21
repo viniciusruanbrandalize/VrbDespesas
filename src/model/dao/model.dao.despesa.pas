@@ -61,6 +61,7 @@ type
                                       Limitacao: Integer; out QtdRegistro: Integer);
 
     function BuscarArquivoPorId(Arquivo: TArquivo; Id: Integer; out Erro: String): Boolean;
+    function BuscarChaveNFExiste(Chave: String): Boolean;
     function ExcluirArquivo(Id: Integer; out Erro: string): Boolean;
 
     constructor Create; override;
@@ -934,6 +935,30 @@ begin
 
   finally
     QryArquivo.Close;
+  end;
+end;
+
+function TDespesaDAO.BuscarChaveNFExiste(Chave: String): Boolean;
+var
+  sql: String;
+begin
+  try
+
+    sql := 'select id from despesa ' +
+           'where (chave_nfe is not null and chave_nfe <> '''') and ' +
+           'chave_nfe = :chave_nfe and id_dono_cadastro = :id_dono_cadastro';
+
+    Qry.Close;
+    Qry.SQL.Clear;
+    Qry.SQL.Add(sql);
+    Qry.ParamByName('chave_nfe').AsString         := Chave;
+    Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.Open;
+
+    Result := Qry.RecordCount > 0;
+
+  finally
+    Qry.Close;
   end;
 end;
 

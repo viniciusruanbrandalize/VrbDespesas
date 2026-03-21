@@ -73,6 +73,7 @@ type
     procedure CancelarAtualizacaoArquivo();
 
     function BuscarChaveDaNota(ArquivoXml: String): String;
+    function ExisteChaveNF(Chave: String): Boolean;
     function ImportarDadosNF(ArquivoXml: String; objDespesa : TDespesa; out Erro: string): Boolean;
 
     constructor Create;
@@ -263,6 +264,11 @@ begin
   Result := LibAcbrNfe.XML.NFe.procNFe.chNFe;
 end;
 
+function TDespesaController.ExisteChaveNF(Chave: String): Boolean;
+begin
+  Result := DespesaDAO.BuscarChaveNFExiste(Chave);
+end;
+
 function TDespesaController.ImportarDadosNF(ArquivoXml: String;
   objDespesa: TDespesa; out Erro: string): Boolean;
 var
@@ -273,6 +279,13 @@ begin
 
     with LibAcbrNfe.XML do
     begin
+
+      if ExisteChaveNF(NFe.procNFe.chNFe) then
+      begin
+        Erro := 'NF já foi importada!';
+        Result := False;
+        Exit;
+      end;
 
       objDespesa.ChaveNFE  := NFe.procNFe.chNFe;
       objDespesa.Data      := NFe.Ide.dEmi;
@@ -293,6 +306,10 @@ begin
 
       for i := 0 to Pred( NFe.pag.Count ) do
       begin
+
+        if NFe.pag[i].tPag = fpSemPagamento then
+          Continue;
+
         AdicionarPagamento();
         j := objDespesa.DespesaFormaPagamento.Count - 1;
 
@@ -302,11 +319,45 @@ begin
             objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 1;
             objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Dinheiro';
           end;
+          fpCartaoDebito:
+          begin
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 2;
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Cartão de débito';
+          end;
+          fpCartaoCredito:
+          begin
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 3;
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Cartão de crédito';
+          end;
           fpPagamentoInstantaneo,
           fpPagamentoInstantaneoEstatico:
           begin
             objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 4;
             objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Pix';
+            objDespesa.DespesaFormaPagamento[j].Pix.Chave := '-1';
+          end;
+          fpBoletoBancario:
+          begin
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 6;
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Boleto';
+          end;
+          fpValeAlimentacao,
+          fpValeCombustivel,
+          fpValePresente,
+          fpValeRefeicao:
+          begin
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 8;
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Vale';
+          end;
+          fpCheque:
+          begin
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 9;
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Cheque';
+          end;
+          else
+          begin
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Id   := 1;
+            objDespesa.DespesaFormaPagamento[j].FormaPagamento.Nome := 'Dinheiro';
           end;
         end;
 
@@ -323,7 +374,6 @@ begin
       if BuscarConfiguracaoPorNome('INSERIR_FORNECEDOR_XML', Erro) = '1' then
       begin
         //buscar por cnpj/cpf
-
       end;
 
     end;

@@ -1913,7 +1913,7 @@ object frmLogin: TfrmLogin
         Width = 237
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Desenvolvido por Vinícius Ruan Brandalize.'#13#10'Copyright © 2025'#13#10'Todos os direitos reservados.'
+        Caption = 'Desenvolvido por Vinícius Ruan Brandalize.'#13#10'Copyright © 2026'#13#10'Todos os direitos reservados.'
         Font.Color = 4680961
         Font.Height = -10
         ParentFont = False
