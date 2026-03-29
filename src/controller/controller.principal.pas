@@ -134,10 +134,10 @@ begin
   ConexaoINI := TConexaoINI.Create;
   try
     case Conexao of
-      1: Result := 'Conn 1: Driver=' + ConexaoINI.Driver1 + ';Server=' + ConexaoINI.Servidor1 +
-                   ';Port=' + IntToStr(ConexaoINI.Porta1) + ';Database=' + ConexaoINI.Banco1 + ';';
-      2: Result := 'Conn 2: Driver=' + ConexaoINI.Driver2 + ';Server=' + ConexaoINI.Servidor2 +
-                   ';Port=' + IntToStr(ConexaoINI.Porta2) + ';Database=' + ConexaoINI.Banco2 +';';
+      1: Result := 'Conn 1: Driver=' + ConexaoINI.Conexao1.Driver + ';Server=' + ConexaoINI.Conexao1.Servidor +
+                   ';Port=' + IntToStr(ConexaoINI.Conexao1.Porta) + ';Database=' + ConexaoINI.Conexao1.Banco + ';';
+      2: Result := 'Conn 2: Driver=' + ConexaoINI.Conexao2.Driver + ';Server=' + ConexaoINI.Conexao2.Servidor +
+                   ';Port=' + IntToStr(ConexaoINI.Conexao2.Porta) + ';Database=' + ConexaoINI.Conexao2.Banco +';';
     end;
   finally
     FreeAndNil(ConexaoINI);

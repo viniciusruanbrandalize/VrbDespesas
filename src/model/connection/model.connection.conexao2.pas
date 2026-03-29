@@ -75,7 +75,7 @@ begin
   ini := TConexaoINI.Create;
   try
 
-    if ini.LogSQL1 then
+    if ini.Conexao2.LogSQL then
     begin
       arq := ExtractFilePath(ParamStr(0))+'SQLCon2.log';
       AssignFile(log, arq);
@@ -123,8 +123,8 @@ begin
     begin
       try
         Enabled            := False;
-        ConnectionType     := ini.Driver2;
-        LibraryName        := VerificarNomeDLL(ini.Driver2);
+        ConnectionType     := ini.Conexao2.Driver;
+        LibraryName        := VerificarNomeDLL(ini.Conexao2.Driver);
         Enabled            := True;
       except on e:Exception do
         TfrmMessage.Mensagem('Erro ao ler biblioteca: '+e.Message,
@@ -134,19 +134,19 @@ begin
 
     with SQLConnector do
     begin
-      CharSet               := ini.CharSet2;
-      ConnectorType         := ini.Driver2;
-      DatabaseName          := ini.Banco2;
-      HostName              := ini.Servidor2;
-      UserName              := ini.Usuario2;
-      Password              := ini.Senha2;
-      Params.Values['port'] := ini.Porta2.ToString;
+      CharSet               := ini.Conexao2.CharSet;
+      ConnectorType         := ini.Conexao2.Driver;
+      DatabaseName          := ini.Conexao2.Banco;
+      HostName              := ini.Conexao2.Servidor;
+      UserName              := ini.Conexao2.Usuario;
+      Password              := ini.Conexao2.Senha;
+      Params.Values['port'] := ini.Conexao2.Porta.ToString;
     end;
 
     try
       SQLConnector.Connected  := True;
-      tmrInatividade.Interval := ini.Inatividade2 * 1000;
-      tmrInatividade.Enabled  := ini.Inatividade2 > 0;
+      tmrInatividade.Interval := ini.Conexao2.Inatividade * 1000;
+      tmrInatividade.Enabled  := ini.Conexao2.Inatividade > 0;
     except on e:Exception do
       TfrmMessage.Mensagem('Erro ao conectar com o banco de dados: '+
                             e.Message, 'Erro', 'E', [mbOk]);

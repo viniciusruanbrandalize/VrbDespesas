@@ -346,11 +346,11 @@ begin
 
     ConexaoINI := TConexaoINI.Create;
     try
-      UsuarioDB1 := ConexaoINI.Usuario1;
-      SenhaDB1   := ConexaoINI.Senha1;
-      NomeBanco1 := ConexaoINI.Banco1;
-      HostDB1    := ConexaoINI.Servidor1;
-      PortaDB1   := ConexaoINI.Porta1.ToString;
+      UsuarioDB1 := ConexaoINI.Conexao1.Usuario;
+      SenhaDB1   := ConexaoINI.Conexao1.Senha;
+      NomeBanco1 := ConexaoINI.Conexao1.Banco;
+      HostDB1    := ConexaoINI.Conexao1.Servidor;
+      PortaDB1   := ConexaoINI.Conexao1.Porta.ToString;
     finally
       ConexaoINI.Free;
     end;

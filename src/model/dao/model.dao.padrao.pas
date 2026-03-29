@@ -399,7 +399,7 @@ begin
   INI := TConexaoINI.Create;
   try
     case FDriver of
-      DRV_FIREBIRD: Result := IfThen(Trim(INI.Collate1) = '', '', 'collate '+Trim(INI.Collate1));
+      DRV_FIREBIRD: Result := IfThen(Trim(INI.Conexao1.Collate) = '', '', 'collate '+Trim(INI.Conexao1.Collate));
       else
         Result := '';
     end;
