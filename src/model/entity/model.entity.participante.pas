@@ -43,7 +43,7 @@ type
     FNome: String;
     FFantasia: String;
     FCNPJ: String;
-    FIE: Integer;
+    FIE: String;
     FTelefone: String;
     FCelular: String;
     FEmail: String;
@@ -74,7 +74,7 @@ type
     function GetExcluido: Boolean;
     function GetFantasia: String;
     function GetId: Integer;
-    function GetIE: Integer;
+    function GetIE: String;
     function GetNome: String;
     function GetNumero: Integer;
     function GetObs: String;
@@ -96,7 +96,7 @@ type
     procedure SetExcluido(AValue: Boolean);
     procedure SetFantasia(AValue: String);
     procedure SetId(AValue: Integer);
-    procedure SetIE(AValue: Integer);
+    procedure SetIE(AValue: String);
     procedure SetNome(AValue: String);
     procedure SetNumero(AValue: Integer);
     procedure SetObs(AValue: String);
@@ -113,7 +113,7 @@ type
     property Pessoa: String read GetPessoa write SetPessoa;
     property Fantasia: String read GetFantasia write SetFantasia;
     property CNPJ: String read GetCNPJ write SetCNPJ;
-    property IE: Integer read GetIE write SetIE;
+    property IE: String read GetIE write SetIE;
     property Telefone: String read GetTelefone write SetTelefone;
     property Celular: String read GetCelular write SetCelular;
     property Email: String read GetEmail write SetEmail;
@@ -206,7 +206,7 @@ begin
   Result := FFantasia;
 end;
 
-function TParticipante.GetIE: Integer;
+function TParticipante.GetIE: String;
 begin
   Result := FIE;
 end;
@@ -319,7 +319,7 @@ begin
     FId := AValue;
 end;
 
-procedure TParticipante.SetIE(AValue: Integer);
+procedure TParticipante.SetIE(AValue: String);
 begin
   FIE := AValue;
 end;

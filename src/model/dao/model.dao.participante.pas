@@ -222,7 +222,7 @@ begin
       Participante.Nome      := Qry.FieldByName('nome').AsString;
       Participante.Fantasia  := Qry.FieldByName('fantasia').AsString;
       Participante.CNPJ      := Qry.FieldByName('cnpj').AsString;
-      Participante.IE        := Qry.FieldByName('ie').AsInteger;
+      Participante.IE        := Qry.FieldByName('ie').AsString;
       Participante.Telefone  := Qry.FieldByName('telefone').AsString;
       Participante.Celular   := Qry.FieldByName('celular').AsString;
       Participante.Email     := Qry.FieldByName('email').AsString;
@@ -321,8 +321,8 @@ begin
       Qry.ParamByName('fantasia').AsString    := Participante.Fantasia;
     if Trim(Participante.CNPJ) <> EmptyStr then
       Qry.ParamByName('cnpj').AsString        := Participante.CNPJ;
-    if Participante.IE <> 0 then
-      Qry.ParamByName('ie').AsInteger         := Participante.IE;
+    if Trim(Participante.IE) <> EmptyStr then
+      Qry.ParamByName('ie').AsString          := Participante.IE;
     if Trim(Participante.Telefone) <> EmptyStr then
       Qry.ParamByName('telefone').AsString    := Participante.Telefone;
     if Trim(Participante.Celular) <> EmptyStr then
@@ -403,8 +403,8 @@ begin
       Qry.ParamByName('fantasia').AsString    := Participante.Fantasia;
     if Trim(Participante.CNPJ) <> EmptyStr then
       Qry.ParamByName('cnpj').AsString        := Participante.CNPJ;
-    if Participante.IE <> 0 then
-      Qry.ParamByName('ie').AsInteger         := Participante.IE;
+    if Trim(Participante.IE) <> EmptyStr then
+      Qry.ParamByName('ie').AsString          := Participante.IE;
     if Trim(Participante.Telefone) <> EmptyStr then
       Qry.ParamByName('telefone').AsString    := Participante.Telefone;
     if Trim(Participante.Celular) <> EmptyStr then

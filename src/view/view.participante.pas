@@ -120,9 +120,7 @@ begin
       Controller.Participante.Pessoa := lbPessoaValues.Items[cbPessoa.ItemIndex];
       Controller.Participante.CNPJ   := edtCnpj.Text;
       if Trim( edtIe.Text ) <> EmptyStr then
-        Controller.Participante.IE     := StrToInt(edtIe.Text)
-      else
-        Controller.Participante.IE     := 0;
+        Controller.Participante.IE     := edtIe.Text;
       Controller.Participante.Fantasia := edtFantasia.Text;
       Controller.Participante.Telefone := edtTelefone.Text;
       Controller.Participante.Celular  := edtCelular.Text;
@@ -333,7 +331,7 @@ begin
   begin
     cbPessoa.ItemIndex := lbPessoaValues.Items.IndexOf(Controller.Participante.Pessoa);
     edtCnpj.Text       := Controller.Participante.CNPJ;
-    edtIe.Text         := Controller.Participante.IE.ToString;
+    edtIe.Text         := Controller.Participante.IE;
     edtNome.Text       := Controller.Participante.Nome;
     edtFantasia.Text   := Controller.Participante.Fantasia;
     edtTelefone.Text   := Controller.Participante.Telefone;

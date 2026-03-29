@@ -125,7 +125,7 @@ inherited frmParticipante: TfrmParticipante
               EditLabel.Height = 15
               EditLabel.Width = 160
               EditLabel.Caption = 'Inscrição Estadual:'
-              MaxLength = 9
+              MaxLength = 14
               NumbersOnly = True
               TabOrder = 2
               Text = 'edtIe'

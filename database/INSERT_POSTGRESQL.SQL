@@ -5897,7 +5897,7 @@ insert into public.cidade (id,nome,ibge,uf) values (5570,'Brasília',5300108,'DF
 
 select setval('seq_id_cidade', 5570);
 
-insert into public.participante (id,pessoa,nome,fantasia,cnpj,ie,telefone,celular,email,cep,rua,numero,complemento,bairro,obs,cadastro,alteracao,excluido,dono_cadastro,id_cidade,id_usuario_cadastro,id_dono_cadastro) values (1,'F','Devedor Padrão','Devedor Padrão','00000000000',0,NULL,NULL,NULL,'00000-000','Rua x',48,NULL,'Bairro',NULL,NULL,NULL,false,true,1,1,1);
+insert into public.participante (id,pessoa,nome,fantasia,cnpj,ie,telefone,celular,email,cep,rua,numero,complemento,bairro,obs,cadastro,alteracao,excluido,dono_cadastro,id_cidade,id_usuario_cadastro,id_dono_cadastro) values (1,'F','Devedor Padrão','Devedor Padrão','00000000000',NULL,NULL,NULL,NULL,'00000-000','Rua x',48,NULL,'Bairro',NULL,NULL,NULL,false,true,1,1,1);
 
 select setval('seq_id_participante', 1);
 

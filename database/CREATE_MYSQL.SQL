@@ -102,7 +102,7 @@ create table participante (
 	nome varchar(100) not null,
 	fantasia varchar(100),
 	cnpj varchar(14),
-	ie integer,
+	ie varchar(14),
 	telefone varchar(20),
 	celular varchar(20),
 	email varchar(200),
