@@ -38,20 +38,41 @@ type
 
   TConfiguracaoINI = class
   private
-  
+
+    { BACKUP }
+    type
+    TBackup = class
+    private
+      FGBak: String;
+      FPGDump: String;
+      FMySQLDump: String;
+      FSQLite3: String;
+    published
+      property GBak: String read FGBak write FGBak;
+      property PGDump: String read FPGDump write FPGDump;
+      property MySQLDump: String read FMySQLDump write FMySQLDump;
+      property SQLite3: String read FSQLite3 write FSQLite3;
+    end;
+
+    { DONO_CADASTRO }
+    type
+    TDonoCadastro = class
+    private
+      FDCId: Integer;
+      FDCNaoPerguntar: Boolean;
+    published
+      property DCId: Integer read FDCId write FDCId;
+      property DCNaoPerguntar: Boolean read FDCNaoPerguntar write FDCNaoPerguntar;
+    end;
+
+  private
+
     FArquivoINI: String;
     FKey:        String;
     FMd5:        String;
 
-    { BACKUP }
-    FGBak: String;
-    FPGDump: String;
-    FMySQLDump: String;
-    FSQLite3: String;
-
-    { DONO_CADASTRO }
-    FDCId: Integer;
-    FDCNaoPerguntar: Boolean;
+    FBackup: TBackup;
+    FDonoCadastro: TDonoCadastro;
 
     procedure Ler;
     procedure GravarDefault;
@@ -61,17 +82,8 @@ type
     constructor Create;
     destructor Destroy; override;
   published
-
-    { BACKUP }
-    property GBak: String read FGBak write FGBak;
-    property PGDump: String read FPGDump write FPGDump;
-    property MySQLDump: String read FMySQLDump write FMySQLDump;
-    property SQLite3: String read FSQLite3 write FSQLite3;
-
-    { DONO_CADASTRO }
-    property DCId: Integer read FDCId write FDCId;
-    property DCNaoPerguntar: Boolean read FDCNaoPerguntar write FDCNaoPerguntar;
-
+    property Backup: TBackup read FBackup write FBackup;
+    property DonoCadastro: TDonoCadastro read FDonoCadastro write FDonoCadastro;
   end;
 
 implementation
@@ -81,13 +93,13 @@ implementation
 procedure TConfiguracaoINI.Ler;
 begin
 
-  FGBak      := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'GBAK', '');
-  FPGDump    := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', '');
-  FMySQLDump := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', '');
-  FSQLite3   := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLITE3', '');
+  FBackup.FGBak      := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'GBAK', '');
+  FBackup.FPGDump    := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', '');
+  FBackup.FMySQLDump := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', '');
+  FBackup.FSQLite3   := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLITE3', '');
 
-  FDCId           := lib.cryptini.LerInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', 0);
-  FDCNaoPerguntar := lib.cryptini.LerBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', false);
+  FDonoCadastro.FDCId           := lib.cryptini.LerInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', 0);
+  FDonoCadastro.FDCNaoPerguntar := lib.cryptini.LerBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', false);
 
 end;
 
@@ -110,13 +122,13 @@ end;
 procedure TConfiguracaoINI.Escrever;
 begin
 
-  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'GBAK', PChar(FGBak));
-  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', PChar(FPGDump));
-  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', PChar(FMySQLDump));
-  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLITE3', PChar(FSQLite3));
+  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'GBAK', PChar(FBackup.FGBak));
+  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', PChar(FBackup.FPGDump));
+  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', PChar(FBackup.FMySQLDump));
+  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLITE3', PChar(FBackup.FSQLite3));
 
-  lib.cryptini.EscreverInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', FDCId);
-  lib.cryptini.EscreverBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', FDCNaoPerguntar);
+  lib.cryptini.EscreverInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', FDonoCadastro.FDCId);
+  lib.cryptini.EscreverBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', FDonoCadastro.FDCNaoPerguntar);
 
 end;
 
@@ -125,12 +137,16 @@ begin
   FArquivoINI := ExtractFilePath(ParamStr(0))+'configuracao.ini';
   FMd5        := 'compras_laz_2025_MD5';
   FKey        := 'compras_laz_2025_KEY';
+  FBackup       := TBackup.Create;
+  FDonoCadastro := TDonoCadastro.Create;
   GravarDefault;
   ler;
 end;
 
 destructor TConfiguracaoINI.Destroy;
 begin
+  FBackup.Free;
+  FDonoCadastro.Free;
   inherited Destroy;
 end;
 

@@ -72,12 +72,12 @@ begin
     dmConexao1.DonoCadastro.Id   := DonoCadastro.Id;
     dmConexao1.DonoCadastro.Nome := DonoCadastro.Nome;
   end;
-  ConfiguracaoINI.DCId := dmConexao1.DonoCadastro.Id;
+  ConfiguracaoINI.DonoCadastro.DCId := dmConexao1.DonoCadastro.Id;
 end;
 
 procedure TSelecionarDonoCadastroController.SelecionarDonoCadastroPadrao();
 begin
-  dmConexao1.DonoCadastro.Id := ConfiguracaoINI.DCId;
+  dmConexao1.DonoCadastro.Id := ConfiguracaoINI.DonoCadastro.DCId;
 end;
 
 constructor TSelecionarDonoCadastroController.Create;

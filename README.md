@@ -21,7 +21,7 @@
 * <a href="https://github.com/viniciusruanbrandalize/VrbLibCep">VrbLibCep</a>
 * <a href="https://github.com/alrieckert/lazarus/tree/master/components/lazreport">lazReport</a>
 * <a href="https://github.com/alrieckert/lazarus/tree/master/components/lazreport/source/addons/pdfexport">lazReportPdfExport</a>
-* <a href="https://projetoacbr.com.br/">ACBr (Projeto ACBr)ACBr (Projeto ACBr)</a>
+* <a href="https://projetoacbr.com.br/">ACBr (Projeto ACBr)</a>
 * <a href="https://github.com/viniciusruanbrandalize/libVrbBCrypt">libVrbBCrypt (.dll/.so)</a>
 * <a href="https://github.com/viniciusruanbrandalize/libVrbCryptIni">libVrbCryptIni (.dll/.so)</a>
 

@@ -336,10 +336,10 @@ begin
 
     ConfigINI := TConfiguracaoINI.Create;
     try
-      gbak      := ConfigINI.GBak;
-      pgdump    := ConfigINI.PGDump;
-      mysqldump := ConfigINI.MySQLDump;
-      sqlite3   := ConfigINI.SQLite3;
+      gbak      := ConfigINI.Backup.GBak;
+      pgdump    := ConfigINI.Backup.PGDump;
+      mysqldump := ConfigINI.Backup.MySQLDump;
+      sqlite3   := ConfigINI.Backup.SQLite3;
     finally
       ConfigINI.Free;
     end;

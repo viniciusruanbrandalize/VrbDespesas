@@ -156,19 +156,19 @@ end;
 
 procedure TfrmConfiguracao.CarregarConfiguracoes();
 begin
-  edtGbak.Text      := Controller.ConfiguracaoINI.GBak;
-  edtMySQLDump.Text := Controller.ConfiguracaoINI.MySQLDump;
-  edtPgDump.Text    := Controller.ConfiguracaoINI.PGDump;
-  edtSQLite3.Text   := Controller.ConfiguracaoINI.SQLite3;
+  edtGbak.Text      := Controller.ConfiguracaoINI.Backup.GBak;
+  edtMySQLDump.Text := Controller.ConfiguracaoINI.Backup.MySQLDump;
+  edtPgDump.Text    := Controller.ConfiguracaoINI.Backup.PGDump;
+  edtSQLite3.Text   := Controller.ConfiguracaoINI.Backup.SQLite3;
 end;
 
 procedure TfrmConfiguracao.Salvar();
 begin
   SalvarConfGeral();
-  Controller.ConfiguracaoINI.GBak      := edtGbak.Text;
-  Controller.ConfiguracaoINI.MySQLDump := edtMySQLDump.Text;
-  Controller.ConfiguracaoINI.PGDump    := edtPgDump.Text;
-  Controller.ConfiguracaoINI.SQLite3   := edtSQLite3.Text;
+  Controller.ConfiguracaoINI.Backup.GBak      := edtGbak.Text;
+  Controller.ConfiguracaoINI.Backup.MySQLDump := edtMySQLDump.Text;
+  Controller.ConfiguracaoINI.Backup.PGDump    := edtPgDump.Text;
+  Controller.ConfiguracaoINI.Backup.SQLite3   := edtSQLite3.Text;
   Controller.ConfiguracaoINI.Escrever;
 end;
 

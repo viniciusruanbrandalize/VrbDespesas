@@ -70,7 +70,7 @@ implementation
 procedure TfrmSelecionarDonoCadastro.btnAvancarClick(Sender: TObject);
 begin
   Controller.SelecionarDonoCadastro(cbDonoCadastro);
-  Controller.ConfiguracaoINI.DCNaoPerguntar := ckbNaoPerguntar.Checked;
+  Controller.ConfiguracaoINI.DonoCadastro.DCNaoPerguntar := ckbNaoPerguntar.Checked;
   Controller.ConfiguracaoINI.Escrever;
   Close;
 end;
@@ -87,7 +87,7 @@ end;
 
 procedure TfrmSelecionarDonoCadastro.FormShow(Sender: TObject);
 begin
-  if Controller.ConfiguracaoINI.DCNaoPerguntar then
+  if Controller.ConfiguracaoINI.DonoCadastro.DCNaoPerguntar then
   begin
     Controller.SelecionarDonoCadastroPadrao();
     tmrFechar.Enabled := True;
