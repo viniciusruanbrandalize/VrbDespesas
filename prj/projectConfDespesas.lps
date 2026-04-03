@@ -3,13 +3,13 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Win32 Debug"/>
+    <BuildModes Active="Linux32 Release"/>
     <Units>
       <Unit>
         <Filename Value="projectConfDespesas.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="30" Y="26"/>
+        <CursorPos X="99" Y="17"/>
         <UsageCount Value="27"/>
       </Unit>
       <Unit>
@@ -18,7 +18,7 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="373"/>
+        <TopLine Value="372"/>
         <CursorPos X="20" Y="380"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
@@ -29,7 +29,7 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="39" Y="28"/>
+        <CursorPos X="89" Y="21"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit>

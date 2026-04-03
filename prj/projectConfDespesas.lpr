@@ -29,6 +29,7 @@ program projectConfDespesas;
 
 uses
   {$IFDEF UNIX}
+  cmem,
   cthreads,
   {$ENDIF}
   {$IFDEF HASAMIGA}
