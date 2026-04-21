@@ -23,46 +23,53 @@
 *******************************************************************************
 }
 
-unit migrations.conexao;
+unit migrations.migration001;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, SQLDB, SQLDBLib, SQLite3Conn, PQConnection,
-  oracleconnection, odbcconn, MSSQLConn, mysql80conn, mysql57conn, mysql56conn,
-  mysql55conn, mysql51conn, mysql50conn, mysql41conn, mysql40conn, IBConnection;
+  Classes, SysUtils, migrations.migrationbase, migrations.conexao;
 
 type
 
-  { TdmMigration }
+  { TMigration001 }
 
-  TdmMigration = class(TDataModule)
-    SQLConnector: TSQLConnector;
-    SQLDBLibraryLoader: TSQLDBLibraryLoader;
-    SQLQuery: TSQLQuery;
-    qryAtualizacao: TSQLQuery;
-    SQLTransaction: TSQLTransaction;
-  private
-
+  TMigration001 = class(TMigration)
   public
-    constructor Create(AOwner: TComponent; AConnection: TSQLConnector);
+    function Versao: Integer; override;
+    procedure AdicionarSQLNaLista; override;
   end;
-
-var
-  dmMigration: TdmMigration;
 
 implementation
 
-{$R *.lfm}
-
-{ TdmMigration }
-
-constructor TdmMigration.Create(AOwner: TComponent; AConnection: TSQLConnector);
+function TMigration001.Versao: Integer;
 begin
-  inherited Create(AOwner);
-  SQLConnector  := AConnection;
+  Result := 1;
+end;
+
+procedure TMigration001.AdicionarSQLNaLista;
+begin
+  if UpperCase(dmMigration.SQLConnector.ConnectorType) = 'FIREBIRD' then
+  begin
+
+    ListaSQL[0] := 'INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES ' +
+                    '(5, ''NUMERO_VERSAO_DB'', ''Número da versão do banco de dados'', ' +
+                    '''Número da versão do banco de dados'', ''0'', false)';
+
+    ListaSQL[1] := 'CREATE GENERATOR GEN_ID_ATUALIZACAO';
+
+    ListaSQL[2] := 'CREATE TABLE ATUALIZACAO ( ' +
+	            'ID INTEGER NOT NULL, ' +
+	            'VERSAO VARCHAR(20) NOT NULL, ' +
+	            'DATA_EXECUCAO TIMESTAMP NOT NULL, ' +
+	            'STATUS VARCHAR(20) NOT NULL, ' +
+	            'SQL_EXECUTADO VARCHAR(5000) NOT NULL, ' +
+	            'TEMPO_EXECUCAO DECIMAL(10,4) NOT NULL ' +
+                    ')';
+
+  end;
 end;
 
 end.

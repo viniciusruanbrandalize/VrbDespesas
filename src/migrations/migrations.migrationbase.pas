@@ -30,16 +30,42 @@ unit migrations.migrationbase;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, migrations.conexao;
 
 type
+
+  { TMigration }
+
   TMigration = class
   public
-    function Version: Integer; virtual; abstract;
-    procedure Up; virtual; abstract;
+    ListaSQL: Array of String;
+    function Versao: Integer; virtual; abstract;
+    procedure AdicionarSQLNaLista; virtual; abstract;
+    procedure ExecutarSQL;
   end;
 
 implementation
+
+{ TMigration }
+
+procedure TMigration.ExecutarSQL;
+var
+  i: Integer;
+begin
+  AdicionarSQLNaLista;
+  dmMigration.SQLTransaction.StartTransaction;
+  try
+    for i := Low(ListaSQL) to High(ListaSQL) do
+    begin
+      dmMigration.SQLQuery.SQL.Clear;
+      dmMigration.SQLQuery.SQL.Text := ListaSQL[i];
+      dmMigration.SQLQuery.ExecSQL;
+    end;
+    dmMigration.SQLTransaction.Commit;
+  except
+    dmMigration.SQLTransaction.Rollback;
+  end;
+end;
 
 end.
 

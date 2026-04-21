@@ -1,7 +1,52 @@
 object dmMigration: TdmMigration
   OldCreateOrder = False
-  Height = 347
+  Height = 277
   HorizontalOffset = 388
   VerticalOffset = 250
-  Width = 629
+  Width = 441
+  object SQLConnector: TSQLConnector
+    Connected = False
+    LoginPrompt = False
+    KeepConnection = False
+    Transaction = SQLTransaction
+    ConnectorType = 'Firebird'
+    Left = 48
+    Top = 16
+  end
+  object SQLDBLibraryLoader: TSQLDBLibraryLoader
+    Enabled = False
+    ConnectionType = 'Firebird'
+    LibraryName = 'fbclient.dll'
+    Left = 168
+    Top = 16
+  end
+  object SQLQuery: TSQLQuery
+    FieldDefs = <>
+    Database = SQLConnector
+    Transaction = SQLTransaction
+    Params = <>
+    Macros = <>
+    Left = 48
+    Top = 144
+  end
+  object SQLTransaction: TSQLTransaction
+    Active = False
+    Action = caCommit
+    Database = SQLConnector
+    Left = 48
+    Top = 80
+  end
+  object qryAtualizacao: TSQLQuery
+    FieldDefs = <>
+    Database = SQLConnector
+    Transaction = SQLTransaction
+    SQL.Strings = (
+      'SELECT * FROM atualizacao'
+      'WHERE id = -1'
+    )
+    Params = <>
+    Macros = <>
+    Left = 48
+    Top = 208
+  end
 end

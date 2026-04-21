@@ -721,10 +721,19 @@
         <Filename Value="..\src\migrations\migrations.conexao.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dmMigration"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.migrationbase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\migrations\migrations.migration001.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\migrations\migrations.executar.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

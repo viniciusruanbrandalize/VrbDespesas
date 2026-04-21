@@ -71,7 +71,8 @@ uses
   view.carregamento, view.relatoriofluxocaixa, model.report.fluxocaixa,
   controller.relatoriofluxocaixa, model.report.participante,
   controller.relatorioparticipante, view.relatorioparticipante, lib.acbrnfe,
-  service.configuracao, migrations.conexao, migrations.migrationbase;
+  service.configuracao, migrations.conexao, migrations.migrationbase, 
+  migrations.migration001, migrations.executar;
 
 {$R *.res}
 
@@ -88,6 +89,9 @@ begin
   Application.Initialize;
   Application.CreateForm(TdmConexao1, dmConexao1);
   Application.CreateForm(TdmConexao2, dmConexao2);
+
+  //ExecutarAtualizacaoBanco(dmConexao1.SQLConnector);
+
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
 
   {$IFOPT D+}

@@ -23,46 +23,61 @@
 *******************************************************************************
 }
 
-unit migrations.conexao;
+unit migrations.executar;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, SQLDB, SQLDBLib, SQLite3Conn, PQConnection,
-  oracleconnection, odbcconn, MSSQLConn, mysql80conn, mysql57conn, mysql56conn,
-  mysql55conn, mysql51conn, mysql50conn, mysql41conn, mysql40conn, IBConnection;
+  SysUtils, SQLDB, migrations.conexao, migrations.migrationbase,
+  migrations.migration001;
 
-type
-
-  { TdmMigration }
-
-  TdmMigration = class(TDataModule)
-    SQLConnector: TSQLConnector;
-    SQLDBLibraryLoader: TSQLDBLibraryLoader;
-    SQLQuery: TSQLQuery;
-    qryAtualizacao: TSQLQuery;
-    SQLTransaction: TSQLTransaction;
-  private
-
-  public
-    constructor Create(AOwner: TComponent; AConnection: TSQLConnector);
-  end;
-
-var
-  dmMigration: TdmMigration;
+  procedure ExecutarAtualizacaoBanco(SQLConnector: TSQLConnector; Conexao: Integer = 1);
+  function getVersaoAtual: Integer;
 
 implementation
 
-{$R *.lfm}
-
-{ TdmMigration }
-
-constructor TdmMigration.Create(AOwner: TComponent; AConnection: TSQLConnector);
+function getVersaoAtual: Integer;
 begin
-  inherited Create(AOwner);
-  SQLConnector  := AConnection;
+  try
+    dmMigration.SQLQuery.SQL.Text := 'SELECT valor AS versao FROM configuracao ' +
+                                     'WHERE nome = ''NUMERO_VERSAO_DB''';
+    dmMigration.SQLQuery.Open;
+    Result := dmMigration.SQLQuery.FieldByName('versao').AsInteger;
+    dmMigration.SQLQuery.Close;
+  except
+    Result := 0;
+  end;
+end;
+
+procedure ExecutarAtualizacaoBanco(SQLConnector: TSQLConnector; Conexao: Integer = 1);
+var
+  VersaoAtual: Integer;
+  Migrations: array of TMigration;
+  I: Integer;
+begin
+  dmMigration := TdmMigration.Create(nil, SQLConnector);
+  try
+
+    VersaoAtual := getVersaoAtual;
+
+    SetLength(Migrations, 2);
+    Migrations[0] := TMigration001.Create;
+    //Migrations[1] := TMigration002.Create;
+
+    for I := 0 to High(Migrations) do
+    begin
+      if Migrations[I].Versao > VersaoAtual then
+        Migrations[I].ExecutarSQL;
+    end;
+
+    for I := 0 to High(Migrations) do
+      Migrations[I].Free;
+
+  finally
+    dmMigration.Free;
+  end;
 end;
 
 end.
