@@ -70,7 +70,8 @@ uses
   view.configuracao, view.selecionardonocadastro, view.ajuda, lib.version,
   view.carregamento, view.relatoriofluxocaixa, model.report.fluxocaixa,
   controller.relatoriofluxocaixa, model.report.participante,
-  controller.relatorioparticipante, view.relatorioparticipante, lib.acbrnfe;
+  controller.relatorioparticipante, view.relatorioparticipante, lib.acbrnfe,
+  service.configuracao, migrations.conexao, migrations.migrationbase;
 
 {$R *.res}
 

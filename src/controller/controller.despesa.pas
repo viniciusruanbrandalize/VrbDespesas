@@ -32,8 +32,7 @@ interface
 uses
   Classes, SysUtils, ComCtrls, StdCtrls, model.entity.despesa, model.dao.padrao,
   model.dao.despesa, model.entity.despesaformapagamento, model.entity.arquivo,
-  model.connection.conexao1, Dialogs, model.dao.configuracao,
-  model.entity.configuracao, lib.acbrnfe;
+  model.connection.conexao1, Dialogs, lib.acbrnfe, service.configuracao;
 
 type
 
@@ -54,7 +53,7 @@ type
     function Inserir(objDespesa : TDespesa; out Erro: string): Boolean;
     function Editar(objDespesa : TDespesa; out Erro: string): Boolean;
     function Excluir(Id: Integer; out Erro: string): Boolean;
-    function BuscarConfiguracaoPorNome(Nome: String; out Erro: String): String;
+    function ConfiguracaoService: TConfiguracaoService;
 
     procedure ListarPagamento(lv: TListView; IdDespesa: Integer);
     function BuscarPagamentoPorId(objPagamento : TDespesaFormaPagamento; Id: Integer; out Erro: String): Boolean;
@@ -138,25 +137,9 @@ begin
   Result := DespesaDAO.Excluir(Id, Erro);
 end;
 
-function TDespesaController.BuscarConfiguracaoPorNome(Nome: String; out Erro: String): String;
-var
-  ConfigDAO: TConfiguracaoDAO;
-  Configuracao: TConfiguracao;
+function TDespesaController.ConfiguracaoService: TConfiguracaoService;
 begin
-  Configuracao := TConfiguracao.Create;
-  try
-    ConfigDAO := TConfiguracaoDAO.Create;
-    try
-      if ConfigDAO.BuscarPorNome(Configuracao, Nome, Erro) then
-        Result := Configuracao.Valor
-      else
-        Result := '';
-    finally
-      ConfigDAO.Free;
-    end;
-  finally
-    Configuracao.Free;
-  end;
+  Result := TConfiguracaoService.Instance;
 end;
 
 procedure TDespesaController.ListarPagamento(lv: TListView; IdDespesa: Integer);
@@ -371,7 +354,7 @@ begin
       objDespesa.Arquivo[0].DataHoraUpload := Now;
       objDespesa.Arquivo[0].Binario.LoadFromFile(ArquivoXml);
 
-      if BuscarConfiguracaoPorNome('INSERIR_FORNECEDOR_XML', Erro) = '1' then
+      if ConfiguracaoService.InserirFornecedorXML then
       begin
         //buscar por cnpj/cpf
       end;
@@ -393,6 +376,7 @@ begin
   Despesa    := TDespesa.Create;
   DespesaDAO := TDespesaDAO.Create;
   LibAcbrNfe := TLibAcbrNfe.Create;
+  TConfiguracaoService.Instance.Ler;
 end;
 
 destructor TDespesaController.Destroy;
@@ -400,6 +384,7 @@ begin
   Despesa.Free;
   DespesaDAO.Free;
   LibAcbrNfe.Free;
+  TConfiguracaoService.Instance.Release;
   inherited Destroy;
 end;
 

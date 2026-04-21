@@ -1,0 +1,7 @@
+object dmMigration: TdmMigration
+  OldCreateOrder = False
+  Height = 347
+  HorizontalOffset = 388
+  VerticalOffset = 250
+  Width = 629
+end

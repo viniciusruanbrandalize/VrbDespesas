@@ -3,15 +3,17 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Linux32 Release"/>
+    <BuildModes Active="Win32 Debug"/>
     <Units>
       <Unit>
         <Filename Value="projectVrbDespesas.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="19"/>
-        <CursorPos X="13" Y="32"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="53"/>
+        <CursorPos X="39" Y="76"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.principal.pas"/>
@@ -19,8 +21,7 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="70" Y="21"/>
+        <CursorPos X="3" Y="24"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -37,8 +38,8 @@
         <Filename Value="..\src\model\entity\model.entity.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="99"/>
-        <CursorPos X="32" Y="38"/>
+        <TopLine Value="122"/>
+        <CursorPos X="6" Y="163"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -75,7 +76,7 @@
         <Filename Value="..\src\controller\controller.banco.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="63"/>
+        <TopLine Value="16"/>
         <CursorPos X="11" Y="24"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -135,8 +136,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="214"/>
-        <CursorPos X="55" Y="243"/>
+        <TopLine Value="239"/>
+        <CursorPos X="45" Y="259"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -458,8 +459,7 @@
         <Filename Value="..\src\controller\controller.login.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="58"/>
-        <CursorPos X="21" Y="76"/>
+        <CursorPos X="10" Y="30"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -560,7 +560,7 @@
         <Filename Value="..\src\model\ini\model.ini.conexao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="97"/>
+        <TopLine Value="46"/>
         <CursorPos X="45" Y="117"/>
         <UsageCount Value="200"/>
       </Unit>
@@ -584,8 +584,8 @@
         <Filename Value="..\src\controller\controller.despesa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="339"/>
-        <CursorPos Y="374"/>
+        <TopLine Value="350"/>
+        <CursorPos X="38" Y="379"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -595,8 +595,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="642"/>
-        <CursorPos X="18" Y="666"/>
+        <TopLine Value="718"/>
+        <CursorPos X="16" Y="726"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -776,8 +776,8 @@
         <Filename Value="..\src\controller\controller.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="52"/>
-        <CursorPos X="3" Y="61"/>
+        <TopLine Value="25"/>
+        <CursorPos X="48" Y="37"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -803,8 +803,8 @@
         <Filename Value="..\src\model\dao\model.dao.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="24"/>
-        <CursorPos X="3" Y="141"/>
+        <TopLine Value="357"/>
+        <CursorPos X="5" Y="397"/>
         <UsageCount Value="202"/>
       </Unit>
       <Unit>
@@ -814,8 +814,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="57"/>
-        <CursorPos X="3" Y="84"/>
+        <CursorPos X="20" Y="26"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
@@ -876,9 +875,8 @@
         <ComponentName Value="frmCarregamento"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="39"/>
         <CursorPos X="33" Y="57"/>
-        <UsageCount Value="119"/>
+        <UsageCount Value="128"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatoriofluxocaixa.pas"/>
@@ -888,7 +886,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="65" Y="116"/>
-        <UsageCount Value="106"/>
+        <UsageCount Value="115"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.fluxocaixa.pas"/>
@@ -896,14 +894,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="93"/>
         <CursorPos X="37" Y="147"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="114"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatoriofluxocaixa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="37" Y="26"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="114"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.participante.pas"/>
@@ -911,7 +909,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="27"/>
         <CursorPos X="14" Y="48"/>
-        <UsageCount Value="99"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
@@ -919,7 +917,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="18" Y="85"/>
-        <UsageCount Value="99"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
@@ -930,21 +928,29 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="39" Y="113"/>
-        <UsageCount Value="99"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.tokenapi.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5" Y="138"/>
-        <UsageCount Value="79"/>
+        <UsageCount Value="88"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.acbrnfe.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="47" Y="37"/>
-        <UsageCount Value="47"/>
+        <UsageCount Value="56"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\service\service.configuracao.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="55"/>
+        <CursorPos X="47" Y="81"/>
+        <UsageCount Value="29"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.padrao.pas"/>
@@ -1413,15 +1419,32 @@
         <CursorPos X="31" Y="33"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\migrations\migrations.conexao.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dmMigration"/>
+        <ResourceBaseClass Value="DataModule"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="11"/>
+        <CursorPos X="22" Y="29"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\migrations\migrations.migrationbase.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="4"/>
+        <CursorPos X="15" Y="13"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="1">
+    <JumpHistory>
       <Position>
-        <Filename Value="..\src\view\view.principal.pas"/>
-        <Caret Line="479" Column="50" TopLine="455"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\view\view.principal.pas"/>
-        <Caret Line="26" Column="32"/>
+        <Filename Value="..\src\migrations\migrations.migrationbase.pas"/>
+        <Caret Line="13" Column="15" TopLine="4"/>
       </Position>
     </JumpHistory>
     <RunParams>

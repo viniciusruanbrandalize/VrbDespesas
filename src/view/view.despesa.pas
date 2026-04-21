@@ -694,7 +694,8 @@ procedure TfrmDespesa.PrepararPesquisaGenerica(i: Integer);
 var
   idFpgto,
   qtdReg: Integer;
-  Erro, Valor : String;
+  Erro: String;
+  UsarCartaoVale: Boolean;
 begin
 
   {
@@ -709,7 +710,8 @@ begin
    9  - CHEQUE
   }
 
-  Valor := '0';
+  UsarCartaoVale := Controller.ConfiguracaoService.UsarCartaoVale;
+
   idFpgto := Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
   Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '-1';
 
@@ -740,26 +742,19 @@ begin
     end;
     8:
     begin
-      Valor := Controller.BuscarConfiguracaoPorNome('USAR_CARTAO_VALE', Erro);
-      if Trim(Valor) = '1' then
+      if UsarCartaoVale then
       begin
         lblPesquisaGenerica.Caption := 'Cartão: *';
         Controller.PesquisarCartao(cbPesquisaGenerica, lbPesquisaGenericaId, qtdReg);
         cbPesquisaGenerica.OnChange := @edtCartaoChange;
         if qtdReg = 0 then
           TfrmMessage.Mensagem('Nenhum cartão cadastrado!', 'Aviso', 'C', [mbOK]);
-      end
-      else
-      if Trim(Valor) = '' then
-      begin
-        TfrmMessage.Mensagem(Erro, 'Erro', 'E', [mbOK]);
-        Valor := '0';
       end;
     end;
   end;
 
-  cbPesquisaGenerica.Visible  :=  (idFpgto in  [2, 3, 4, 5, 6]) or (Trim(Valor) = '1');
-  lblPesquisaGenerica.Visible :=  (idFpgto in  [2, 3, 4, 5, 6]) or (Trim(Valor) = '1');
+  cbPesquisaGenerica.Visible  :=  (idFpgto in  [2, 3, 4, 5, 6]) or (UsarCartaoVale);
+  lblPesquisaGenerica.Visible :=  (idFpgto in  [2, 3, 4, 5, 6]) or (UsarCartaoVale);
 
 end;
 
