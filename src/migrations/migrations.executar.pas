@@ -30,39 +30,48 @@ unit migrations.executar;
 interface
 
 uses
-  SysUtils, SQLDB, migrations.conexao, migrations.migrationbase,
+  SysUtils, SQLDB, SQLDBLib, migrations.conexao, migrations.migrationbase,
   migrations.migration001;
 
-  procedure ExecutarAtualizacaoBanco(SQLConnector: TSQLConnector; Conexao: Integer = 1);
+  procedure ExecutarAtualizacaoBanco(SQLConnector: TSQLConnector;
+                                     SQLDBLibraryLoader: TSQLDBLibraryLoader;
+                                     Conexao: Integer = 1);
   function getVersaoAtual: Integer;
 
 implementation
 
 function getVersaoAtual: Integer;
 begin
+  dmMigration.SQLTransaction.StartTransaction;
   try
     dmMigration.SQLQuery.SQL.Text := 'SELECT valor AS versao FROM configuracao ' +
                                      'WHERE nome = ''NUMERO_VERSAO_DB''';
     dmMigration.SQLQuery.Open;
-    Result := dmMigration.SQLQuery.FieldByName('versao').AsInteger;
+    if dmMigration.SQLQuery.RecordCount > 0 then
+      Result := dmMigration.SQLQuery.FieldByName('versao').AsInteger
+    else
+      Result := 0;
     dmMigration.SQLQuery.Close;
+    dmMigration.SQLTransaction.Commit;
   except
+    dmMigration.SQLTransaction.Rollback;
     Result := 0;
   end;
 end;
 
-procedure ExecutarAtualizacaoBanco(SQLConnector: TSQLConnector; Conexao: Integer = 1);
+procedure ExecutarAtualizacaoBanco(SQLConnector: TSQLConnector;
+  SQLDBLibraryLoader: TSQLDBLibraryLoader;  Conexao: Integer = 1);
 var
   VersaoAtual: Integer;
   Migrations: array of TMigration;
   I: Integer;
 begin
-  dmMigration := TdmMigration.Create(nil, SQLConnector);
+  dmMigration := TdmMigration.Create(nil, SQLConnector, SQLDBLibraryLoader);
   try
 
     VersaoAtual := getVersaoAtual;
 
-    SetLength(Migrations, 2);
+    SetLength(Migrations, 1);
     Migrations[0] := TMigration001.Create;
     //Migrations[1] := TMigration002.Create;
 

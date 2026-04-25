@@ -2,8 +2,9 @@ insert into public.configuracao (id,nome,descricao,uso,valor,excluido) values (1
 insert into public.configuracao (id,nome,descricao,uso,valor,excluido) values (2, 'DATA_VERSAO','Data da versão do sistema','Data da versão do sistema','26/04/2025',false);
 insert into public.configuracao (id,nome,descricao,uso,valor,excluido, componente) values (3,'USAR_CARTAO_VALE','Usar o cartão quando for informado pagamento como Vale','Pede as informações do cartão na forma de pagamento Vale','1',false,'TCheckBox');
 insert into public.configuracao (id,nome,descricao,uso,valor,componente,excluido) values (4, 'INSERIR_FORNECEDOR_XML', 'Cadastrar fornecedor ao importar NF', 'Cadastra o fornecedor, se não existir, ao importar o arquivo XML de uma NF-e', '1', 'TCheckBox', false);
+insert into public.configuracao (id,nome,descricao,uso,valor,excluido) VALUES (5, 'NUMERO_VERSAO_DB', 'Número da versão do banco de dados', 'Número da versão do banco de dados', '1', false);
 
-select setval('seq_id_configuracao', 4);
+select setval('seq_id_configuracao', 5);
 
 insert into public.banco (id,numero,nome,excluido) values (1, 748,'Sicredi',false);
 insert into public.banco (id,numero,nome,excluido) values (2, 1,'Banco Do Brasil',false);

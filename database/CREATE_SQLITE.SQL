@@ -305,6 +305,16 @@ create table token_api (
 	excluido boolean not null
 );
 
+create table log_atualizacao (
+	id integer not null,
+	versao varchar(20) not null,
+	data_execucao datetime not null,
+	status varchar(20) not null,
+	sql_executado varchar(5000) not null,
+	erro varchar(500),
+	tempo_execucao decimal(10,4) not null
+);
+
 --db arquivo sqlite3
 
 create table arquivo (

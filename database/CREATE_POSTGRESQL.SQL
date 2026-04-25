@@ -182,6 +182,14 @@ create sequence public.seq_id_token_api
 	start 1
 	cache 1
 	no cycle;
+	
+create sequence public.seq_id_log_atualizacao
+	increment by 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	start 1
+	cache 1
+	no cycle;
 
 create table public.pais (
 	id integer not null,
@@ -511,6 +519,16 @@ create table public.recebimento (
 
 alter table public.recebimento add cadastro timestamp;
 alter table public.recebimento add alteracao timestamp;
+
+create table public.log_atualizacao (
+	id integer not null,
+	versao varchar(20) not null,
+	data_execucao timestamp not null,
+	status varchar(20) not null,
+	sql_executado varchar(5000) not null,
+	erro varchar(500),
+	tempo_execucao decimal(10,4) not null
+);
 
 --db arquivo postgresql
 

@@ -51,22 +51,95 @@ end;
 
 procedure TMigration001.AdicionarSQLNaLista;
 begin
-  if UpperCase(dmMigration.SQLConnector.ConnectorType) = 'FIREBIRD' then
+  if dmMigration.Driver = 'FIREBIRD' then
   begin
+
+    SetLength(ListaSQL, 3);
 
     ListaSQL[0] := 'INSERT INTO CONFIGURACAO (ID,NOME,DESCRICAO,USO,VALOR,EXCLUIDO) VALUES ' +
                     '(5, ''NUMERO_VERSAO_DB'', ''Número da versão do banco de dados'', ' +
                     '''Número da versão do banco de dados'', ''0'', false)';
 
-    ListaSQL[1] := 'CREATE GENERATOR GEN_ID_ATUALIZACAO';
+    ListaSQL[1] := 'CREATE GENERATOR GEN_ID_LOG_ATUALIZACAO';
 
-    ListaSQL[2] := 'CREATE TABLE ATUALIZACAO ( ' +
+    ListaSQL[2] := 'CREATE TABLE LOG_ATUALIZACAO ( ' +
 	            'ID INTEGER NOT NULL, ' +
 	            'VERSAO VARCHAR(20) NOT NULL, ' +
 	            'DATA_EXECUCAO TIMESTAMP NOT NULL, ' +
 	            'STATUS VARCHAR(20) NOT NULL, ' +
 	            'SQL_EXECUTADO VARCHAR(5000) NOT NULL, ' +
+                    'ERRO VARCHAR(500), ' +
 	            'TEMPO_EXECUCAO DECIMAL(10,4) NOT NULL ' +
+                    ')';
+
+  end
+  else
+  if dmMigration.Driver = 'POSTGRESQL' then
+  begin
+
+    SetLength(ListaSQL, 3);
+
+    ListaSQL[0] := 'insert into public.configuracao (id,nome,descricao,uso,valor,excluido) values ' +
+                    '(5, ''NUMERO_VERSAO_DB'', ''Número da versão do banco de dados'', ' +
+                    '''Número da versão do banco de dados'', ''0'', false)';
+
+    ListaSQL[1] := 'create sequence public.seq_id_log_atualizacao ' +
+	            'increment by 1 ' +
+	            'minvalue 1 ' +
+	            'maxvalue 9223372036854775807 ' +
+	            'start 1 ' +
+	            'cache 1 ' +
+	            'no cycle';
+
+    ListaSQL[2] := 'create table public.log_atualizacao ( ' +
+	            'id integer not null, ' +
+	            'versao varchar(20) not null, ' +
+	            'data_execucao timestamp not null, ' +
+	            'status varchar(20) not null, ' +
+	            'sql_executado varchar(5000) not null, ' +
+	            'erro varchar(500), ' +
+	            'tempo_execucao decimal(10,4) not null ' +
+                    ')';
+
+  end
+  else
+  if Pos('MYSQL', UpperCase(dmMigration.Driver)) <> 0 then
+  begin
+
+    SetLength(ListaSQL, 2);
+
+    ListaSQL[0] := 'insert into configuracao (id,nome,descricao,uso,valor,excluido) values ' +
+                    '(5, ''NUMERO_VERSAO_DB'', ''Número da versão do banco de dados'', ' +
+                    '''Número da versão do banco de dados'', ''0'', 0)';
+
+    ListaSQL[1] := 'create table log_atualizacao ( ' +
+	            'id integer not null, '+
+	            'versao varchar(20) not null, ' +
+	            'data_execucao timestamp not null, ' +
+	            'status varchar(20) not null, ' +
+	            'sql_executado varchar(5000) not null, ' +
+	            'erro varchar(500), ' +
+	            'tempo_execucao decimal(10,4) not null ' +
+                    ')';
+
+  end
+  else
+  if dmMigration.Driver = 'SQLITE3' then
+  begin
+    SetLength(ListaSQL, 2);
+
+    ListaSQL[0] := 'insert into configuracao (id,nome,descricao,uso,valor,excluido) values ' +
+                    '(5, ''NUMERO_VERSAO_DB'', ''Número da versão do banco de dados'', ' +
+                    '''Número da versão do banco de dados'', ''0'', false)';
+
+    ListaSQL[1] := 'create table log_atualizacao ( ' +
+	            'id integer not null, '+
+	            'versao varchar(20) not null, ' +
+	            'data_execucao datetime not null, ' +
+	            'status varchar(20) not null, ' +
+	            'sql_executado varchar(5000) not null, ' +
+	            'erro varchar(500), ' +
+	            'tempo_execucao decimal(10,4) not null ' +
                     ')';
 
   end;

@@ -330,6 +330,16 @@ create table token_api (
 	constraint pk_token_api primary key (id)
 );
 
+create table log_atualizacao (
+	id integer not null,
+	versao varchar(20) not null,
+	data_execucao timestamp not null,
+	status varchar(20) not null,
+	sql_executado varchar(5000) not null,
+	erro varchar(500),
+	tempo_execucao decimal(10,4) not null
+);
+
 --db arquivo mysql / mariaDB
 
 create table arquivo (

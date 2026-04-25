@@ -1,7 +1,8 @@
 INSERT INTO configuracao (id,nome,descricao,uso,valor,excluido) VALUES (1,'NUMERO_VERSAO','Número da versão do sistema','Número da versão do sistema','1.0.0.0',0);
 INSERT INTO configuracao (id,nome,descricao,uso,valor,excluido) VALUES (2,'DATA_VERSAO','Data da versão do sistema','Data da versão do sistema','26/04/2025',0);
 INSERT INTO configuracao (id,nome,descricao,uso,valor,componente,excluido) VALUES (3,'USAR_CARTAO_VALE','Usar o cartão quando for informado pagamento como Vale','Pede as informações do cartão na forma de pagamento Vale','1','TCheckBox',0);
-INSERT INTO configuracao (id,nome,descricao,uso,valor,componente,excluido) VALUES(4, 'INSERIR_FORNECEDOR_XML', 'Cadastrar fornecedor ao importar NF', 'Cadastra o fornecedor, se não existir, ao importar o arquivo XML de uma NF-e', '1', 'TCheckBox', 0);
+INSERT INTO configuracao (id,nome,descricao,uso,valor,componente,excluido) VALUES (4, 'INSERIR_FORNECEDOR_XML', 'Cadastrar fornecedor ao importar NF', 'Cadastra o fornecedor, se não existir, ao importar o arquivo XML de uma NF-e', '1', 'TCheckBox', 0);
+INSERT INTO configuracao (id,nome,descricao,uso,valor,excluido) VALUES (5, 'NUMERO_VERSAO_DB', 'Número da versão do banco de dados', 'Número da versão do banco de dados', '1', 0);
 
 INSERT INTO banco (numero,nome,excluido) VALUES (748,'Sicredi',0);
 INSERT INTO banco (numero,nome,excluido) VALUES (1,'Banco Do Brasil',0);
