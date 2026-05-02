@@ -62,11 +62,12 @@ var
 begin
   try
 
-    sql := 'select * from banco where excluido = false order by nome '+Collate();
+    sql := 'select * from banco where excluido = :excluido order by nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -95,13 +96,13 @@ begin
     if TryStrToFloat(Busca, valor) then
     begin
       sql := 'select * from banco ' +
-             'where '+campo+' = :busca and excluido = false '+
+             'where '+campo+' = :busca and excluido = :excluido '+
              'order by nome '+Collate();
     end
     else
     begin
       sql := 'select * from banco ' +
-             'where '+ILikeSQL(Campo, 'busca')+' and excluido = false '+
+             'where '+ILikeSQL(Campo, 'busca')+' and excluido = :excluido '+
              'order by nome '+Collate();
     end;
 
@@ -109,6 +110,7 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -133,13 +135,14 @@ begin
   try
 
     sql := 'select * from banco ' +
-           'where id = :id and excluido = false ' +
+           'where id = :id and excluido = :excluido ' +
            'order by id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     if Qry.RecordCount = 1 then

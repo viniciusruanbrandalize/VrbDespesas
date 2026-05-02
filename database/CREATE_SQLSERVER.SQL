@@ -499,8 +499,8 @@ create table dbo.uc_acesso (
 create table dbo.token_api (
 	id integer not null,
 	token varchar(100) not null,
-	geracao timestamp not null,
-	validade timestamp not null,
+	geracao datetime not null,
+	validade datetime not null,
 	excluido bit not null,
 	constraint pk_token_api primary key (id)
 );
@@ -519,7 +519,7 @@ create table dbo.arquivo (
 	id integer not null, 
 	nome varchar(250) not null, 
 	extensao varchar(50) not null, 
-	binario blob sub_type 0 not null, 
+	binario binary not null, 
 	data_hora_upload datetime not null, 
 	id_despesa integer not null,
 	constraint pk_arquivo primary key (id)

@@ -90,7 +90,7 @@ begin
     HostName              := AConnection.HostName;
     UserName              := AConnection.UserName;
     Password              := AConnection.Password;
-    Params.Values['port'] := AConnection.Params.Values['port'];
+    Params                := AConnection.Params;
   end;
 
   try

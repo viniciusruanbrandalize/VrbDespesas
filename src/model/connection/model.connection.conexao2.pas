@@ -115,32 +115,61 @@ end;
 procedure TdmConexao2.ConectarBaseDeDados();
 var
   ini: TConexaoINI;
+  Driver: String;
 begin
   ini := TConexaoINI.Create;
   try
 
-    with SQLDBLibraryLoader do
-    begin
-      try
-        Enabled            := False;
-        ConnectionType     := ini.Conexao2.Driver;
-        LibraryName        := VerificarNomeDLL(ini.Conexao2.Driver);
-        Enabled            := True;
-      except on e:Exception do
-        TfrmMessage.Mensagem('Erro ao ler biblioteca: '+e.Message,
-                              'Erro', 'E', [mbOk]);
-      end;
-    end;
+    Driver := ini.Conexao2.Driver;
 
-    with SQLConnector do
+    if UpperCase(Driver) = 'MSSQLSERVER' then
+      Driver := 'ODBC';
+
+    if Driver = 'ODBC' then
     begin
-      CharSet               := ini.Conexao2.CharSet;
-      ConnectorType         := ini.Conexao2.Driver;
-      DatabaseName          := ini.Conexao2.Banco;
-      HostName              := ini.Conexao2.Servidor;
-      UserName              := ini.Conexao2.Usuario;
-      Password              := ini.Conexao2.Senha;
-      Params.Values['port'] := ini.Conexao2.Porta.ToString;
+      with SQLConnector do
+      begin
+        if UpperCase(ini.Conexao2.Driver) = 'MSSQLSERVER' then
+        begin
+          Params.Values['Driver']                 := 'ODBC Driver 18 for SQL Server';
+          Params.Values['Encrypt']                := 'yes';
+          Params.Values['TrustServerCertificate'] := 'yes';
+        end;
+        CharSet                   := ini.Conexao2.CharSet;
+        ConnectorType             := Driver;
+        Params.Values['Server']   := ini.Conexao2.Servidor+','+ini.Conexao2.Porta.ToString;
+        Params.Values['Database'] := ini.Conexao2.Banco;
+        Params.Values['Uid']      := ini.Conexao2.Usuario;
+        Params.Values['Pwd']      := ini.Conexao2.Senha;
+      end;
+    end
+    else
+    begin
+
+      with SQLDBLibraryLoader do
+      begin
+        try
+          Enabled            := False;
+          ConnectionType     := ini.Conexao2.Driver;
+          LibraryName        := VerificarNomeDLL(ini.Conexao2.Driver);
+          Enabled            := True;
+        except on e:Exception do
+          TfrmMessage.Mensagem('Erro ao ler biblioteca: '+e.Message,
+                                'Erro', 'E', [mbOk]);
+        end;
+      end;
+
+      with SQLConnector do
+      begin
+        CharSet               := ini.Conexao2.CharSet;
+        ConnectorType         := ini.Conexao2.Driver;
+        DatabaseName          := ini.Conexao2.Banco;
+        HostName              := ini.Conexao2.Servidor;
+        UserName              := ini.Conexao2.Usuario;
+        Password              := ini.Conexao2.Senha;
+        Params.Values['port'] := ini.Conexao2.Porta.ToString;
+      end;
+
     end;
 
     try
