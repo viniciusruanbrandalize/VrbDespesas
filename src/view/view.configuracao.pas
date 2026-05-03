@@ -41,10 +41,12 @@ type
     btnSelDirSQLite3Bkp: TSpeedButton;
     btnSelDirPgDumpBkp: TSpeedButton;
     btnSelDirMysqlDumpBkp: TSpeedButton;
+    btnSelDirSQLCmdBkp: TSpeedButton;
     edtSQLite3: TLabeledEdit;
     edtPesquisa: TEdit;
     edtPgDump: TLabeledEdit;
     edtMySQLDump: TLabeledEdit;
+    edtSQLCmd: TLabeledEdit;
     gbBackup: TGroupBox;
     imgList: TImageList;
     edtGbak: TLabeledEdit;
@@ -66,6 +68,7 @@ type
     procedure btnSelDirGbakBkpClick(Sender: TObject);
     procedure btnSelDirMysqlDumpBkpClick(Sender: TObject);
     procedure btnSelDirPgDumpBkpClick(Sender: TObject);
+    procedure btnSelDirSQLCmdBkpClick(Sender: TObject);
     procedure btnSelDirSQLite3BkpClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -118,6 +121,12 @@ begin
     edtPgDump.Text := openDlg.FileName;
 end;
 
+procedure TfrmConfiguracao.btnSelDirSQLCmdBkpClick(Sender: TObject);
+begin
+  if openDlg.Execute then
+    edtSQLCmd.Text := openDlg.FileName;
+end;
+
 procedure TfrmConfiguracao.btnSelDirSQLite3BkpClick(Sender: TObject);
 begin
   if openDlg.Execute then
@@ -160,6 +169,7 @@ begin
   edtMySQLDump.Text := Controller.ConfiguracaoINI.Backup.MySQLDump;
   edtPgDump.Text    := Controller.ConfiguracaoINI.Backup.PGDump;
   edtSQLite3.Text   := Controller.ConfiguracaoINI.Backup.SQLite3;
+  edtSQLCmd.Text    := Controller.ConfiguracaoINI.Backup.SQLCmd;
 end;
 
 procedure TfrmConfiguracao.Salvar();
@@ -169,6 +179,7 @@ begin
   Controller.ConfiguracaoINI.Backup.MySQLDump := edtMySQLDump.Text;
   Controller.ConfiguracaoINI.Backup.PGDump    := edtPgDump.Text;
   Controller.ConfiguracaoINI.Backup.SQLite3   := edtSQLite3.Text;
+  Controller.ConfiguracaoINI.Backup.SQLCmd    := edtSQLCmd.Text;
   Controller.ConfiguracaoINI.Escrever;
 end;
 

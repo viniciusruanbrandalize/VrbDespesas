@@ -323,6 +323,7 @@ var
   pgdump,
   mysqldump,
   sqlite3,
+  sqlcmd,
   ArqTemp,
   ArqBackupFinal,
   Erro: String;
@@ -340,6 +341,7 @@ begin
       pgdump    := ConfigINI.Backup.PGDump;
       mysqldump := ConfigINI.Backup.MySQLDump;
       sqlite3   := ConfigINI.Backup.SQLite3;
+      sqlcmd    := ConfigINI.Backup.SQLCmd;
     finally
       ConfigINI.Free;
     end;
@@ -423,6 +425,22 @@ begin
       aProcess.Executable := sqlite3;
       aProcess.Parameters.Add(NomeBanco1);
       aProcess.Parameters.Add('.backup '+ArqBackupFinal);
+    end
+    else
+    if DAO.Driver = DRV_MSSQLSERVER then
+    begin
+      ArqBackupFinal := Destino+'\VRB_DESPESA_'+FormatDateTime('yyyymmdd_hhnnss', Now)+'.bak';
+      aProcess.Executable := sqlcmd;
+      aProcess.Parameters.Add('-S');
+      aProcess.Parameters.Add(HostDB1+','+PortaDB1);
+      aProcess.Parameters.Add('-U');
+      aProcess.Parameters.Add(UsuarioDB1);
+      aProcess.Parameters.Add('-P');
+      aProcess.Parameters.Add('"'+SenhaDB1+'"');
+      aProcess.Parameters.Add('-N');
+      aProcess.Parameters.Add('-C');
+      aProcess.Parameters.Add('-Q');
+      aProcess.Parameters.Add('"BACKUP DATABASE '+NomeBanco1+' TO DISK='''+ArqBackupFinal+''' WITH INIT"');
     end;
 
     aprocess.ShowWindow := swoHIDE;

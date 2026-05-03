@@ -47,11 +47,13 @@ type
       FPGDump: String;
       FMySQLDump: String;
       FSQLite3: String;
+      FSQLCmd: String;
     published
       property GBak: String read FGBak write FGBak;
       property PGDump: String read FPGDump write FPGDump;
       property MySQLDump: String read FMySQLDump write FMySQLDump;
       property SQLite3: String read FSQLite3 write FSQLite3;
+      property SQLCmd: String read FSQLCmd write FSQLCmd;
     end;
 
     { DONO_CADASTRO }
@@ -97,6 +99,7 @@ begin
   FBackup.FPGDump    := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', '');
   FBackup.FMySQLDump := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', '');
   FBackup.FSQLite3   := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLITE3', '');
+  FBackup.FSQLCmd    := lib.cryptini.LerString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLCMD', '');
 
   FDonoCadastro.FDCId           := lib.cryptini.LerInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', 0);
   FDonoCadastro.FDCNaoPerguntar := lib.cryptini.LerBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', false);
@@ -112,6 +115,7 @@ begin
     lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', 'C:\Program Files\PostgreSQL\17\bin\pg_dump.exe');
     lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', 'C:\Program Files\MariaDB 11.8\bin\mysqldump.exe');
     lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLITE3', PChar(ExtractFilePath(ParamStr(0))+'sqlite\sqlite3.exe'));
+    lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLCMD', 'C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\180\Tools\Binn\SQLCMD.EXE');
 
     lib.cryptini.EscreverInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', 1);
     lib.cryptini.EscreverBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', false);
@@ -126,6 +130,7 @@ begin
   lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'PGDUMP', PChar(FBackup.FPGDump));
   lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'MYSQLDUMP', PChar(FBackup.FMySQLDump));
   lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLITE3', PChar(FBackup.FSQLite3));
+  lib.cryptini.EscreverString(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'BACKUP', 'SQLCMD', PChar(FBackup.FSQLCmd));
 
   lib.cryptini.EscreverInteger(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'ID', FDonoCadastro.FDCId);
   lib.cryptini.EscreverBoolean(PChar(FArquivoINI), PChar(FKey), PChar(FMd5), 'DONO_CADASTRO', 'NAOPERGUNTAR', FDonoCadastro.FDCNaoPerguntar);

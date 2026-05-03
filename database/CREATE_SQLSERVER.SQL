@@ -1,5 +1,6 @@
 --db despesa sqlserver
 
+alter database vrb_despesa
 collate Latin1_General_100_CI_AS_SC_UTF8;
 
 create sequence dbo.seq_id_banco
@@ -509,6 +510,7 @@ create table dbo.token_api (
 
 --db arquivo sqlserver
 
+alter database vrb_despesa
 collate Latin1_General_100_CI_AS_SC_UTF8;
 
 create sequence dbo.seq_id_arquivo

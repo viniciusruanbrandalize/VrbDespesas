@@ -12,7 +12,6 @@ object frmConfiguracao: TfrmConfiguracao
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '3.6.0.0'
   object pnlFundo: TPanel
     Left = 0
     Height = 441
@@ -106,11 +105,11 @@ object frmConfiguracao: TfrmConfiguracao
           TabOrder = 0
           object gbBackup: TGroupBox
             Left = 8
-            Height = 232
+            Height = 312
             Top = 8
             Width = 697
             Caption = 'Backup'
-            ClientHeight = 212
+            ClientHeight = 292
             ClientWidth = 693
             ParentBackground = False
             TabOrder = 0
@@ -201,6 +200,28 @@ object frmConfiguracao: TfrmConfiguracao
               ImageIndex = 0
               ImageWidth = 16
               OnClick = btnSelDirSQLite3BkpClick
+            end
+            object edtSQLCmd: TLabeledEdit
+              Left = 8
+              Height = 23
+              Top = 216
+              Width = 632
+              EditLabel.Height = 15
+              EditLabel.Width = 632
+              EditLabel.Caption = 'SQLCmd (SQLServer) :'
+              ReadOnly = True
+              TabOrder = 4
+              Text = 'edtSQLCmd'
+            end
+            object btnSelDirSQLCmdBkp: TSpeedButton
+              Left = 648
+              Height = 23
+              Top = 216
+              Width = 31
+              Images = imgList
+              ImageIndex = 0
+              ImageWidth = 16
+              OnClick = btnSelDirSQLCmdBkpClick
             end
           end
         end

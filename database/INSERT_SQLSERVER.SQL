@@ -4,7 +4,7 @@ insert into dbo.configuracao (id,nome,descricao,uso,valor,excluido, componente) 
 insert into dbo.configuracao (id,nome,descricao,uso,valor,componente,excluido) values (4, 'INSERIR_FORNECEDOR_XML', 'Cadastrar fornecedor ao importar NF', 'Cadastra o fornecedor, se não existir, ao importar o arquivo XML de uma NF-e', '1', 'TCheckBox', 0);
 insert into dbo.configuracao (id,nome,descricao,uso,valor,excluido) VALUES (5, 'NUMERO_VERSAO_DB', 'Número da versão do banco de dados', 'Número da versão do banco de dados', '1', 0);
 
-alter sequence dbo.seq_id_configuracao RESTART with 5;
+alter sequence dbo.seq_id_configuracao RESTART with 6;
 
 insert into dbo.banco (id,numero,nome,excluido) values (1, 748,'Sicredi',0);
 insert into dbo.banco (id,numero,nome,excluido) values (2, 1,'Banco Do Brasil',0);
@@ -16,14 +16,14 @@ insert into dbo.banco (id,numero,nome,excluido) values (7, 237,'Bradesco',0);
 insert into dbo.banco (id,numero,nome,excluido) values (8, 999,'VR',0);
 insert into dbo.banco (id,numero,nome,excluido) values (9, 999,'Nubank',0);
 
-alter sequence dbo.seq_id_banco RESTART with 9;
+alter sequence dbo.seq_id_banco RESTART with 10;
 
 insert into dbo.bandeira (id,nome,excluido) values (1,'ELO',0);
 insert into dbo.bandeira (id,nome,excluido) values (2,'MasterCard',0);
 insert into dbo.bandeira (id,nome,excluido) values (3,'Visa',0);
 insert into dbo.bandeira (id,nome,excluido) values (4,'Hipercard',0);
 
-alter sequence dbo.seq_id_bandeira RESTART with 4;
+alter sequence dbo.seq_id_bandeira RESTART with 5;
 
 insert into dbo.forma_pgto (id,nome,sigla,excluido) values (1,'Dinheiro','DIN',0);
 insert into dbo.forma_pgto (id,nome,sigla,excluido) values (2,'Cartao De Debito','DEB',0);
@@ -35,21 +35,21 @@ insert into dbo.forma_pgto (id,nome,sigla,excluido) values (7,'Deposito','DEP',0
 insert into dbo.forma_pgto (id,nome,sigla,excluido) values (8,'Vale','VAL',0);
 insert into dbo.forma_pgto (id,nome,sigla,excluido) values (9,'Cheque','CHE',0);
 
-alter sequence dbo.seq_id_forma_pgto RESTART with 9;
+alter sequence dbo.seq_id_forma_pgto RESTART with 10;
 
 insert into dbo.tipo_despesa (id,nome,excluido) values (1,'Geral',0);
 insert into dbo.tipo_despesa (id,nome,excluido) values (2,'Despesas Fixas',0);
 insert into dbo.tipo_despesa (id,nome,excluido) values (3,'Despesas Variáveis',0);
 
-alter sequence dbo.seq_id_tipo_despesa RESTART with 3;
+alter sequence dbo.seq_id_tipo_despesa RESTART with 4;
 
 insert into dbo.subtipo_despesa (id,nome,excluido,id_tipo_despesa) VALUES (1,'Geral',0,1);
 
-alter sequence dbo.seq_id_subtipo_despesa RESTART with 1;
+alter sequence dbo.seq_id_subtipo_despesa RESTART with 2;
 
 insert into dbo.usuario (id,nome,senha,email,cadastro,alteracao,excluido) values (1,'admin','$2a$10$nsp7SUmZt3K7ZzC/9gMTLuWf0.J5FQV2n2xRXAVmGWeai/FNH4QY2','admin@email.com','2022-03-03 11:54:00.0',NULL,0);
 
-alter sequence dbo.seq_id_usuario RESTART with 1;
+alter sequence dbo.seq_id_usuario RESTART with 2;
 
 insert into dbo.pais (id,nome,siscomex,sped) values (1,'AFEGANISTAO','013','0132');
 insert into dbo.pais (id,nome,siscomex,sped) values (2,'AFRICA DO SUL','756','7560');
@@ -295,7 +295,7 @@ insert into dbo.pais (id,nome,siscomex,sped) values (241,'WALLIS E FUTUNA, ILHAS
 insert into dbo.pais (id,nome,siscomex,sped) values (242,'ZAMBIA','890','8907');
 insert into dbo.pais (id,nome,siscomex,sped) values (243,'ZIMBABUE','665','6653');
 
-alter sequence dbo.seq_id_pais RESTART with 243;
+alter sequence dbo.seq_id_pais RESTART with 244;
 
 insert into dbo.estado (uf,nome,ibge,id_pais) values ('AC','Acre',12,31);
 insert into dbo.estado (uf,nome,ibge,id_pais) values ('AL','Alagoas',27,31);
@@ -5896,15 +5896,15 @@ insert into dbo.cidade (id,nome,ibge,uf) values (5568,'Vila Boa',5222203,'GO');
 insert into dbo.cidade (id,nome,ibge,uf) values (5569,'Vila Propício',5222302,'GO');
 insert into dbo.cidade (id,nome,ibge,uf) values (5570,'Brasília',5300108,'DF');
 
-alter sequence dbo.seq_id_cidade RESTART with 5570;
+alter sequence dbo.seq_id_cidade RESTART with 5571;
 
 insert into dbo.participante (id,pessoa,nome,fantasia,cnpj,ie,telefone,celular,email,cep,rua,numero,complemento,bairro,obs,cadastro,alteracao,excluido,dono_cadastro,id_cidade,id_usuario_cadastro,id_dono_cadastro) values (1,'F','Devedor Padrão','Devedor Padrão','00000000000',NULL,NULL,NULL,NULL,'00000-000','Rua x',48,NULL,'Bairro',NULL,NULL,NULL,0,1,1,1,1);
 
-alter sequence dbo.seq_id_participante RESTART with 1;
+alter sequence dbo.seq_id_participante RESTART with 2;
 
 insert into dbo.usuario_dono_cadastro (id, id_usuario, id_dono_cadastro, cadastro) values (1, 1, 1, CURRENT_TIMESTAMP);
 
-alter sequence dbo.seq_id_usuario_dono_cadastro RESTART with 1;
+alter sequence dbo.seq_id_usuario_dono_cadastro RESTART with 2;
 
 insert into dbo.uc_tela (nome,titulo) values ('frmBanco','Cadastro de Banco');
 insert into dbo.uc_tela (nome,titulo) values ('frmBandeira','Cadastro de Bandeira');
@@ -6010,7 +6010,7 @@ insert into dbo.uc_acao (id,nome,titulo,nome_uc_tela) values (86,'actExcluir','E
 insert into dbo.uc_acao (id,nome,titulo,nome_uc_tela) values (87,'actVisualizar','Visualizar','frmUsuario');
 insert into dbo.uc_acao (id,nome,titulo,nome_uc_tela) values (88,'actAcesso','Gerenciar Acessos','frmUsuario');
 
-alter sequence dbo.seq_id_uc_acao RESTART with 88;
+alter sequence dbo.seq_id_uc_acao RESTART with 89;
 
 insert into dbo.uc_acesso (id,id_acao,id_usuario) values (NEXT VALUE FOR dbo.seq_id_uc_acesso,5,1);
 insert into dbo.uc_acesso (id,id_acao,id_usuario) values (NEXT VALUE FOR dbo.seq_id_uc_acesso,20,1);
