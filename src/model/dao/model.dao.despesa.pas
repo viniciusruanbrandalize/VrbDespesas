@@ -83,7 +83,16 @@ begin
     begin
       sql := 'select first 100 d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where d.paga and d.id_dono_cadastro = :id_dono_cadastro and ' +
+             'where d.paga = :paga and d.id_dono_cadastro = :id_dono_cadastro and ' +
+             'd.data between :data_inicial and :data_final ' +
+             'order by d.data desc, d.hora desc';
+    end
+    else
+    if Driver = DRV_MSSQLSERVER then
+    begin
+      sql := 'select top 100 d.*, f.nome as nome_fornecedor from despesa d ' +
+             'left join participante f on f.id = d.id_fornecedor ' +
+             'where d.paga = :paga and d.id_dono_cadastro = :id_dono_cadastro and ' +
              'd.data between :data_inicial and :data_final ' +
              'order by d.data desc, d.hora desc';
     end
@@ -92,7 +101,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where d.paga and d.id_dono_cadastro = :id_dono_cadastro and ' +
+             'where d.paga = :paga and d.id_dono_cadastro = :id_dono_cadastro and ' +
              'd.data between :data_inicial and :data_final ' +
              'order by d.data desc, d.hora desc ' +
              'limit 100';
@@ -104,6 +113,7 @@ begin
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.ParamByName('data_inicial').AsDateTime    := StartOfTheMonth(Now);
     Qry.ParamByName('data_final').AsDateTime      := EndOfTheMonth(Now);
+    Qry.ParamByName('paga').AsBoolean             := True;
     Qry.Open;
 
     Qry.First;
@@ -137,7 +147,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where '+campo+' = :busca and d.paga = true and ' +
+             'where '+campo+' = :busca and d.paga = :paga and ' +
              'd.id_dono_cadastro = :id_dono_cadastro '+
              'order by d.data desc, d.hora desc';
     end
@@ -145,7 +155,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where '+ILikeSQL(Campo, 'busca')+' and d.paga = true and ' +
+             'where '+ILikeSQL(Campo, 'busca')+' and d.paga = :paga and ' +
              'd.id_dono_cadastro = :id_dono_cadastro '+
              'order by d.data desc, d.hora desc';
     end;
@@ -155,6 +165,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('paga').AsBoolean := True;
     Qry.Open;
 
     Qry.First;
@@ -189,7 +200,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where '+campo+' = :busca and d.paga and ' +
+             'where '+campo+' = :busca and d.paga = :paga and ' +
              'd.id_dono_cadastro = :id_dono_cadastro and '+
              'd.data between :data_inicial and :data_final '+
              'order by d.data desc, d.hora desc';
@@ -198,7 +209,7 @@ begin
     begin
       sql := 'select d.*, f.nome as nome_fornecedor from despesa d ' +
              'left join participante f on f.id = d.id_fornecedor ' +
-             'where '+ILikeSQL(Campo, 'busca')+' and d.paga and ' +
+             'where '+ILikeSQL(Campo, 'busca')+' and d.paga = :paga and ' +
              'd.id_dono_cadastro = :id_dono_cadastro and ' +
              'd.data between :data_inicial and :data_final '+
              'order by d.data desc, d.hora desc';
@@ -211,6 +222,7 @@ begin
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
     Qry.ParamByName('data_inicial').AsDateTime    := DataInicial;
     Qry.ParamByName('data_final').AsDateTime      := DataFinal;
+    Qry.ParamByName('paga').AsBoolean             := True;
     Qry.Open;
 
     Qry.First;
@@ -243,7 +255,7 @@ begin
            'from despesa d ' +
            'left join participante f on f.id = d.id_fornecedor ' +
            'left join subtipo_despesa sd on sd.id = d.id_subtipo ' +
-           'where d.id = :id and d.paga = true and ' +
+           'where d.id = :id and d.paga = :paga and ' +
            'd.id_dono_cadastro = :id_dono_cadastro ' +
            'order by d.id';
 
@@ -252,6 +264,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('paga').AsBoolean := True;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -605,7 +618,7 @@ begin
     sql := 'select pgto.*, fp.nome as nome_forma_pgto from despesa_forma_pgto pgto ' +
            'left join forma_pgto fp on fp.id = pgto.id_forma_pgto ' +
            'left join despesa d on d.id = pgto.id_despesa ' +
-           'where pgto.id_despesa = :id and d.paga = true and ' +
+           'where pgto.id_despesa = :id and d.paga = :paga and ' +
            'd.id_dono_cadastro = :id_dono_cadastro ' +
            'order by pgto.id';
 
@@ -614,6 +627,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := IdDespesa;
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('paga').AsBoolean := True;
     Qry.Open;
 
     Qry.First;
@@ -649,7 +663,7 @@ begin
            'left join cartao card on card.id = pgto.id_cartao ' +
            'left join bandeira ban on ban.id = card.id_bandeira ' +
            'left join banco bco on bco.id = cb.id_banco ' +
-           'where pgto.id_despesa = :id and d.paga = true and ' +
+           'where pgto.id_despesa = :id and d.paga = :paga and ' +
            'd.id_dono_cadastro = :id_dono_cadastro ' +
            'order by pgto.id';
 
@@ -658,6 +672,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('paga').AsBoolean := True;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -846,7 +861,7 @@ begin
       sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = false and ' +
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = :excluido and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
              'order by cb.numero '+Collate();
     end
@@ -859,7 +874,7 @@ begin
       sql := 'select cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = false and ' +
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = :excluido and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
              'order by cb.numero '+CmdLimit;
     end;
@@ -869,6 +884,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;

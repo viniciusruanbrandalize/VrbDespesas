@@ -53,6 +53,7 @@ type
       const Msg: String);
     procedure tmrInatividadeTimer(Sender: TObject);
   private
+    FDriverConexao: String;
     FUsuario: TUsuario;
     FDonoCadastro: TParticipante;
     FUsuarioDC: TUsuarioDonoCadastroLista;
@@ -60,6 +61,7 @@ type
     function VerificarNomeDLL(Driver: String): String;
   public
     function TestarConexao: Boolean;
+    property DriverConexao: String read FDriverConexao;
     property Usuario:      TUsuario read FUsuario write FUsuario;
     property DonoCadastro: TParticipante read FDonoCadastro write FDonoCadastro;
     property UsuarioDC:    TUsuarioDonoCadastroLista read FUsuarioDC write FUsuarioDC;
@@ -146,6 +148,7 @@ begin
   try
 
     Driver := ini.Conexao1.Driver;
+    FDriverConexao := Driver;
 
     if UpperCase(Driver) = 'MSSQLSERVER' then
       Driver := 'ODBC';

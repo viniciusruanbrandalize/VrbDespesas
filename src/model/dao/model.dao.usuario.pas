@@ -69,12 +69,13 @@ begin
   try
 
     sql := 'select * from usuario ' +
-           'where excluido = false ' +
+           'where excluido = :excluido ' +
            'order by nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -118,6 +119,7 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -144,12 +146,14 @@ begin
   try
 
     sql := 'select id, nome, fantasia from participante ' +
-           'where excluido = false and dono_cadastro ' +
+           'where excluido = :excluido and dono_cadastro = :dono_cadastro ' +
            'order by nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
+    Qry.ParamByName('excluido').AsBoolean := false;
+    Qry.ParamByName('dono_cadastro').AsBoolean := True;
     Qry.Open;
 
     lbTitulo.Items.Clear;
@@ -178,14 +182,16 @@ begin
 
     sql := 'select p.id, p.nome, p.fantasia from participante p ' +
            'left join usuario_dono_cadastro usd on usd.id_dono_cadastro = p.id ' +
-           'where usd.id_usuario = :id_usuario and p.excluido = false and ' +
-           'p.dono_cadastro ' +
+           'where usd.id_usuario = :id_usuario and p.excluido = :excluido and ' +
+           'p.dono_cadastro = :dono_cadastro ' +
            'order by p.nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id_usuario').AsInteger := IdUsuario;
+    Qry.ParamByName('excluido').AsBoolean := false;
+    Qry.ParamByName('dono_cadastro').AsBoolean := True;
     Qry.Open;
 
     lbTitulo.Items.Clear;
@@ -340,12 +346,13 @@ begin
     begin
       try
 
-        sql := 'update usuario set excluido = true where id = :id';
+        sql := 'update usuario set excluido = :excluido where id = :id';
 
         Qry.Close;
         Qry.SQL.Clear;
         Qry.SQL.Add(sql);
         Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
         dmConexao1.SQLTransaction.Commit;
 

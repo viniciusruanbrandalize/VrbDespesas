@@ -124,7 +124,7 @@ begin
     end;
   end
   else
-  if FDriver = DRV_POSTGRESQL Then
+  if FDriver in [DRV_POSTGRESQL, DRV_MSSQLSERVER] then
   begin
     case Sequencia of
       SEQ_ID_BANCO:                 NomeSeq := 'seq_id_banco';
@@ -237,7 +237,7 @@ begin
     NomeTabela := TabelaToString(Tabela);
 
     if TemCampoExcluido(Tabela) then
-      WhereExcluido := 'and excluido = false ';
+      WhereExcluido := 'and excluido = :excluido ';
 
     if FDriver = DRV_FIREBIRD then
     begin
@@ -247,6 +247,16 @@ begin
       sql := 'select '+CmdLimit+' id, nome from '+NomeTabela+' '+
              'where '+ILikeSQL('nome', 'busca')+' '+WhereExcluido+
              'order by nome '+Collate();
+    end
+    else
+    if FDriver = DRV_MSSQLSERVER then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'top '+Limitacao.ToString;
+
+      sql := 'select '+CmdLimit+' id, nome from '+NomeTabela+' '+
+             'where '+ILikeSQL('nome', 'busca')+' '+WhereExcluido+
+             'order by nome';
     end
     else
     if FDriver in [DRV_POSTGRESQL, DRV_MYSQL, DRV_MARIADB, DRV_SQLITE3] then
@@ -263,6 +273,8 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    if TemCampoExcluido(Tabela) then
+      Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -443,7 +455,7 @@ end;
 constructor TPadraoDAO.Create;
 begin
   FConectorPadrao := dmConexao1.SQLConnector;
-  FDriver := StrToDriverDB(Trim(UpperCase(dmConexao1.SQLConnector.ConnectorType)));
+  FDriver := StrToDriverDB(Trim(UpperCase(dmConexao1.DriverConexao)));
   FAutoInc := (FDriver in [DRV_MYSQL, DRV_MARIADB, DRV_SQLITE3]);
   CriarQuery(Qry, FConectorPadrao);
 end;

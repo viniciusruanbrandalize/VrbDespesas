@@ -65,7 +65,7 @@ begin
   try
 
     sql := 'select p.* from participante p ' +
-           'where p.dono_cadastro = :dono_cadastro and excluido = false and ' +
+           'where p.dono_cadastro = :dono_cadastro and excluido = :excluido and ' +
            'p.id_dono_cadastro = :id_dono_cadastro ' +
            'order by p.nome '+Collate();
 
@@ -74,6 +74,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('dono_cadastro').AsBoolean := DonoCadastro;
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -106,7 +107,7 @@ begin
     begin
       sql := 'select p.* from participante p ' +
              'where '+campo+' = :busca and ' +
-             'p.dono_cadastro = :dono_cadastro and excluido = false and ' +
+             'p.dono_cadastro = :dono_cadastro and excluido = :excluido and ' +
              'p.id_dono_cadastro = :id_dono_cadastro '+
              'order by p.nome '+Collate();
     end
@@ -114,7 +115,7 @@ begin
     begin
       sql := 'select p.* from participante p ' +
              'where '+ILikeSQL(Campo, 'busca')+' and '+
-             'p.dono_cadastro = :dono_cadastro and excluido = false and ' +
+             'p.dono_cadastro = :dono_cadastro and excluido = :excluido and ' +
              'p.id_dono_cadastro = :id_dono_cadastro '+
              'order by p.nome '+Collate();
     end;
@@ -125,6 +126,7 @@ begin
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
     Qry.ParamByName('dono_cadastro').AsBoolean := DonoCadastro;
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -157,6 +159,13 @@ begin
       sql := 'select first 10 id, nome, uf from cidade ' +
              'where '+ILikeSQL('nome', 'busca')+' '+
              'order by nome '+Collate();
+    end
+    else
+    if Driver = DRV_MSSQLSERVER then
+    begin
+      sql := 'select top 10 id, nome, uf from cidade ' +
+             'where '+ILikeSQL('nome', 'busca')+' '+
+             'order by nome';
     end
     else
     if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL, DRV_SQLITE3] then
@@ -204,7 +213,7 @@ begin
     sql := 'select p.*, c.nome as nome_cidade, c.uf from participante p ' +
            'left join cidade c on c.id = p.id_cidade ' +
            'where p.id = :id and p.dono_cadastro = :dono_cadastro and ' +
-           'p.excluido = false and p.id_dono_cadastro = :id_dono_cadastro ' +
+           'p.excluido = :excluido and p.id_dono_cadastro = :id_dono_cadastro ' +
            'order by p.id';
 
     Qry.Close;
@@ -213,6 +222,7 @@ begin
     Qry.ParamByName('id').AsInteger := id;
     Qry.ParamByName('dono_cadastro').AsBoolean := DonoCadastro;
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -461,12 +471,13 @@ begin
     begin
       try
 
-        sql := 'update participante set excluido = true where id = :id';
+        sql := 'update participante set excluido = :excluido where id = :id';
 
         Qry.Close;
         Qry.SQL.Clear;
         Qry.SQL.Add(sql);
         Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
         dmConexao1.SQLTransaction.Commit;
 

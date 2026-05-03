@@ -254,13 +254,14 @@ begin
   except on E: Exception do
     begin
       try
-        sql := 'update banco set excluido = true ' +
+        sql := 'update banco set excluido = :excluido ' +
                'where id = :id';
 
         Qry.Close;
         Qry.SQL.Clear;
         Qry.SQL.Add(sql);
         Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
         dmConexao1.SQLTransaction.Commit;
 

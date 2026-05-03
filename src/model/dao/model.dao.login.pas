@@ -68,6 +68,13 @@ begin
              'order by data desc, hora desc';
     end
     else
+    if Driver = DRV_MSSQLSERVER then
+    begin
+      sql := 'select top 20 l.*, u.nome as nome_usuario from login l ' +
+             'left join usuario u on l.id_usuario = u.id ' +
+             'order by data desc, hora desc';
+    end
+    else
     if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL, DRV_SQLITE3] then
     begin
       sql := 'select l.*, u.nome as nome_usuario from login l ' +
@@ -170,13 +177,14 @@ begin
   try
 
     sql := 'select * from usuario ' +
-           'where nome = :busca and excluido = false ' +
+           'where nome = :busca and excluido = :excluido ' +
            'order by id asc';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := Nome;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;

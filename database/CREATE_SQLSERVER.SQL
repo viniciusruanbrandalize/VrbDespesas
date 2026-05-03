@@ -1,5 +1,7 @@
 --db despesa sqlserver
 
+collate Latin1_General_100_CI_AS_SC_UTF8;
+
 create sequence dbo.seq_id_banco
 	increment by 1
 	minvalue 1
@@ -506,6 +508,8 @@ create table dbo.token_api (
 );
 
 --db arquivo sqlserver
+
+collate Latin1_General_100_CI_AS_SC_UTF8;
 
 create sequence dbo.seq_id_arquivo
 	increment by 1

@@ -74,6 +74,15 @@ begin
              'order by r.data desc';
     end
     else
+    if Driver = DRV_MSSQLSERVER then
+    begin
+      sql := 'select top 100 r.*, p.nome as nome_pagador from recebimento r ' +
+             'left join participante p on p.id = r.id_pagador ' +
+             'where r.tipo = :tipo and r.id_dono_cadastro = :id_dono_cadastro and ' +
+             'r.data between :data_inicial and :data_final ' +
+             'order by r.data desc';
+    end
+    else
     if Driver in [DRV_MYSQL, DRV_MARIADB, DRV_POSTGRESQL, DRV_SQLITE3] then
     begin
       sql := 'select r.*, p.nome as nome_pagador from recebimento r ' +
@@ -459,9 +468,22 @@ begin
       sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = false and ' +
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = :excluido and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
              'order by cb.numero '+Collate();
+    end
+    else
+    if Driver = DRV_MSSQLSERVER then
+    begin
+      if Limitacao <> -1 then
+        CmdLimit := 'top '+Limitacao.ToString;
+
+      sql := 'select '+CmdLimit+' cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
+             'from conta_bancaria cb ' +
+             'left join banco bnc on bnc.id = cb.id_banco '+
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = :excluido and ' +
+             'cb.id_dono_cadastro = :id_dono_cadastro '+
+             'order by cb.numero';
     end
     else
     if Driver in [DRV_MARIADB, DRV_MYSQL, DRV_POSTGRESQL, DRV_SQLITE3] then
@@ -472,7 +494,7 @@ begin
       sql := 'select cb.id, cb.numero, cb.agencia, bnc.nome as nome_banco ' +
              'from conta_bancaria cb ' +
              'left join banco bnc on bnc.id = cb.id_banco '+
-             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = false and ' +
+             'where '+ILikeSQL('cb.numero', 'busca')+' and cb.excluido = :excluido and ' +
              'cb.id_dono_cadastro = :id_dono_cadastro '+
              'order by cb.numero '+CmdLimit;
     end;
@@ -482,6 +504,7 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
     Qry.ParamByName('id_dono_cadastro').AsInteger := dmConexao1.DonoCadastro.Id;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;

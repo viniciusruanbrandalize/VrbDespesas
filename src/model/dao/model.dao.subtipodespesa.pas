@@ -64,12 +64,13 @@ begin
 
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
            'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-           'where sd.excluido = false ' +
+           'where sd.excluido = :excluido ' +
            'order by sd.nome '+Collate();
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -100,14 +101,14 @@ begin
     begin
       sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
            'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-           'where '+campo+' = :busca and sd.excluido = false '+
+           'where '+campo+' = :busca and sd.excluido = :excluido '+
            'order by sd.nome '+Collate();
     end
     else
     begin
       sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
              'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-             'where '+ILikeSQL(Campo, 'busca')+' and sd.excluido = false '+
+             'where '+ILikeSQL(Campo, 'busca')+' and sd.excluido = :excluido '+
              'order by sd.nome '+Collate();
     end;
 
@@ -115,6 +116,7 @@ begin
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('busca').AsString := '%'+UpperCase(Busca)+'%';
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     Qry.First;
@@ -141,13 +143,14 @@ begin
 
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
              'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-             'where sd.id = :id and sd.excluido = false '+
+             'where sd.id = :id and sd.excluido = :excluido '+
              'order by sd.id';
 
     Qry.Close;
     Qry.SQL.Clear;
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger := id;
+    Qry.ParamByName('excluido').AsBoolean := false;
     Qry.Open;
 
     if Qry.RecordCount = 1 then
@@ -262,12 +265,13 @@ begin
     begin
       try
 
-        sql := 'update subtipo_despesa set excluido = true where id = :id';
+        sql := 'update subtipo_despesa set excluido = :excluido where id = :id';
 
         Qry.Close;
         Qry.SQL.Clear;
         Qry.SQL.Add(sql);
         Qry.ParamByName('id').AsInteger  := Id;
+        Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
         dmConexao1.SQLTransaction.Commit;
 
