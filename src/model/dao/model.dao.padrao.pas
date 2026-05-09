@@ -422,12 +422,22 @@ end;
 
 function TPadraoDAO.ExtractData(Param: TExtractData; Campo: String): String;
 const
+  datepart: Array [0..2] of String = ('year', 'month', 'day');
   strftime: Array [0..2] of String = ('''%Y''', '''%M''', '''%D''');
   extract: Array [0..2] of String = ('year from', 'month from', 'day from');
-  pStr: Array [0..7] of String = ('extract', 'extract', 'extract', 'extract',
+  pStr: Array [0..7] of String = ('extract', 'datepart', 'extract', 'extract',
                                   'extract', 'extract', 'extract', 'strftime');
 begin
-  Result := pStr[Integer(FDriver)] + '(' + IfThen(pStr[Integer(FDriver)] = 'extract', extract[Integer(Param)], strftime[Integer(Param)]+',') + ' ' + Campo + ')';
+  Result := pStr[Integer(FDriver)] + '(' +
+              IfThen(
+                     pStr[Integer(FDriver)] = 'extract',
+                      extract[Integer(Param)],
+                       IfThen(
+                              pStr[Integer(FDriver)] = 'strftime',
+                               strftime[Integer(Param)]+',',
+                                datepart[Integer(Param)]+','
+                       )
+              ) + ' ' + Campo + ')';
 end;
 
 procedure TPadraoDAO.CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);

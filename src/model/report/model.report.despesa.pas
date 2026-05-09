@@ -99,7 +99,7 @@ begin
             'left join banco bco on bco.id = cb.id_banco ' +
             'left join subtipo_despesa sd on sd.id = d.id_subtipo ' +
             'left join tipo_despesa td on td.id = sd.id_tipo_despesa ' +
-            'where d.paga = true and d.data between :inicial and :final and ' +
+            'where d.paga = :paga and d.data between :inicial and :final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro ';
 
     dmRelatorio.qryPadrao.Close;
@@ -165,6 +165,7 @@ begin
     dmRelatorio.qryPadrao.ParamByName('inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('final').AsDate    := dFinal;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
+    dmRelatorio.qryPadrao.ParamByName('paga').AsBoolean := True;
 
     if BuscaId > 0 then
       dmRelatorio.qryPadrao.ParamByName('busca').AsInteger := BuscaId
@@ -200,32 +201,34 @@ begin
     FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
             'sum(total) as total, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, '+
             DAO.ExtractData(EXT_ANO, 'data')+' as ano, count(id) as qtd_despesa, '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''1'' then ''Janeiro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''2'' then ''Fevereiro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''3'' then ''Março'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''4'' then ''Abril'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''5'' then ''Maio'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''6'' then ''Junho'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''7'' then ''Julho'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''8'' then ''Agosto'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''9'' then ''Setembro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''10'' then ''Outubro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''11'' then ''Novembro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''12'' then ''Dezembro'' '+
-            ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-            'group by mes, ano, paga, id_dono_cadastro '+
-            'having '+IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' between :ano_inicial and :ano_final ' +
-            'and '+IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_MES, 'data'), 'mes')+' = :mes_informado and ' +
-            'paga and id_dono_cadastro = :id_dono_cadastro '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = 1 then ''Janeiro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 2 then ''Fevereiro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 3 then ''Março'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 4 then ''Abril'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 5 then ''Maio'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 6 then ''Junho'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 7 then ''Julho'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 8 then ''Agosto'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 9 then ''Setembro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 10 then ''Outubro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 11 then ''Novembro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 12 then ''Dezembro'' '+
+            'end) as nome_mes from despesa '+
+            'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
+            ', '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+', paga, id_dono_cadastro '+
+            'having '+IfThen(DAO.Driver in [DRV_FIREBIRD, DRV_POSTGRESQL, DRV_MSSQLSERVER], DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' between :ano_inicial and :ano_final ' +
+            'and '+IfThen(DAO.Driver in [DRV_FIREBIRD, DRV_POSTGRESQL, DRV_MSSQLSERVER], DAO.ExtractData(EXT_MES, 'data'), 'mes')+' = :mes_informado and ' +
+            'paga = :paga and id_dono_cadastro = :id_dono_cadastro '+
             'order by ano desc, mes desc';
 
     dmRelatorio.qryPadrao.Close;
     dmRelatorio.qryPadrao.SQL.Clear;
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
-    dmRelatorio.qryPadrao.ParamByName('ano_inicial').AsInteger  := anoInicial;
-    dmRelatorio.qryPadrao.ParamByName('ano_final').AsInteger    := anoFinal;
-    dmRelatorio.qryPadrao.ParamByName('mes_informado').AsString := FormatFloat('00', mes);
+    dmRelatorio.qryPadrao.ParamByName('ano_inicial').AsInteger   := anoInicial;
+    dmRelatorio.qryPadrao.ParamByName('ano_final').AsInteger     := anoFinal;
+    dmRelatorio.qryPadrao.ParamByName('mes_informado').AsInteger := mes;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
+    dmRelatorio.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 
@@ -302,10 +305,10 @@ begin
     FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
             'sum(total) as total, '+DAO.ExtractData(EXT_ANO, 'data')+' as ano, ' +
             'count(id) as qtd_despesa from despesa '+
-            'group by ano, paga, id_dono_cadastro '+
-            'having '+IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' '+
+            'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+', paga, id_dono_cadastro '+
+            'having '+IfThen(DAO.Driver in [DRV_FIREBIRD, DRV_POSTGRESQL, DRV_MSSQLSERVER], DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' '+
             'between :ano_inicial and :ano_final ' +
-            'and paga and id_dono_cadastro = :id_dono_cadastro ' +
+            'and paga = :paga and id_dono_cadastro = :id_dono_cadastro ' +
             'order by ano desc';
 
     dmRelatorio.qryPadrao.Close;
@@ -314,6 +317,7 @@ begin
     dmRelatorio.qryPadrao.ParamByName('ano_inicial').AsInteger  := anoInicial;
     dmRelatorio.qryPadrao.ParamByName('ano_final').AsInteger    := anoFinal;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
+    dmRelatorio.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 
@@ -387,22 +391,23 @@ begin
     FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
             'sum(total) as total, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, '+
             DAO.ExtractData(EXT_ANO, 'data')+' as ano, count(id) as qtd_despesa, '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''1'' then ''Janeiro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''2'' then ''Fevereiro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''3'' then ''Março'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''4'' then ''Abril'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''5'' then ''Maio'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''6'' then ''Junho'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''7'' then ''Julho'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''8'' then ''Agosto'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''9'' then ''Setembro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''10'' then ''Outubro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''11'' then ''Novembro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''12'' then ''Dezembro'' '+
-            ' end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from despesa '+
-            'group by mes, ano, paga, id_dono_cadastro '+
-            'having '+IfThen(DAO.Driver = DRV_FIREBIRD, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' = :ano_informado and ' +
-            'paga and id_dono_cadastro = :id_dono_cadastro ' +
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = 1 then ''Janeiro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 2 then ''Fevereiro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 3 then ''Março'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 4 then ''Abril'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 5 then ''Maio'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 6 then ''Junho'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 7 then ''Julho'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 8 then ''Agosto'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 9 then ''Setembro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 10 then ''Outubro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 11 then ''Novembro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 12 then ''Dezembro'' '+
+            'end) as nome_mes from despesa '+
+            'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
+            ', '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+', paga, id_dono_cadastro '+
+            'having '+IfThen(DAO.Driver in [DRV_FIREBIRD, DRV_POSTGRESQL, DRV_MSSQLSERVER], DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' = :ano_informado and ' +
+            'paga = :paga and id_dono_cadastro = :id_dono_cadastro ' +
             'order by mes asc';
 
     dmRelatorio.qryPadrao.Close;
@@ -410,6 +415,7 @@ begin
     dmRelatorio.qryPadrao.SQL.Add(FSQL);
     dmRelatorio.qryPadrao.ParamByName('ano_informado').AsInteger  := ano;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
+    dmRelatorio.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 
@@ -482,15 +488,15 @@ begin
 
       FSQL := 'select sd.nome as nome_subtipo, ' +
               '(select coalesce(avg(d.total), 0) from despesa d ' +
-              'where d.id_subtipo = sd.id and d.paga = true and ' +
+              'where d.id_subtipo = sd.id and d.paga = :paga and ' +
               'd.data between :data_inicial and :data_final and ' +
               'd.id_dono_cadastro = :id_dono_cadastro) as media, ' +
               '(select coalesce(sum(d.total), 0) from despesa d ' +
-              'where d.id_subtipo = sd.id and d.paga = true and ' +
+              'where d.id_subtipo = sd.id and d.paga = :paga and ' +
               'd.data between :data_inicial and :data_final and ' +
               'd.id_dono_cadastro = :id_dono_cadastro) as total, ' +
               '(select coalesce(count(d.id), 0) from despesa d ' +
-              'where d.id_subtipo = sd.id and d.paga = true and ' +
+              'where d.id_subtipo = sd.id and d.paga = :paga and ' +
               'd.data between :data_inicial and :data_final and ' +
               'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa ' +
               'from subtipo_despesa sd ' +
@@ -502,6 +508,7 @@ begin
     dmRelatorio.qryPadrao.ParamByName('data_inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
+    dmRelatorio.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 
@@ -557,17 +564,17 @@ begin
     FSQL := 'select td.nome as nome_tipo, '+
             '(select coalesce(avg(d.total), 0) from despesa d ' +
             'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
-            'where td.id = sd.id_tipo_despesa and d.paga = true and '+
+            'where td.id = sd.id_tipo_despesa and d.paga = :paga and '+
             'd.data between :data_inicial and :data_final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro) as media, '+
             '(select coalesce(sum(d.total), 0) from despesa d ' +
             'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
-            'where td.id = sd.id_tipo_despesa and d.paga = true and '+
+            'where td.id = sd.id_tipo_despesa and d.paga = :paga and '+
             'd.data between :data_inicial and :data_final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro) as total, '+
             '(select coalesce(count(d.id), 0) from despesa d '+
             'left join subtipo_despesa sd on sd.id = d.id_subtipo '+
-            'where td.id = sd.id_tipo_despesa and d.paga = true and '+
+            'where td.id = sd.id_tipo_despesa and d.paga = :paga and '+
             'd.data between :data_inicial and :data_final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa '+
             'from tipo_despesa td '+
@@ -579,6 +586,7 @@ begin
     dmRelatorio.qryPadrao.ParamByName('data_inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
+    dmRelatorio.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 
@@ -634,17 +642,17 @@ begin
     FSQL := 'select fp.nome as nome_forma_pagamento, '+
             '(select coalesce(avg(dfp.valor), 0) from despesa_forma_pgto dfp ' +
             'left join despesa d on d.id = dfp.id_despesa ' +
-            'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
+            'where dfp.id_forma_pgto = fp.id and d.paga = :paga and '+
             'd.data between :data_inicial and :data_final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro) as media, '+
             '(select coalesce(sum(dfp.valor), 0) from despesa_forma_pgto dfp ' +
             'left join despesa d on d.id = dfp.id_despesa ' +
-            'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
+            'where dfp.id_forma_pgto = fp.id and d.paga = :paga and '+
             'd.data between :data_inicial and :data_final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro) as total, '+
             '(select coalesce(count(dfp.id), 0) from despesa_forma_pgto dfp ' +
             'left join despesa d on d.id = dfp.id_despesa ' +
-            'where dfp.id_forma_pgto = fp.id and d.paga = true and '+
+            'where dfp.id_forma_pgto = fp.id and d.paga = :paga and '+
             'd.data between :data_inicial and :data_final and ' +
             'd.id_dono_cadastro = :id_dono_cadastro) as qtd_despesa '+
             'from forma_pgto fp '+
@@ -656,6 +664,7 @@ begin
     dmRelatorio.qryPadrao.ParamByName('data_inicial').AsDate  := dInicial;
     dmRelatorio.qryPadrao.ParamByName('data_final').AsDate    := dFinal;
     dmRelatorio.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmRelatorio.IDDonoCadastro;
+    dmRelatorio.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.qryPadrao.First;
 

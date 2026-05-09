@@ -141,6 +141,7 @@ begin
         Params.Values['Database'] := ini.Conexao2.Banco;
         Params.Values['Uid']      := ini.Conexao2.Usuario;
         Params.Values['Pwd']      := ini.Conexao2.Senha;
+        Params.Values['CHARSET']  := ini.Conexao2.CharSet;
       end;
     end
     else
