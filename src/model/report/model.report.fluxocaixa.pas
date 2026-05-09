@@ -75,7 +75,7 @@ begin
             QuotedStr('D')+' as tipo_saldo, d.id_dono_cadastro ' +
             'from despesa d ' +
             'left join participante p on p.id = d.id_fornecedor ' +
-            'where d.paga ' +
+            'where d.paga = :paga ' +
             'union all ' +
             'select r.data, r.descricao, p.nome as nome_participante, r.valor_total as total, ' +
             QuotedStr('R')+' as tipo_saldo, r.id_dono_cadastro ' +
@@ -90,6 +90,7 @@ begin
     dmConexaoReport.qryPadrao.ParamByName('inicial').AsDateTime  := dInicial;
     dmConexaoReport.qryPadrao.ParamByName('final').AsDateTime    := dFinal;
     dmConexaoReport.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmConexaoReport.IDDonoCadastro;
+    dmConexaoReport.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmConexaoReport.qryPadrao.Open;
 
     dmConexaoReport.frReport.LoadFromFile(dmConexaoReport.DiretorioRelatorios +
@@ -119,28 +120,30 @@ begin
   try
 
     FSQL := 'select sum(total_despesa) as total_despesa, sum(total_recebimento) as total_recebimento, mes, ano, id_dono_cadastro, ' +
-            '(case when mes = 1 then ''Janeiro'' else '+
-            '(case when mes = 2 then ''Fevereiro'' else '+
-            '(case when mes = 3 then ''Março'' else '+
-            '(case when mes = 4 then ''Abril'' else '+
-            '(case when mes = 5 then ''Maio'' else '+
-            '(case when mes = 6 then ''Junho'' else '+
-            '(case when mes = 7 then ''Julho'' else '+
-            '(case when mes = 8 then ''Agosto'' else '+
-            '(case when mes = 9 then ''Setembro'' else '+
-            '(case when mes = 10 then ''Outubro'' else '+
-            '(case when mes = 11 then ''Novembro'' else '+
-            '(case when mes = 12 then ''Dezembro'' '+
-            'end) end) end) end) end) end) end) end) end) end) end) end) as nome_mes from ' +
+            '(case when mes = 1 then ''Janeiro'' '+
+            'when mes = 2 then ''Fevereiro'' '+
+            'when mes = 3 then ''Março'' '+
+            'when mes = 4 then ''Abril'' '+
+            'when mes = 5 then ''Maio'' '+
+            'when mes = 6 then ''Junho'' '+
+            'when mes = 7 then ''Julho'' '+
+            'when mes = 8 then ''Agosto'' '+
+            'when mes = 9 then ''Setembro'' '+
+            'when mes = 10 then ''Outubro'' '+
+            'when mes = 11 then ''Novembro'' '+
+            'when mes = 12 then ''Dezembro'' '+
+            'end) as nome_mes from ' +
             '(select sum(total) as total_despesa, 0 AS total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
             DAO.ExtractData(EXT_ANO, 'data')+' as ano, id_dono_cadastro from despesa ' +
-            'where paga ' +
-            'group by mes, ano, id_dono_cadastro ' +
+            'where paga = :paga ' +
+            'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
+            ', '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+', id_dono_cadastro ' +
             'union all ' +
             'select 0 as total_despesa, sum(valor_total) AS total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
             DAO.ExtractData(EXT_ANO, 'data')+' as ano, id_dono_cadastro from recebimento ' +
-            'group by mes, ano, id_dono_cadastro ) s1 ' +
-            'group by mes, ano, nome_mes, id_dono_cadastro ' +
+            'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
+            ', '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+', id_dono_cadastro ) s1 ' +
+            'group by mes, ano, id_dono_cadastro ' +
             'having ano = :ano_informado and id_dono_cadastro = :id_dono_cadastro ' +
             'order by mes asc';
 
@@ -149,6 +152,7 @@ begin
     dmConexaoReport.qryPadrao.SQL.Add(FSQL);
     dmConexaoReport.qryPadrao.ParamByName('ano_informado').AsInteger := ano;
     dmConexaoReport.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmConexaoReport.IDDonoCadastro;
+    dmConexaoReport.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmConexaoReport.qryPadrao.Open;
     dmConexaoReport.qryPadrao.First;
 

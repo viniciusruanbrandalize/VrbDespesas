@@ -73,24 +73,25 @@ begin
     FSQL := 'select sum(hora_extra) as hre, sum(inss) AS inss, sum(ir) AS ir , ' +
             'sum(valor_total) as liquido, sum(valor_base) as bruto, ' +
             DAO.ExtractData(EXT_MES, 'data')+' as mes, '+DAO.ExtractData(EXT_ANO, 'data')+' as ano, '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''1'' then ''Janeiro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''2'' then ''Fevereiro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''3'' then ''Março'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''4'' then ''Abril'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''5'' then ''Maio'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''6'' then ''Junho'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''7'' then ''Julho'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''8'' then ''Agosto'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''9'' then ''Setembro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''10'' then ''Outubro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''11'' then ''Novembro'' else '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = ''12'' then ''Dezembro'' '+
-            ' end) end) end) end) end) end) end) end) end) end) end) END) as mes_nome '+
+            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = 1 then ''Janeiro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 2 then ''Fevereiro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 3 then ''Março'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 4 then ''Abril'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 5 then ''Maio'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 6 then ''Junho'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 7 then ''Julho'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 8 then ''Agosto'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 9 then ''Setembro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 10 then ''Outubro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 11 then ''Novembro'' '+
+            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 12 then ''Dezembro'' '+
+            'end) as mes_nome '+
             'from recebimento '+
             'where '+DAO.ExtractData(EXT_ANO, 'data')+' = :ano and ' +
             'id_dono_cadastro = :id_dono_cadastro ' +
             IfThen(tipoRece<>2, 'and tipo = :tipo ') +
-            'group by mes, ano '+
+            'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
+            ', '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+' '+
             'order by mes desc';
 
     dmConexaoReport.qryPadrao.Close;
