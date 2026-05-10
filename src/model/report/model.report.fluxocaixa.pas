@@ -114,12 +114,11 @@ end;
 
 function TFluxoCaixaReport.TotalMensal(var Grafico: TChart; ano, Tipo: Integer;
   out Erro: String): Boolean;
-var
-  i: Double;
 begin
   try
 
-    FSQL := 'select sum(total_despesa) as total_despesa, sum(total_recebimento) as total_recebimento, mes, ano, id_dono_cadastro, ' +
+    FSQL := 'select sum(total_despesa) as total_despesa, sum(total_recebimento) as total_recebimento, ' +
+            '(sum(total_recebimento) - sum(total_despesa)) as total_saldo, mes, ano, id_dono_cadastro, ' +
             '(case when mes = 1 then ''Janeiro'' '+
             'when mes = 2 then ''Fevereiro'' '+
             'when mes = 3 then ''Março'' '+
@@ -154,14 +153,6 @@ begin
     dmConexaoReport.qryPadrao.ParamByName('id_dono_cadastro').AsInteger := dmConexaoReport.IDDonoCadastro;
     dmConexaoReport.qryPadrao.ParamByName('paga').AsBoolean := True;
     dmConexaoReport.qryPadrao.Open;
-    dmConexaoReport.qryPadrao.First;
-
-    while not dmConexaoReport.qryPadrao.EOF do
-    begin
-      i:=dmConexaoReport.qryPadrao.FieldByName('total_despesa').AsFloat;
-      i:=dmConexaoReport.qryPadrao.FieldByName('total_recebimento').AsFloat;
-      dmConexaoReport.qryPadrao.Next;
-    end;
 
     dmConexaoReport.frReport.LoadFromFile(dmConexaoReport.DiretorioRelatorios +
                                          'dfc_total_mensal.lrf');

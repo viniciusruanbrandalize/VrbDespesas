@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-10-25 10:28:52"/>
+    <ReportLastChange Value="2026-05-10 09:00:20"/>
     <ReportVersionBuild Value=""/>
     <ReportVersionMajor Value=""/>
     <ReportVersionMinor Value=""/>
@@ -354,9 +354,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="568"/>
+            <Left Value="556"/>
             <Top Value="168"/>
-            <Width Value="55"/>
+            <Width Value="67"/>
             <Height Value="17"/>
           </Size>
           <Flags Value="3"/>
@@ -539,7 +539,7 @@
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
-            <Memo Value="totyal&#xD;&#xA;"/>
+            <Memo Value="Total: [FORMATFLOAT(['#,0.00'], [SUM(qryPadrao.&quot;TOTAL_SALDO&quot;)])]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -996,9 +996,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="569"/>
+            <Left Value="557"/>
             <Top Value="212"/>
-            <Width Value="53"/>
+            <Width Value="65"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -1011,9 +1011,9 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="16974380"/>
+            <Format Value="16843308"/>
             <FormatStr Value=""/>
-            <Memo Value="[qryPadrao.&quot;TOTAL_RECEBIMENTO&quot;]&#xD;&#xA;"/>
+            <Memo Value="[IF(qryPadrao.&quot;TOTAL_RECEBIMENTO&quot; &lt;&gt; 0, (qryPadrao.&quot;TOTAL_DESPESA&quot; * 100) / qryPadrao.&quot;TOTAL_RECEBIMENTO&quot;, 0)] %&#xD;&#xA;&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1125,7 +1125,7 @@
           <Data>
             <Format Value="16974380"/>
             <FormatStr Value=""/>
-            <Memo Value="[qryPadrao.&quot;TOTAL_RECEBIMENTO&quot;]&#xD;&#xA;"/>
+            <Memo Value="[qryPadrao.&quot;TOTAL_SALDO&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1278,7 +1278,7 @@
           <Size>
             <Left Value="452"/>
             <Top Value="168"/>
-            <Width Value="115"/>
+            <Width Value="103"/>
             <Height Value="17"/>
           </Size>
           <Flags Value="3"/>
@@ -1334,7 +1334,7 @@
           <Size>
             <Left Value="452"/>
             <Top Value="212"/>
-            <Width Value="117"/>
+            <Width Value="105"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -1349,7 +1349,7 @@
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
-            <Memo Value="[qryPadrao.&quot;TOTAL_DESPESA&quot;]&#xD;&#xA;"/>
+            <Memo Value="-&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
