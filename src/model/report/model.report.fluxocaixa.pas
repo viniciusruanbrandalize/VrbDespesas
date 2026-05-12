@@ -117,8 +117,10 @@ function TFluxoCaixaReport.TotalMensal(var Grafico: TChart; ano, Tipo: Integer;
 begin
   try
 
-    FSQL := 'select sum(total_despesa) as total_despesa, sum(total_recebimento) as total_recebimento, ' +
-            '(sum(total_recebimento) - sum(total_despesa)) as total_saldo, mes, ano, id_dono_cadastro, ' +
+    FSQL := 'select cast(coalesce(sum(total_despesa),0) as decimal(15,2)) as total_despesa, ' +
+            'cast(coalesce(sum(total_recebimento),0) as decimal(15,2)) as total_recebimento, ' +
+            'cast(coalesce(sum(total_recebimento),0) - coalesce(sum(total_despesa),0) as decimal(15,2)) as total_saldo, ' +
+            'mes, ano, id_dono_cadastro, ' +
             '(case when mes = 1 then ''Janeiro'' '+
             'when mes = 2 then ''Fevereiro'' '+
             'when mes = 3 then ''Março'' '+
@@ -132,13 +134,15 @@ begin
             'when mes = 11 then ''Novembro'' '+
             'when mes = 12 then ''Dezembro'' '+
             'end) as nome_mes from ' +
-            '(select sum(total) as total_despesa, 0 AS total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
+            '(select cast(sum(total) as decimal(15,2)) as total_despesa, ' +
+            'cast(0 as decimal(15,2)) as total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
             DAO.ExtractData(EXT_ANO, 'data')+' as ano, id_dono_cadastro from despesa ' +
             'where paga = :paga ' +
             'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
             ', '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+', id_dono_cadastro ' +
             'union all ' +
-            'select 0 as total_despesa, sum(valor_total) AS total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
+            'select cast(0 as decimal(15,2)) as total_despesa, ' +
+            'cast(sum(valor_total) as decimal(15,2)) as total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
             DAO.ExtractData(EXT_ANO, 'data')+' as ano, id_dono_cadastro from recebimento ' +
             'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
             ', '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+', id_dono_cadastro ) s1 ' +

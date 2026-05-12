@@ -19,7 +19,8 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <CursorPos X="21" Y="26"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="51" Y="25"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -876,7 +877,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="33" Y="57"/>
-        <UsageCount Value="165"/>
+        <UsageCount Value="167"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatoriofluxocaixa.pas"/>
@@ -886,24 +887,22 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="65" Y="116"/>
-        <UsageCount Value="152"/>
+        <UsageCount Value="154"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.fluxocaixa.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="111"/>
-        <CursorPos X="34" Y="116"/>
-        <UsageCount Value="151"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="131"/>
+        <CursorPos X="30" Y="155"/>
+        <UsageCount Value="153"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatoriofluxocaixa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="37" Y="26"/>
-        <UsageCount Value="151"/>
+        <UsageCount Value="153"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.participante.pas"/>
@@ -911,7 +910,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="33" Y="40"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="147"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
@@ -919,7 +918,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="18" Y="85"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="147"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
@@ -930,21 +929,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="39" Y="113"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="147"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.tokenapi.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5" Y="138"/>
-        <UsageCount Value="125"/>
+        <UsageCount Value="127"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.acbrnfe.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="47" Y="37"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="95"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\service\service.configuracao.pas"/>
@@ -952,7 +951,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos X="47" Y="81"/>
-        <UsageCount Value="66"/>
+        <UsageCount Value="68"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.conexao.pas"/>
@@ -963,7 +962,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="66"/>
         <CursorPos X="40" Y="99"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="61"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.migrationbase.pas"/>
@@ -971,7 +970,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="100"/>
         <CursorPos X="5" Y="140"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="61"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.migration001.pas"/>
@@ -979,7 +978,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="17" Y="121"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="59"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.executar.pas"/>
@@ -987,7 +986,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="52"/>
         <CursorPos X="5" Y="93"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="59"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.migration002.pas"/>
