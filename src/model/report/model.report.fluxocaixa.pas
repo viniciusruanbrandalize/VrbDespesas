@@ -121,18 +121,18 @@ begin
             'cast(coalesce(sum(total_recebimento),0) as decimal(15,2)) as total_recebimento, ' +
             'cast(coalesce(sum(total_recebimento),0) - coalesce(sum(total_despesa),0) as decimal(15,2)) as total_saldo, ' +
             'mes, ano, id_dono_cadastro, ' +
-            '(case when mes = 1 then ''Janeiro'' '+
-            'when mes = 2 then ''Fevereiro'' '+
-            'when mes = 3 then ''Março'' '+
-            'when mes = 4 then ''Abril'' '+
-            'when mes = 5 then ''Maio'' '+
-            'when mes = 6 then ''Junho'' '+
-            'when mes = 7 then ''Julho'' '+
-            'when mes = 8 then ''Agosto'' '+
-            'when mes = 9 then ''Setembro'' '+
-            'when mes = 10 then ''Outubro'' '+
-            'when mes = 11 then ''Novembro'' '+
-            'when mes = 12 then ''Dezembro'' '+
+            '(case when cast(mes as int) = 1 then ''Janeiro'' '+
+            'when cast(mes as int) = 2 then ''Fevereiro'' '+
+            'when cast(mes as int) = 3 then ''Março'' '+
+            'when cast(mes as int) = 4 then ''Abril'' '+
+            'when cast(mes as int) = 5 then ''Maio'' '+
+            'when cast(mes as int) = 6 then ''Junho'' '+
+            'when cast(mes as int) = 7 then ''Julho'' '+
+            'when cast(mes as int) = 8 then ''Agosto'' '+
+            'when cast(mes as int) = 9 then ''Setembro'' '+
+            'when cast(mes as int) = 10 then ''Outubro'' '+
+            'when cast(mes as int) = 11 then ''Novembro'' '+
+            'when cast(mes as int) = 12 then ''Dezembro'' '+
             'end) as nome_mes from ' +
             '(select cast(sum(total) as decimal(15,2)) as total_despesa, ' +
             'cast(0 as decimal(15,2)) as total_recebimento, '+DAO.ExtractData(EXT_MES, 'data')+' as mes, ' +
@@ -147,7 +147,7 @@ begin
             'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
             ', '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_ANO, 'data'), 'ano')+', id_dono_cadastro ) s1 ' +
             'group by mes, ano, id_dono_cadastro ' +
-            'having ano = :ano_informado and id_dono_cadastro = :id_dono_cadastro ' +
+            'having cast(ano as int) = :ano_informado and id_dono_cadastro = :id_dono_cadastro ' +
             'order by mes asc';
 
     dmConexaoReport.qryPadrao.Close;

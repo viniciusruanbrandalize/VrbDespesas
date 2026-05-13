@@ -73,21 +73,21 @@ begin
     FSQL := 'select sum(hora_extra) as hre, sum(inss) AS inss, sum(ir) AS ir , ' +
             'sum(valor_total) as liquido, sum(valor_base) as bruto, ' +
             DAO.ExtractData(EXT_MES, 'data')+' as mes, '+DAO.ExtractData(EXT_ANO, 'data')+' as ano, '+
-            '(case when '+DAO.ExtractData(EXT_MES, 'data')+' = 1 then ''Janeiro'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 2 then ''Fevereiro'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 3 then ''Março'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 4 then ''Abril'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 5 then ''Maio'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 6 then ''Junho'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 7 then ''Julho'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 8 then ''Agosto'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 9 then ''Setembro'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 10 then ''Outubro'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 11 then ''Novembro'' '+
-            'when '+DAO.ExtractData(EXT_MES, 'data')+' = 12 then ''Dezembro'' '+
+            '(case when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 1 then ''Janeiro'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 2 then ''Fevereiro'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 3 then ''Março'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 4 then ''Abril'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 5 then ''Maio'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 6 then ''Junho'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 7 then ''Julho'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 8 then ''Agosto'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 9 then ''Setembro'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 10 then ''Outubro'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 11 then ''Novembro'' '+
+            'when cast('+DAO.ExtractData(EXT_MES, 'data')+' as int) = 12 then ''Dezembro'' '+
             'end) as mes_nome '+
             'from recebimento '+
-            'where '+DAO.ExtractData(EXT_ANO, 'data')+' = :ano and ' +
+            'where cast('+DAO.ExtractData(EXT_ANO, 'data')+' as int) = :ano and ' +
             'id_dono_cadastro = :id_dono_cadastro ' +
             IfThen(tipoRece<>2, 'and tipo = :tipo ') +
             'group by '+IfThen(DAO.Driver = DRV_MSSQLSERVER, DAO.ExtractData(EXT_MES, 'data'), 'mes')+
