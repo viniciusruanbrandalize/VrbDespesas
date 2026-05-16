@@ -35,6 +35,7 @@ uses
 
   procedure ExecutarAtualizacaoBanco(SQLConnector: TSQLConnector;
                                      SQLDBLibraryLoader: TSQLDBLibraryLoader;
+                                     Driver: String;
                                      Conexao: Integer = 1);
   function getVersaoAtual: Integer;
 
@@ -60,13 +61,13 @@ begin
 end;
 
 procedure ExecutarAtualizacaoBanco(SQLConnector: TSQLConnector;
-  SQLDBLibraryLoader: TSQLDBLibraryLoader;  Conexao: Integer = 1);
+  SQLDBLibraryLoader: TSQLDBLibraryLoader; Driver: String; Conexao: Integer = 1);
 var
   VersaoAtual: Integer;
   Migrations: array of TMigration;
   I: Integer;
 begin
-  dmMigration := TdmMigration.Create(nil, SQLConnector, SQLDBLibraryLoader);
+  dmMigration := TdmMigration.Create(nil, SQLConnector, SQLDBLibraryLoader, Driver);
   try
 
     VersaoAtual := getVersaoAtual;

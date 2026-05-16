@@ -47,7 +47,7 @@ type
   private
     FDriver: String;
   public
-    constructor Create(AOwner: TComponent; AConnection: TSQLConnector; ALibraryLoader: TSQLDBLibraryLoader);
+    constructor Create(AOwner: TComponent; AConnection: TSQLConnector; ALibraryLoader: TSQLDBLibraryLoader; Driver: String);
     property Driver: String read FDriver write FDriver;
   end;
 
@@ -66,7 +66,7 @@ begin
 end;
 
 constructor TdmMigration.Create(AOwner: TComponent; AConnection: TSQLConnector;
-  ALibraryLoader: TSQLDBLibraryLoader);
+  ALibraryLoader: TSQLDBLibraryLoader; Driver: String);
 begin
   inherited Create(AOwner);
 
@@ -99,7 +99,7 @@ begin
 
   end;
 
-  FDriver := UpperCase(AConnection.ConnectorType);
+  FDriver := UpperCase(Driver);
 end;
 
 end.

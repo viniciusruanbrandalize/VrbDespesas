@@ -170,7 +170,13 @@ begin
     if BuscaId > 0 then
       dmRelatorio.qryPadrao.ParamByName('busca').AsInteger := BuscaId
     else
-      dmRelatorio.qryPadrao.ParamByName('busca').AsString  := '%'+UpperCase(Busca)+'%';
+    begin
+      case Tipo of
+        0: dmRelatorio.qryPadrao.ParamByName('busca').AsInteger := StrToIntDef(Busca, 0);
+      else
+        dmRelatorio.qryPadrao.ParamByName('busca').AsString  := '%'+UpperCase(Busca)+'%';
+      end;
+    end;
 
     dmRelatorio.qryPadrao.Open;
     dmRelatorio.frReport.LoadFromFile(dmRelatorio.DiretorioRelatorios +

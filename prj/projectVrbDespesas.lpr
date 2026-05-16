@@ -90,7 +90,7 @@ begin
   Application.CreateForm(TdmConexao1, dmConexao1);
   Application.CreateForm(TdmConexao2, dmConexao2);
 
-  ExecutarAtualizacaoBanco(dmConexao1.SQLConnector, dmConexao1.SQLDBLibraryLoader);
+  ExecutarAtualizacaoBanco(dmConexao1.SQLConnector, dmConexao1.SQLDBLibraryLoader, dmConexao1.DriverConexao);
 
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
 
