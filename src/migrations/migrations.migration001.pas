@@ -142,6 +142,35 @@ begin
 	            'tempo_execucao decimal(10,4) not null ' +
                     ')';
 
+  end
+  else
+  if dmMigration.Driver = 'MSSQLSERVER' then
+  begin
+
+    SetLength(ListaSQL, 3);
+
+    ListaSQL[0] := 'insert into dbo.configuracao (id,nome,descricao,uso,valor,excluido) values ' +
+                    '(5, ''NUMERO_VERSAO_DB'', ''Número da versão do banco de dados'', ' +
+                    '''Número da versão do banco de dados'', ''0'', 0)';
+
+    ListaSQL[1] := 'create sequence dbo.seq_id_log_atualizacao ' +
+	            'increment by 1 ' +
+	            'minvalue 1 ' +
+	            'maxvalue 9223372036854775807 ' +
+	            'start with 1 ' +
+	            'cache 1 ' +
+	            'no cycle';
+
+    ListaSQL[2] := 'create table dbo.log_atualizacao ( ' +
+	            'id integer not null, ' +
+	            'versao varchar(20) not null, ' +
+	            'data_execucao datetime not null, ' +
+	            'status varchar(20) not null, ' +
+	            'sql_executado varchar(5000) not null, ' +
+	            'erro varchar(500), ' +
+	            'tempo_execucao decimal(10,4) not null ' +
+                    ')';
+
   end;
 end;
 

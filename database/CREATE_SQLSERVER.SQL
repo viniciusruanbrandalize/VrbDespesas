@@ -178,6 +178,14 @@ create sequence dbo.seq_id_token_api
 	start with 1
 	cache 1
 	no cycle;
+	
+create sequence dbo.seq_id_log_atualizacao
+	increment by 1
+	minvalue 1
+	maxvalue 9223372036854775807
+	start with 1
+	cache 1
+	no cycle;
 
 create table dbo.pais (
 	id integer not null,
@@ -506,6 +514,16 @@ create table dbo.token_api (
 	validade datetime not null,
 	excluido bit not null,
 	constraint pk_token_api primary key (id)
+);
+
+create table dbo.log_atualizacao (
+	id integer not null,
+	versao varchar(20) not null,
+	data_execucao datetime not null,
+	status varchar(20) not null,
+	sql_executado varchar(5000) not null,
+	erro varchar(500),
+	tempo_execucao decimal(10,4) not null
 );
 
 --db arquivo sqlserver
