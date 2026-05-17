@@ -20,7 +20,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="17" Y="12"/>
+        <CursorPos X="8"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -868,7 +868,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="15"/>
-        <CursorPos X="20" Y="26"/>
+        <CursorPos X="6" Y="56"/>
         <UsageCount Value="201"/>
       </Unit>
       <Unit>
