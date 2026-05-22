@@ -710,10 +710,9 @@ begin
    9  - CHEQUE
   }
 
-  UsarCartaoVale := Controller.ConfiguracaoService.UsarCartaoVale;
-
   idFpgto := Controller.Despesa.DespesaFormaPagamento[i].FormaPagamento.Id;
   Controller.Despesa.DespesaFormaPagamento[i].Pix.Chave := '-1';
+  UsarCartaoVale := Controller.ConfiguracaoService.UsarCartaoVale and (idFpgto = 8);
 
   case idFpgto of
     2, 3:
