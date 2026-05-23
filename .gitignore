@@ -52,6 +52,8 @@ configurador/compile/
 database/conversao/
 prj/backup/
 attIni/compile/
+installer/bin_databases/
+installer/bin/
 *.dbg
 *.err
 *.log
