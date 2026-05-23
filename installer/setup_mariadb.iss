@@ -60,6 +60,8 @@ Source: ..\exe\reports\*.png; DestDir: {app}\reports; Flags: ignoreversion
 Source: ..\exe\resources\*.*; DestDir: {app}\resources; Flags: ignoreversion
 Source: ..\license-third-party\*.*; DestDir: {app}\license-third-party; Flags: ignoreversion
 Source: ..\exe\reports\*.lrf; DestDir: {app}\reports; Flags: ignoreversion
+Source: ..\database\CREATE_MYSQL.SQL; DestDir: {app}\vrb_temp; Flags: deleteafterinstall ignoreversion
+Source: ..\database\INSERT_MYSQL.SQL; DestDir: {app}\vrb_temp; Flags: deleteafterinstall ignoreversion
 Source: bin_databases\mariadb\*.*; DestDir: {app}\mariadb
 Source: bin_databases\mariadb\bin\*.*; DestDir: {app}\mariadb\bin; Flags: recursesubdirs
 Source: bin_databases\mariadb\data\my.ini; DestDir: {app}\mariadb\data; Flags: onlyifdoesntexist
@@ -74,6 +76,10 @@ Name: {autodesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; Tasks: deskto
 
 [Run]
 Filename: {app}\AttIni32.exe; WorkingDir: {app}; StatusMsg: Criando arquivo de configuração de conexão...; Flags: runhidden; Parameters: """MySQL 5.6"" ""127.0.0.1"" ""3388"" ""vrb_despesa"" ""root"" ""adm*3030"" ""libmysql.dll"" ""MySQL 5.6"" ""127.0.0.1"" ""3388"" ""vrb_despesa"" ""root"" ""adm*3030"" ""libmysql.dll"""
+Filename: {app}\mariadb\bin\mariadb-install-db.exe; Parameters: "--datadir=""{app}\database"" --password=adm*3030"; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando arquivos do MariaDB...; Flags: runhidden
+Filename: {app}\mariadb\bin\mariadbd.exe; Parameters: "--install ""MariaDB_VRB"" --defaults-file=""{app}\mariadb\data\my.ini"""; StatusMsg: Instalando serviço do MariaDB...; WorkingDir: {app}\mariadb\bin; Flags: runhidden
+Filename: {cmd}; Parameters: "\c ""net start MariaDB_VRB"""; StatusMsg: Iniciando o serviço de banco de dados...; Flags: runhidden
+Filename: {cmd}; Parameters: "\c mariadb -u root -padm*3030 -e ""CREATE DATABASE vrb_despesa CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"" && mariadb -u root -padm*3030 vrb_despesa < ""{app}\vrb_temp\CREATE_MYSQL.SQL"" && mariadb -u root -padm*3030 vrb_despesa < ""{app}\vrb_temp\INSERT_MYSQL.SQL"""; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando base de dados...; Flags: runhidden
 Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall skipifsilent
 
 [Dirs]
