@@ -62,13 +62,13 @@ Source: ..\exe\resources\*.*; DestDir: {app}\resources; Flags: ignoreversion
 Source: ..\license-third-party\*.*; DestDir: {app}\license-third-party; Flags: ignoreversion
 Source: ..\exe\reports\*.lrf; DestDir: {app}\reports; Flags: ignoreversion
 Source: ..\database\CREATE_MYSQL.SQL; DestDir: {app}\vrb_temp; Flags: deleteafterinstall ignoreversion
-Source: ..\database\INSERT_MYSQL.SQL; DestDir: {app}\vrb_temp; Flags: deleteafterinstall ignoreversion
-Source: bin_databases\mariadb\*.*; DestDir: {app}\mariadb
-Source: bin_databases\mariadb\bin\*.*; DestDir: {app}\mariadb\bin; Flags: recursesubdirs
-Source: bin_databases\mariadb\data\my.ini; DestDir: {app}\mariadb\data; Flags: onlyifdoesntexist
-Source: bin_databases\mariadb\include\*.*; DestDir: {app}\mariadb\include; Flags: recursesubdirs
-Source: bin_databases\mariadb\lib\*.*; DestDir: {app}\mariadb\lib; Flags: recursesubdirs
-Source: bin_databases\mariadb\share\*.*; DestDir: {app}\mariadb\share; Flags: recursesubdirs
+Source: ..\database\INSERT_MYSQL.SQL; DestDir: {app}\vrb_temp; Flags: deleteafterinstall ignoreversion; Tasks: ; Languages: 
+Source: bin_databases\mariadb\*.*; DestDir: {app}\mariadb; Components: instalacao_maria_db
+Source: bin_databases\mariadb\bin\*.*; DestDir: {app}\mariadb\bin; Flags: recursesubdirs; Components: instalacao_maria_db
+Source: bin_databases\mariadb\data\my.ini; DestDir: {app}\mariadb\data; Flags: onlyifdoesntexist; Components: instalacao_maria_db; Tasks: 
+Source: bin_databases\mariadb\include\*.*; DestDir: {app}\mariadb\include; Flags: recursesubdirs; Components: instalacao_maria_db
+Source: bin_databases\mariadb\lib\*.*; DestDir: {app}\mariadb\lib; Flags: recursesubdirs; Components: instalacao_maria_db
+Source: bin_databases\mariadb\share\*.*; DestDir: {app}\mariadb\share; Flags: recursesubdirs; Components: instalacao_maria_db
 
 [Icons]
 Name: {group}\{#MyAppName}; Filename: {app}\{#MyAppExeName}
@@ -77,30 +77,32 @@ Name: {autodesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; Tasks: deskto
 
 [Run]
 Filename: {app}\AttIni32.exe; WorkingDir: {app}; StatusMsg: Criando arquivo de configuração de conexão...; Flags: runhidden; Parameters: """MySQL 5.6"" ""127.0.0.1"" ""3388"" ""vrb_despesa"" ""root"" ""adm*3030"" ""libmysql.dll"" ""MySQL 5.6"" ""127.0.0.1"" ""3388"" ""vrb_despesa"" ""root"" ""adm*3030"" ""libmysql.dll"""
-Filename: {app}\mariadb\bin\mariadb-install-db.exe; Parameters: "--datadir=""{app}\database"" --password=adm*3030"; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando arquivos do MariaDB...; Flags: runhidden
-Filename: {app}\mariadb\bin\mariadbd.exe; Parameters: "--install ""MariaDB_VRB"" --defaults-file=""{app}\mariadb\data\my.ini"""; StatusMsg: Instalando serviço do MariaDB...; WorkingDir: {app}\mariadb\bin; Flags: runhidden
-Filename: {cmd}; Parameters: /c net start MariaDB_VRB; StatusMsg: Iniciando o serviço de banco de dados...; Flags: runhidden
-Filename: {cmd}; Parameters: "/c mariadb -u root -padm*3030 -e ""CREATE DATABASE vrb_despesa CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"" && mariadb -u root -padm*3030 vrb_despesa < ""{app}\vrb_temp\CREATE_MYSQL.SQL"" && mariadb -u root -padm*3030 vrb_despesa < ""{app}\vrb_temp\INSERT_MYSQL.SQL"""; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando base de dados...; Flags: runhidden
+Filename: {app}\mariadb\bin\mariadb-install-db.exe; Parameters: "--datadir=""{app}\database"" --password=adm*3030"; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando arquivos do MariaDB...; Flags: runhidden; Components: instalacao_maria_db
+Filename: {app}\mariadb\bin\mariadbd.exe; Parameters: "--install ""MariaDB_VRB"" --defaults-file=""{app}\mariadb\data\my.ini"""; StatusMsg: Instalando serviço do MariaDB...; WorkingDir: {app}\mariadb\bin; Flags: runhidden; Components: instalacao_maria_db
+Filename: {cmd}; Parameters: /c net start MariaDB_VRB; StatusMsg: Iniciando o serviço de banco de dados...; Flags: runhidden; Components: instalacao_maria_db
+Filename: {cmd}; Parameters: "/c mariadb -u root -padm*3030 -e ""CREATE DATABASE vrb_despesa CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"" && mariadb -u root -padm*3030 vrb_despesa < ""{app}\vrb_temp\CREATE_MYSQL.SQL"" && mariadb -u root -padm*3030 vrb_despesa < ""{app}\vrb_temp\INSERT_MYSQL.SQL"""; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando base de dados...; Flags: runhidden; Components: instalacao_maria_db
 Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall skipifsilent
 
 [Dirs]
-Name: {app}\mariadb
+Name: {app}\mariadb; Components: instalacao_maria_db
 Name: {app}\database
 Name: {app}\reports
 Name: {app}\resources
 Name: {app}\license-third-party
 Name: {app}\vrb_temp; Flags: deleteafterinstall
-Name: {app}\mariadb\bin
-Name: {app}\mariadb\data
-Name: {app}\mariadb\include
-Name: {app}\mariadb\lib
-Name: {app}\mariadb\share
+Name: {app}\mariadb\bin; Components: instalacao_maria_db
+Name: {app}\mariadb\data; Components: instalacao_maria_db
+Name: {app}\mariadb\include; Components: instalacao_maria_db
+Name: {app}\mariadb\lib; Components: instalacao_maria_db
+Name: {app}\mariadb\share; Components: instalacao_maria_db
 [INI]
-Filename: {app}\mariadb\data\my.ini; Section: mysqld; Key: datadir; String: {app}\database
-Filename: {app}\mariadb\data\my.ini; Section: mysqld; Key: port; String: 3388
-Filename: {app}\mariadb\data\my.ini; Section: mysqld; Key: innodb_buffer_pool_size; String: 1508M
-Filename: {app}\mariadb\data\my.ini; Section: client; Key: port; String: 3388
-Filename: {app}\mariadb\data\my.ini; Section: client; Key: plugin-dir; String: {app}\mariadb\lib\plugin
+Filename: {app}\mariadb\data\my.ini; Section: mysqld; Key: datadir; String: {app}\database; Components: instalacao_maria_db
+Filename: {app}\mariadb\data\my.ini; Section: mysqld; Key: port; String: 3388; Components: instalacao_maria_db
+Filename: {app}\mariadb\data\my.ini; Section: mysqld; Key: innodb_buffer_pool_size; String: 1508M; Components: instalacao_maria_db
+Filename: {app}\mariadb\data\my.ini; Section: client; Key: port; String: 3388; Components: instalacao_maria_db
+Filename: {app}\mariadb\data\my.ini; Section: client; Key: plugin-dir; String: {app}\mariadb\lib\plugin; Components: instalacao_maria_db
 [UninstallRun]
-Filename: {cmd}; Parameters: /c net stop MariaDB_VRB; Flags: runhidden
-Filename: sc.exe; Parameters: delete MariaDB_VRB; Flags: runhidden; Tasks: ; Languages: 
+Filename: {cmd}; Parameters: /c net stop MariaDB_VRB; Flags: runhidden; Components: instalacao_maria_db
+Filename: sc.exe; Parameters: delete MariaDB_VRB; Flags: runhidden; Tasks: ; Languages: ; Components: instalacao_maria_db
+[Components]
+Name: instalacao_maria_db; Description: Servidor MariaDB; Languages: ; Types: full
