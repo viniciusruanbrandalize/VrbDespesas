@@ -60,6 +60,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from banco where excluido = :excluido order by nome '+Collate();
@@ -80,8 +81,14 @@ begin
       Qry.Next;
     end;
 
-  finally
     Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -91,6 +98,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -123,8 +131,14 @@ begin
       Qry.Next;
     end;
 
-  finally
     qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -132,6 +146,7 @@ function TBancoDAO.BuscarPorId(Banco: TBanco; Id: Integer; out Erro: String): Bo
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from banco ' +
@@ -164,8 +179,14 @@ begin
       Result := False;
     end;
 
-  finally
     Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := E.Message;
+    end;
   end;
 end;
 
@@ -173,6 +194,7 @@ function TBancoDAO.Inserir(Banco: TBanco; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'insert into banco(id, nome, numero, excluido) values ' +
@@ -198,6 +220,7 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao inserir banco: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -208,6 +231,7 @@ function TBancoDAO.Editar(Banco: TBanco; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'update banco set nome = :nome, numero = :numero ' +
@@ -238,6 +262,7 @@ function TBancoDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'delete from banco where id = :id';
@@ -267,6 +292,7 @@ begin
 
       except on E: Exception do
         begin
+          dmConexao1.SQLTransaction.Rollback;
           Erro := 'Ocorreu um erro ao excluir banco: ' + sLineBreak + E.Message;
           Result := False;
         end;

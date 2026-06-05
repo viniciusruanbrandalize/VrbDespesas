@@ -37,6 +37,7 @@ object dmConexao1: TdmConexao1
     Active = False
     Action = caCommit
     Database = SQLConnector
+    Options = [stoExplicitStart]
     Left = 48
     Top = 77
   end
