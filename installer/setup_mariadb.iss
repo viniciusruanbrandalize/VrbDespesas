@@ -2,6 +2,12 @@
 #define MyAppVersion "0.8.0"
 #define MyAppPublisher "Vinicius Ruan Brandalize"
 #define MyAppExeName "vrbDespesas32.exe"
+#define ServDB "127.0.0.1"
+#define PortDB "3388"
+#define NameDB "vrb_despesa"
+#define UserDB "root"
+#define PassDB "adm*3030"
+#define ServiceDB "mariadb-vrb"
 
 [Setup]
 AppId={{89ED3917-5FEA-48D5-B828-9A4549AD94C6}
@@ -76,11 +82,11 @@ Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
 Name: {autodesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; Tasks: desktopicon
 
 [Run]
-Filename: {app}\AttIni32.exe; WorkingDir: {app}; StatusMsg: Criando arquivo de configuração de conexão...; Flags: runhidden; Parameters: """MySQL 5.6"" ""127.0.0.1"" ""3388"" ""vrb_despesa"" ""root"" ""adm*3030"" ""libmysql.dll"" ""MySQL 5.6"" ""127.0.0.1"" ""3388"" ""vrb_despesa"" ""root"" ""adm*3030"" ""libmysql.dll"""
-Filename: {app}\mariadb\bin\mariadb-install-db.exe; Parameters: "--datadir=""{app}\database"" --password=adm*3030"; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando arquivos do MariaDB...; Flags: runhidden; Components: instalacao_maria_db
-Filename: {app}\mariadb\bin\mariadbd.exe; Parameters: "--install ""MariaDB_VRB"" --defaults-file=""{app}\mariadb\data\my.ini"""; StatusMsg: Instalando serviço do MariaDB...; WorkingDir: {app}\mariadb\bin; Flags: runhidden; Components: instalacao_maria_db
-Filename: {cmd}; Parameters: /c net start MariaDB_VRB; StatusMsg: Iniciando o serviço de banco de dados...; Flags: runhidden; Components: instalacao_maria_db
-Filename: {cmd}; Parameters: "/c mariadb -u root -padm*3030 -e ""CREATE DATABASE vrb_despesa CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"" && mariadb -u root -padm*3030 vrb_despesa < ""{app}\vrb_temp\CREATE_MYSQL.SQL"" && mariadb -u root -padm*3030 vrb_despesa < ""{app}\vrb_temp\INSERT_MYSQL.SQL"""; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando base de dados...; Flags: runhidden; Components: instalacao_maria_db
+Filename: {app}\AttIni32.exe; WorkingDir: {app}; StatusMsg: Criando arquivo de configuração de conexão...; Flags: runhidden; Parameters: """MySQL 5.6"" ""{#ServDB}"" ""{#PortDB}"" ""{#NameDB}"" ""{#UserDB}"" ""{#PassDB}"" ""libmysql.dll"" ""MySQL 5.6"" ""{#ServDB}"" ""{#PortDB}"" ""{#NameDB}"" ""{#UserDB}"" ""{#PassDB}"" ""libmysql.dll"""
+Filename: {app}\mariadb\bin\mariadb-install-db.exe; Parameters: "--datadir=""{app}\database"" --password=""{#PassDB}"""; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando arquivos do MariaDB...; Flags: runhidden; Components: instalacao_maria_db
+Filename: {app}\mariadb\bin\mariadbd.exe; Parameters: "--install ""{#ServiceDB}"" --defaults-file=""{app}\mariadb\data\my.ini"""; StatusMsg: Instalando serviço do MariaDB...; WorkingDir: {app}\mariadb\bin; Flags: runhidden; Components: instalacao_maria_db
+Filename: {cmd}; Parameters: "/c net start ""{#ServiceDB}"""; StatusMsg: Iniciando o serviço de banco de dados...; Flags: runhidden; Components: instalacao_maria_db
+Filename: {cmd}; Parameters: "/c mariadb -u ""{#UserDB}"" -p""{#PassDB}"" -e ""CREATE DATABASE ""{#NameDB}"" CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"" && mariadb -u ""{#UserDB}"" -p""{#PassDB}"" ""{#NameDB}"" < ""{app}\vrb_temp\CREATE_MYSQL.SQL"" && mariadb -u ""{#UserDB}"" -p""{#PassDB}"" ""{#NameDB}"" < ""{app}\vrb_temp\INSERT_MYSQL.SQL"""; WorkingDir: {app}\mariadb\bin; StatusMsg: Criando base de dados...; Flags: runhidden; Components: instalacao_maria_db
 Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall skipifsilent
 
 [Dirs]
@@ -102,7 +108,7 @@ Filename: {app}\mariadb\data\my.ini; Section: mysqld; Key: innodb_buffer_pool_si
 Filename: {app}\mariadb\data\my.ini; Section: client; Key: port; String: 3388; Components: instalacao_maria_db
 Filename: {app}\mariadb\data\my.ini; Section: client; Key: plugin-dir; String: {app}\mariadb\lib\plugin; Components: instalacao_maria_db
 [UninstallRun]
-Filename: {cmd}; Parameters: /c net stop MariaDB_VRB; Flags: runhidden; Components: instalacao_maria_db
-Filename: sc.exe; Parameters: delete MariaDB_VRB; Flags: runhidden; Tasks: ; Languages: ; Components: instalacao_maria_db
+Filename: {cmd}; Parameters: "/c net stop ""{#ServiceDB}"""; Flags: runhidden; Components: instalacao_maria_db
+Filename: sc.exe; Parameters: "delete ""{#ServiceDB}"""; Flags: runhidden; Tasks: ; Languages: ; Components: instalacao_maria_db
 [Components]
 Name: instalacao_maria_db; Description: Servidor MariaDB; Languages: ; Types: full

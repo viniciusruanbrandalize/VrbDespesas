@@ -2,6 +2,12 @@
 #define MyAppVersion "0.8.0"
 #define MyAppPublisher "Vinicius Ruan Brandalize"
 #define MyAppExeName "vrbDespesas32.exe"
+#define ServDB "127.0.0.1"
+#define PortDB "5418"
+#define NameDB "vrb_despesa"
+#define UserDB "pgvrb"
+#define PassDB "adm*3030"
+#define ServiceDB "postgresql-x64-18-vrb"
 
 [Setup]
 AppId={{89ED3917-5FEA-48D5-B828-9A4549AD94C6}
@@ -67,6 +73,7 @@ Source: ..\license-third-party\*.*; DestDir: {app}\license-third-party; Flags: i
 Source: ..\exe\reports\*.lrf; DestDir: {app}\reports; Flags: ignoreversion
 Source: ..\database\CREATE_POSTGRESQL.SQL; DestDir: {app}\vrb_temp; Flags: deleteafterinstall ignoreversion
 Source: ..\database\INSERT_POSTGRESQL.SQL; DestDir: {app}\vrb_temp; Flags: deleteafterinstall ignoreversion; Tasks: ; Languages: 
+Source: pw_file.txt; DestDir: {app}\vrb_temp; Flags: deleteafterinstall ignoreversion
 Source: bin_databases\pgsql\*.*; DestDir: {app}\pgsql; Components: instalacao_pgsql
 Source: bin_databases\pgsql\bin\*.*; DestDir: {app}\pgsql\bin; Flags: recursesubdirs; Components: instalacao_pgsql
 Source: bin_databases\pgsql\include\*.*; DestDir: {app}\pgsql\include; Flags: recursesubdirs; Components: instalacao_pgsql
@@ -79,12 +86,13 @@ Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
 Name: {autodesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; Tasks: desktopicon
 
 [Run]
-Filename: {app}\AttIni32.exe; WorkingDir: {app}; StatusMsg: Criando arquivo de configuração de conexão...; Flags: runhidden; Parameters: """PostgreSQL"" ""127.0.0.1"" ""5418"" ""vrb_despesa"" ""postgres"" ""adm*3030"" ""libpq.dll"" ""PostgreSQL"" ""127.0.0.1"" ""5418"" ""vrb_despesa"" ""postgres"" ""adm*3030"" ""libpq.dll"""
-Filename: {cmd}; Parameters: "/c echo ""adm*3030"" > pw_file.txt"; StatusMsg: Criando arquivo pw_file...; Flags: runhidden; Components: instalacao_pgsql; WorkingDir: {app}\vrb_temp
-Filename: {app}\pgsql\bin\initdb.exe; Parameters: "-D ""{app}\database"" -U postgres -E UTF8 --no-locale --pwfile=""{app}\vrb_temp\pw_file.txt"""; WorkingDir: {app}\pgsql\bin; StatusMsg: Criando arquivos do PostgreSQL...; Flags: runhidden; Components: instalacao_pgsql
-Filename: {app}\pgsql\bin\pg_ctl.exe; Parameters: "register -N ""PostgreSQL18_VRB"" -D ""{app}\database"""; StatusMsg: Instalando serviço do PostgreSQL...; WorkingDir: {app}\pgsql\bin; Flags: runhidden; Components: instalacao_pgsql
-Filename: {cmd}; Parameters: /c net start PostgreSQL18_VRB; StatusMsg: Iniciando o serviço de banco de dados...; Flags: runhidden; Components: instalacao_pgsql
-Filename: {cmd}; WorkingDir: {app}\pgsql\bin; StatusMsg: Criando base de dados...; Flags: runhidden; Components: instalacao_pgsql; Parameters: /c createdb -U postgres -h 127.0.0.1 -p 5418 vrb_despesa
+Filename: {app}\AttIni32.exe; WorkingDir: {app}; StatusMsg: Criando arquivo de configuração de conexão...; Flags: runhidden; Parameters: """PostgreSQL"" ""{#ServDB}"" ""{#PortDB}"" ""{#NameDB}"" ""{#UserDB}"" ""{#PassDB}"" ""libpq.dll"" ""PostgreSQL"" ""{#ServDB}"" ""{#PortDB}"" ""{#NameDB}"" ""{#UserDB}"" ""{#PassDB}"" ""libpq.dll"""
+Filename: {cmd}; Parameters: "/c echo ""{#PassDB}"" > pw_file.txt"; StatusMsg: Criando arquivo pw_file...; Flags: runhidden; Components: instalacao_pgsql; WorkingDir: {app}\vrb_temp
+Filename: {app}\pgsql\bin\initdb.exe; Parameters: "-D ""{app}\database"" -U ""{#UserDB}"" -E UTF8 --no-locale --pwfile=""{app}\vrb_temp\pw_file.txt"""; WorkingDir: {app}\pgsql\bin; StatusMsg: Criando arquivos do PostgreSQL...; Flags: runhidden; Components: instalacao_pgsql
+Filename: {sys}\WindowsPowerShell\v1.0\powershell.exe; Parameters: "-NoProfile -ExecutionPolicy Bypass -Command ""(Get-Content ""{app}\database\postgresql.conf"") | ForEach-Object {{ $_ -replace '^\s*#?\s*port\s*=\s*5432\b.*$', 'port=""{#PortDB}""' } | Set-Content ""{app}\database\postgresql.conf"""""; StatusMsg: Alterando a porta do banco de dados...; WorkingDir: {sys}\WindowsPowerShell\v1.0; Flags: runhidden; Components: instalacao_pgsql
+Filename: {app}\pgsql\bin\pg_ctl.exe; Parameters: "register -N ""{#ServiceDB}"" -D ""{app}\database"""; StatusMsg: Instalando serviço do PostgreSQL...; WorkingDir: {app}\pgsql\bin; Flags: runhidden; Components: instalacao_pgsql
+Filename: {cmd}; Parameters: /c net start {#ServiceDB}; StatusMsg: Iniciando o serviço de banco de dados...; Flags: runhidden; Components: instalacao_pgsql
+Filename: {cmd}; Parameters: "/c set PGPASSWORD=""{#PassDB}""&& createdb -U ""{#UserDB}"" -h ""{#ServDB}"" -p ""{#PortDB}"" -E UTF8 ""{#NameDB}"" && psql -h ""{#ServDB}"" -p ""{#PortDB}"" -U ""{#UserDB}"" -d ""{#NameDB}"" -E ""SET client_encoding = ""UTF8"";"" -f ""{app}\vrb_temp\CREATE_POSTGRESQL.SQL"" -f ""{app}\vrb_temp\INSERT_POSTGRESQL.SQL"""; StatusMsg: Criando base de dados...; Flags: runhidden; WorkingDir: {app}\pgsql\bin; Components: instalacao_pgsql
 Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall skipifsilent
 
 [Dirs]
@@ -101,7 +109,7 @@ Name: {app}\pgsql\lib; Components: instalacao_pgsql
 Name: {app}\pgsql\share; Components: instalacao_pgsql
 Name: {app}\pgsql\StackBuilder
 [UninstallRun]
-Filename: {cmd}; Parameters: /c net stop PostgreSQL18_VRB; Flags: runhidden; Components: instalacao_pgsql
-Filename: sc.exe; Parameters: delete PostgreSQL18_VRB; Flags: runhidden; Tasks: ; Languages: ; Components: instalacao_pgsql
+Filename: {cmd}; Parameters: "/c net stop ""{#ServiceDB}"""; Flags: runhidden; Components: instalacao_pgsql
+Filename: sc.exe; Parameters: "delete ""{#ServiceDB}"""; Flags: runhidden; Tasks: ; Languages: ; Components: instalacao_pgsql
 [Components]
 Name: instalacao_pgsql; Description: Servidor PostgreSQL; Languages: ; Types: full
