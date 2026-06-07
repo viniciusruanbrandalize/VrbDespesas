@@ -4,7 +4,7 @@
  Software de controle e gerenciamento de despesas.
  
 ## Tecnologias utilizadas
-* <a href="https://www.lazarus-ide.org/" target="_blank"> Lazarus FPC (Versão 4.6).</a>
+* <a href="https://www.lazarus-ide.org/" target="_blank" target="_blank" rel="noopener noreferrer"> Lazarus FPC (Versão 4.6).</a>
 * <a href="https://jrsoftware.org/isinfo.php" target="_blank"> Inno Setup </a>
 
 ### Bancos de dados compatíveis
