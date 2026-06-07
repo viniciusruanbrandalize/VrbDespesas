@@ -60,6 +60,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from bandeira where excluido = :excluido order by nome '+Collate();
@@ -80,8 +81,14 @@ begin
       Qry.Next;
     end;
 
-  finally
     Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -91,6 +98,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -123,8 +131,14 @@ begin
       Qry.Next;
     end;
 
-  finally
     qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -132,6 +146,7 @@ function TBandeiraDAO.BuscarPorId(Bandeira: TBandeira; Id: Integer; out Erro: St
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from bandeira ' +
@@ -163,8 +178,14 @@ begin
       Result := False;
     end;
 
-  finally
     Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := E.Message;
+    end;
   end;
 end;
 
@@ -172,6 +193,7 @@ function TBandeiraDAO.Inserir(Bandeira: TBandeira; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'insert into bandeira(id, nome, excluido) values (:id, :nome, :excluido)';
@@ -195,6 +217,7 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao inserir Bandeira: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -205,6 +228,7 @@ function TBandeiraDAO.Editar(Bandeira: TBandeira; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'update bandeira set nome = :nome ' +
@@ -234,6 +258,7 @@ function TBandeiraDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'delete from bandeira where id = :id';
@@ -249,6 +274,8 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
+      dmConexao1.SQLTransaction.StartTransaction;
       try
 
         sql := 'update bandeira set excluido = :excluido where id = :id';
@@ -265,6 +292,7 @@ begin
 
       except on E: Exception do
         begin
+          dmConexao1.SQLTransaction.Rollback;
           Erro := 'Ocorreu um erro ao excluir Bandeira: ' + sLineBreak + E.Message;
           Result := False;
         end;

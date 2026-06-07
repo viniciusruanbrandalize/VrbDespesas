@@ -62,6 +62,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from configuracao where excluido = :excluido order by nome '+Collate();
@@ -83,9 +84,15 @@ begin
       item.SubItems.Add(qry.FieldByName('valor').AsString);
       Qry.Next;
     end;
-    //dmConexao1.SQLTransaction.Commit;
-  finally
+
     Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -95,6 +102,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -129,8 +137,14 @@ begin
       Qry.Next;
     end;
 
-  finally
     qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -140,6 +154,7 @@ var
   sql: String;
   i: Integer;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from configuracao ' +
@@ -175,10 +190,16 @@ begin
 
     end;
 
+    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
     Result := True;
 
-  finally
-    Qry.Close;
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -186,6 +207,7 @@ function TConfiguracaoDAO.BuscarPorId(Configuracao : TConfiguracao; Id: Integer;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from configuracao ' +
@@ -221,8 +243,14 @@ begin
       Result := False;
     end;
 
-  finally
     Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := E.Message;
+    end;
   end;
 end;
 
@@ -231,6 +259,7 @@ function TConfiguracaoDAO.BuscarPorNome(Configuracao: TConfiguracao;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from configuracao ' +
@@ -267,8 +296,14 @@ begin
       Result := False;
     end;
 
-  finally
     Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := E.Message;
+    end;
   end;
 end;
 
@@ -276,6 +311,7 @@ function TConfiguracaoDAO.Inserir(Configuracao : TConfiguracao; out Erro: string
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'insert into configuracao(id, nome, descricao, uso, valor, excluido, componente) values ' +
@@ -306,6 +342,7 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao inserir configuração: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -316,6 +353,7 @@ function TConfiguracaoDAO.Editar(Configuracao : TConfiguracao; out Erro: string)
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'update configuracao set nome = :nome, ' +
@@ -351,6 +389,7 @@ function TConfiguracaoDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'delete from configuracao where id = :id';
@@ -366,6 +405,8 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
+      dmConexao1.SQLTransaction.StartTransaction;
       try
 
         sql := 'update configuracao set excluido = :excluido where id = :id';
@@ -382,6 +423,7 @@ begin
 
       except on E: Exception do
         begin
+          dmConexao1.SQLTransaction.Rollback;
           Erro := 'Ocorreu um erro ao excluir configuração: ' + sLineBreak + E.Message;
           Result := False;
         end;

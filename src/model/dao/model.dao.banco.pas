@@ -278,6 +278,8 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
+      dmConexao1.SQLTransaction.StartTransaction;
       try
         sql := 'update banco set excluido = :excluido ' +
                'where id = :id';

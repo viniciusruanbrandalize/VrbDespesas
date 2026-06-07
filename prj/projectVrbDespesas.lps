@@ -19,7 +19,8 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <CursorPos X="53" Y="26"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="80" Y="23"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -80,12 +81,10 @@
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="275"/>
-        <CursorPos X="51" Y="284"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="277"/>
+        <CursorPos X="35" Y="304"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.cryptini.pas"/>
@@ -134,12 +133,10 @@
         <ComponentName Value="dmConexao1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="105"/>
-        <CursorPos X="44" Y="299"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="278"/>
+        <CursorPos X="37" Y="312"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\connection\model.connection.conexao2.pas"/>
@@ -467,11 +464,10 @@
       <Unit>
         <Filename Value="..\src\model\dao\model.dao.bandeira.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="118"/>
-        <CursorPos Y="137"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="251"/>
+        <CursorPos X="31" Y="275"/>
         <UsageCount Value="201"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.bandeira.pas"/>
@@ -809,8 +805,8 @@
         <Filename Value="..\src\model\dao\model.dao.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="364"/>
-        <CursorPos X="88" Y="385"/>
+        <TopLine Value="399"/>
+        <CursorPos X="6" Y="445"/>
         <UsageCount Value="202"/>
       </Unit>
       <Unit>
@@ -882,7 +878,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="33" Y="57"/>
-        <UsageCount Value="176"/>
+        <UsageCount Value="178"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatoriofluxocaixa.pas"/>
@@ -892,7 +888,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="65" Y="116"/>
-        <UsageCount Value="163"/>
+        <UsageCount Value="165"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.fluxocaixa.pas"/>
@@ -900,14 +896,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="67"/>
         <CursorPos X="36" Y="94"/>
-        <UsageCount Value="162"/>
+        <UsageCount Value="164"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatoriofluxocaixa.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="37" Y="26"/>
-        <UsageCount Value="162"/>
+        <UsageCount Value="164"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\report\model.report.participante.pas"/>
@@ -915,7 +911,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="33" Y="40"/>
-        <UsageCount Value="156"/>
+        <UsageCount Value="158"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controller\controller.relatorioparticipante.pas"/>
@@ -923,7 +919,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="18" Y="85"/>
-        <UsageCount Value="156"/>
+        <UsageCount Value="158"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\view\view.relatorioparticipante.pas"/>
@@ -934,28 +930,28 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="94"/>
         <CursorPos X="39" Y="113"/>
-        <UsageCount Value="156"/>
+        <UsageCount Value="158"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\model\entity\model.entity.tokenapi.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5" Y="138"/>
-        <UsageCount Value="136"/>
+        <UsageCount Value="138"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\lib\lib.acbrnfe.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="47" Y="37"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="106"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\service\service.configuracao.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="47" Y="81"/>
-        <UsageCount Value="77"/>
+        <UsageCount Value="79"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.conexao.pas"/>
@@ -966,7 +962,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="66"/>
         <CursorPos X="44" Y="83"/>
-        <UsageCount Value="70"/>
+        <UsageCount Value="72"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.migrationbase.pas"/>
@@ -974,7 +970,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="91"/>
         <CursorPos Y="123"/>
-        <UsageCount Value="70"/>
+        <UsageCount Value="72"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.migration001.pas"/>
@@ -982,7 +978,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="138"/>
         <CursorPos Y="150"/>
-        <UsageCount Value="68"/>
+        <UsageCount Value="70"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.executar.pas"/>
@@ -990,7 +986,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="53"/>
         <CursorPos X="54" Y="76"/>
-        <UsageCount Value="68"/>
+        <UsageCount Value="70"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\migrations\migrations.migration002.pas"/>
@@ -1466,128 +1462,7 @@
         <UsageCount Value="9"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="183" TopLine="163"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="63" TopLine="42"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="85" TopLine="65"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="197" TopLine="176"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="223" TopLine="203"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="63" TopLine="42"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="85" TopLine="65"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="197" TopLine="176"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="223" TopLine="203"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="63" TopLine="42"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="85" TopLine="65"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="63" TopLine="42"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="85" TopLine="65"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="149" TopLine="128"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="152" TopLine="128"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="183" TopLine="163"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="63" TopLine="42"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="85" TopLine="55"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="149" TopLine="128"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="152" TopLine="128"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="183" TopLine="157"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="63" TopLine="42"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="85" TopLine="65"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="197" TopLine="176"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="223" TopLine="203"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="63" TopLine="42"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="85" TopLine="65"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="197" TopLine="176"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="223" TopLine="193"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\model\dao\model.dao.banco.pas"/>
-        <Caret Line="63" TopLine="42"/>
-      </Position>
-    </JumpHistory>
+    <JumpHistory HistoryIndex="-1"/>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes ActiveMode=""/>
