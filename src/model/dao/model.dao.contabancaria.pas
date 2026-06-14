@@ -78,6 +78,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
@@ -104,8 +105,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -115,6 +121,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -153,8 +160,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -162,6 +174,7 @@ function TContaBancariaDAO.BuscarPorId(ContaBancaria: TContaBancaria; Id: Intege
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select cb.*, b.nome as nome_banco from conta_bancaria cb ' +
@@ -203,8 +216,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -212,6 +231,7 @@ function TContaBancariaDAO.Inserir(ContaBancaria: TContaBancaria; out Erro: stri
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'insert into conta_bancaria(id, numero, agencia, tipo, cadastro, ' +
@@ -244,6 +264,7 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao inserir Conta Bancaria: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -254,6 +275,7 @@ function TContaBancariaDAO.Editar(ContaBancaria: TContaBancaria; out Erro: strin
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'update conta_bancaria set numero = :numero, agencia = :agencia, ' +
@@ -288,6 +310,7 @@ function TContaBancariaDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'delete from conta_bancaria where id = :id';
@@ -303,6 +326,8 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
+      dmConexao1.SQLTransaction.StartTransaction;
       try
 
         sql := 'update conta_bancaria set excluido = :excluido where id = :id';
@@ -319,6 +344,7 @@ begin
 
       except on E: Exception do
         begin
+          dmConexao1.SQLTransaction.Rollback;
           Erro := 'Ocorreu um erro ao excluir Conta Bancaria: ' + sLineBreak + E.Message;
           Result := False;
         end;
@@ -332,6 +358,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from pix ' +
@@ -359,8 +386,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -369,6 +401,7 @@ function TContaBancariaDAO.BuscarPixPorId(Pix: TPix; Id: String; out Erro: Strin
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from pix ' +
@@ -406,8 +439,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -415,6 +454,7 @@ function TContaBancariaDAO.InserirPix(Pix: TPix; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'insert into pix(chave, tipo, cadastro, id_conta_bancaria, ' +
@@ -439,6 +479,7 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao inserir Pix: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -449,6 +490,7 @@ function TContaBancariaDAO.EditarPix(Pix: TPix; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'update pix set chave = :chave, tipo = :tipo, ' +
@@ -481,6 +523,7 @@ function TContaBancariaDAO.ExcluirPix(Id: String; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'delete from pix where chave = :id';
@@ -496,6 +539,8 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
+      dmConexao1.SQLTransaction.StartTransaction;
       try
 
         sql := 'update pix set excluido = :excluido where chave = :id';
@@ -512,6 +557,7 @@ begin
 
       except on E: Exception do
         begin
+          dmConexao1.SQLTransaction.Rollback;
           Erro := 'Ocorreu um erro ao excluir Pix: ' + sLineBreak + E.Message;
           Result := False;
         end;
@@ -525,6 +571,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from cartao ' +
@@ -562,8 +609,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -572,6 +624,7 @@ function TContaBancariaDAO.BuscarCartaoPorId(Cartao: TCartao; Id: Integer; out
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select card.*, ban.nome as nome_bandeira from cartao card ' +
@@ -615,8 +668,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -625,6 +684,7 @@ function TContaBancariaDAO.InserirCartao(Cartao: TCartao; out Erro: string
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'insert into cartao(id, numero, tipo, aproximacao, validade, cadastro, ' +
@@ -659,6 +719,7 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao inserir Cartão: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -670,6 +731,7 @@ function TContaBancariaDAO.EditarCartao(Cartao: TCartao; out Erro: string
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'update cartao set numero = :numero, tipo = :tipo, ' +
@@ -705,6 +767,7 @@ function TContaBancariaDAO.ExcluirCartao(Id: Integer; out Erro: string): Boolean
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'delete from cartao where id = :id';
@@ -720,6 +783,8 @@ begin
 
   except on E: Exception do
     begin
+      dmConexao1.SQLTransaction.Rollback;
+      dmConexao1.SQLTransaction.StartTransaction;
       try
 
         sql := 'update cartao set excluido = :excluido where id = :id';
@@ -736,6 +801,7 @@ begin
 
       except on E: Exception do
         begin
+          dmConexao1.SQLTransaction.Rollback;
           Erro := 'Ocorreu um erro ao excluir Cartão: ' + sLineBreak + E.Message;
           Result := False;
         end;

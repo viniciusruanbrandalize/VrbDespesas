@@ -77,6 +77,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     if Driver = DRV_FIREBIRD then
@@ -130,8 +131,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -141,6 +147,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -182,8 +189,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -194,6 +206,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -239,8 +252,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -249,6 +267,8 @@ var
   sql: String;
   i: Integer;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
+  dmConexao2.SQLTransaction.StartTransaction;
   try
 
     sql := 'select d.*, f.nome as nome_fornecedor, sd.nome as nome_subtipo ' +
@@ -354,8 +374,16 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+    dmConexao2.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      dmConexao2.SQLTransaction.Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -364,6 +392,8 @@ var
   sql: String;
   i: Integer;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
+  dmConexao2.SQLTransaction.StartTransaction;
   try
 
     sql := 'insert into despesa (id, data, hora, descricao, chave_nfe, valor, desconto, ' +
@@ -485,6 +515,8 @@ var
   sql: String;
   i: Integer;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
+  dmConexao2.SQLTransaction.StartTransaction;
   try
 
     sql := 'update despesa set data=:data, hora=:hora, descricao=:descricao, ' +
@@ -567,6 +599,8 @@ function TDespesaDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao2.SQLTransaction.StartTransaction;
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'delete from arquivo where id_despesa = :id_despesa';
@@ -613,6 +647,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select pgto.*, fp.nome as nome_forma_pgto from despesa_forma_pgto pgto ' +
@@ -641,8 +676,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -651,6 +691,7 @@ function TDespesaDAO.BuscarPagamentoPorId(Pagamento: TDespesaFormaPagamento;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select pgto.*, fp.nome as nome_forma_pgto, card.numero as numero_cartao, ' +
@@ -703,8 +744,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -714,6 +761,7 @@ var
   sql: String;
   CmdLimit: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     CmdLimit := '';
@@ -763,8 +811,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -774,6 +827,7 @@ var
   sql: String;
   CmdLimit: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     CmdLimit := '';
@@ -838,8 +892,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -849,6 +908,7 @@ var
   sql: String;
   CmdLimit: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     CmdLimit := '';
@@ -905,8 +965,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -915,6 +980,7 @@ function TDespesaDAO.BuscarArquivoPorId(Arquivo: TArquivo; Id: Integer; out
 var
   sql: String;
 begin
+  dmConexao2.SQLTransaction.StartTransaction;
   try
 
     sql := 'select * from arquivo ' +
@@ -949,8 +1015,14 @@ begin
       Result := False;
     end;
 
-  finally
-    QryArquivo.Close;
+    dmConexao2.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao2.SQLTransaction.Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -958,6 +1030,7 @@ function TDespesaDAO.BuscarChaveNFExiste(Chave: String): Boolean;
 var
   sql: String;
 begin
+  dmConexao1.SQLTransaction.StartTransaction;
   try
 
     sql := 'select id from despesa ' +
@@ -973,8 +1046,13 @@ begin
 
     Result := Qry.RecordCount > 0;
 
-  finally
-    Qry.Close;
+    dmConexao1.SQLTransaction.Commit;
+
+  except on E: Exception do
+    begin
+      dmConexao1.SQLTransaction.Rollback;
+      Result := False;
+    end;
   end;
 end;
 
@@ -982,6 +1060,7 @@ function TDespesaDAO.ExcluirArquivo(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  dmConexao2.SQLTransaction.StartTransaction;
   try
 
     sql := 'delete from arquivo where id = :id';
@@ -992,10 +1071,13 @@ begin
     QryArquivo.ParamByName('id').AsInteger  := Id;
     QryArquivo.ExecSQL;
 
+    dmConexao2.SQLTransaction.Commit;
+
     Result := True;
 
   except on E: Exception do
     begin
+      dmConexao2.SQLTransaction.Rollback;
       Erro := 'Ocorreu um erro ao excluir arquivo: ' + sLineBreak + E.Message;
       Result := False;
     end;

@@ -26,6 +26,7 @@ object dmConexao2: TdmConexao2
   object SQLTransaction: TSQLTransaction
     Active = False
     Database = SQLConnector
+    Options = [stoExplicitStart]
     Left = 56
     Top = 77
   end

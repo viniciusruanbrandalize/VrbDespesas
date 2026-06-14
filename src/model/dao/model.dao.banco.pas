@@ -81,7 +81,6 @@ begin
       Qry.Next;
     end;
 
-    Qry.Close;
     dmConexao1.SQLTransaction.Commit;
 
   except on E: Exception do
@@ -131,7 +130,6 @@ begin
       Qry.Next;
     end;
 
-    qry.Close;
     dmConexao1.SQLTransaction.Commit;
 
   except on E: Exception do
@@ -179,7 +177,6 @@ begin
       Result := False;
     end;
 
-    Qry.Close;
     dmConexao1.SQLTransaction.Commit;
 
   except on E: Exception do
