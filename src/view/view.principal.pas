@@ -170,6 +170,7 @@ type
     procedure mudarMenu(Index: Integer);
     procedure LiberarBloquearAcessos();
     procedure AtribuirHintMenu();
+    procedure LimparCaptionMenuRetrair(pnl: TPanel);
   public
     procedure BarraLateralVazia(pnlAtivo: TPanel; Ativo: Boolean);
   end;
@@ -439,6 +440,7 @@ begin
     pnlMenuRetair.Caption := '';
   end;
   MenuEstaRetraido := not MenuEstaRetraido;
+  LimparCaptionMenuRetrair(pnlFundo);
 end;
 
 procedure TfrmPrincipal.mudarMenu(Index: Integer);
@@ -481,6 +483,24 @@ begin
   begin
     if Trim(TAction(actMenu.Actions[i]).Hint) = EmptyStr then
       TAction(actMenu.Actions[i]).Hint := TAction(actMenu.Actions[i]).Caption;
+  end;
+end;
+
+procedure TfrmPrincipal.LimparCaptionMenuRetrair(pnl: TPanel);
+var
+  i,
+  j: Integer;
+begin
+  for i := 0 to Pred( pnl.ControlCount ) do
+  begin
+    if pnl.Controls[i] is TPanel then
+    begin
+      for j := 0 to Pred( TPanel(pnl.Controls[i]).ControlCount ) do
+      begin
+        if TPanel(pnl.Controls[i]).Controls[j] is TSpeedButton then
+          TSpeedButton(TPanel(pnl.Controls[i]).Controls[j]).ShowCaption := not MenuEstaRetraido;
+      end;
+    end;
   end;
 end;
 

@@ -10,12 +10,13 @@ object frmPrincipal: TfrmPrincipal
   Constraints.MinHeight = 600
   Constraints.MinWidth = 1024
   KeyPreview = True
+  Position = poScreenCenter
+  LCLVersion = '4.6.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  Position = poScreenCenter
   object pnlFundo: TPanel
     Left = 0
     Height = 600
@@ -194,8 +195,8 @@ object frmPrincipal: TfrmPrincipal
           ImageIndex = 2
           ImageWidth = 32
           Images = imgList
-          OnClick = imgMenuClick
           Proportional = True
+          OnClick = imgMenuClick
         end
       end
       object pnlUsuario: TPanel
