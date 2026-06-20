@@ -40,7 +40,7 @@ type
 
   TUsuarioAcessoDAO = class(TPadraoDAO)
   private
-
+    function MarcarAcessos(var lbTitulo: TCheckListBox; IdAcao, IdUsuario: Integer; out Erro: String): Boolean;
   public
     procedure Listar(lv: TListView); override;
     procedure Pesquisar(lv: TListView; Campo, Busca: String); override;
@@ -55,7 +55,6 @@ type
     function InserirAcesso(Acesso: TUcAcesso; out Erro: string): Boolean;
     function RemoverAcesso(Id: Integer; out Erro: string): Boolean;
     function BuscarAcessoPorId(Acesso: TUcAcesso; out Erro: String): Boolean;
-    function MarcarAcessos(var lbTitulo: TCheckListBox; IdAcao, IdUsuario: Integer; out Erro: String): Boolean;
     function BuscarAcessoPorNomeEUsuarioLogado(Nome, Tela: String; out Erro: String): Boolean;
     constructor Create; override;
     destructor Destroy; override;
@@ -80,6 +79,7 @@ procedure TUsuarioAcessoDAO.ListarTelas(var lbNome: TListBox;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from uc_tela ' +
@@ -102,8 +102,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -112,6 +117,7 @@ procedure TUsuarioAcessoDAO.ListarAcoes(var lbNome: TListBox;
 var
   sql, Erro: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from uc_acao ' +
@@ -137,8 +143,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -146,6 +157,7 @@ function TUsuarioAcessoDAO.InserirTela(Tela: TUcTela; out Erro: string): Boolean
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into uc_tela(nome, titulo) values (:nome, :titulo)';
@@ -157,12 +169,13 @@ begin
     Qry.ParamByName('nome').AsString   := Tela.Nome;
     Qry.ParamByName('titulo').AsString := Tela.Titulo;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir tela: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -173,6 +186,7 @@ function TUsuarioAcessoDAO.EditarTela(Tela: TUcTela; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'update uc_tela set titulo = :titulo where nome = :nome';
@@ -184,12 +198,13 @@ begin
     Qry.ParamByName('nome').AsString   := Tela.Nome;
     Qry.ParamByName('titulo').AsString := Tela.Titulo;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar tela: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -201,6 +216,7 @@ function TUsuarioAcessoDAO.BuscarTelaPorNome(Tela: TUcTela; Nome: String; out
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from uc_tela ' +
@@ -231,8 +247,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -240,6 +262,7 @@ function TUsuarioAcessoDAO.InserirAcao(Acao: TUcAcao; out Erro: string): Boolean
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into uc_acao(id, nome, titulo, nome_uc_tela) values ' +
@@ -259,12 +282,13 @@ begin
     Qry.ParamByName('titulo').AsString       := Acao.Titulo;
     Qry.ParamByName('nome_uc_tela').AsString := Acao.UcTela.Nome;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir ação: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -275,6 +299,7 @@ function TUsuarioAcessoDAO.EditarAcao(Acao: TUcAcao; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'update uc_acao set titulo = :titulo ' +
@@ -288,23 +313,24 @@ begin
     Qry.ParamByName('titulo').AsString       := Acao.Titulo;
     Qry.ParamByName('nome_uc_tela').AsString := Acao.UcTela.Nome;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar ação: ' + sLineBreak + E.Message;
       Result := False;
     end;
   end;
 end;
 
-function TUsuarioAcessoDAO.BuscarAcaoPorNome(Acao: TUcAcao; out Erro: String
-  ): Boolean;
+function TUsuarioAcessoDAO.BuscarAcaoPorNome(Acao: TUcAcao; out Erro: String): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from uc_acao ' +
@@ -337,16 +363,22 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
-function TUsuarioAcessoDAO.InserirAcesso(Acesso: TUcAcesso; out Erro: string
-  ): Boolean;
+function TUsuarioAcessoDAO.InserirAcesso(Acesso: TUcAcesso; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into uc_acesso(id, id_acao, id_usuario) values ' +
@@ -366,12 +398,13 @@ begin
     Qry.ParamByName('id_usuario').AsInteger := Acesso.Usuario.Id;
 
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir acesso: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -383,6 +416,7 @@ function TUsuarioAcessoDAO.RemoverAcesso(Id: Integer; out Erro: string
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from uc_acesso where id = :id';
@@ -392,12 +426,13 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao remover acesso: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -409,6 +444,7 @@ function TUsuarioAcessoDAO.BuscarAcessoPorId(Acesso: TUcAcesso; out Erro: String
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from uc_acesso ' +
@@ -441,8 +477,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -493,6 +535,7 @@ function TUsuarioAcessoDAO.BuscarAcessoPorNomeEUsuarioLogado(Nome, Tela: String;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select acesso.id as id_acesso from uc_acesso acesso ' +
@@ -510,8 +553,14 @@ begin
 
     Result := Qry.RecordCount > 0;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 

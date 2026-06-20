@@ -59,6 +59,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  StartTransaction;
   try
 
     if Driver = DRV_FIREBIRD then
@@ -102,8 +103,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -111,6 +117,7 @@ function TLoginDAO.Inserir(Login : TLogin; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into login(id, nome_pc, ip_pc, data, hora, id_usuario) values ' +
@@ -132,12 +139,13 @@ begin
     Qry.ParamByName('hora').AsDateTime      := Login.Hora;
     Qry.ParamByName('id_usuario').AsInteger := Login.Usuario.Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir usuário: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -148,6 +156,7 @@ function TLoginDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from login where id = :id';
@@ -157,12 +166,13 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao excluir usuário: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -174,6 +184,7 @@ function TLoginDAO.EncontrarUsuario(Usuario: TUsuario; Nome: String; out
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from usuario ' +
@@ -205,8 +216,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -215,6 +232,7 @@ function TLoginDAO.ListarDonoCadastro(DonoCadastro: TUsuarioDonoCadastroLista;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select udc.*, u.nome as nome_usuario, dc.nome as nome_dono_cadastro ' +
@@ -258,8 +276,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 

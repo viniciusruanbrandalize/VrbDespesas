@@ -69,7 +69,6 @@ type
     procedure ListarArquivos(lv: TListView; objDespesa: TDespesa);
     procedure AdicionarArquivo(objDespesa: TDespesa);
     function ExcluirArquivo(objDespesa: TDespesa; Id, Index: Integer; out Erro: String): Boolean;
-    procedure CancelarAtualizacaoArquivo();
 
     function BuscarChaveDaNota(ArquivoXml: String): String;
     function ExisteChaveNF(Chave: String): Boolean;
@@ -234,11 +233,6 @@ begin
   objDespesa.Arquivo.Delete(Index);
   if not (id = 0) then
     Result := DespesaDAO.ExcluirArquivo(Id, Erro);
-end;
-
-procedure TDespesaController.CancelarAtualizacaoArquivo();
-begin
-  DespesaDAO.Roolback(2);
 end;
 
 function TDespesaController.BuscarChaveDaNota(ArquivoXml: String): String;

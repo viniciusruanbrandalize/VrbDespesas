@@ -76,7 +76,7 @@ procedure TCopiaSegurancaDAO.BuscarTabelas(var pgb: TProgressBar;
 var
   SQL: String;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  DAO.StartTransaction;
   try
     FTabelas.Clear;
     lblStatus.Caption := 'Buscando Tabelas...';
@@ -104,11 +104,11 @@ begin
       DAO.Qry.Next;
     end;
 
-    dmConexao1.SQLTransaction.Commit;
+    DAO.Commit;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      DAO.Rollback;
       raise;
     end;
   end;
@@ -119,7 +119,7 @@ procedure TCopiaSegurancaDAO.BuscarColunas(Tabela: String; var pgb: TProgressBar
 var
   SQL: String;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  DAO.StartTransaction;
   try
     FColunas.Clear;
     lblStatus.Caption := 'Buscando Colunas...';
@@ -146,11 +146,11 @@ begin
       DAO.Qry.Next;
     end;
 
-    dmConexao1.SQLTransaction.Commit;
+    DAO.Commit;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      DAO.Rollback;
       raise;
     end;
   end;
@@ -161,7 +161,7 @@ procedure TCopiaSegurancaDAO.BuscarSequencias(var pgb: TProgressBar;
 var
   SQL: String;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  DAO.StartTransaction;
   try
     if DAO.Driver = DRV_FIREBIRD then
     begin
@@ -185,11 +185,11 @@ begin
       DAO.Qry.Next;
     end;
 
-    dmConexao1.SQLTransaction.Commit;
+    DAO.Commit;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      DAO.Rollback;
       raise;
     end;
   end;
@@ -203,7 +203,7 @@ var
 begin
   for i := 0 to Pred(FSequencias.Count) do
   begin
-    dmConexao1.SQLTransaction.StartTransaction;
+    DAO.StartTransaction;
     try
 
       if DAO.Driver = DRV_FIREBIRD then
@@ -220,11 +220,11 @@ begin
 
       FSequenciasValores.Add(Trim(DAO.Qry.FieldByName('ID').AsString));
 
-      dmConexao1.SQLTransaction.Commit;
+      DAO.Commit;
 
     except on E: Exception do
       begin
-        dmConexao1.SQLTransaction.Rollback;
+        DAO.Rollback;
         raise;
       end;
     end;
@@ -240,7 +240,7 @@ begin
   total := 0;
   for i := 0 to Pred(FTabelas.Count) do
   begin
-    dmConexao1.SQLTransaction.StartTransaction;
+    DAO.StartTransaction;
     try
       SQL := 'SELECT COUNT(*) AS QUANTIDADE FROM '+FTabelas[i];
 
@@ -251,11 +251,11 @@ begin
 
       total := total + DAO.Qry.FieldByName('QUANTIDADE').AsInteger;
 
-      dmConexao1.SQLTransaction.Commit;
+      DAO.Commit;
 
     except on E: Exception do
       begin
-        dmConexao1.SQLTransaction.Rollback;
+        DAO.Rollback;
         raise;
       end;
     end;
@@ -297,7 +297,7 @@ begin
         end;
       end;
 
-      dmConexao1.SQLTransaction.StartTransaction;
+      DAO.StartTransaction;
       try
 
         //MONTA O SQL DE INSERTS
@@ -323,11 +323,11 @@ begin
           DAO.Qry.Next;
         end;
 
-        dmConexao1.SQLTransaction.Commit;
+        DAO.Commit;
 
       except on E: Exception do
         begin
-          dmConexao1.SQLTransaction.Rollback;
+          DAO.Rollback;
           raise;
         end;
       end;
@@ -562,7 +562,7 @@ function TCopiaSegurancaDAO.GravarLog(objLogBackup: TLogBackup; out Erro: String
 var
   sql: String;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  DAO.StartTransaction;
   try
 
     sql := 'insert into log_backup(id, data, hora, local_arquivo) values ' +
@@ -583,13 +583,13 @@ begin
     DAO.Qry.ParamByName('local_arquivo').AsString := objLogBackup.LocalArquivo;
 
     DAO.Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    DAO.Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      DAO.Rollback;
       Erro := 'Ocorreu um erro ao gravar o log de backup: ' + sLineBreak + E.Message;
       Result := False;
     end;

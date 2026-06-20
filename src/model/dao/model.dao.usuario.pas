@@ -66,6 +66,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from usuario ' +
@@ -89,8 +90,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -100,6 +106,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -133,8 +140,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -143,6 +155,7 @@ procedure TUsuarioDAO.ListarDevedores(var lbNome: TListBox;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select id, nome, fantasia from participante ' +
@@ -168,8 +181,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -178,6 +196,7 @@ procedure TUsuarioDAO.BuscarDevedorPorUsuario(var lbNome: TListBox;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select p.id, p.nome, p.fantasia from participante p ' +
@@ -206,8 +225,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -215,6 +239,7 @@ function TUsuarioDAO.BuscarPorId(Usuario : TUsuario; Id: Integer; out Erro: Stri
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from usuario ' +
@@ -250,8 +275,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -259,6 +290,7 @@ function TUsuarioDAO.Inserir(Usuario : TUsuario; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into usuario(id, nome, senha, email, cadastro, excluido) values ' +
@@ -280,12 +312,13 @@ begin
     Qry.ParamByName('cadastro').AsDateTime := Usuario.Cadastro;
     Qry.ParamByName('excluido').AsBoolean  := Usuario.Excluido;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir usuário: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -296,6 +329,7 @@ function TUsuarioDAO.Editar(Usuario : TUsuario; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'update usuario set nome = :nome, ' +
@@ -312,13 +346,13 @@ begin
     Qry.ParamByName('alteracao').AsDateTime := Usuario.Alteracao;   //Now
 
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar usuário: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -329,6 +363,7 @@ function TUsuarioDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from usuario where id = :id';
@@ -338,12 +373,14 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
+      StartTransaction;
       try
 
         sql := 'update usuario set excluido = :excluido where id = :id';
@@ -354,12 +391,13 @@ begin
         Qry.ParamByName('id').AsInteger  := Id;
         Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
-        dmConexao1.SQLTransaction.Commit;
+        Commit;
 
         Result := True;
 
       except on E: Exception do
         begin
+          Rollback;
           Erro := 'Ocorreu um erro ao excluir usuário: ' + sLineBreak + E.Message;
           Result := False;
         end;
@@ -373,6 +411,7 @@ function TUsuarioDAO.InserirDevedor(UsuarioDevedor: TUsuarioDonoCadastro;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into usuario_dono_cadastro(id, id_usuario, id_dono_cadastro, ' +
@@ -392,12 +431,13 @@ begin
     Qry.ParamByName('id_dono_cadastro').AsInteger := UsuarioDevedor.DonoCadastro.Id;
     Qry.ParamByName('cadastro').AsDateTime        := UsuarioDevedor.Cadastro;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir acessos ao devedor: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -408,6 +448,7 @@ function TUsuarioDAO.ExcluirDevedor(UsuarioDevedor : TUsuarioDonoCadastro; out E
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from usuario_dono_cadastro ' +
@@ -419,12 +460,13 @@ begin
     Qry.ParamByName('id_dono_cadastro').AsInteger  := UsuarioDevedor.DonoCadastro.Id;
     Qry.ParamByName('id_usuario').AsInteger        := UsuarioDevedor.Usuario.Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao excluir acesso ao devedor: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -435,6 +477,7 @@ function TUsuarioDAO.UsuarioDevedorJaExiste(UsuarioDevedor: TUsuarioDonoCadastro
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select id from usuario_dono_cadastro ' +
@@ -451,8 +494,14 @@ begin
 
     Result := Qry.RecordCount > 0;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Result := False;
+      raise;
+    end;
   end;
 end;
 

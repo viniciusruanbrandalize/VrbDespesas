@@ -68,6 +68,7 @@ implementation
 
 function TFluxoCaixaReport.PorPeriodo(dInicial, dFinal: TDate; out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select data, descricao, nome_participante, total, tipo_saldo, id_dono_cadastro from (' +
@@ -101,11 +102,14 @@ begin
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -115,6 +119,7 @@ end;
 function TFluxoCaixaReport.TotalMensal(var Grafico: TChart; ano, Tipo: Integer;
   out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select cast(coalesce(sum(total_despesa),0) as decimal(15,2)) as total_despesa, ' +
@@ -165,11 +170,14 @@ begin
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;

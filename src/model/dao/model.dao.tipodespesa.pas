@@ -60,6 +60,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from tipo_despesa ' +
@@ -82,8 +83,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -93,6 +99,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -125,8 +132,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -134,6 +146,7 @@ function TTipoDespesaDAO.BuscarPorId(TipoDespesa : TTipoDespesa; Id: Integer; ou
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from tipo_despesa ' +
@@ -165,8 +178,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -174,6 +193,7 @@ function TTipoDespesaDAO.Inserir(TipoDespesa : TTipoDespesa; out Erro: string): 
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into tipo_despesa(id, nome, excluido) values (:id, :nome, :excluido)';
@@ -191,12 +211,13 @@ begin
     Qry.ParamByName('nome').AsString := TipoDespesa.Nome;
     Qry.ParamByName('excluido').AsBoolean := TipoDespesa.Excluido;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir tipo de despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -207,6 +228,7 @@ function TTipoDespesaDAO.Editar(TipoDespesa : TTipoDespesa; out Erro: string): B
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'update tipo_despesa set nome = :nome ' +
@@ -218,13 +240,13 @@ begin
     Qry.ParamByName('id').AsInteger   := TipoDespesa.Id;
     Qry.ParamByName('nome').AsString  := TipoDespesa.Nome;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar tipo de despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -235,6 +257,7 @@ function TTipoDespesaDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from tipo_despesa where id = :id';
@@ -244,12 +267,14 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
+      StartTransaction;
       try
 
         sql := 'update tipo_despesa set excluido = :excluido where id = :id';
@@ -260,12 +285,13 @@ begin
         Qry.ParamByName('id').AsInteger  := Id;
         Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
-        dmConexao1.SQLTransaction.Commit;
+        Commit;
 
         Result := True;
 
       except on E: Exception do
         begin
+          Rollback;
           Erro := 'Ocorreu um erro ao excluir tipo de despesa: ' + sLineBreak + E.Message;
           Result := False;
         end;

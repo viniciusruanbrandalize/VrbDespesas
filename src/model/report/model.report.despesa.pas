@@ -86,6 +86,7 @@ function TDespesaReport.PorPeriodo(dInicial, dFinal: TDate; Tipo, BuscaId: Integ
 var
   TipoDeBusca: String;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select d.id, d.data, d.hora, d.descricao, f.nome as nome_fpgto, ' +
@@ -188,11 +189,14 @@ begin
     dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -202,6 +206,7 @@ end;
 function TDespesaReport.ComparativoMensal(var Grafico: TChart; anoInicial, anoFinal,
   mes: Integer; Tipo: Integer; out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
@@ -292,11 +297,14 @@ begin
     dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -306,6 +314,7 @@ end;
 function TDespesaReport.ComparativoAnual(var Grafico: TChart; anoInicial, anoFinal, Tipo: Integer; out
   Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
@@ -379,11 +388,14 @@ begin
     dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -392,6 +404,7 @@ end;
 
 function TDespesaReport.TotalPorMes(var Grafico: TChart; ano, Tipo: Integer; out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select sum(total) as med_diaria, avg(total) as media, '+
@@ -476,11 +489,14 @@ begin
     dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -490,6 +506,7 @@ end;
 function TDespesaReport.TotalPorSubtipo(var Grafico: TChart; dInicial, dFinal: TDate;
   Tipo: Integer; out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
       FSQL := 'select sd.nome as nome_subtipo, ' +
@@ -551,11 +568,14 @@ begin
     dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -565,6 +585,7 @@ end;
 function TDespesaReport.TotalPorTipo(var Grafico: TChart; dInicial, dFinal: TDate;
   Tipo: Integer; out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select td.nome as nome_tipo, '+
@@ -629,11 +650,14 @@ begin
     dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -643,6 +667,7 @@ end;
 function TDespesaReport.TotalPorFormaPgto(var Grafico: TChart; dInicial, dFinal: TDate;
   Tipo: Integer; out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select fp.nome as nome_forma_pagamento, '+
@@ -707,11 +732,14 @@ begin
     dmRelatorio.CarregarLogo();
     dmRelatorio.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;

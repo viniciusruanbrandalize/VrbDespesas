@@ -79,7 +79,8 @@ type
     function ExtractData(Param: TExtractData; Campo: String): String;
     procedure CriarQuery(var SQLQuery: TSQLQuery; Conector: TSQLConnector);
     procedure Commit(Conexao: Integer = 1);
-    procedure Roolback(Conexao: Integer = 1);
+    procedure Rollback(Conexao: Integer = 1);
+    procedure StartTransaction(Conexao: Integer = 1);
 
     constructor Create; virtual;
     destructor Destroy; override;
@@ -230,6 +231,7 @@ var
   CmdLimit: String;
   WhereExcluido: String;
 begin
+  StartTransaction;
   try
 
     CmdLimit := '';
@@ -303,8 +305,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -316,6 +323,11 @@ var
   nomeSequencia: String;
   QryTemp: TSQLQuery;
 begin
+  {
+    Nao tem controle de transacao,
+    sendo necessario chama-lo dentro de metodos transacionais.
+  }
+
   id := 0;
 
   if Conector = nil then
@@ -364,6 +376,11 @@ var
   id: Integer;
   sql: String;
 begin
+  {
+    Nao tem controle de transacao,
+    sendo necessario chama-lo dentro de metodos transacionais.
+  }
+
   id := 0;
   sql := '';
   try
@@ -454,11 +471,19 @@ begin
   end;
 end;
 
-procedure TPadraoDAO.Roolback(Conexao: Integer = 1);
+procedure TPadraoDAO.Rollback(Conexao: Integer = 1);
 begin
   case Conexao of
     1: dmConexao1.SQLTransaction.Rollback;
     2: dmConexao2.SQLTransaction.Rollback;
+  end;
+end;
+
+procedure TPadraoDAO.StartTransaction(Conexao: Integer = 1);
+begin
+  case Conexao of
+    1: dmConexao1.SQLTransaction.StartTransaction;
+    2: dmConexao2.SQLTransaction.StartTransaction;
   end;
 end;
 

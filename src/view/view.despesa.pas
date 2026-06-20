@@ -105,7 +105,6 @@ type
     tbsPagamento: TTabSheet;
     tbsArquivo: TTabSheet;
     trbNivelPrecisao: TTrackBar;
-    procedure actCancelarExecute(Sender: TObject);
     procedure actCancelarFpgtoExecute(Sender: TObject);
     procedure actEditarExecute(Sender: TObject);
     procedure actExcluirArquivoExecute(Sender: TObject);
@@ -512,16 +511,6 @@ procedure TfrmDespesa.actCancelarFpgtoExecute(Sender: TObject);
 begin
   Controller.DeletarUltimoPagamento();
   AjustarTelaPagamento(False);
-end;
-
-procedure TfrmDespesa.actCancelarExecute(Sender: TObject);
-begin
-  if TfrmMessage.Mensagem('Deseja cancelar ?', 'Aviso', 'Q', [mbNao, mbSim], mbNao) then
-  begin
-    pgcPadrao.ActivePage := tbsLista;
-    Operacao := opNenhum;
-    Controller.CancelarAtualizacaoArquivo();
-  end;
 end;
 
 procedure TfrmDespesa.actEditarExecute(Sender: TObject);

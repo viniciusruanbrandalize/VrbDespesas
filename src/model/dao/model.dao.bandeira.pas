@@ -60,7 +60,7 @@ var
   sql: String;
   item : TListItem;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  StartTransaction;
   try
 
     sql := 'select * from bandeira where excluido = :excluido order by nome '+Collate();
@@ -81,11 +81,11 @@ begin
       Qry.Next;
     end;
 
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       raise;
     end;
   end;
@@ -97,7 +97,7 @@ var
   item : TListItem;
   valor: Double;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -130,11 +130,11 @@ begin
       Qry.Next;
     end;
 
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       raise;
     end;
   end;
@@ -144,7 +144,7 @@ function TBandeiraDAO.BuscarPorId(Bandeira: TBandeira; Id: Integer; out Erro: St
 var
   sql: String;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  StartTransaction;
   try
 
     sql := 'select * from bandeira ' +
@@ -176,11 +176,11 @@ begin
       Result := False;
     end;
 
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := E.Message;
     end;
   end;
@@ -190,7 +190,7 @@ function TBandeiraDAO.Inserir(Bandeira: TBandeira; out Erro: string): Boolean;
 var
   sql: String;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  StartTransaction;
   try
 
     sql := 'insert into bandeira(id, nome, excluido) values (:id, :nome, :excluido)';
@@ -208,13 +208,13 @@ begin
     Qry.ParamByName('nome').AsString := Bandeira.Nome;
     Qry.ParamByName('excluido').AsBoolean := Bandeira.Excluido;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir Bandeira: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -225,7 +225,7 @@ function TBandeiraDAO.Editar(Bandeira: TBandeira; out Erro: string): Boolean;
 var
   sql: String;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  StartTransaction;
   try
 
     sql := 'update bandeira set nome = :nome ' +
@@ -238,13 +238,13 @@ begin
     Qry.ParamByName('nome').AsString := Bandeira.Nome;
 
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar Bandeira: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -255,7 +255,7 @@ function TBandeiraDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
-  dmConexao1.SQLTransaction.StartTransaction;
+  StartTransaction;
   try
 
     sql := 'delete from bandeira where id = :id';
@@ -265,14 +265,14 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
-      dmConexao1.SQLTransaction.StartTransaction;
+      Rollback;
+      StartTransaction;
       try
 
         sql := 'update bandeira set excluido = :excluido where id = :id';
@@ -283,13 +283,13 @@ begin
         Qry.ParamByName('id').AsInteger  := Id;
         Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
-        dmConexao1.SQLTransaction.Commit;
+        Commit;
 
         Result := True;
 
       except on E: Exception do
         begin
-          dmConexao1.SQLTransaction.Rollback;
+          Rollback;
           Erro := 'Ocorreu um erro ao excluir Bandeira: ' + sLineBreak + E.Message;
           Result := False;
         end;

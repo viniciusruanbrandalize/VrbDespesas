@@ -63,6 +63,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  StartTransaction;
   try
 
     if Driver = DRV_FIREBIRD then
@@ -127,8 +128,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -138,6 +144,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -172,8 +179,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -184,6 +196,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -240,8 +253,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -249,6 +267,7 @@ function TRecebimentoDAO.BuscarPorId(Recebimento: TRecebimento; Id: Integer; out
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select r.*, p.nome as nome_pagador, f.nome as nome_forma_pgto, ' +
@@ -308,8 +327,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -317,6 +342,7 @@ function TRecebimentoDAO.Inserir(Recebimento: TRecebimento; out Erro: string): B
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into recebimento (id, data, hora_extra, inss, ir, valor_total, ' +
@@ -361,12 +387,13 @@ begin
       Qry.ParamByName('id_conta_bancaria').AsInteger := Recebimento.ContaBancaria.Id;
 
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir Recebimento: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -377,6 +404,7 @@ function TRecebimentoDAO.Editar(Recebimento: TRecebimento; out Erro: string): Bo
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'update recebimento set data=:data, hora_extra=:hora_extra, inss=:inss, ' +
@@ -412,13 +440,13 @@ begin
       Qry.ParamByName('id_conta_bancaria').AsInteger := Recebimento.ContaBancaria.Id;
 
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar Recebimento: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -429,6 +457,7 @@ function TRecebimentoDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from recebimento where id = :id';
@@ -438,12 +467,13 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao excluir Recebimento: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -456,6 +486,7 @@ var
   sql: String;
   CmdLimit: String;
 begin
+  StartTransaction;
   try
 
     CmdLimit := '';
@@ -525,8 +556,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 

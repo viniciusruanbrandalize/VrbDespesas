@@ -60,6 +60,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from forma_pgto where excluido = :excluido order by nome '+Collate();
@@ -80,9 +81,14 @@ begin
       item.SubItems.Add(qry.FieldByName('sigla').AsString);
       Qry.Next;
     end;
-    //dmConexao1.SQLTransaction.Commit;
-  finally
-    Qry.Close;
+
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -92,6 +98,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -125,8 +132,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -134,6 +146,7 @@ function TFormaPagamentoDAO.BuscarPorId(FormaPagamento : TFormaPagamento; Id: In
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select * from forma_pgto ' +
@@ -166,8 +179,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -175,6 +194,7 @@ function TFormaPagamentoDAO.Inserir(FormaPagamento : TFormaPagamento; out Erro: 
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into forma_pgto(id, nome, sigla, excluido) values ' +
@@ -195,12 +215,13 @@ begin
       Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
     Qry.ParamByName('excluido').AsBoolean := FormaPagamento.Excluido;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir forma de pagamento: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -211,6 +232,7 @@ function TFormaPagamentoDAO.Editar(FormaPagamento : TFormaPagamento; out Erro: s
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'update forma_pgto set nome = :nome, ' +
@@ -225,13 +247,13 @@ begin
     if Trim(FormaPagamento.Sigla) <> EmptyStr then
       Qry.ParamByName('sigla').AsString := FormaPagamento.Sigla;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar forma de pagamento: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -242,6 +264,7 @@ function TFormaPagamentoDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from forma_pgto where id = :id';
@@ -251,12 +274,14 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
+      StartTransaction;
       try
 
         sql := 'update forma_pgto set excluido = :excluido where id = :id';
@@ -267,12 +292,13 @@ begin
         Qry.ParamByName('id').AsInteger  := Id;
         Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
-        dmConexao1.SQLTransaction.Commit;
+        Commit;
 
         Result := True;
 
       except on E: Exception do
         begin
+          Rollback;
           Erro := 'Ocorreu um erro ao excluir forma de pagamento: ' + sLineBreak + E.Message;
           Result := False;
         end;

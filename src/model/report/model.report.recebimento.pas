@@ -68,6 +68,7 @@ implementation
 
 function TRecebimentoReport.DeclaracaoDeRenda(ano, tipoRece: Integer; out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select sum(hora_extra) as hre, sum(inss) AS inss, sum(ir) AS ir , ' +
@@ -114,11 +115,14 @@ begin
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -130,6 +134,7 @@ function TRecebimentoReport.PorPeriodo(dInicial, dFinal: TDate; Busca: String;
 var
   TipoDeBusca: String;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select r.id, r.data, r.descricao, r.tipo, r.valor_total as total, ' +
@@ -185,11 +190,14 @@ begin
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -199,6 +207,7 @@ end;
 function TRecebimentoReport.PorPeriodoSalario(dInicial, dFinal: TDate;
   out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select r.id, r.data, r.valor_base, r.hora_extra, r.ir*(-1) as ir, r.inss*(-1) as inss, r.antecipacao, ' +
@@ -228,11 +237,14 @@ begin
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;

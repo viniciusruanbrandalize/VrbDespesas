@@ -265,19 +265,27 @@ function TdmConexao2.TestarConexao: Boolean;
 var
   qryTemp: TSQLQuery;
 begin
-  qryTemp := TSQLQuery.Create(nil);
-  try
+  if not SQLTransaction.Active then
+  begin
+    qryTemp := TSQLQuery.Create(nil);
     try
-      qryTemp.SQLConnection := SQLConnector;
-      qryTemp.SQL.Add('select id from arquivo where id = :id');
-      qryTemp.ParamByName('id').AsInteger := 0;
-      qryTemp.Open;
-      Result := True;
-    except
-      Result := False;
+      SQLTransaction.StartTransaction;
+      try
+        qryTemp.SQLConnection := SQLConnector;
+        qryTemp.SQL.Add('select id from arquivo where id = :id');
+        qryTemp.ParamByName('id').AsInteger := 0;
+        qryTemp.Open;
+        SQLTransaction.Commit;
+        Result := True;
+      except
+        begin
+          SQLTransaction.Rollback;
+          Result := False;
+        end;
+      end;
+    finally
+      qryTemp.Free;
     end;
-  finally
-    qryTemp.Free;
   end;
 end;
 

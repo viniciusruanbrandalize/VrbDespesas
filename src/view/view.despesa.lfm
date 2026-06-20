@@ -712,9 +712,6 @@ inherited frmDespesa: TfrmDespesa
     inherited actSalvar: TAction
       OnExecute = actSalvarExecute
     end
-    inherited actCancelar: TAction
-      OnExecute = actCancelarExecute
-    end
     object actIncluirFpgto: TAction[8]
       Caption = 'Incluir'
       ImageIndex = 1

@@ -60,6 +60,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  StartTransaction;
   try
 
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
@@ -84,8 +85,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -95,6 +101,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -130,8 +137,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -139,6 +151,7 @@ function TSubtipoDespesaDAO.BuscarPorId(SubtipoDespesa: TSubtipoDespesa; Id: Int
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select sd.*, td.nome as nome_tipo from subtipo_despesa sd ' +
@@ -173,8 +186,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -182,6 +201,7 @@ function TSubtipoDespesaDAO.Inserir(SubtipoDespesa: TSubtipoDespesa; out Erro: s
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into subtipo_despesa(id, nome, id_tipo_despesa, excluido) values ' +
@@ -201,12 +221,13 @@ begin
     Qry.ParamByName('excluido').AsBoolean := SubtipoDespesa.Excluido;
     Qry.ParamByName('id_tipo_despesa').AsInteger := SubtipoDespesa.TipoDespesa.Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir Subtipo Despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -217,6 +238,7 @@ function TSubtipoDespesaDAO.Editar(SubtipoDespesa: TSubtipoDespesa; out Erro: st
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'update subtipo_despesa set nome = :nome, id_tipo_despesa = :id_tipo_despesa ' +
@@ -228,16 +250,14 @@ begin
     Qry.ParamByName('id').AsInteger  := SubtipoDespesa.Id;
     Qry.ParamByName('nome').AsString := SubtipoDespesa.Nome;
     Qry.ParamByName('id_tipo_despesa').AsInteger  := SubtipoDespesa.TipoDespesa.Id;
-
-    //dmConexao1.SQLTransaction.StartTransaction;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar Subtipo de Despesa: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -248,6 +268,7 @@ function TSubtipoDespesaDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from subtipo_despesa where id = :id';
@@ -257,12 +278,14 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
+      StartTransaction;
       try
 
         sql := 'update subtipo_despesa set excluido = :excluido where id = :id';
@@ -273,12 +296,13 @@ begin
         Qry.ParamByName('id').AsInteger  := Id;
         Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
-        dmConexao1.SQLTransaction.Commit;
+        Commit;
 
         Result := True;
 
       except on E: Exception do
         begin
+          Rollback;
           Erro := 'Ocorreu um erro ao excluir Subtipo de Despesa: ' + sLineBreak + E.Message;
           Result := False;
         end;

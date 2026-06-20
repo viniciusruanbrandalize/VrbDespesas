@@ -62,6 +62,7 @@ var
   sql: String;
   item : TListItem;
 begin
+  StartTransaction;
   try
 
     sql := 'select p.* from participante p ' +
@@ -89,8 +90,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -101,6 +107,7 @@ var
   item : TListItem;
   valor: Double;
 begin
+  StartTransaction;
   try
 
     if TryStrToFloat(Busca, valor) then
@@ -141,8 +148,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -152,6 +164,7 @@ var
   sql: String;
   limit: String;
 begin
+  StartTransaction;
   try
 
     if Driver = DRV_FIREBIRD then
@@ -198,8 +211,13 @@ begin
       Qry.Next;
     end;
 
-  finally
-    qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      raise;
+    end;
   end;
 end;
 
@@ -208,6 +226,7 @@ function TParticipanteDAO.BuscarPorId(Participante : TParticipante; Id: Integer;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select p.*, c.nome as nome_cidade, c.uf from participante p ' +
@@ -262,8 +281,14 @@ begin
       Result := False;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := False;
+    end;
   end;
 end;
 
@@ -271,6 +296,7 @@ function TParticipanteDAO.BuscarIdCidadePorIBGE(IBGE: Integer; out Erro: String)
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'select id from cidade where ibge = :ibge';
@@ -297,8 +323,14 @@ begin
       Result := 0;
     end;
 
-  finally
-    Qry.Close;
+    Commit;
+
+  except on E: Exception do
+    begin
+      Rollback;
+      Erro := E.Message;
+      Result := 0;
+    end;
   end;
 end;
 
@@ -306,6 +338,7 @@ function TParticipanteDAO.Inserir(Participante : TParticipante; out Erro: string
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'insert into participante(id, pessoa, nome, fantasia, cnpj, ie, telefone, ' +
@@ -378,12 +411,13 @@ begin
 
     end;
 
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
       Erro := 'Ocorreu um erro ao inserir participante: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -394,6 +428,7 @@ function TParticipanteDAO.Editar(Participante : TParticipante; out Erro: string)
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'update participante set pessoa=:pessoa, nome=:nome, fantasia=:fantasia, ' +
@@ -437,13 +472,13 @@ begin
     Qry.ParamByName('dono_cadastro').AsBoolean := Participante.EhDonoCadastro;
     Qry.ParamByName('id_cidade').AsInteger     := Participante.Cidade.Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
-      dmConexao1.SQLTransaction.Rollback;
+      Rollback;
       Erro := 'Ocorreu um erro ao alterar participante: ' + sLineBreak + E.Message;
       Result := False;
     end;
@@ -454,6 +489,7 @@ function TParticipanteDAO.Excluir(Id: Integer; out Erro: string): Boolean;
 var
   sql: String;
 begin
+  StartTransaction;
   try
 
     sql := 'delete from participante where id = :id';
@@ -463,12 +499,14 @@ begin
     Qry.SQL.Add(sql);
     Qry.ParamByName('id').AsInteger  := Id;
     Qry.ExecSQL;
-    dmConexao1.SQLTransaction.Commit;
+    Commit;
 
     Result := True;
 
   except on E: Exception do
     begin
+      Rollback;
+      StartTransaction;
       try
 
         sql := 'update participante set excluido = :excluido where id = :id';
@@ -479,12 +517,13 @@ begin
         Qry.ParamByName('id').AsInteger  := Id;
         Qry.ParamByName('excluido').AsBoolean := True;
         Qry.ExecSQL;
-        dmConexao1.SQLTransaction.Commit;
+        Commit;
 
         Result := True;
 
       except on E: Exception do
         begin
+          Rollback;
           Erro := 'Ocorreu um erro ao excluir participante: ' + sLineBreak + E.Message;
           Result := False;
         end;

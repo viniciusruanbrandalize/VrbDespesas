@@ -63,6 +63,7 @@ implementation
 
 function TParticipanteReport.Telemarketing(out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select nome, fantasia, telefone, celular, email, cadastro from participante ' +
@@ -83,11 +84,14 @@ begin
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
@@ -96,6 +100,7 @@ end;
 
 function TParticipanteReport.Completo(out Erro: String): Boolean;
 begin
+  DAO.StartTransaction;
   try
 
     FSQL := 'select p.*, c.nome as nome_cidade, c.uf as uf from participante p ' +
@@ -117,11 +122,14 @@ begin
     dmConexaoReport.CarregarLogo();
     dmConexaoReport.frReport.ShowReport;
 
+    DAO.Commit;
+
     Result := True;
 
   except
     on e: Exception do
     begin
+      DAO.Rollback;
       Erro := 'Erro ao gerar o relatório: ' + e.Message;
       Result := False;
     end;
